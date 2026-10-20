@@ -34,7 +34,7 @@ export function EtiquetaDePreco({
       </span>
       <span
         aria-hidden
-        className="mt-1 font-sans text-xs font-bold tracking-wide not-italic uppercase"
+        className="mt-1 font-texto text-xs font-bold tracking-wide not-italic uppercase"
       >
         {unidade}
       </span>

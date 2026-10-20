@@ -40,7 +40,7 @@ export function CapaDoEncarte({
             da semana
           </h1>
           <ValidadeDaSemana className="mt-5 inline-block bg-tinta px-3 py-1.5 text-sm font-bold text-encarte" />
-          <p className="mt-6 max-w-[40ch] text-lg font-medium">{chamada}</p>
+          <p className="mt-6 max-w-[40ch] text-lg">{chamada}</p>
           <div className="mt-7">
             <BotaoWhatsApp
               acao={acao}
@@ -74,7 +74,8 @@ export function CapaDoEncarte({
                     src={oferta.imagem.src}
                     alt={oferta.imagem.alt}
                     fill
-                    preload={i === 0}
+                    fetchPriority={i === 0 ? "high" : "auto"}
+                    loading={i === 0 ? "eager" : "lazy"}
                     sizes={
                       i === 0
                         ? "(min-width: 768px) 50vw, 100vw"

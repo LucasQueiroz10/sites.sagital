@@ -1,8 +1,10 @@
 import { SerwistProvider } from "@serwist/turbopack/react";
 import type { Metadata, Viewport } from "next";
+import { URL_DO_SITE } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(URL_DO_SITE),
   applicationName: "Sagital",
   title: {
     default: "Sagital — Sites para negócios locais",
@@ -16,6 +18,7 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
   },
   formatDetection: { telephone: false },
+  openGraph: { type: "website", locale: "pt_BR", siteName: "Sagital" },
 };
 
 export const viewport: Viewport = {
