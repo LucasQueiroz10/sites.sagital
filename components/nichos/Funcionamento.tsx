@@ -54,7 +54,7 @@ export function Funcionamento({ expediente, endereco, className }: Props) {
             const ehHoje = hoje !== null && periodo.dias.includes(hoje);
             return (
               <div
-                key={periodo.dias.join("-")}
+                key={periodo.dias.join("-") + periodo.abre}
                 className={classes(
                   "flex items-baseline justify-between gap-4 py-3",
                   ehHoje ? "text-texto" : "text-texto-suave",
@@ -62,6 +62,7 @@ export function Funcionamento({ expediente, endereco, className }: Props) {
               >
                 <dt className={ehHoje ? "font-semibold" : undefined}>
                   {rotuloDosDias(periodo.dias)}
+                  {periodo.turno && ` · ${periodo.turno}`}
                   {ehHoje && <span className="sr-only"> (hoje)</span>}
                 </dt>
                 <dd className="tabular-nums">

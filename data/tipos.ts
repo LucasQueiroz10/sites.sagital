@@ -104,3 +104,30 @@ export type DadosDoMercado = DadosDoNicho & {
   entrega: { linhas: { item: string; valor: string }[]; pagamento: string };
   imagemDaLoja: Imagem;
 };
+
+export type ItemDoCardapio = {
+  nome: string;
+  descricao?: string;
+  /** Centavos. */
+  preco: number;
+  vegetariano?: boolean;
+};
+
+export type CategoriaDoCardapio = {
+  id: string;
+  nome: string;
+  itens: ItemDoCardapio[];
+};
+
+export type DadosDoRestaurante = DadosDoNicho & {
+  slogan: string;
+  chamada: string;
+  imagemPrincipal: Imagem;
+  delivery: { rotulo: string; url: string };
+  cardapio: CategoriaDoCardapio[];
+  casa: { paragrafos: string[]; imagem: Imagem; destaque: string };
+  /** Cinco fotos: a primeira ocupa duas linhas no desktop e a grade fecha certinha. */
+  galeria: Imagem[];
+  /** Pessoas por mesa no formulário de reserva; o último vale "ou mais". */
+  pessoas: number[];
+};

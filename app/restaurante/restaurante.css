@@ -1,0 +1,26 @@
+/* Tokens do demo de restaurante. As cores primárias e o fundo vêm de lib/tema.ts. */
+[data-nicho="restaurante"] {
+  --cor-superficie: #eef1f6;
+  --cor-texto: #16213d;
+  --cor-texto-suave: #4a5470;
+  --cor-borda: #d3d9e6;
+  --cor-esmalte: #f8f7f3;
+  --raio: 4px;
+  --fonte-titulo: var(--font-young-serif), Georgia, serif;
+  --fonte-texto: var(--font-figtree), system-ui, sans-serif;
+  color-scheme: light;
+}
+
+[data-nicho="restaurante"] :is(h1, h2, h3, .marca, .destaque-casa) {
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+}
+
+[data-nicho="restaurante"] :is(h1, h2) {
+  letter-spacing: -0.015em;
+  line-height: 1.04;
+}
+
+[data-nicho="restaurante"] .marca {
+  color: var(--cor-cobalto);
+}

@@ -7,6 +7,7 @@ import {
   rotuloDosDias,
   semanaDe,
   diaMes,
+  horariosDeReserva,
   statusDoExpediente,
   type Aula,
   type Expediente,
@@ -133,5 +134,35 @@ describe("semanaDe", () => {
     expect(diaMes(fim)).toBe("25/10");
     const domingo = semanaDe(new Date(2026, 9, 25, 10, 0));
     expect(diaMes(domingo.inicio)).toBe("19/10");
+  });
+});
+
+describe("turnos de almoço e jantar", () => {
+  const restaurante: Expediente[] = [
+    { dias: [2, 3, 4, 5], turno: "almoço", abre: "11:30", fecha: "15:00" },
+    { dias: [2, 3, 4, 5], turno: "jantar", abre: "19:00", fecha: "23:00" },
+  ];
+  const terca = (h: number, m = 0) => new Date(2026, 9, 20, h, m);
+
+  it("no intervalo entre turnos, abre de novo no jantar", () => {
+    expect(statusDoExpediente(restaurante, terca(16))).toEqual({
+      aberto: false,
+      abreAs: "19:00",
+      diasDepois: 0,
+    });
+    expect(statusDoExpediente(restaurante, terca(20)).aberto).toBe(true);
+  });
+
+  it("lista horários de reserva até 1 hora antes de fechar", () => {
+    const todos = horariosDeReserva(restaurante, 2, null, false);
+    expect(todos[0]).toBe("11:30");
+    expect(todos).toContain("14:00");
+    expect(todos).not.toContain("14:30");
+    expect(todos.at(-1)).toBe("22:00");
+  });
+
+  it("hoje, só horários a partir de 30 minutos depois de agora", () => {
+    const hoje = horariosDeReserva(restaurante, 2, terca(19, 40), true);
+    expect(hoje[0]).toBe("20:30");
   });
 });

@@ -19,6 +19,8 @@
   /* Cores fixas de algum nicho (não mudam com a personalização). */
   --cor-encarte: #ffd60a;
   --cor-tinta: #141414;
+  --cor-cobalto: #1f3f95;
+  --cor-esmalte: #f8f7f3;
   --raio: 0.5rem;
   --fonte-titulo: ui-sans-serif, system-ui, sans-serif;
   --fonte-texto: ui-sans-serif, system-ui, sans-serif;
@@ -37,6 +39,8 @@
   --color-destaque: var(--cor-destaque);
   --color-encarte: var(--cor-encarte);
   --color-tinta: var(--cor-tinta);
+  --color-cobalto: var(--cor-cobalto);
+  --color-esmalte: var(--cor-esmalte);
   --radius-tema: var(--raio);
   --font-titulo: var(--fonte-titulo);
   --font-texto: var(--fonte-texto);

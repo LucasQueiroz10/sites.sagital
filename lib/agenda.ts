@@ -30,6 +30,8 @@ export type Aula = {
 
 export type Expediente = {
   dias: readonly DiaDaSemana[];
+  /** Nome do turno, quando o dia tem mais de um ("almoço", "jantar"). */
+  turno?: string;
   abre: string;
   fecha: string;
 };
@@ -101,24 +103,58 @@ export function statusDoExpediente(
   agora: Date,
 ): StatusDoExpediente {
   const minutos = agora.getHours() * 60 + agora.getMinutes();
-  const hoje = expedienteDoDia(expedientes, agora.getDay() as DiaDaSemana);
-  if (
-    hoje &&
-    minutos >= minutosDoDia(hoje.abre) &&
-    minutos < minutosDoDia(hoje.fecha)
-  ) {
-    return { aberto: true, fechaAs: hoje.fecha };
-  }
-  if (hoje && minutos < minutosDoDia(hoje.abre)) {
-    return { aberto: false, abreAs: hoje.abre, diasDepois: 0 };
-  }
+  const deHoje = periodosDoDia(expedientes, agora.getDay() as DiaDaSemana);
+  const atual = deHoje.find(
+    (p) => minutos >= minutosDoDia(p.abre) && minutos < minutosDoDia(p.fecha),
+  );
+  if (atual) return { aberto: true, fechaAs: atual.fecha };
+  const maisTarde = deHoje.find((p) => minutosDoDia(p.abre) > minutos);
+  if (maisTarde)
+    return { aberto: false, abreAs: maisTarde.abre, diasDepois: 0 };
   for (let diasDepois = 1; diasDepois <= 7; diasDepois++) {
     const dia = ((agora.getDay() + diasDepois) % 7) as DiaDaSemana;
-    const expediente = expedienteDoDia(expedientes, dia);
-    if (expediente)
-      return { aberto: false, abreAs: expediente.abre, diasDepois };
+    const primeiro = periodosDoDia(expedientes, dia)[0];
+    if (primeiro) return { aberto: false, abreAs: primeiro.abre, diasDepois };
   }
   return { aberto: false, abreAs: null, diasDepois: null };
+}
+
+/** Todos os turnos de um dia (almoço e jantar, por exemplo), em ordem. */
+export function periodosDoDia(
+  expedientes: readonly Expediente[],
+  dia: DiaDaSemana,
+): Expediente[] {
+  return expedientes
+    .filter((e) => e.dias.includes(dia))
+    .sort((a, b) => minutosDoDia(a.abre) - minutosDoDia(b.abre));
+}
+
+/**
+ * Horários de reserva de um dia, de 30 em 30 minutos, até 1 hora antes de
+ * cada turno fechar. Para hoje, só os que começam daqui a 30 minutos ou mais.
+ */
+export function horariosDeReserva(
+  expedientes: readonly Expediente[],
+  dia: DiaDaSemana,
+  agora: Date | null,
+  ehHoje: boolean,
+): string[] {
+  const limite =
+    ehHoje && agora ? agora.getHours() * 60 + agora.getMinutes() + 30 : -1;
+  const horarios: string[] = [];
+  for (const periodo of periodosDoDia(expedientes, dia)) {
+    for (
+      let m = minutosDoDia(periodo.abre);
+      m <= minutosDoDia(periodo.fecha) - 60;
+      m += 30
+    ) {
+      if (m >= limite) {
+        const horas = String(Math.floor(m / 60)).padStart(2, "0");
+        horarios.push(`${horas}:${String(m % 60).padStart(2, "0")}`);
+      }
+    }
+  }
+  return horarios;
 }
 
 /** "hoje", "amanhã" ou o nome do dia. */
