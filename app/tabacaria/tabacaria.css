@@ -1,0 +1,40 @@
+/* Tokens do demo de tabacaria. As cores primárias e o fundo vêm de lib/tema.ts. */
+[data-nicho="tabacaria"] {
+  --cor-superficie: #1c1611;
+  --cor-texto: #efe6d8;
+  --cor-texto-suave: #b5a690;
+  --cor-borda: #3a2e24;
+  /* Latão dos frisos: fixo, para o clima sóbrio sobreviver a qualquer cor. */
+  --cor-latao: #a8835a;
+  --raio: 2px;
+  --fonte-titulo: var(--font-marcellus), Georgia, serif;
+  --fonte-texto: var(--font-jost), system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+[data-nicho="tabacaria"] :is(h1, h2, h3, .titulo-lounge, .marca) {
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+}
+
+[data-nicho="tabacaria"] :is(h1, h2) {
+  letter-spacing: 0.01em;
+  line-height: 1.08;
+}
+
+[data-nicho="tabacaria"] .marca {
+  color: var(--cor-latao);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+
+/* Moldura de latão com fio duplo, como as placas e os quadros do lounge. */
+[data-nicho="tabacaria"] .moldura {
+  border: 1px solid var(--cor-latao);
+  outline: 1px solid color-mix(in srgb, var(--cor-latao) 45%, transparent);
+  outline-offset: -7px;
+}
+
+[data-nicho="tabacaria"] .friso {
+  background: var(--cor-latao);
+}

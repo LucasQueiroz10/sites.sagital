@@ -131,3 +131,17 @@ export type DadosDoRestaurante = DadosDoNicho & {
   /** Pessoas por mesa no formulário de reserva; o último vale "ou mais". */
   pessoas: number[];
 };
+
+export type DadosDaTabacaria = DadosDoNicho & {
+  slogan: string;
+  chamada: string;
+  imagemPrincipal: Imagem;
+  /** Textura de madeira do aviso de maioridade. */
+  imagemMadeira: Imagem;
+  categorias: { nome: string; descricao: string }[];
+  imagensDaLoja: Imagem[];
+  lounge: { paragrafos: string[]; comodidades: string[]; imagem: Imagem };
+  /** Cinco fotos do ambiente e dos acessórios, sem pessoas fumando. */
+  galeria: Imagem[];
+  avisos: { maioridade: string; saude: string };
+};
