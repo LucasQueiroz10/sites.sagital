@@ -16,6 +16,7 @@
   --cor-primaria-hover: #000000;
   --cor-primaria-texto: #ffffff;
   --cor-destaque: #1c1917;
+  --cor-erro: #b42318;
   /* Cores fixas de algum nicho (não mudam com a personalização). */
   --cor-encarte: #ffd60a;
   --cor-tinta: #141414;
@@ -37,6 +38,7 @@
   --color-primaria-hover: var(--cor-primaria-hover);
   --color-primaria-texto: var(--cor-primaria-texto);
   --color-destaque: var(--cor-destaque);
+  --color-erro: var(--cor-erro);
   --color-encarte: var(--cor-encarte);
   --color-tinta: var(--cor-tinta);
   --color-cobalto: var(--cor-cobalto);
