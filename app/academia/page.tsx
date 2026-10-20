@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import { BotaoWhatsApp } from "@/components/BotaoWhatsApp";
 import { NomeDoEstabelecimento, TemaDoNicho } from "@/components/TemaDoNicho";
@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   description: dados.descricao,
   robots: { index: false, follow: false },
 };
+
+// Cor da barra do navegador no celular, combinando com o demo.
+export const viewport: Viewport = { themeColor: "#0d0e0f" };
 
 export default function PaginaAcademia() {
   return (

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import { TemaDoNicho } from "@/components/TemaDoNicho";
 import { BarraWhatsApp } from "@/components/nichos/BarraWhatsApp";
@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   description: dados.descricao,
   robots: { index: false, follow: false },
 };
+
+// Cor da barra do navegador no celular, combinando com o demo.
+export const viewport: Viewport = { themeColor: "#f8f7f3" };
 
 export default function PaginaRestaurante() {
   return (

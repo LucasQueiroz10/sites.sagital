@@ -1,0 +1,33 @@
+import type { MetadataRoute } from "next";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    id: "/",
+    name: "Sagital — Sites para negócios locais",
+    short_name: "Sagital",
+    description:
+      "Demos de sites para academias, mercados, restaurantes e tabacarias, com link e QR code personalizados.",
+    lang: "pt-BR",
+    start_url: "/",
+    scope: "/",
+    display: "standalone",
+    background_color: "#ecebe7",
+    theme_color: "#3b2bd9",
+    icons: [
+      { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+      {
+        src: "/icons/maskable-512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "maskable",
+      },
+    ],
+    shortcuts: [
+      { name: "Gerar link e QR code", url: "/gerar" },
+      { name: "Demo de academia", url: "/academia" },
+      { name: "Demo de mercado", url: "/mercado" },
+      { name: "Demo de restaurante", url: "/restaurante" },
+    ],
+  };
+}

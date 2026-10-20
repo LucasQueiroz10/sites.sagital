@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import { AvisoMaioridade } from "@/components/AvisoMaioridade";
 import { BotaoWhatsApp } from "@/components/BotaoWhatsApp";
@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   description: dados.descricao,
   robots: { index: false, follow: false },
 };
+
+// Cor da barra do navegador no celular, combinando com o demo.
+export const viewport: Viewport = { themeColor: "#120e0b" };
 
 export default function PaginaTabacaria() {
   return (

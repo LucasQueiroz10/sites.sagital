@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { GeradorDeLink } from "@/components/sagital/GeradorDeLink";
 import { MarcaSagital } from "@/components/sagital/MarcaSagital";
+import { PreparadorOffline } from "@/components/sagital/PreparadorOffline";
 import { Container } from "@/components/ui/Container";
 import { demos } from "@/data/sagital";
 import { lexend } from "../fontes";
@@ -54,6 +55,9 @@ export default function PaginaGerar() {
             </p>
           </div>
           <GeradorDeLink demos={opcoes} modo="completo" />
+          <PreparadorOffline
+            paginas={["/", ...opcoes.map((d) => `/${d.nicho}`)]}
+          />
         </Container>
       </main>
     </div>
