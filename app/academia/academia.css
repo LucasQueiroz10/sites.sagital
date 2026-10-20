@@ -1,0 +1,51 @@
+/* Tokens do demo de academia. As cores primárias e o fundo vêm de lib/tema.ts. */
+[data-nicho="academia"] {
+  --cor-superficie: #17191b;
+  --cor-texto: #f1f1ec;
+  --cor-texto-suave: #a3a69f;
+  --cor-borda: #2a2d30;
+  --raio: 2px;
+  --fonte-titulo: var(--font-archivo), "Arial Narrow", sans-serif;
+  --fonte-texto: var(--font-archivo), system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+/* Títulos expandidos, como letreiro de uniforme. */
+[data-nicho="academia"] :is(h1, h2, h3),
+[data-nicho="academia"] .marca,
+[data-nicho="academia"] .horario,
+[data-nicho="academia"] .preco {
+  font-family: var(--fonte-titulo);
+  font-variation-settings: "wdth" 125;
+}
+
+[data-nicho="academia"] :is(h1, h2) {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+}
+
+[data-nicho="academia"] h3 {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+
+[data-nicho="academia"] .marca {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+/* Os dois-pontos piscam no ritmo dos segundos, como no cronômetro de parede. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-nicho="academia"] .cronometro .dois-pontos {
+    animation: piscar 1s steps(1, end) infinite;
+  }
+}
+
+@keyframes piscar {
+  50% {
+    opacity: 0.25;
+  }
+}

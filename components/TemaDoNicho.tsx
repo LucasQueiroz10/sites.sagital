@@ -17,6 +17,7 @@ import {
   type Tema,
   type VariaveisDoTema,
 } from "@/lib/tema";
+import { classes } from "@/lib/classes";
 
 const ContextoDoTema = createContext<Tema | null>(null);
 
@@ -26,6 +27,8 @@ type PropsDoTema = {
   /** Nome do nicho no título da aba, ex.: "Academia". */
   rotulo: string;
   padrao: PadraoDoTema;
+  /** Classes extras do wrapper, como a variável da fonte do nicho. */
+  className?: string;
   children: ReactNode;
 };
 
@@ -34,7 +37,13 @@ type PropsDoTema = {
  * do nicho; a personalização da URL é lida no navegador, o que permite abrir
  * qualquer link personalizado a partir do cache offline.
  */
-export function TemaDoNicho({ nicho, rotulo, padrao, children }: PropsDoTema) {
+export function TemaDoNicho({
+  nicho,
+  rotulo,
+  padrao,
+  className,
+  children,
+}: PropsDoTema) {
   const [tema, setTema] = useState<Tema>(() => resolverTema({}, padrao));
   const estilo: CSSProperties & VariaveisDoTema = tema.variaveis;
 
@@ -47,7 +56,10 @@ export function TemaDoNicho({ nicho, rotulo, padrao, children }: PropsDoTema) {
       <div
         data-nicho={nicho}
         style={estilo}
-        className="flex flex-1 flex-col bg-fundo font-texto text-texto"
+        className={classes(
+          "flex flex-1 flex-col bg-fundo font-texto text-texto",
+          className,
+        )}
       >
         {children}
       </div>

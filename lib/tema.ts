@@ -38,6 +38,7 @@ export type PadraoDoTema = {
 };
 
 export type VariaveisDoTema = {
+  "--cor-fundo": CorHex;
   "--cor-primaria": CorHex;
   "--cor-primaria-hover": CorHex;
   "--cor-primaria-texto": CorHex;
@@ -140,6 +141,7 @@ export function variaveisDoTema(cor: CorHex, fundo: CorHex): VariaveisDoTema {
   // O hover se afasta da cor do texto, então o contraste só aumenta.
   const hover = misturar(cor, texto === BRANCO ? PRETO : BRANCO, 0.14);
   return {
+    "--cor-fundo": fundo,
     "--cor-primaria": cor,
     "--cor-primaria-hover": hover,
     "--cor-primaria-texto": texto,
