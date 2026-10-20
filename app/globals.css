@@ -1,1 +1,60 @@
 @import "tailwindcss";
+
+/*
+ * Tokens do tema. Valores neutros de partida: cada nicho sobrescreve os
+ * neutros, o raio e as fontes no seu wrapper ([data-nicho="..."]). As
+ * variáveis --cor-primaria* e --cor-destaque vêm de lib/tema.ts, porque
+ * dependem da cor personalizada pela URL.
+ */
+:root {
+  --cor-fundo: #ffffff;
+  --cor-superficie: #f5f5f4;
+  --cor-texto: #1c1917;
+  --cor-texto-suave: #57534e;
+  --cor-borda: #d6d3d1;
+  --cor-primaria: #1c1917;
+  --cor-primaria-hover: #000000;
+  --cor-primaria-texto: #ffffff;
+  --cor-destaque: #1c1917;
+  --raio: 0.5rem;
+  --fonte-titulo: ui-sans-serif, system-ui, sans-serif;
+  --fonte-texto: ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Expõe os tokens como classes do Tailwind: bg-primaria, text-destaque, rounded-tema... */
+@theme inline {
+  --color-fundo: var(--cor-fundo);
+  --color-superficie: var(--cor-superficie);
+  --color-texto: var(--cor-texto);
+  --color-texto-suave: var(--cor-texto-suave);
+  --color-borda: var(--cor-borda);
+  --color-primaria: var(--cor-primaria);
+  --color-primaria-hover: var(--cor-primaria-hover);
+  --color-primaria-texto: var(--cor-primaria-texto);
+  --color-destaque: var(--cor-destaque);
+  --radius-tema: var(--raio);
+  --font-titulo: var(--fonte-titulo);
+  --font-texto: var(--fonte-texto);
+}
+
+body {
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-texto);
+}
+
+::selection {
+  background: var(--cor-primaria);
+  color: var(--cor-primaria-texto);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

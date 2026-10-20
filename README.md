@@ -16,7 +16,9 @@ Não há backend nem banco de dados: o conteúdo de cada nicho fica em arquivos 
 
 ## Como rodar
 
-Requer Node.js 20.9 ou superior.
+Copie `.env.example` para `.env.local` e preencha o número de WhatsApp que recebe os contatos.
+
+Requer Node.js 22.12 ou superior.
 
 ```bash
 npm install
@@ -34,9 +36,10 @@ Depois abra http://localhost:3000.
 | `npm run start`        | Serve o build de produção                       |
 | `npm run lint`         | ESLint                                          |
 | `npm run typecheck`    | Gera os tipos das rotas e verifica o TypeScript |
+| `npm test`             | Testes automáticos (Vitest)                     |
 | `npm run format`       | Formata o código com o Prettier                 |
 | `npm run format:check` | Confere a formatação sem alterar arquivos       |
-| `npm run check`        | Lint, tipos e formatação de uma vez             |
+| `npm run check`        | Lint, tipos, formatação e testes de uma vez     |
 
 ## Estrutura
 
