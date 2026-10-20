@@ -146,3 +146,19 @@ export function rotuloDosDias(dias: readonly DiaDaSemana[]): string {
         : `${nomes.slice(0, -1).join(", ")} e ${nomes[nomes.length - 1]}`;
   return (texto ?? "").charAt(0).toUpperCase() + (texto ?? "").slice(1);
 }
+
+/** Segunda a domingo da semana de `agora`, para a validade das ofertas. */
+export function semanaDe(agora: Date): { inicio: Date; fim: Date } {
+  const inicio = new Date(agora);
+  inicio.setHours(0, 0, 0, 0);
+  const desdeSegunda = (inicio.getDay() + 6) % 7;
+  inicio.setDate(inicio.getDate() - desdeSegunda);
+  const fim = new Date(inicio);
+  fim.setDate(inicio.getDate() + 6);
+  return { inicio, fim };
+}
+
+/** "20/10". */
+export function diaMes(data: Date): string {
+  return `${String(data.getDate()).padStart(2, "0")}/${String(data.getMonth() + 1).padStart(2, "0")}`;
+}

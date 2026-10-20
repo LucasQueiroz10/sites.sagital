@@ -1,0 +1,31 @@
+/* Tokens do demo de mercado. As cores primárias e o fundo vêm de lib/tema.ts. */
+[data-nicho="mercado"] {
+  --cor-superficie: #f6f3ea;
+  --cor-texto: #171717;
+  --cor-texto-suave: #4d4d4d;
+  --cor-borda: #e4dfd1;
+  --raio: 10px;
+  --fonte-titulo: var(--font-barlow-condensed), "Arial Narrow", sans-serif;
+  --fonte-texto: var(--font-barlow), system-ui, sans-serif;
+  color-scheme: light;
+}
+
+[data-nicho="mercado"] :is(h2, .titulo-encarte, .marca) {
+  font-family: var(--fonte-titulo);
+}
+
+[data-nicho="mercado"] h2 {
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+}
+
+[data-nicho="mercado"] .marca {
+  color: var(--cor-destaque);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}

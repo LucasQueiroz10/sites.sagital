@@ -5,6 +5,8 @@ import {
   proximaAula,
   quandoFalar,
   rotuloDosDias,
+  semanaDe,
+  diaMes,
   statusDoExpediente,
   type Aula,
   type Expediente,
@@ -121,5 +123,15 @@ describe("rotuloDosDias", () => {
     expect(rotuloDosDias([6])).toBe("Sábado");
     expect(rotuloDosDias([0, 6])).toBe("Sábado e domingo");
     expect(rotuloDosDias([1, 3, 5])).toBe("Segunda, quarta e sexta");
+  });
+});
+
+describe("semanaDe", () => {
+  it("vai de segunda a domingo, inclusive quando hoje é domingo", () => {
+    const { inicio, fim } = semanaDe(new Date(2026, 9, 22, 15, 0));
+    expect(diaMes(inicio)).toBe("19/10");
+    expect(diaMes(fim)).toBe("25/10");
+    const domingo = semanaDe(new Date(2026, 9, 25, 10, 0));
+    expect(diaMes(domingo.inicio)).toBe("19/10");
   });
 });

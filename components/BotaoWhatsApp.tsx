@@ -12,6 +12,8 @@ type Props = {
   variante?: "primario" | "secundario";
   tamanho?: "normal" | "grande";
   className?: string;
+  /** Texto extra só para leitores de tela, quando o rótulo sozinho é ambíguo. */
+  complementoAcessivel?: string;
 };
 
 /** Botão de WhatsApp dos demos, com a mensagem já escrita e o nome do cliente. */
@@ -21,6 +23,7 @@ export function BotaoWhatsApp({
   variante,
   tamanho,
   className,
+  complementoAcessivel,
 }: Props) {
   const { nome } = useTema();
   const href = montarLinkWhatsApp(
@@ -37,6 +40,9 @@ export function BotaoWhatsApp({
     >
       <MessageCircle aria-hidden className="size-5 shrink-0" />
       {acao.rotulo}
+      {complementoAcessivel && (
+        <span className="sr-only"> {complementoAcessivel}</span>
+      )}
       <span className="sr-only"> (abre o WhatsApp)</span>
     </Botao>
   );

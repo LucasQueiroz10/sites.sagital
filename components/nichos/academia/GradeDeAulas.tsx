@@ -62,7 +62,7 @@ export function GradeDeAulas({ grade }: { grade: Aula[] }) {
               onClick={() => setEscolhido(d)}
               onKeyDown={(e) => navegarComTeclado(e, i)}
               className={classes(
-                "relative min-h-12 min-w-14 flex-1 border px-3 text-sm font-bold tracking-wide uppercase transition-colors",
+                "relative min-h-12 min-w-11 flex-1 border px-1 text-sm font-bold tracking-wide uppercase transition-colors",
                 "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque",
                 selecionado
                   ? "border-primaria bg-primaria text-primaria-texto"

@@ -67,3 +67,40 @@ export type DadosDaAcademia = DadosDoNicho & {
   modalidades: Modalidade[];
   depoimentos: Depoimento[];
 };
+
+export type Oferta = {
+  produto: string;
+  unidade: string;
+  /** Valores em centavos. */
+  precoAntigo: number;
+  precoNovo: number;
+  imagem?: Imagem;
+  destaque?: boolean;
+};
+
+export type IconeDoCorredor =
+  | "hortifruti"
+  | "acougue"
+  | "padaria"
+  | "mercearia"
+  | "laticinios"
+  | "bebidas"
+  | "limpeza"
+  | "congelados";
+
+export type Corredor = {
+  numero: number;
+  nome: string;
+  exemplos: string;
+  icone: IconeDoCorredor;
+  /** Cor da placa do corredor (fixa, não muda com a personalização). */
+  cor: `#${string}`;
+};
+
+export type DadosDoMercado = DadosDoNicho & {
+  chamada: string;
+  ofertas: Oferta[];
+  corredores: Corredor[];
+  entrega: { linhas: { item: string; valor: string }[]; pagamento: string };
+  imagemDaLoja: Imagem;
+};
