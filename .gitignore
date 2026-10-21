@@ -46,3 +46,6 @@ next-env.d.ts
 # ferramentas locais de IA e configurações pessoais (não fazem parte do site)
 /.claude/
 /.impeccable/
+
+# perfis temporários do Chrome usados nos testes de tela
+.perfil*/
