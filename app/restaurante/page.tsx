@@ -101,7 +101,7 @@ export default function PaginaRestaurante() {
           <Container largura="larga">
             <h2
               id="cardapio-titulo"
-              className="mx-auto mb-8 w-fit rounded-tema bg-esmalte px-6 py-3 text-center text-4xl text-cobalto sm:text-5xl"
+              className="mx-auto mb-10 w-fit rounded-tema border-2 border-cobalto bg-esmalte px-8 py-4 text-center text-4xl text-cobalto shadow-[0_0_0_12px_var(--cor-esmalte)] sm:text-5xl"
             >
               Cardápio
             </h2>

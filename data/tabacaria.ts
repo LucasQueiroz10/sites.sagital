@@ -1,10 +1,11 @@
 import bebida from "@/public/imagens/tabacaria/bebida.jpg";
-import isqueiro from "@/public/imagens/tabacaria/isqueiro.jpg";
+import cinzeiro from "@/public/imagens/tabacaria/cinzeiro.jpg";
+import isqueiroEscuro from "@/public/imagens/tabacaria/isqueiro-escuro.jpg";
 import loungeAbajur from "@/public/imagens/tabacaria/lounge-abajur.jpg";
 import loungeArco from "@/public/imagens/tabacaria/lounge-arco.jpg";
 import madeira from "@/public/imagens/tabacaria/madeira.jpg";
+import poltronaLareira from "@/public/imagens/tabacaria/poltrona-lareira.jpg";
 import poltrona from "@/public/imagens/tabacaria/poltrona.jpg";
-import prateleiras from "@/public/imagens/tabacaria/prateleiras.jpg";
 import salaGlobo from "@/public/imagens/tabacaria/sala-globo.jpg";
 import tacas from "@/public/imagens/tabacaria/tacas.jpg";
 import type { DadosDaTabacaria } from "./tipos";
@@ -81,12 +82,12 @@ export const tabacaria: DadosDaTabacaria = {
   ],
   imagensDaLoja: [
     {
-      src: prateleiras,
-      alt: "Estante de madeira escura até o teto, com potes e uma escada de biblioteca",
+      src: isqueiroEscuro,
+      alt: "Detalhe da roda e da chaminé de um isqueiro de metal, na penumbra",
     },
     {
-      src: isqueiro,
-      alt: "Isqueiro de metal com capa de couro sobre folhas de livro",
+      src: cinzeiro,
+      alt: "Cinzeiro de vidro âmbar, vazio, sobre uma mesa de metal",
     },
   ],
   lounge: {
@@ -117,8 +118,8 @@ export const tabacaria: DadosDaTabacaria = {
     { src: tacas, alt: "Duas taças e uma vela acesa sobre o balcão" },
     { src: bebida, alt: "Copo baixo com gelo sobre uma mesa de mármore" },
     {
-      src: prateleiras,
-      alt: "Estante de madeira escura com potes organizados",
+      src: poltronaLareira,
+      alt: "Poltrona de couro ao lado de uma lareira, em ambiente escuro",
     },
   ],
   avisos: {

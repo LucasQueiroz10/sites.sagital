@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { BotaoWhatsApp } from "@/components/BotaoWhatsApp";
 import type { Oferta } from "@/data/tipos";
+import { classes } from "@/lib/classes";
 import { formatarPreco } from "@/lib/formato";
 import { EtiquetaDePreco } from "./EtiquetaDePreco";
 
@@ -10,7 +11,7 @@ type Props = { ofertas: Oferta[]; rotuloDoNicho: string };
 export function GradeDeOfertas({ ofertas, rotuloDoNicho }: Props) {
   return (
     <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-      {ofertas.map((oferta) => {
+      {ofertas.map((oferta, i) => {
         const preco = formatarPreco(oferta.precoNovo);
         return (
           <li
@@ -42,7 +43,10 @@ export function GradeDeOfertas({ ofertas, rotuloDoNicho }: Props) {
             <EtiquetaDePreco
               centavos={oferta.precoNovo}
               unidade={oferta.unidade}
-              className="titulo-encarte mt-2 self-start font-black italic"
+              className={classes(
+                "titulo-encarte mt-2 self-start font-black italic",
+                i % 2 === 0 ? "-rotate-2" : "rotate-1",
+              )}
             />
             <div className="mt-auto pt-4">
               <BotaoWhatsApp

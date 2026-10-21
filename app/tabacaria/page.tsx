@@ -75,7 +75,7 @@ export default function PaginaTabacaria() {
               <p className="mt-6 max-w-[44ch] text-lg text-texto-suave">
                 {dados.chamada}
               </p>
-              <div className="mt-8">
+              <div data-cta-principal className="mt-8">
                 <BotaoWhatsApp
                   acao={dados.acaoPrincipal}
                   rotuloDoNicho={dados.rotulo}

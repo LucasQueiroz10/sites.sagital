@@ -31,18 +31,6 @@
     0 3px 8px -3px rgb(18 18 18 / 0.18);
 }
 
-/* Base de acrílico do suporte, logo abaixo da placa. */
-[data-pagina="sagital"] .suporte::after {
-  content: "";
-  display: block;
-  height: 1.25rem;
-  margin: -0.25rem 8% 0;
-  border-radius: 0 0 var(--raio) var(--raio);
-  background: rgb(255 255 255 / 0.55);
-  border: 1px solid rgb(255 255 255 / 0.8);
-  box-shadow: 0 14px 18px -12px rgb(18 18 18 / 0.35);
-}
-
 /* Enquanto o link não existe, um QR "apagado" ocupa o lugar. */
 [data-pagina="sagital"] .qr-fantasma {
   background-image: conic-gradient(

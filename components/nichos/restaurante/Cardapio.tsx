@@ -47,14 +47,22 @@ export function Cardapio({
                 <li key={item.nome}>
                   <div className="flex items-baseline gap-3">
                     <span className="font-semibold">
-                      {item.nome}
-                      {item.vegetariano && (
-                        <abbr
-                          title="Vegetariano"
-                          className="ml-2 inline-grid size-5 translate-y-[-0.1em] place-items-center rounded-full border border-cobalto text-[0.65rem] font-bold text-cobalto no-underline"
-                        >
-                          V
-                        </abbr>
+                      {item.vegetariano ? (
+                        <>
+                          {item.nome.split(" ").slice(0, -1).join(" ")}{" "}
+                          {/* A última palavra e o selo ficam juntos: o "V" nunca quebra sozinho. */}
+                          <span className="whitespace-nowrap">
+                            {item.nome.split(" ").at(-1)}
+                            <abbr
+                              title="Vegetariano"
+                              className="ml-2 inline-grid size-5 translate-y-[-0.1em] place-items-center rounded-full border border-cobalto text-[0.65rem] font-bold text-cobalto no-underline"
+                            >
+                              V
+                            </abbr>
+                          </span>
+                        </>
+                      ) : (
+                        item.nome
                       )}
                     </span>
                     <span

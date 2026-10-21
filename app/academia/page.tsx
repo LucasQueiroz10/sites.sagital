@@ -59,7 +59,10 @@ export default function PaginaAcademia() {
               <p className="mt-5 max-w-[46ch] text-lg text-texto-suave">
                 {dados.chamada}
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div
+                data-cta-principal
+                className="mt-8 flex flex-col gap-3 sm:flex-row"
+              >
                 <BotaoWhatsApp
                   acao={dados.acaoPrincipal}
                   rotuloDoNicho={dados.rotulo}

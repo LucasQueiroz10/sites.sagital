@@ -1,10 +1,11 @@
-import { Check, Minus } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { BotaoContato } from "@/components/sagital/BotaoContato";
 import { GeradorDeLink } from "@/components/sagital/GeradorDeLink";
 import { MarcaSagital } from "@/components/sagital/MarcaSagital";
+import { TabelaDePacotes } from "@/components/sagital/TabelaDePacotes";
+import { BarraFixa } from "@/components/ui/BarraFixa";
 import { Container } from "@/components/ui/Container";
 import {
   demos,
@@ -16,7 +17,6 @@ import {
   variacoes,
 } from "@/data/sagital";
 import { classes } from "@/lib/classes";
-import { formatarPreco } from "@/lib/formato";
 import { lexend } from "./fontes";
 import "./sagital.css";
 
@@ -98,7 +98,7 @@ export default function PaginaSagital() {
                 Atendimento presencial: eu levo o demo até a sua loja.
               </p>
             </div>
-            <div className="suporte">
+            <div data-cta-principal>
               <GeradorDeLink demos={opcoes} modo="compacto" />
             </div>
           </Container>
@@ -226,85 +226,8 @@ export default function PaginaSagital() {
             <p className="mt-4 max-w-[56ch] text-lg text-texto-suave">
               Pagamento único, com prazo de entrega combinado na visita.
             </p>
-            <div className="relative mt-10 -mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-              <table className="w-full min-w-[34rem] border-collapse text-left">
-                <caption className="sr-only">
-                  Comparação dos pacotes: preço, prazo e o que cada um inclui
-                </caption>
-                <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      className="w-[40%] pb-4 align-bottom text-sm font-medium text-texto-suave"
-                    >
-                      O que inclui
-                    </th>
-                    {pacotes.map((pacote) => (
-                      <th
-                        key={pacote.nome}
-                        scope="col"
-                        className={classes(
-                          "rounded-t-tema px-3 pt-4 pb-4 align-bottom",
-                          pacote.recomendado && "bg-white",
-                        )}
-                      >
-                        {pacote.recomendado && (
-                          <span className="mb-2 inline-block rounded-full bg-primaria px-2.5 py-0.5 text-xs font-semibold text-primaria-texto">
-                            Recomendado
-                          </span>
-                        )}
-                        <span className="block text-lg font-bold">
-                          {pacote.nome}
-                        </span>
-                        <span className="mt-1 block text-2xl font-bold tabular-nums">
-                          {formatarPreco(pacote.preco)}
-                        </span>
-                        <span className="block text-sm font-normal text-texto-suave">
-                          Entrega em {pacote.prazo}
-                        </span>
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {recursos.map((recurso) => (
-                    <tr key={recurso.nome} className="border-t border-borda">
-                      <th scope="row" className="py-3 pr-3 font-normal">
-                        {recurso.nome}
-                      </th>
-                      {recurso.inclui.map((valor, i) => (
-                        <td
-                          key={pacotes[i]?.nome}
-                          className={classes(
-                            "px-3 py-3 text-sm",
-                            pacotes[i]?.recomendado && "bg-white",
-                          )}
-                        >
-                          {valor === true ? (
-                            <>
-                              <Check
-                                aria-hidden
-                                className="size-5 text-destaque"
-                              />
-                              <span className="sr-only">Incluso</span>
-                            </>
-                          ) : valor === false ? (
-                            <>
-                              <Minus
-                                aria-hidden
-                                className="size-5 text-borda"
-                              />
-                              <span className="sr-only">Não incluso</span>
-                            </>
-                          ) : (
-                            <span className="font-semibold">{valor}</span>
-                          )}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="mt-10">
+              <TabelaDePacotes pacotes={pacotes} recursos={recursos} />
             </div>
             <p className="mt-6 text-sm text-texto-suave">
               {observacoesDosPacotes}
@@ -388,9 +311,9 @@ export default function PaginaSagital() {
         </Container>
       </footer>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-borda bg-fundo px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden">
+      <BarraFixa>
         <BotaoContato className="w-full" />
-      </div>
+      </BarraFixa>
     </div>
   );
 }

@@ -185,7 +185,7 @@ export function ReservaDeMesa({ expediente, pessoas, rotuloDoNicho }: Props) {
         </div>
       </fieldset>
 
-      <div className="grid gap-2">
+      <div data-cta-principal className="grid gap-2">
         <BotaoWhatsApp
           acao={{ rotulo: "Reservar pelo WhatsApp", pedido }}
           rotuloDoNicho={rotuloDoNicho}

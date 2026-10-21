@@ -11,7 +11,7 @@ export function DiretorioDaLoja({ categorias, imagensDaLoja }: Props) {
   const [principal, detalhe] = imagensDaLoja;
   return (
     <div className="grid gap-12 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:gap-16">
-      <ul className="moldura grid content-start px-5 py-6 sm:px-8 sm:py-8">
+      <ul className="moldura grid content-start self-start px-5 py-6 sm:px-8 sm:py-8">
         {categorias.map((categoria, i) => (
           <li
             key={categoria.nome}

@@ -13,3 +13,13 @@ export function partesDoPreco(centavos: number): [string, string] {
   const inteiro = Math.floor(centavos / 100).toLocaleString("pt-BR");
   return [inteiro, String(centavos % 100).padStart(2, "0")];
 }
+
+/** Como formatarPreco, mas sem ",00" quando o valor é redondo: "R$ 1.490". */
+export function formatarPrecoRedondo(centavos: number): string {
+  if (centavos % 100 !== 0) return formatarPreco(centavos);
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    maximumFractionDigits: 0,
+  }).format(centavos / 100);
+}

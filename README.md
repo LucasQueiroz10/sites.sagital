@@ -1,31 +1,43 @@
 # Sagital — sites para negócios locais
 
-Portfólio de vendas da Sagital: uma página de apresentação e um site demonstrativo completo para cada nicho (academia, mercado, restaurante e tabacaria). Os demos são usados em visitas presenciais e aceitam o nome e a cor do cliente pela URL.
+Portfólio de vendas da Sagital: uma página de apresentação e um site demonstrativo completo para cada nicho (academia, mercado, restaurante e tabacaria). Os demos são mostrados em visitas presenciais, aceitam o nome e a cor do cliente pela URL e funcionam sem internet.
 
-> Em desenvolvimento. Todo o conteúdo dos demos é fictício.
+> Todo o conteúdo dos demos é fictício (nomes, preços e depoimentos).
 
-## Stack
+## Rotas
 
-- [Next.js](https://nextjs.org) (App Router) com React e TypeScript em modo `strict`
-- Tailwind CSS e variáveis CSS para o tema personalizável
-- Serwist para funcionamento offline (PWA)
-- ESLint e Prettier
-- Deploy na Vercel
+| Rota           | O que é                                                                                         |
+| -------------- | ----------------------------------------------------------------------------------------------- |
+| `/`            | Página da Sagital: gera o demo personalizado na hora, mostra os demos, os pacotes e o contato   |
+| `/academia`    | Demo de academia: cronômetro até a próxima aula, planos, grade da semana                        |
+| `/mercado`     | Demo de mercado: encarte de ofertas da semana com pedido de cada item                           |
+| `/restaurante` | Demo de restaurante: reserva de mesa com dia e horário, cardápio, delivery                      |
+| `/tabacaria`   | Demo de tabacaria: aviso de maioridade, lounge e avisos legais                                  |
+| `/gerar`       | Ferramenta do vendedor: link personalizado, QR code (PNG e impressão) e preparo do modo offline |
 
-Não há backend nem banco de dados: o conteúdo de cada nicho fica em arquivos TypeScript em `data/`.
+Personalização: `/academia?nome=Iron+Gym&cor=ff6600`. Nome com até 40 caracteres (letras, números, espaços e `& ' - .`); cor em hex sem `#`. Valores inválidos são ignorados e o demo usa o padrão do nicho.
+
+## Destaques técnicos
+
+- **Personalização segura** ([lib/tema.ts](lib/tema.ts)): validação estrita, nome renderizado só como texto, cor aplicada como variável CSS e contraste WCAG AA calculado automaticamente (o texto do botão nunca fica ilegível).
+- **Offline de verdade** (Serwist): as páginas ficam em cache e os parâmetros da URL são ignorados na busca, então qualquer link personalizado novo abre sem internet.
+- **Páginas estáticas**: a personalização é lida no navegador, o que mantém o site rápido e compatível com o cache.
+- **Segurança**: CSP com cada exceção documentada em [next.config.ts](next.config.ts), HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy` e `Permissions-Policy`; imagens só locais; nenhum segredo no código.
+- **Acessibilidade**: HTML semântico, navegação por teclado com foco visível, áreas de toque de 44px, `prefers-reduced-motion` e o aviso de maioridade em `<dialog>` modal.
+- **Qualidade**: TypeScript strict, ESLint, Prettier, testes com Vitest e CI no GitHub Actions.
+- **Reaproveitamento**: componentes compartilhados em `components/` e conteúdo em `data/`. Cada nicho tem uma identidade visual própria, definida por tokens.
 
 ## Como rodar
-
-Copie `.env.example` para `.env.local` e preencha o número de WhatsApp que recebe os contatos.
 
 Requer Node.js 22.12 ou superior.
 
 ```bash
 npm install
+cp .env.example .env.local   # no PowerShell: copy .env.example .env.local
 npm run dev
 ```
 
-Depois abra http://localhost:3000.
+Preencha em `.env.local` o número de WhatsApp que recebe os contatos (só dígitos, com país e DDD). Depois, abra http://localhost:3000.
 
 ## Scripts
 
@@ -41,14 +53,41 @@ Depois abra http://localhost:3000.
 | `npm run format:check` | Confere a formatação sem alterar arquivos       |
 | `npm run check`        | Lint, tipos, formatação e testes de uma vez     |
 
+## Como testar o modo offline no Chrome
+
+O service worker só funciona no build de produção.
+
+1. Rode `npm run build` e depois `npm run start`, e abra http://localhost:3000/gerar.
+2. Abra o DevTools (F12), vá na aba **Application** e clique em **Service workers**. O worker de `/serwist/sw.js` deve aparecer como _activated and is running_.
+3. Ainda no `/gerar`, clique em **Preparar modo offline** e espere a mensagem "Pronto".
+4. Em **Application > Cache storage**, confira os caches `serwist-precache…` (páginas, JS, CSS e fontes) e `imagens-dos-demos` (fotos).
+5. Na aba **Network**, troque _No throttling_ por **Offline**.
+6. Abra um link personalizado novo, por exemplo `http://localhost:3000/mercado?nome=Teste&cor=0a7d3b`. A página abre com o nome e a cor, sem internet.
+7. Uma rota que não existe (por exemplo `/barbearia`) mostra a página "Sem internet por aqui".
+
+No celular, o fluxo é o mesmo: abra o site uma vez com internet, use **Preparar modo offline** no `/gerar` e, se quiser, instale o app pelo menu do navegador (**Adicionar à tela inicial**).
+
+## Deploy na Vercel
+
+1. Entre em https://vercel.com com a sua conta do GitHub.
+2. Clique em **Add New… > Project** e importe o repositório `sites.sagital`. A Vercel detecta o Next.js sozinha.
+3. Em **Environment Variables**, adicione `NEXT_PUBLIC_WHATSAPP_NUMERO` com o seu número (só dígitos, por exemplo `5511999999999`).
+4. Clique em **Deploy**. A cada push na branch `main`, a Vercel publica uma versão nova.
+5. Para um domínio próprio (`.com.br`), registre em https://registro.br e adicione em **Settings > Domains** no projeto da Vercel.
+
 ## Estrutura
 
 ```
-app/                 rotas (uma pasta por nicho)
-components/ui/       componentes base (botão, card, seção...)
-components/nichos/   blocos de cada nicho (planos, cardápio, ofertas...)
-data/                conteúdo fictício de cada nicho e tipos compartilhados
-lib/                 tema personalizável e links de WhatsApp
-public/imagens/      fotos locais de cada nicho
+app/                 rotas, layout, manifesto do PWA e service worker (sw.ts)
+components/ui/       componentes base (botão, card, seção, container)
+components/nichos/   blocos compartilhados dos demos e pastas por nicho
+components/sagital/  placa geradora de link e QR, marca e contato
+data/                conteúdo fictício de cada nicho e da Sagital
+lib/                 tema, agenda, links, WhatsApp e formatação (com testes)
+public/imagens/      fotos locais (Unsplash) e capturas dos demos
 public/icons/        ícones do PWA
 ```
+
+## Créditos
+
+Fotos do [Unsplash](https://unsplash.com), salvas localmente sob a licença Unsplash. A origem de cada foto está gravada no próprio arquivo.

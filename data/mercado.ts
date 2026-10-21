@@ -1,15 +1,20 @@
+import acucar from "@/public/imagens/mercado/acucar.jpg";
 import arroz from "@/public/imagens/mercado/arroz.jpg";
 import banana from "@/public/imagens/mercado/banana.jpg";
 import cafe from "@/public/imagens/mercado/cafe.jpg";
 import carne from "@/public/imagens/mercado/carne.jpg";
+import detergente from "@/public/imagens/mercado/detergente.jpg";
+import feijao from "@/public/imagens/mercado/feijao.jpg";
 import hortifruti from "@/public/imagens/mercado/hortifruti.jpg";
+import leite from "@/public/imagens/mercado/leite.jpg";
+import oleo from "@/public/imagens/mercado/oleo.jpg";
 import ovos from "@/public/imagens/mercado/ovos.jpg";
 import pao from "@/public/imagens/mercado/pao.jpg";
 import tomate from "@/public/imagens/mercado/tomate.jpg";
 import type { DadosDoMercado } from "./tipos";
 
 // Conteúdo fictício, sem marcas reais. Fotos do Unsplash (licença livre),
-// salvas localmente. Itens sem foto aparecem só com a etiqueta, como no encarte.
+// salvas localmente. Se uma oferta ficar sem foto, aparece o nome em amarelo.
 
 export const mercado: DadosDoMercado = {
   nicho: "mercado",
@@ -90,30 +95,38 @@ export const mercado: DadosDoMercado = {
       unidade: "1 kg",
       precoAntigo: 999,
       precoNovo: 749,
+      imagem: { src: feijao, alt: "Grãos de feijão carioca" },
     },
     {
       produto: "Óleo de soja",
       unidade: "900 ml",
       precoAntigo: 849,
       precoNovo: 679,
+      imagem: { src: oleo, alt: "Duas garrafas de óleo" },
     },
     {
       produto: "Açúcar refinado",
       unidade: "5 kg",
       precoAntigo: 2490,
       precoNovo: 1990,
+      imagem: { src: acucar, alt: "Cubos de açúcar empilhados" },
     },
     {
       produto: "Leite integral",
       unidade: "caixa de 1 litro",
       precoAntigo: 649,
       precoNovo: 499,
+      imagem: { src: leite, alt: "Caneca de vidro com leite" },
     },
     {
       produto: "Detergente líquido",
       unidade: "500 ml",
       precoAntigo: 299,
       precoNovo: 199,
+      imagem: {
+        src: detergente,
+        alt: "Frascos de sabão líquido verde com válvula",
+      },
     },
   ],
   corredores: [
