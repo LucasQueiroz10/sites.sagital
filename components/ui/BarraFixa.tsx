@@ -5,8 +5,8 @@ import { classes } from "@/lib/classes";
 
 /**
  * Barra fixa no rodapé da tela do celular. Fica escondida enquanto a ação
- * principal do topo (o elemento com data-cta-principal) está à vista, para a
- * primeira tela não mostrar dois botões iguais; aparece quando ela sai por cima.
+ * principal da página (o elemento com data-cta-principal) está à vista, para
+ * nunca haver dois botões iguais na tela; no resto do tempo, aparece.
  */
 export function BarraFixa({ children }: { children: ReactNode }) {
   const [visivel, setVisivel] = useState(false);
@@ -19,9 +19,7 @@ export function BarraFixa({ children }: { children: ReactNode }) {
     }
     const observador = new IntersectionObserver(([entrada]) => {
       if (entrada) {
-        setVisivel(
-          !entrada.isIntersecting && entrada.boundingClientRect.top < 0,
-        );
+        setVisivel(!entrada.isIntersecting);
       }
     });
     observador.observe(alvo);
