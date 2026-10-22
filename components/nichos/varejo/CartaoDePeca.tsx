@@ -1,6 +1,5 @@
 "use client";
 
-import { MessageCircle } from "lucide-react";
 import Image from "next/image";
 import { useId, useRef, useState } from "react";
 import { BotaoWhatsApp } from "@/components/BotaoWhatsApp";
@@ -8,6 +7,7 @@ import { Botao } from "@/components/ui/Botao";
 import type { DadosDoVarejo, Peca, Tamanho } from "@/data/tipos";
 import { classes } from "@/lib/classes";
 import { formatarPreco, parcelar } from "@/lib/formato";
+import { prefereMenosMovimento } from "@/lib/movimento";
 
 type Props = {
   peca: Peca;
@@ -28,6 +28,7 @@ export function CartaoDePeca({
   className,
 }: Props) {
   const id = useId();
+  const cartao = useRef<HTMLLIElement>(null);
   const grade = useRef<HTMLFieldSetElement>(null);
   const [tamanho, setTamanho] = useState<Tamanho | null>(null);
   const [semTamanho, setSemTamanho] = useState(false);
@@ -43,15 +44,25 @@ export function CartaoDePeca({
       ? Math.round((1 - peca.preco / peca.precoAntigo) * 100)
       : null;
 
-  function pedirSemTamanho() {
+  // Sem tamanho, o botão leva à grade: o cartão entra inteiro na tela, com o
+  // aviso à vista, e o foco vai para o primeiro tamanho disponível.
+  function levarAosTamanhos() {
     setSemTamanho(true);
     grade.current
       ?.querySelector<HTMLInputElement>("input:not(:disabled)")
-      ?.focus();
+      ?.focus({ preventScroll: true });
+    cartao.current?.scrollIntoView({
+      inline: "nearest",
+      block: "nearest",
+      behavior: prefereMenosMovimento() ? "auto" : "smooth",
+    });
   }
 
   return (
-    <li className={classes("flex shrink-0 snap-start flex-col", className)}>
+    <li
+      ref={cartao}
+      className={classes("flex shrink-0 snap-start flex-col", className)}
+    >
       <div className="group relative aspect-[3/4] overflow-hidden rounded-lg bg-superficie">
         <Image
           src={peca.imagem.src}
@@ -78,7 +89,7 @@ export function CartaoDePeca({
         )}
       </div>
 
-      <h3 className="mt-3 text-[0.9375rem] leading-snug font-medium tracking-normal">
+      <h3 className="mt-3 min-h-[2lh] text-[0.9375rem] lg:min-h-0 leading-snug font-medium tracking-normal">
         {peca.nome}
       </h3>
       <p className="numero mt-1.5 flex flex-wrap items-baseline gap-x-2">
@@ -109,7 +120,7 @@ export function CartaoDePeca({
         aria-describedby={semTamanho ? `${id}-aviso` : undefined}
       >
         <legend className="sr-only">Tamanho de {peca.nome}</legend>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1">
           {peca.tamanhos.map((opcao) => {
             const esgotado = peca.esgotados?.includes(opcao) ?? false;
             return (
@@ -162,10 +173,9 @@ export function CartaoDePeca({
             className="w-full"
           />
         ) : (
-          <Botao onClick={pedirSemTamanho} className="w-full">
-            <MessageCircle aria-hidden className="size-5 shrink-0" />
-            Pedir no WhatsApp
-            <span className="sr-only"> {peca.nome}</span>
+          <Botao onClick={levarAosTamanhos} className="w-full">
+            Escolha o tamanho
+            <span className="sr-only"> de {peca.nome}</span>
           </Botao>
         )}
       </div>

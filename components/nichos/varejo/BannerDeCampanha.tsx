@@ -40,31 +40,33 @@ export function BannerDeCampanha({
           className="foto-que-assenta object-cover object-[50%_12%] lg:object-[50%_30%]"
           placeholder="blur"
         />
-        <div className="vidro absolute inset-x-2 bottom-2 rounded-xl p-4 sm:inset-x-auto sm:bottom-6 sm:left-6 sm:max-w-[27rem] sm:p-7">
+        {/* No celular e no tablet, a etiqueta é uma faixa encostada na base da
+            foto; no desktop, flutua no canto, à esquerda do casal. */}
+        <div className="vidro absolute inset-x-0 bottom-0 px-4 pt-3.5 pb-4 sm:px-6 sm:py-5 lg:inset-x-auto lg:bottom-6 lg:left-6 lg:max-w-[27rem] lg:rounded-xl lg:p-8">
           <h1
             id="titulo-principal"
-            className="text-[1.75rem] leading-[1.08] font-semibold text-balance sm:text-[2.5rem]"
+            className="text-[1.625rem] leading-[1.08] font-semibold text-balance sm:text-[2.25rem] lg:text-[3rem] lg:leading-[1.04]"
           >
             {titulo}
           </h1>
-          <p className="mt-2 text-[0.9375rem] leading-snug sm:mt-3 sm:text-lg">
+          <p className="numero mt-1 text-[0.9375rem] leading-snug sm:mt-1.5 sm:text-lg lg:mt-3">
             {chamada}
           </p>
-          <div className="mt-4 flex flex-wrap items-center gap-x-1 gap-y-2 sm:mt-5 sm:gap-2">
+          <div className="mt-3 flex flex-wrap gap-2 sm:mt-4 lg:mt-6">
             <div data-cta-principal>
               <BotaoWhatsApp
                 acao={acao}
                 rotuloDoNicho={rotuloDoNicho}
                 variante="claro"
-                className="px-4! text-[0.9375rem]! sm:px-5! sm:text-base!"
+                className="px-3.5! text-[0.9375rem]! sm:px-5! sm:text-base!"
               />
             </div>
             <a
               href={primeiraVitrine}
-              className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-2 font-semibold underline decoration-white/50 underline-offset-4 transition-colors duration-150 hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 sm:border sm:border-white/70 sm:px-5 sm:no-underline"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-white/70 px-3.5 text-[0.9375rem] font-semibold transition-colors duration-150 hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 sm:px-5 sm:text-base"
             >
               Ver peças
-              <ArrowDown aria-hidden className="size-4" />
+              <ArrowDown aria-hidden className="hidden size-4 sm:block" />
             </a>
           </div>
         </div>

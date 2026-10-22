@@ -30,7 +30,7 @@ export const varejo: DadosDoVarejo = {
   descricao:
     "Básicos de algodão femininos e masculinos, com pedido pelo WhatsApp e retirada na loja.",
   slogan: "Básicos de algodão para o dia a dia",
-  chamada: "Do PP ao GG, com troca fácil e retirada na loja em 1 hora.",
+  chamada: "Do PP ao GG",
   navegacao: [
     { rotulo: "Feminino", href: "#feminino" },
     { rotulo: "Masculino", href: "#masculino" },

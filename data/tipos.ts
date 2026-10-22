@@ -106,6 +106,7 @@ export type IconeDoBeneficio = "troca" | "parcelas" | "retirada" | "entrega";
 
 export type DadosDoVarejo = DadosDoNicho & {
   slogan: string;
+  /** Início da linha do topo; a página completa com "a partir de" o menor preço. */
   chamada: string;
   campanha: Imagem;
   beneficios: { texto: string; icone: IconeDoBeneficio }[];

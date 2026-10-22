@@ -144,8 +144,8 @@ export default function PaginaSagital() {
                   <span className="text-destaque">antes de pagar.</span>
                 </h2>
                 <p className="mt-4 max-w-[44ch] text-[1.0625rem] leading-relaxed text-texto-suave">
-                  Sites para academias, lojas, restaurantes e tabacarias, já
-                  com o nome e a cor da sua loja.
+                  Sites para academias, lojas, restaurantes e tabacarias, já com
+                  o nome e a cor da sua loja.
                 </p>
                 <div data-cta-principal className="mt-6">
                   <GeradorDeLink modo="compacto" />

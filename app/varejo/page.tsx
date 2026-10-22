@@ -11,6 +11,7 @@ import { Vitrine } from "@/components/nichos/varejo/Vitrine";
 import { Container } from "@/components/ui/Container";
 import { Secao } from "@/components/ui/Secao";
 import { varejo as dados } from "@/data/varejo";
+import { formatarPreco } from "@/lib/formato";
 import { hanken } from "./fontes";
 import "./varejo.css";
 
@@ -22,6 +23,11 @@ export const metadata: Metadata = {
 
 // Cor da barra do navegador no celular, combinando com o demo.
 export const viewport: Viewport = { themeColor: "#ffffff" };
+
+// A peça mais barata da loja, para o "a partir de" do topo.
+const menorPreco = Math.min(
+  ...dados.setores.flatMap((setor) => setor.pecas.map((peca) => peca.preco)),
+);
 
 export default function PaginaVarejo() {
   return (
@@ -42,7 +48,7 @@ export default function PaginaVarejo() {
         <FaixaDeBeneficios beneficios={dados.beneficios} />
         <BannerDeCampanha
           titulo={dados.slogan}
-          chamada={dados.chamada}
+          chamada={`${dados.chamada}, a partir de ${formatarPreco(menorPreco)}.`}
           imagem={dados.campanha}
           acao={dados.acaoPrincipal}
           rotuloDoNicho={dados.rotulo}

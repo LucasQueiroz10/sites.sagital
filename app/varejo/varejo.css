@@ -24,7 +24,7 @@
 
 /* Títulos de seção contidos, como nas vitrines de rede. */
 [data-nicho="varejo"] h2 {
-  font-size: clamp(1.625rem, 6vw, 2.125rem);
+  font-size: clamp(1.375rem, 4.4vw, 1.625rem);
   font-weight: 600;
   line-height: 1.1;
 }
