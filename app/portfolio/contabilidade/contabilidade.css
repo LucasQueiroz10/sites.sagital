@@ -1,0 +1,102 @@
+/*
+ * Prumo Contabilidade: papel claro levemente azulado, tinta azul-marinho
+ * nas faixas de impacto, menta para o que está em dia e âmbar para o que
+ * pede atenção. Schibsted Grotesk com algarismos alinhados, cantos de 8px.
+ */
+[data-portfolio="contabilidade"] {
+  --cor-fundo: #ffffff;
+  --cor-superficie: #f1f4f8;
+  --cor-texto: #102a43;
+  --cor-texto-suave: #4f6378;
+  --cor-borda: #dbe2ea;
+  --cor-primaria: #102a43;
+  --cor-primaria-hover: #0a1c2e;
+  --cor-primaria-texto: #ffffff;
+  --cor-destaque: #13706a;
+  --cor-tinta: #102a43;
+  --cor-menta: #9fe3c9;
+  --cor-ambar: #f2b84b;
+  --raio: 8px;
+  --fonte-titulo: var(--font-schibsted), system-ui, sans-serif;
+  --fonte-texto: var(--font-schibsted), system-ui, sans-serif;
+  color-scheme: light;
+}
+
+[data-portfolio="contabilidade"] :is(h1, h2) {
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+[data-portfolio="contabilidade"] h2 {
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 1.05;
+}
+
+/* Algarismos alinhados, mas proporcionais: os tabulares desta fonte
+   alargam também o ponto e a vírgula ("R$ 25 . 000"). */
+[data-portfolio="contabilidade"] .numero {
+  font-variant-numeric: lining-nums proportional-nums;
+}
+
+/* Controle do faturamento: trilho preenchido até o cursor. */
+[data-portfolio="contabilidade"] .controle {
+  appearance: none;
+  height: 44px;
+  background: transparent;
+  cursor: pointer;
+}
+
+[data-portfolio="contabilidade"] .controle::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    var(--cor-destaque) var(--progresso),
+    var(--cor-borda) var(--progresso)
+  );
+}
+
+[data-portfolio="contabilidade"] .controle::-moz-range-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--cor-borda);
+}
+
+[data-portfolio="contabilidade"] .controle::-moz-range-progress {
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--cor-destaque);
+}
+
+[data-portfolio="contabilidade"] .controle::-webkit-slider-thumb {
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  margin-top: -10px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 2px solid var(--cor-destaque);
+  box-shadow: 0 2px 6px rgb(16 42 67 / 0.25);
+}
+
+[data-portfolio="contabilidade"] .controle::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 2px solid var(--cor-destaque);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-portfolio="contabilidade"] .sobe {
+    animation: sobe 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--ordem, 0) * 90ms);
+  }
+}
+
+@keyframes sobe {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}

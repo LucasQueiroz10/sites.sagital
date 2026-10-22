@@ -1,0 +1,121 @@
+/*
+ * Atelier Vão Arquitetura: cal quente e grafite, terracota só no que
+ * responde ao toque. Archivo estreita e alta nos títulos, cantos retos,
+ * fios de 1px e muito espaço vazio, como uma prancha de projeto.
+ */
+[data-portfolio="arquitetura"] {
+  --cor-fundo: #f4f1ec;
+  --cor-superficie: #e9e4dc;
+  --cor-texto: #1c1b19;
+  --cor-texto-suave: #5f5a52;
+  --cor-borda: #d5cec3;
+  --cor-primaria: #1c1b19;
+  --cor-primaria-hover: #000000;
+  --cor-primaria-texto: #f4f1ec;
+  --cor-destaque: #9c4a2c;
+  --cor-terracota: #9c4a2c;
+  --cor-grafite: #1c1b19;
+  --cor-cal: #f4f1ec;
+  --raio: 0;
+  --fonte-titulo: var(--font-archivo), system-ui, sans-serif;
+  --fonte-texto: var(--font-archivo), system-ui, sans-serif;
+  color-scheme: light;
+}
+
+[data-portfolio="arquitetura"] :is(h1, h2) {
+  font-stretch: 75%;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+[data-portfolio="arquitetura"] h2 {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  line-height: 0.95;
+}
+
+[data-portfolio="arquitetura"] .numero {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Régua do controle de área: trilho fino de 1px e cursor quadrado. */
+[data-portfolio="arquitetura"] .regua {
+  appearance: none;
+  height: 44px;
+  background: transparent;
+  cursor: pointer;
+}
+
+[data-portfolio="arquitetura"] .regua::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--cor-cal) var(--progresso),
+    rgb(244 241 236 / 0.25) var(--progresso)
+  );
+}
+
+[data-portfolio="arquitetura"] .regua::-moz-range-track {
+  height: 2px;
+  background: rgb(244 241 236 / 0.25);
+}
+
+[data-portfolio="arquitetura"] .regua::-moz-range-progress {
+  height: 2px;
+  background: var(--cor-cal);
+}
+
+[data-portfolio="arquitetura"] .regua::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -10px;
+  background: var(--cor-cal);
+  border: 0;
+}
+
+[data-portfolio="arquitetura"] .regua::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 0;
+  background: var(--cor-cal);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* A capa abre como uma cortina, de baixo para cima. */
+  [data-portfolio="arquitetura"] .capa-abre {
+    animation: capa-abre 1300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  [data-portfolio="arquitetura"] .projeto-entra {
+    animation: projeto-entra 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  [data-portfolio="arquitetura"] .ficha[open] {
+    animation: ficha-abre 380ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@keyframes capa-abre {
+  from {
+    clip-path: inset(18% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes projeto-entra {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@keyframes ficha-abre {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
