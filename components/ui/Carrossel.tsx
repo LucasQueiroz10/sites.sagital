@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { classes } from "@/lib/classes";
+import { prefereMenosMovimento } from "@/lib/movimento";
 
 type Props = {
   /** Nome da lista para leitores de tela, ex.: "Demos". */
@@ -32,9 +33,6 @@ type Props = {
 };
 
 const larguras = { normal: "72rem", larga: "80rem" } as const;
-
-const prefereMenosMovimento = () =>
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const recuoDa = (el: HTMLElement) =>
   Number.parseFloat(getComputedStyle(el).scrollPaddingInlineStart) || 0;

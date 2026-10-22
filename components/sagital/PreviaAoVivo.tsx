@@ -3,6 +3,11 @@
 import { LoaderCircle, Monitor, Smartphone, Tablet, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { classes } from "@/lib/classes";
+import {
+  CURVA_CHEGADA,
+  fecharDialogo,
+  prefereMenosMovimento,
+} from "@/lib/movimento";
 import { BotaoSagital } from "./BotaoSagital";
 import type { OpcaoDeDemo } from "./EscolhaDoDemo";
 import { SeletorDeCor } from "./SeletorDeCor";
@@ -62,6 +67,7 @@ export function PreviaAoVivo({
 }: Props) {
   const dialogo = useRef<HTMLDialogElement>(null);
   const palco = useRef<HTMLDivElement>(null);
+  const visor = useRef<HTMLDivElement>(null);
   const [area, setArea] = useState({ largura: 0, altura: 0 });
   const [carregado, setCarregado] = useState<string | null>(null);
 
@@ -90,6 +96,31 @@ export function PreviaAoVivo({
     return () => observador.disconnect();
   }, [aberta]);
 
+  function fechar() {
+    const el = dialogo.current;
+    if (el) void fecharDialogo(el, [{ opacity: 1 }, { opacity: 0 }], 180);
+  }
+
+  /**
+   * Troca de aparelho: a tela apaga enquanto a moldura muda de tamanho e
+   * acende já reorganizada, sem mostrar o site esticado no meio do caminho.
+   */
+  function trocarAparelho(chave: Aparelho) {
+    if (chave === aparelho) return;
+    if (!prefereMenosMovimento()) {
+      visor.current?.animate(
+        [
+          { opacity: 1 },
+          { opacity: 0, offset: 0.18 },
+          { opacity: 0, offset: 0.55, easing: CURVA_CHEGADA },
+          { opacity: 1 },
+        ],
+        { duration: 600 },
+      );
+    }
+    escolherAparelho(chave);
+  }
+
   const tela = APARELHOS[aparelho];
   const moldura = MOLDURAS[aparelho];
   const escala = area.largura
@@ -108,6 +139,10 @@ export function PreviaAoVivo({
     <dialog
       ref={dialogo}
       aria-labelledby="previa-titulo"
+      onCancel={(evento) => {
+        evento.preventDefault();
+        fechar();
+      }}
       onClose={() => {
         document.documentElement.style.overflow = "";
         aoFechar();
@@ -117,7 +152,7 @@ export function PreviaAoVivo({
       <div className="grid grid-cols-[2.75rem_1fr_2.75rem] items-center gap-2 px-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-2">
         <button
           type="button"
-          onClick={() => dialogo.current?.close()}
+          onClick={fechar}
           className="sg-pressiona grid size-11 place-items-center rounded-full bg-white/14 hover:bg-white/22 focus-visible:outline-white"
         >
           <X aria-hidden className="size-6" />
@@ -144,7 +179,7 @@ export function PreviaAoVivo({
         {aberta && link && escala > 0 && (
           <div
             className={classes(
-              "relative transition-[width,height,border-radius] duration-[360ms] ease-[cubic-bezier(.2,.8,.2,1)]",
+              "relative animate-[sg-aparelho-chega_480ms_cubic-bezier(.16,1,.3,1)] transition-[width,height,border-radius] duration-[360ms] ease-[cubic-bezier(.2,.8,.2,1)]",
               aparelho === "computador"
                 ? "bg-[#e9eef4] shadow-[0_24px_60px_rgb(5_10_30/0.45)]"
                 : "bg-[#16181b] shadow-[0_0_0_1px_#34373c,0_24px_60px_rgb(5_10_30/0.45)]",
@@ -170,6 +205,7 @@ export function PreviaAoVivo({
               </div>
             )}
             <div
+              ref={visor}
               className="relative overflow-hidden bg-white"
               style={{
                 width: largura,
@@ -177,29 +213,37 @@ export function PreviaAoVivo({
                 borderRadius: Math.max(moldura.raio - moldura.lado, 2),
               }}
             >
+              {/* Embaixo do iframe: o "desligado" da tela enquanto o demo carrega. */}
+              <div
+                aria-hidden={!carregando}
+                className="absolute inset-0 grid place-items-center bg-[#f1f5fa] text-[#5b6478]"
+              >
+                <p className="flex items-center gap-2 text-sm font-medium">
+                  <LoaderCircle
+                    aria-hidden
+                    className={classes(
+                      "size-5",
+                      carregando && "animate-spin motion-reduce:animate-none",
+                    )}
+                  />
+                  Abrindo o demo…
+                </p>
+              </div>
+              {/* Quando o demo termina de carregar, a tela acende de cima para
+                  baixo: o site aparece montado, com o nome e a cor escolhidos. */}
               <iframe
                 key={link}
                 src={link}
                 title={`Demo de ${demo.rotulo.toLowerCase()} para ${nomeExibido}`}
                 onLoad={() => setCarregado(link)}
-                className="block origin-top-left border-0 bg-white transition-transform duration-[360ms] ease-[cubic-bezier(.2,.8,.2,1)]"
+                className="relative block origin-top-left border-0 bg-white transition-[clip-path] duration-[640ms] ease-[cubic-bezier(.16,1,.3,1)]"
                 style={{
                   width: tela.largura,
                   height: tela.altura,
                   transform: `scale(${escala})`,
+                  clipPath: carregando ? "inset(0 0 100% 0)" : "inset(0 0 0 0)",
                 }}
               />
-              {carregando && (
-                <div className="absolute inset-0 grid place-items-center bg-[#f1f5fa] text-[#5b6478]">
-                  <p className="flex items-center gap-2 text-sm font-medium">
-                    <LoaderCircle
-                      aria-hidden
-                      className="size-5 animate-spin motion-reduce:animate-none"
-                    />
-                    Abrindo o demo…
-                  </p>
-                </div>
-              )}
             </div>
           </div>
         )}
@@ -221,7 +265,7 @@ export function PreviaAoVivo({
                   name="aparelho-da-previa"
                   value={chave}
                   checked={marcado}
-                  onChange={() => escolherAparelho(chave)}
+                  onChange={() => trocarAparelho(chave)}
                   className="peer sr-only"
                 />
                 <span

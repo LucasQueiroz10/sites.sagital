@@ -12,6 +12,7 @@ import {
 import { useRef, useState } from "react";
 import { classes } from "@/lib/classes";
 import { nomeDoArquivoQr } from "@/lib/link";
+import { fecharDialogo } from "@/lib/movimento";
 import {
   NOME_MAXIMO,
   contraste,
@@ -65,6 +66,23 @@ export function GeradorDeLink({ modo }: Props) {
     } catch {
       setAviso("Não deu para copiar. Toque e segure o link para copiar.");
     }
+  }
+
+  /** A folha do QR desce de volta (no desktop, some com um leve recuo). */
+  function fecharFolha() {
+    const el = folhaDoQr.current;
+    if (!el) return;
+    const desktop = window.matchMedia("(min-width: 640px)").matches;
+    void fecharDialogo(
+      el,
+      desktop
+        ? [
+            { opacity: 1, transform: "translateY(0)" },
+            { opacity: 0, transform: "translateY(16px)" },
+          ]
+        : [{ transform: "translateY(0)" }, { transform: "translateY(100%)" }],
+      desktop ? 160 : 220,
+    );
   }
 
   async function baixar() {
@@ -237,7 +255,7 @@ export function GeradorDeLink({ modo }: Props) {
               className="sg-pressiona inline-flex min-h-11 items-center gap-2 rounded-[10px] px-3 text-sm font-semibold text-destaque hover:bg-white disabled:opacity-40"
             >
               {aviso === COPIADO ? (
-                <Check aria-hidden className="size-[18px]" />
+                <Check aria-hidden className="sg-confirma size-[18px]" />
               ) : (
                 <Copy aria-hidden className="size-[18px]" strokeWidth={1.75} />
               )}
@@ -306,8 +324,20 @@ export function GeradorDeLink({ modo }: Props) {
           ref={folhaDoQr}
           aria-labelledby={`qr-titulo-${modo}`}
           className="sg-dialogo fixed inset-x-0 top-auto bottom-0 m-0 w-full max-w-none rounded-t-3xl bg-white px-4 pt-2 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-texto shadow-[var(--sg-sombra-folha)] sm:inset-0 sm:m-auto sm:max-w-sm sm:rounded-3xl sm:px-6 sm:pt-6"
+          onCancel={(e) => {
+            e.preventDefault();
+            fecharFolha();
+          }}
           onClick={(e) => {
-            if (e.target === e.currentTarget) folhaDoQr.current?.close();
+            // Só o toque no fundo escurecido fecha: o recheio da folha também
+            // tem o <dialog> como alvo, então confere se o ponto ficou fora.
+            const caixa = e.currentTarget.getBoundingClientRect();
+            const fora =
+              e.clientX < caixa.left ||
+              e.clientX > caixa.right ||
+              e.clientY < caixa.top ||
+              e.clientY > caixa.bottom;
+            if (e.target === e.currentTarget && fora) fecharFolha();
           }}
         >
           <span
@@ -328,16 +358,13 @@ export function GeradorDeLink({ modo }: Props) {
           <div className="mt-5 grid gap-2">
             <BotaoSagital variante="secundario" onClick={copiar}>
               {aviso === COPIADO ? (
-                <Check aria-hidden className="size-5" />
+                <Check aria-hidden className="sg-confirma size-5" />
               ) : (
                 <Copy aria-hidden className="size-5" strokeWidth={1.75} />
               )}
               {aviso === COPIADO ? "Link copiado" : "Copiar link"}
             </BotaoSagital>
-            <BotaoSagital
-              variante="contorno"
-              onClick={() => folhaDoQr.current?.close()}
-            >
+            <BotaoSagital variante="contorno" onClick={fecharFolha}>
               Fechar
             </BotaoSagital>
           </div>
@@ -375,7 +402,7 @@ export function GeradorDeLink({ modo }: Props) {
               disabled={!link}
             >
               {aviso === COPIADO ? (
-                <Check aria-hidden className="size-[18px]" />
+                <Check aria-hidden className="sg-confirma size-[18px]" />
               ) : (
                 <Copy aria-hidden className="size-[18px]" strokeWidth={1.75} />
               )}

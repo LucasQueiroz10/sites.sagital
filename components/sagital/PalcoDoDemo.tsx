@@ -7,7 +7,8 @@ import { useEscolha } from "./EscolhaDoDemo";
 
 /**
  * O palco do topo no desktop: a captura real do demo escolhido no navegador
- * e no celular, trocando junto com o ramo. Abre a prévia ao vivo.
+ * e no celular, trocando junto com o ramo em dois tempos (o navegador chega,
+ * o celular vem logo atrás). Abre a prévia ao vivo.
  */
 export function PalcoDoDemo() {
   const { demos, nicho, demo, abrirPrevia } = useEscolha();
@@ -21,12 +22,18 @@ export function PalcoDoDemo() {
             key={d.nicho}
             aria-hidden={!atual}
             className={classes(
-              "absolute inset-0 transition-[opacity,translate] duration-[360ms] ease-[cubic-bezier(.2,.8,.2,1)]",
-              atual ? "opacity-100" : "translate-y-3 opacity-0",
+              "absolute inset-0 transition-opacity duration-300 ease-[cubic-bezier(.2,.8,.2,1)]",
+              atual ? "opacity-100" : "opacity-0",
             )}
           >
             {d.capturaDesktop && (
-              <div className="absolute top-[11%] left-[7%] w-[74%] overflow-hidden rounded-xl bg-[#e9eef4] shadow-[0_24px_60px_rgb(5_10_30/0.45)]">
+              <div
+                className={classes(
+                  "absolute top-[11%] left-[7%] w-[74%] overflow-hidden rounded-xl bg-[#e9eef4] shadow-[0_24px_60px_rgb(5_10_30/0.45)]",
+                  "transition-transform duration-[520ms] ease-[cubic-bezier(.16,1,.3,1)]",
+                  !atual && "translate-y-3",
+                )}
+              >
                 <div className="flex h-7 items-center gap-1.5 px-3">
                   <span className="size-2 rounded-full bg-[#ff5f57]" />
                   <span className="size-2 rounded-full bg-[#febc2e]" />
@@ -44,7 +51,13 @@ export function PalcoDoDemo() {
               </div>
             )}
             {d.captura && (
-              <div className="sg-celular absolute top-[27%] right-[6%] w-[25%] rounded-[1.75rem] p-1.5">
+              <div
+                className={classes(
+                  "sg-celular absolute top-[27%] right-[6%] w-[25%] rounded-[1.75rem] p-1.5",
+                  "transition-transform delay-[70ms] duration-[520ms] ease-[cubic-bezier(.16,1,.3,1)]",
+                  !atual && "translate-y-8",
+                )}
+              >
                 <div className="relative aspect-[390/844] overflow-hidden rounded-[1.4rem]">
                   <Image
                     src={d.captura.src}
