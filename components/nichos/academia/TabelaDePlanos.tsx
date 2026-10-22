@@ -19,7 +19,7 @@ export function TabelaDePlanos({ planos, rotuloDoNicho, cabecalho }: Props) {
     <Carrossel
       rotulo="Planos"
       cabecalho={cabecalho}
-      classeDasSetas="rounded-full bg-fundo text-texto shadow-[0_1px_2px_rgb(18_22_28/0.08)]"
+      classeDasSetas="rounded-full bg-fundo text-texto ring-1 ring-borda"
       className="gap-3 py-1 sm:gap-4"
     >
       {planos.map((plano) => {
