@@ -1,10 +1,11 @@
-import { ArrowDown, Code, MessageCircle } from "lucide-react";
+import { ArrowDown, Code } from "lucide-react";
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { BotaoContato } from "@/components/sagital/BotaoContato";
 import { BotaoDePrevia } from "@/components/sagital/BotaoDePrevia";
 import { BotaoSagital } from "@/components/sagital/BotaoSagital";
+import { CabecalhoSagital } from "@/components/sagital/CabecalhoSagital";
 import { ProvedorDaEscolha } from "@/components/sagital/EscolhaDoDemo";
 import { GeradorDeLink } from "@/components/sagital/GeradorDeLink";
 import { MarcaSagital } from "@/components/sagital/MarcaSagital";
@@ -15,7 +16,6 @@ import { Carrossel } from "@/components/ui/Carrossel";
 import { Container } from "@/components/ui/Container";
 import {
   demos,
-  mensagemDeContato,
   observacoesDosPacotes,
   pacotes,
   processo,
@@ -24,7 +24,6 @@ import {
   variacoes,
 } from "@/data/sagital";
 import { formatarPrecoRedondo } from "@/lib/formato";
-import { montarLinkWhatsApp } from "@/lib/whatsapp";
 import { jakarta } from "./fontes";
 import "./sagital.css";
 
@@ -35,12 +34,6 @@ export const metadata: Metadata = {
 
 // A barra do navegador no celular acompanha o topo escuro da abertura.
 export const viewport: Viewport = { themeColor: "#111a3d" };
-
-const navegacao = [
-  { rotulo: "Demos", href: "#demos" },
-  { rotulo: "Como funciona", href: "#como-funciona" },
-  { rotulo: "Pacotes", href: "#pacotes" },
-];
 
 const tituloDeSecao =
   "sg-titulo text-[clamp(1.75rem,5.6vw,2.75rem)] max-w-[22ch]";
@@ -68,48 +61,25 @@ export default function PaginaSagital() {
       className={`${jakarta.variable} relative flex flex-1 flex-col bg-fundo font-texto text-texto`}
     >
       <ProvedorDaEscolha demos={opcoes}>
-        {/* O cabeçalho flutua sobre a abertura escura, que é a primeira seção. */}
-        <header className="sg-foco-claro absolute inset-x-0 top-0 z-10">
-          <Container
-            largura="larga"
-            className="flex min-h-16 items-center justify-between gap-4"
-          >
-            <MarcaSagital className="text-white" />
-            <nav aria-label="Seções" className="hidden items-center md:flex">
-              {navegacao.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="inline-flex min-h-11 items-center rounded-[10px] px-3 text-[0.9375rem] font-medium text-white/75 transition-colors hover:bg-white/10 hover:text-white"
-                >
-                  {link.rotulo}
-                </a>
-              ))}
-              <BotaoContato variante="vidro" tamanho="medio" className="ml-3" />
-            </nav>
-            <a
-              href={montarLinkWhatsApp(mensagemDeContato)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="sg-pressiona grid size-11 place-items-center rounded-full bg-white/14 text-white hover:bg-white/22 md:hidden"
-            >
-              <MessageCircle
-                aria-hidden
-                className="size-[22px]"
-                strokeWidth={1.75}
-              />
-              <span className="sr-only">
-                Falar no WhatsApp (abre o WhatsApp)
-              </span>
-            </a>
-          </Container>
-        </header>
+        <CabecalhoSagital />
 
         <main id="topo" className="flex-1">
           <section
             aria-labelledby="titulo-principal"
             className="sg-abertura flex flex-col items-center px-4 pt-28 pb-16 text-center sm:px-6 sm:pt-36 sm:pb-24 lg:pt-44 lg:pb-32"
           >
+            {/* Marcadores do cabeçalho fixo: um no topo da abertura e outro
+                a 64px do fim, a altura do cabeçalho. */}
+            <span
+              aria-hidden
+              data-topo-da-abertura
+              className="pointer-events-none absolute inset-x-0 top-0 h-2"
+            />
+            <span
+              aria-hidden
+              data-fim-da-abertura
+              className="pointer-events-none absolute inset-x-0 bottom-16 h-px"
+            />
             <h1
               id="titulo-principal"
               className="sg-display max-w-[16ch] text-[clamp(2.25rem,9.6vw,4.75rem)] text-white"
@@ -159,7 +129,7 @@ export default function PaginaSagital() {
           <section
             id="seu-demo"
             aria-labelledby="seu-demo-titulo"
-            className="scroll-mt-4"
+            className="scroll-mt-20"
           >
             <Container
               largura="larga"
@@ -188,7 +158,7 @@ export default function PaginaSagital() {
           <section
             id="demos"
             aria-labelledby="demos-titulo"
-            className="scroll-mt-4 pt-6 pb-14 sm:pb-20"
+            className="scroll-mt-20 pt-6 pb-14 sm:pb-20"
           >
             <Carrossel
               rotulo="Demos"
@@ -338,7 +308,7 @@ export default function PaginaSagital() {
           <section
             id="como-funciona"
             aria-labelledby="processo-titulo"
-            className="scroll-mt-4 py-14 sm:py-20"
+            className="scroll-mt-20 py-14 sm:py-20"
           >
             <Container
               largura="larga"
@@ -387,7 +357,7 @@ export default function PaginaSagital() {
           <section
             id="pacotes"
             aria-labelledby="pacotes-titulo"
-            className="scroll-mt-4 border-t border-[var(--sg-borda-sutil)] py-14 sm:py-20"
+            className="scroll-mt-20 border-t border-[var(--sg-borda-sutil)] py-14 sm:py-20"
           >
             <Pacotes
               pacotes={pacotes}

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { classes } from "@/lib/classes";
+import { usePassouDoTopo } from "@/lib/usePassouDoTopo";
 
 /**
  * Barra fixa no rodapé da tela do celular. Aparece depois que a ação principal
@@ -16,26 +17,10 @@ export function BarraFixa({
   /** A partir de qual largura o cabeçalho já mostra a ação e a barra some. */
   escondeEm?: "md" | "lg";
 }) {
-  const [visivel, setVisivel] = useState(false);
-
-  useEffect(() => {
-    const alvo = document.querySelector("[data-cta-principal]");
-    if (!alvo) {
-      const quadro = requestAnimationFrame(() => setVisivel(true));
-      return () => cancelAnimationFrame(quadro);
-    }
-    const observador = new IntersectionObserver(([entrada]) => {
-      // Só depois de passar pela ação: enquanto ela ainda está abaixo da
-      // dobra (um formulário no meio da primeira tela), a barra não a cobre.
-      if (entrada) {
-        setVisivel(
-          !entrada.isIntersecting && entrada.boundingClientRect.top < 0,
-        );
-      }
-    });
-    observador.observe(alvo);
-    return () => observador.disconnect();
-  }, []);
+  // Só depois de passar pela ação: enquanto ela ainda está abaixo da dobra
+  // (um formulário no meio da primeira tela), a barra não a cobre. Sem ação
+  // marcada na página, a barra fica sempre à vista.
+  const visivel = usePassouDoTopo("[data-cta-principal]", true);
 
   return (
     <div

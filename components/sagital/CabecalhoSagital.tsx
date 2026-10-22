@@ -1,0 +1,87 @@
+"use client";
+
+import { MessageCircle } from "lucide-react";
+import { mensagemDeContato } from "@/data/sagital";
+import { classes } from "@/lib/classes";
+import { usePassouDoTopo } from "@/lib/usePassouDoTopo";
+import { montarLinkWhatsApp } from "@/lib/whatsapp";
+import { BotaoContato } from "./BotaoContato";
+import { MarcaSagital } from "./MarcaSagital";
+
+const navegacao = [
+  { rotulo: "Demos", href: "#demos" },
+  { rotulo: "Como funciona", href: "#como-funciona" },
+  { rotulo: "Pacotes", href: "#pacotes" },
+];
+
+/**
+ * Cabeçalho fixo da página da Sagital, em três tempos: transparente sobre a
+ * abertura no topo da página; azul-noite enquanto a abertura passa por baixo
+ * (o título não se mistura com o nome); barra branca depois dela.
+ */
+export function CabecalhoSagital() {
+  const rolou = usePassouDoTopo("[data-topo-da-abertura]");
+  const claro = usePassouDoTopo("[data-fim-da-abertura]");
+  // No celular, a barra fixa de baixo já leva ao WhatsApp: o botão redondo
+  // some enquanto ela aparece, para não haver dois iguais à vista.
+  const barraVisivel = usePassouDoTopo("[data-cta-principal]");
+
+  return (
+    <header
+      className={classes(
+        "fixed inset-x-0 top-0 z-40 border-b transition-[background-color,border-color] duration-200 ease-[cubic-bezier(.2,.8,.2,1)]",
+        claro
+          ? "border-[var(--sg-borda-sutil)] bg-white"
+          : rolou
+            ? "sg-foco-claro border-white/10 bg-[#111a3d]"
+            : "sg-foco-claro border-transparent bg-transparent",
+      )}
+    >
+      <div className="mx-auto flex min-h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+        <MarcaSagital
+          className={claro ? "text-[var(--sg-tinta-forte)]" : "text-white"}
+        />
+        <nav aria-label="Seções" className="hidden items-center md:flex">
+          {navegacao.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className={classes(
+                "inline-flex min-h-11 items-center rounded-[10px] px-3 text-[0.9375rem] font-medium transition-colors",
+                claro
+                  ? "text-texto-suave hover:bg-superficie hover:text-texto"
+                  : "text-white/75 hover:bg-white/10 hover:text-white",
+              )}
+            >
+              {link.rotulo}
+            </a>
+          ))}
+          <BotaoContato
+            variante={claro ? "escuro" : "vidro"}
+            tamanho="medio"
+            className="ml-3"
+          />
+        </nav>
+        <a
+          href={montarLinkWhatsApp(mensagemDeContato)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={classes(
+            "sg-pressiona grid size-11 place-items-center rounded-full md:hidden",
+            claro
+              ? "bg-superficie text-texto hover:bg-[var(--sg-pressionado)]"
+              : "bg-white/14 text-white hover:bg-white/22",
+            barraVisivel && "invisible",
+          )}
+        >
+          <MessageCircle
+            aria-hidden
+            className="size-[22px]"
+            strokeWidth={1.75}
+          />
+          <span className="sr-only">Falar no WhatsApp (abre o WhatsApp)</span>
+        </a>
+      </div>
+    </header>
+  );
+}
