@@ -129,7 +129,7 @@ export function GeradorDeLink({ modo }: Props) {
           className={classes(
             "rounded-[10px] bg-white px-3.5 pt-2 pb-2.5 transition-shadow duration-150",
             nomeComErro
-              ? "shadow-[inset_0_0_0_1.5px_#c82231]"
+              ? "shadow-[inset_0_0_0_1.5px_var(--cor-erro)]"
               : "focus-within:shadow-[inset_0_0_0_1.5px_var(--cor-primaria)]",
           )}
         >
@@ -160,7 +160,7 @@ export function GeradorDeLink({ modo }: Props) {
           id={`ajuda-${modo}`}
           className={classes(
             "mt-1.5 px-0.5 text-[0.8125rem]",
-            nomeComErro ? "text-[#c82231]" : "text-texto-suave",
+            nomeComErro ? "text-erro" : "text-texto-suave",
           )}
         >
           {nomeComErro

@@ -22,13 +22,13 @@
     /* Próprios do design system. */
     --sg-tinta-forte: #0b0f1e;
     --sg-terciario: #6b7486;
-    --sg-campo: #f7f9fc;
     --sg-pressionado: #e9eef4;
     --sg-borda-sutil: #e9eef4;
     --sg-ceu: #6fcaef;
     --sg-marinho-800: #1a2756;
     /* O início do degradê é o céu um tom abaixo do kit (#1381c0 no lugar de
-       #1a9bdc): assim o texto branco do botão passa de 4,5:1 em toda a largura. */
+       #1a9bdc): o texto branco, sempre centralizado, fica acima de 4,5:1
+       (só a ponta esquerda, onde não há texto, mede 4,3:1). */
     --sg-degrade: linear-gradient(90deg, #1381c0 0%, #1f48c2 100%);
     --sg-degrade-pressionado: linear-gradient(90deg, #1170a8 0%, #1a39a0 100%);
     --sg-noite:

@@ -22,7 +22,7 @@ export function RodapeDoDemo({
   return (
     <footer
       className={classes(
-        "border-t border-borda pt-12 pb-28 text-sm text-texto-suave md:pb-12",
+        "border-t border-borda pt-12 pb-28 text-sm text-texto-suave lg:pb-12",
         className,
       )}
     >
