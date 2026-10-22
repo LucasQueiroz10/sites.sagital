@@ -1,13 +1,14 @@
-import condicionamento from "@/public/imagens/academia/condicionamento.jpg";
+import bike from "@/public/imagens/academia/bike.jpg";
+import cordas from "@/public/imagens/academia/cordas.jpg";
 import funcional from "@/public/imagens/academia/funcional.jpg";
-import levantamento from "@/public/imagens/academia/hero-levantamento.jpg";
 import lutas from "@/public/imagens/academia/lutas.jpg";
 import musculacao from "@/public/imagens/academia/musculacao.jpg";
-import refletor from "@/public/imagens/academia/refletor.jpg";
+import principal from "@/public/imagens/academia/principal.jpg";
 import type { Aula, DiaDaSemana } from "@/lib/agenda";
 import type { DadosDaAcademia } from "./tipos";
 
-// Conteúdo fictício. Fotos do Unsplash (licença livre), salvas localmente.
+// Conteúdo fictício. Fotos claras do Unsplash (licença livre), salvas
+// localmente; a origem de cada uma está gravada no próprio arquivo.
 
 type AulaSemDia = Omit<Aula, "dia">;
 
@@ -108,12 +109,13 @@ export const academia: DadosDaAcademia = {
   rotulo: "Academia",
   padrao: {
     nome: "Academia Pulso",
-    cor: "#ff4b1f",
-    fundo: "#0d0e0f",
+    cor: "#d42a16",
+    fundo: "#ffffff",
   },
   descricao:
     "Musculação, funcional, cross, bike e lutas. Faça uma aula experimental grátis.",
   slogan: "Sua primeira aula é por nossa conta.",
+  destaqueDoSlogan: "por nossa conta.",
   chamada:
     "Escolha um horário da grade, chame a gente no WhatsApp e treine sem pagar nada. Sem matrícula e sem compromisso.",
   navegacao: [
@@ -126,20 +128,28 @@ export const academia: DadosDaAcademia = {
     rotulo: "Agendar aula experimental",
     pedido: "Quero agendar uma aula experimental.",
   },
+  diferencial: { titulo: "Estacionamento", detalhe: "próprio, na porta" },
   imagemPrincipal: {
-    src: levantamento,
-    alt: "Atleta segurando uma barra carregada com anilhas, visto de cima, no piso de borracha da academia",
+    src: principal,
+    alt: "Aluna começando um levantamento terra com o professor ao lado, num salão claro com janelões",
   },
   imagemFinal: {
-    src: refletor,
-    alt: "Atleta concentrado antes de levantar a barra, iluminado por um único refletor",
+    src: cordas,
+    alt: "Aluno e aluna treinando com cordas navais num salão com janelões",
   },
+  // O mais escolhido primeiro: no celular é o card que aparece inteiro.
   planos: [
     {
-      nome: "Mensal",
-      precoMensal: 12990,
-      cobranca: "Sem fidelidade",
-      inclui: ["Musculação e todas as aulas", "Avaliação física na matrícula"],
+      nome: "Anual",
+      precoMensal: 8990,
+      cobranca: "12x no cartão",
+      inclui: [
+        "Musculação e todas as aulas",
+        "Avaliação física a cada 3 meses",
+        "1 treino com personal por mês",
+        "2 convites por mês para treinar com um amigo",
+      ],
+      destaque: "Mais escolhido",
     },
     {
       nome: "Trimestral",
@@ -152,16 +162,10 @@ export const academia: DadosDaAcademia = {
       ],
     },
     {
-      nome: "Anual",
-      precoMensal: 8990,
-      cobranca: "12x no cartão",
-      inclui: [
-        "Musculação e todas as aulas",
-        "Avaliação física a cada 3 meses",
-        "1 treino com personal por mês",
-        "2 convites por mês para treinar com um amigo",
-      ],
-      destaque: "Mais escolhido",
+      nome: "Mensal",
+      precoMensal: 12990,
+      cobranca: "Sem fidelidade",
+      inclui: ["Musculação e todas as aulas", "Avaliação física na matrícula"],
     },
   ],
   grade: [
@@ -177,7 +181,7 @@ export const academia: DadosDaAcademia = {
         "Área de pesos livres com halteres até 50 kg, racks e máquinas de cabo. Ficha montada na avaliação.",
       imagem: {
         src: musculacao,
-        alt: "Fileira de halteres no suporte, sob luz azulada",
+        alt: "Aluna fazendo agachamento com a barra apoiada nos ombros",
       },
       rodape: "Livre, em todo o horário de funcionamento",
     },
@@ -187,7 +191,7 @@ export const academia: DadosDaAcademia = {
         "Kettlebell, peso do corpo e circuitos curtos. Turmas pequenas, com professor do começo ao fim.",
       imagem: {
         src: funcional,
-        alt: "Mão com magnésio segurando a alça de um kettlebell laranja",
+        alt: "Aluna agachada segurando um kettlebell com as duas mãos",
       },
       naGrade: ["Funcional", "Funcional express"],
     },
@@ -197,7 +201,7 @@ export const academia: DadosDaAcademia = {
         "Muay thai e boxe no tatame, do básico à luva. Equipamento de treino emprestado nas primeiras aulas.",
       imagem: {
         src: lutas,
-        alt: "Sacos de pancada enfileirados num salão com piso de madeira",
+        alt: "Aluno de luvas treinando socos na manopla do professor",
       },
       naGrade: ["Muay thai", "Boxe"],
     },
@@ -206,8 +210,8 @@ export const academia: DadosDaAcademia = {
       descricao:
         "Condicionamento em grupo: cordas, anilhas e sprints no box, e bike indoor com música alta.",
       imagem: {
-        src: condicionamento,
-        alt: "Atleta batendo cordas navais num espaço coberto",
+        src: bike,
+        alt: "Turma pedalando numa aula de bike indoor",
       },
       naGrade: ["Cross", "Bike indoor", "Bike express"],
     },

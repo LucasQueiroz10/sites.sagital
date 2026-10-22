@@ -1,10 +1,15 @@
-import { Archivo } from "next/font/google";
+import { Sofia_Sans, Sofia_Sans_Condensed } from "next/font/google";
 
-// Archivo variável com o eixo de largura: o mesmo desenho serve para os
-// títulos expandidos e para o texto corrido.
-export const archivo = Archivo({
+// Uma família só, em duas larguras: a condensada nos títulos em caixa alta,
+// como em material de academia e loja de esporte; a normal no texto corrido.
+export const sofiaCondensada = Sofia_Sans_Condensed({
   subsets: ["latin"],
-  axes: ["wdth"],
-  variable: "--font-archivo",
+  variable: "--font-sofia-condensada",
+  display: "swap",
+});
+
+export const sofia = Sofia_Sans({
+  subsets: ["latin"],
+  variable: "--font-sofia",
   display: "swap",
 });

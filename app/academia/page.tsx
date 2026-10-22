@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import { BotaoWhatsApp } from "@/components/BotaoWhatsApp";
 import { NomeDoEstabelecimento, TemaDoNicho } from "@/components/TemaDoNicho";
-import { Cronometro } from "@/components/nichos/academia/Cronometro";
+import { FatosDaAcademia } from "@/components/nichos/academia/FatosDaAcademia";
 import { GradeDeAulas } from "@/components/nichos/academia/GradeDeAulas";
 import { Modalidades } from "@/components/nichos/academia/Modalidades";
 import { TabelaDePlanos } from "@/components/nichos/academia/TabelaDePlanos";
@@ -11,12 +11,12 @@ import { CabecalhoDoDemo } from "@/components/nichos/CabecalhoDoDemo";
 import { Depoimentos } from "@/components/nichos/Depoimentos";
 import { Funcionamento } from "@/components/nichos/Funcionamento";
 import { RodapeDoDemo } from "@/components/nichos/RodapeDoDemo";
-import { Botao } from "@/components/ui/Botao";
 import { Container } from "@/components/ui/Container";
 import { Secao, TituloDaSecao } from "@/components/ui/Secao";
 import { academia as dados } from "@/data/academia";
+import { formatarPreco } from "@/lib/formato";
 import "./academia.css";
-import { archivo } from "./fontes";
+import { sofia, sofiaCondensada } from "./fontes";
 
 export const metadata: Metadata = {
   title: { absolute: `${dados.padrao.nome} — ${dados.rotulo}` },
@@ -25,7 +25,16 @@ export const metadata: Metadata = {
 };
 
 // Cor da barra do navegador no celular, combinando com o demo.
-export const viewport: Viewport = { themeColor: "#0d0e0f" };
+export const viewport: Viewport = { themeColor: "#ffffff" };
+
+// O slogan com o final na cor do cliente: "Sua primeira aula é" + "por nossa conta."
+const inicioDoSlogan = dados.slogan.slice(
+  0,
+  dados.slogan.lastIndexOf(dados.destaqueDoSlogan),
+);
+
+// O menor preço mensal entre os planos, para o "a partir de" do topo.
+const menorMensalidade = Math.min(...dados.planos.map((p) => p.precoMensal));
 
 export default function PaginaAcademia() {
   return (
@@ -33,156 +42,160 @@ export default function PaginaAcademia() {
       nicho={dados.nicho}
       rotulo={dados.rotulo}
       padrao={dados.padrao}
-      className={archivo.variable}
+      className={`${sofia.variable} ${sofiaCondensada.variable}`}
     >
       <CabecalhoDoDemo
         navegacao={dados.navegacao}
         acao={dados.acaoPrincipal}
         rotuloDoNicho={dados.rotulo}
-        classeDaMarca="marca text-lg sm:text-xl"
+        classeDaMarca="marca text-[1.375rem] leading-none"
       />
 
       <main id="topo" className="flex-1">
-        <section aria-labelledby="titulo-principal">
-          <Container
-            largura="larga"
-            className="grid gap-10 pt-6 pb-4 sm:pb-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-stretch lg:gap-12 lg:py-14"
-          >
-            <div className="flex flex-col justify-center">
-              <Cronometro grade={dados.grade} />
+        <section aria-labelledby="titulo-principal" className="lg:pb-8">
+          {/* No celular a foto sangra nas laterais; no desktop, 7 de 12 colunas. */}
+          <div className="mx-auto grid w-full max-w-7xl lg:grid-cols-12 lg:items-center lg:gap-12 lg:px-6 lg:pt-10">
+            <div className="relative lg:order-2 lg:col-span-7">
+              <div className="relative aspect-[4/3] overflow-hidden lg:aspect-[5/4] lg:rounded-xl">
+                <Image
+                  src={dados.imagemPrincipal.src}
+                  alt={dados.imagemPrincipal.alt}
+                  fill
+                  preload
+                  sizes="(min-width: 1280px) 720px, (min-width: 1024px) 58vw, 100vw"
+                  className="foto-que-assenta object-cover object-[42%_50%]"
+                  placeholder="blur"
+                />
+              </div>
+              <FatosDaAcademia
+                expediente={dados.expediente}
+                grade={dados.grade}
+                diferencial={dados.diferencial}
+                className="hidden shadow-[0_12px_32px_rgb(18_22_28/0.12)] lg:absolute lg:inset-x-6 lg:-bottom-9 lg:grid"
+              />
+            </div>
+
+            <div className="px-4 pt-7 pb-12 sm:px-6 lg:order-1 lg:col-span-5 lg:px-0 lg:py-16">
               <h1
                 id="titulo-principal"
-                className="mt-8 text-[clamp(2.4rem,10vw,4.75rem)] text-balance"
+                className="text-[clamp(2.75rem,12.5vw,5.5rem)] text-balance lg:text-[clamp(3.75rem,6.4vw,5.5rem)]"
               >
-                {dados.slogan}
+                {inicioDoSlogan}
+                <span className="text-destaque">{dados.destaqueDoSlogan}</span>
               </h1>
-              <p className="mt-5 max-w-[46ch] text-lg text-texto-suave">
+              <p className="mt-5 max-w-[42ch] text-lg leading-relaxed text-texto-suave">
                 {dados.chamada}
               </p>
-              <div
-                data-cta-principal
-                className="mt-8 flex flex-col gap-3 sm:flex-row"
-              >
+              <div data-cta-principal className="mt-8">
                 <BotaoWhatsApp
                   acao={dados.acaoPrincipal}
                   rotuloDoNicho={dados.rotulo}
                   tamanho="grande"
+                  className="w-full sm:w-auto"
                 />
-                <Botao href="#aulas" variante="secundario" tamanho="grande">
-                  Ver a grade de aulas
-                </Botao>
               </div>
-            </div>
-            <div className="relative -mx-4 aspect-[4/3] sm:mx-0 sm:aspect-[16/9] lg:aspect-auto lg:min-h-[36rem]">
-              <Image
-                src={dados.imagemPrincipal.src}
-                alt={dados.imagemPrincipal.alt}
-                fill
-                preload
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover"
-                placeholder="blur"
+              <p className="mt-4 text-[0.9375rem] text-texto-suave">
+                Planos a partir de{" "}
+                <strong className="font-bold text-texto">
+                  {formatarPreco(menorMensalidade)}/mês
+                </strong>
+                {" · "}
+                <a
+                  href="#planos"
+                  className="font-semibold text-texto underline decoration-borda decoration-2 underline-offset-4 hover:decoration-destaque focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
+                >
+                  ver planos
+                </a>
+              </p>
+              <FatosDaAcademia
+                expediente={dados.expediente}
+                grade={dados.grade}
+                diferencial={dados.diferencial}
+                className="mt-8 lg:hidden"
               />
             </div>
-          </Container>
+          </div>
         </section>
 
-        <Secao id="planos" cheia>
+        <Secao id="planos" cheia className="bg-superficie">
           <TabelaDePlanos
             planos={dados.planos}
+            rotuloDoNicho={dados.rotulo}
             cabecalho={<TituloDaSecao id="planos">Planos</TituloDaSecao>}
           />
         </Secao>
 
-        <Secao
-          id="aulas"
-          titulo="Grade da semana"
-          largura="larga"
-          className="border-t border-borda"
-        >
-          <GradeDeAulas grade={dados.grade} />
+        <Secao id="aulas" titulo="Aulas de hoje e da semana" largura="larga">
+          <GradeDeAulas grade={dados.grade} rotuloDoNicho={dados.rotulo} />
         </Secao>
 
         <Secao id="estrutura" cheia className="border-t border-borda">
           <Modalidades
             modalidades={dados.modalidades}
             grade={dados.grade}
+            rotuloDoNicho={dados.rotulo}
             cabecalho={
-              <TituloDaSecao id="estrutura">
-                Estrutura e modalidades
-              </TituloDaSecao>
+              <TituloDaSecao id="estrutura">Modalidades</TituloDaSecao>
             }
           />
         </Secao>
 
-        <Secao
-          id="depoimentos"
-          cheia
-          className="border-t border-borda bg-superficie"
-        >
+        <Secao id="depoimentos" cheia className="bg-superficie">
           <Depoimentos
             depoimentos={dados.depoimentos}
-            classeDoTexto="text-2xl font-semibold"
-            classeDasSetas="rounded-tema border border-borda bg-fundo text-texto"
+            classeDoTexto="text-[1.375rem] font-semibold leading-snug"
+            classeDasSetas="rounded-full bg-fundo text-texto"
             cabecalho={
               <TituloDaSecao id="depoimentos">Quem treina aqui</TituloDaSecao>
             }
           />
         </Secao>
 
-        <Secao
-          id="contato"
-          titulo="Horários e endereço"
-          largura="larga"
-          className="border-t border-borda"
-        >
+        <Secao id="contato" titulo="Horários e endereço" largura="larga">
           <Funcionamento
             expediente={dados.expediente}
             endereco={dados.endereco}
+            comoChegar
           />
         </Secao>
 
-        <section
-          aria-labelledby="titulo-final"
-          className="relative isolate overflow-hidden border-t border-borda"
-        >
-          {/* No celular a foto vem antes do texto; no desktop ocupa a direita e
-              escurece em direção ao texto. */}
-          <div className="relative aspect-[4/3] md:absolute md:inset-y-0 md:right-0 md:left-[38%] md:-z-10 md:aspect-auto">
-            <Image
-              src={dados.imagemFinal.src}
-              alt=""
-              fill
-              sizes="(min-width: 768px) 62vw, 100vw"
-              className="object-cover object-[50%_60%]"
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0 bg-linear-to-t from-fundo to-transparent to-40% md:bg-linear-to-r md:from-fundo md:to-30%"
-            />
-          </div>
-          <Container largura="larga" className="pt-2 pb-20 md:py-32">
-            <h2
-              id="titulo-final"
-              className="max-w-[16ch] text-[clamp(2.25rem,8vw,4.5rem)] text-balance md:max-w-[12ch]"
-            >
-              Treine com a gente na <NomeDoEstabelecimento />.
-            </h2>
-            <p className="mt-5 max-w-[40ch] text-lg">
-              A primeira aula é grátis. Escolha o horário e mande uma mensagem.
-            </p>
-            <div className="mt-8">
-              <BotaoWhatsApp
-                acao={dados.acaoPrincipal}
-                rotuloDoNicho={dados.rotulo}
-                tamanho="grande"
-              />
+        <section aria-labelledby="titulo-final" className="pb-16 sm:pb-24">
+          <Container largura="larga">
+            <div className="faixa-final grid overflow-hidden rounded-2xl bg-primaria text-primaria-texto lg:grid-cols-2">
+              <div className="flex flex-col justify-center px-6 py-10 sm:px-12 sm:py-14 lg:py-20">
+                <h2 id="titulo-final" className="titulo-final text-balance">
+                  Treine com a gente na <NomeDoEstabelecimento />.
+                </h2>
+                <p className="mt-4 max-w-[38ch] text-lg leading-relaxed">
+                  A primeira aula é grátis. Escolha o horário e mande uma
+                  mensagem.
+                </p>
+                <div className="mt-8">
+                  <BotaoWhatsApp
+                    acao={dados.acaoPrincipal}
+                    rotuloDoNicho={dados.rotulo}
+                    variante="claro"
+                    tamanho="grande"
+                    className="w-full sm:w-auto"
+                  />
+                </div>
+              </div>
+              <div className="relative aspect-[4/3] lg:order-first lg:aspect-auto lg:min-h-[28rem]">
+                <Image
+                  src={dados.imagemFinal.src}
+                  alt={dados.imagemFinal.alt}
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="object-cover"
+                  placeholder="blur"
+                />
+              </div>
             </div>
           </Container>
         </section>
       </main>
 
-      <RodapeDoDemo endereco={dados.endereco} classeDaMarca="marca text-lg" />
+      <RodapeDoDemo endereco={dados.endereco} classeDaMarca="marca text-xl" />
       <BarraWhatsApp acao={dados.acaoPrincipal} rotuloDoNicho={dados.rotulo} />
     </TemaDoNicho>
   );

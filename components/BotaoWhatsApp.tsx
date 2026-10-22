@@ -2,14 +2,14 @@
 
 import { MessageCircle } from "lucide-react";
 import { useTema } from "@/components/TemaDoNicho";
-import { Botao } from "@/components/ui/Botao";
+import { Botao, type VarianteDoBotao } from "@/components/ui/Botao";
 import type { AcaoWhatsApp } from "@/data/tipos";
 import { mensagemDoDemo, montarLinkWhatsApp } from "@/lib/whatsapp";
 
 type Props = {
   acao: AcaoWhatsApp;
   rotuloDoNicho: string;
-  variante?: "primario" | "secundario";
+  variante?: VarianteDoBotao;
   tamanho?: "normal" | "grande";
   className?: string;
   /** Texto extra só para leitores de tela, quando o rótulo sozinho é ambíguo. */

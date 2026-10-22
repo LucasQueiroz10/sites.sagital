@@ -9,7 +9,7 @@ Portfólio de vendas da Sagital: uma página de apresentação e um site demonst
 | Rota           | O que é                                                                                         |
 | -------------- | ----------------------------------------------------------------------------------------------- |
 | `/`            | Página da Sagital: monta o demo personalizado, mostra a prévia ao vivo, os demos e os pacotes   |
-| `/academia`    | Demo de academia: cronômetro até a próxima aula, planos, grade da semana                        |
+| `/academia`    | Demo de academia: visual claro e comercial, planos com preço, grade com agendar em cada aula    |
 | `/mercado`     | Demo de mercado: encarte de ofertas da semana com pedido de cada item                           |
 | `/restaurante` | Demo de restaurante: reserva de mesa com dia e horário, cardápio, delivery                      |
 | `/tabacaria`   | Demo de tabacaria: aviso de maioridade, lounge e avisos legais                                  |

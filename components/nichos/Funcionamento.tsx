@@ -1,6 +1,7 @@
 "use client";
 
-import { MapPin } from "lucide-react";
+import { MapPin, Navigation } from "lucide-react";
+import { Botao } from "@/components/ui/Botao";
 import type { Endereco } from "@/data/tipos";
 import {
   horarioCurto,
@@ -16,11 +17,18 @@ import { useAgora } from "@/lib/useAgora";
 type Props = {
   expediente: Expediente[];
   endereco: Endereco;
+  /** Mostra o botão "Como chegar", que abre o endereço num mapa. */
+  comoChegar?: boolean;
   className?: string;
 };
 
 /** Horário de funcionamento com o status ao vivo ("aberto agora") e o endereço. */
-export function Funcionamento({ expediente, endereco, className }: Props) {
+export function Funcionamento({
+  expediente,
+  endereco,
+  comoChegar = false,
+  className,
+}: Props) {
   const agora = useAgora("minuto");
   const hoje = agora ? (agora.getDay() as DiaDaSemana) : null;
   const status = agora ? statusDoExpediente(expediente, agora) : null;
@@ -38,7 +46,10 @@ export function Funcionamento({ expediente, endereco, className }: Props) {
                 aria-hidden
                 className={classes(
                   "size-2.5 rounded-full",
-                  status.aberto ? "bg-destaque" : "bg-texto-suave",
+                  // Um mundo pode dar ao "aberto" uma cor de status própria.
+                  status.aberto
+                    ? "bg-[var(--cor-aberto,var(--cor-destaque))]"
+                    : "bg-texto-suave",
                 )}
               />
               {status.aberto
@@ -85,6 +96,25 @@ export function Funcionamento({ expediente, endereco, className }: Props) {
         </p>
         {endereco.referencia && (
           <p className="mt-3 pl-8 text-texto-suave">{endereco.referencia}</p>
+        )}
+        {comoChegar && (
+          <div className="mt-6 pl-8">
+            <Botao
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                `${endereco.logradouro}, ${endereco.bairro}`,
+              )}`}
+              externo
+              variante="secundario"
+            >
+              <Navigation aria-hidden className="size-[18px]" />
+              Como chegar
+              <span className="sr-only"> (abre o mapa)</span>
+            </Botao>
+            {/* O endereço do demo é inventado; a busca no mapa pode achar outro lugar. */}
+            <p className="mt-3 text-sm text-texto-suave">
+              Endereço ilustrativo, criado para este site demonstrativo.
+            </p>
+          </div>
         )}
       </address>
     </div>

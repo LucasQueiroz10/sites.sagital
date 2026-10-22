@@ -41,7 +41,7 @@ export const demos: Demo[] = [
     rotulo: academia.rotulo,
     padrao: academia.padrao,
     descricao:
-      "Cronômetro até a próxima aula, planos, grade da semana e aula experimental.",
+      "Aula experimental agendada direto da grade, planos com preço e modalidades.",
     captura: {
       src: demoAcademia,
       alt: "Primeira tela do demo de academia no celular",
@@ -50,8 +50,8 @@ export const demos: Demo[] = [
       src: demoAcademiaDesktop,
       alt: "Primeira tela do demo de academia no computador",
     },
-    paleta: ["#0d0e0f", "#ff4b1f", "#f1f1ec"],
-    fonte: "Archivo",
+    paleta: ["#ffffff", "#d42a16", "#12161c"],
+    fonte: "Sofia Sans Condensed",
   },
   {
     nicho: "mercado",

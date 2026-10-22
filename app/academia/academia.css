@@ -1,34 +1,49 @@
-/* Tokens do demo de academia. As cores primárias e o fundo vêm de lib/tema.ts. */
+/*
+ * Demo de academia: o site comercial de rede, em versão clara. Branco, cinza
+ * frio nas faixas e tinta quase preta; a cor do cliente (lib/tema.ts) fica
+ * para botões, preço em destaque, "Próxima" e a faixa final.
+ */
 [data-nicho="academia"] {
-  --cor-superficie: #17191b;
-  --cor-texto: #f1f1ec;
-  --cor-texto-suave: #a3a69f;
-  --cor-borda: #2a2d30;
-  --raio: 2px;
-  --fonte-titulo: var(--font-archivo), "Arial Narrow", sans-serif;
-  --fonte-texto: var(--font-archivo), system-ui, sans-serif;
-  color-scheme: dark;
+  --cor-superficie: #f2f4f6;
+  --cor-texto: #12161c;
+  --cor-texto-suave: #5b6470;
+  --cor-borda: #e3e6ea;
+  /* Verde do "aberto agora": status, não muda com a cor do cliente. */
+  --cor-aberto: #1f9d55;
+  --raio: 10px;
+  --fonte-titulo: var(--font-sofia-condensada), "Arial Narrow", sans-serif;
+  --fonte-texto: var(--font-sofia), system-ui, sans-serif;
+  color-scheme: light;
 }
 
-/* Títulos expandidos, como letreiro de uniforme. */
+/* Títulos em caixa alta condensada, pesados e apertados. */
 [data-nicho="academia"] :is(h1, h2, h3),
 [data-nicho="academia"] .marca,
-[data-nicho="academia"] .horario,
-[data-nicho="academia"] .preco {
+[data-nicho="academia"] .numero {
   font-family: var(--fonte-titulo);
-  font-variation-settings: "wdth" 125;
 }
 
 [data-nicho="academia"] :is(h1, h2) {
   font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 0.98;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+}
+
+/* Títulos de seção maiores que o padrão: a condensada pede corpo. */
+[data-nicho="academia"] h2 {
+  font-size: clamp(2.5rem, 9vw, 3.75rem);
+}
+
+[data-nicho="academia"] h2.titulo-final {
+  font-size: clamp(2.75rem, 10vw, 4.75rem);
 }
 
 [data-nicho="academia"] h3 {
   font-weight: 800;
-  letter-spacing: -0.01em;
-  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1;
 }
 
 [data-nicho="academia"] .marca {
@@ -37,15 +52,25 @@
   letter-spacing: 0.01em;
 }
 
-/* Os dois-pontos piscam no ritmo dos segundos, como no cronômetro de parede. */
+[data-nicho="academia"] .numero {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Sobre a faixa na cor do cliente, o foco usa a cor do texto dela. */
+[data-nicho="academia"] .faixa-final :focus-visible {
+  outline-color: var(--cor-primaria-texto);
+}
+
+/* A foto principal assenta no lugar ao abrir; o resto já está à vista. */
 @media (prefers-reduced-motion: no-preference) {
-  [data-nicho="academia"] .cronometro .dois-pontos {
-    animation: piscar 1s steps(1, end) infinite;
+  [data-nicho="academia"] .foto-que-assenta {
+    animation: assentar 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 }
 
-@keyframes piscar {
-  50% {
-    opacity: 0.25;
+@keyframes assentar {
+  from {
+    transform: scale(1.04);
   }
 }

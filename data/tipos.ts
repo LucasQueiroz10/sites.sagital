@@ -59,7 +59,11 @@ export type Modalidade = {
 
 export type DadosDaAcademia = DadosDoNicho & {
   slogan: string;
+  /** Final do slogan que vai na cor do cliente; precisa estar no slogan. */
+  destaqueDoSlogan: string;
   chamada: string;
+  /** Um fato curto da estrutura, na faixa abaixo do topo. */
+  diferencial: { titulo: string; detalhe: string };
   imagemPrincipal: Imagem;
   imagemFinal: Imagem;
   planos: Plano[];
