@@ -1,26 +1,31 @@
 # Sagital — sites para negócios locais
 
-Portfólio de vendas da Sagital: uma página de apresentação e um site demonstrativo completo para cada nicho (academia, varejo, restaurante e tabacaria). Os demos são mostrados em visitas presenciais, aceitam o nome e a cor do cliente pela URL e funcionam sem internet.
+Portfólio de vendas da Sagital: uma página de apresentação, um site demonstrativo completo para cada nicho (academia, varejo, restaurante e tabacaria) e quatro sites conceituais de serviços profissionais (advocacia, odontologia, arquitetura e contabilidade). Os demos são mostrados em visitas presenciais, aceitam o nome e a cor do cliente pela URL e funcionam sem internet.
 
-> Todo o conteúdo dos demos é fictício (nomes, preços e depoimentos).
+> Todo o conteúdo dos demos e dos sites do portfólio é fictício (nomes, preços e depoimentos).
 
 ## Rotas
 
-| Rota           | O que é                                                                                         |
-| -------------- | ----------------------------------------------------------------------------------------------- |
-| `/`            | Página da Sagital: monta o demo personalizado, mostra a prévia ao vivo, os demos e os pacotes   |
-| `/academia`    | Demo de academia: visual claro e comercial, planos com preço, grade com agendar em cada aula    |
-| `/varejo`      | Demo de varejo: loja de básicos com vitrines Feminino e Masculino e pedido por tamanho          |
-| `/restaurante` | Demo de restaurante: reserva de mesa com dia e horário, cardápio, delivery                      |
-| `/tabacaria`   | Demo de tabacaria: aviso de maioridade, lounge e avisos legais                                  |
-| `/gerar`       | Ferramenta do vendedor: link personalizado, QR code (PNG e impressão) e preparo do modo offline |
+| Rota                       | O que é                                                                                                    |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `/`                        | Página da Sagital: monta o demo personalizado, mostra a prévia ao vivo, os demos, o portfólio e os pacotes |
+| `/academia`                | Demo de academia: visual claro e comercial, planos com preço, grade com agendar em cada aula               |
+| `/varejo`                  | Demo de varejo: loja de básicos com vitrines Feminino e Masculino e pedido por tamanho                     |
+| `/restaurante`             | Demo de restaurante: reserva de mesa com dia e horário, cardápio, delivery                                 |
+| `/tabacaria`               | Demo de tabacaria: aviso de maioridade, lounge e avisos legais                                             |
+| `/gerar`                   | Ferramenta do vendedor: link personalizado, QR code (PNG e impressão) e preparo do modo offline            |
+| `/portfolio/advocacia`     | Duarte Moreira Advogados: áreas de atuação e triagem do caso em três passos                                |
+| `/portfolio/odontologia`   | Lumi Odontologia: agenda com horários livres e próximo horário no topo                                     |
+| `/portfolio/arquitetura`   | Atelier Vão Arquitetura: projetos filtráveis com ficha e briefing com régua de área                        |
+| `/portfolio/contabilidade` | Prumo Contabilidade: simulador de MEI e Simples Nacional com a alíquota efetiva                            |
 
 Personalização: `/academia?nome=Iron+Gym&cor=ff6600`. Nome com até 40 caracteres (letras, números, espaços e `& ' - .`); cor em hex sem `#`. Valores inválidos são ignorados e o demo usa o padrão do nicho.
 
 ## Destaques técnicos
 
 - **Design system próprio**: a página da Sagital segue o Sagital Design System (Plus Jakarta Sans, azul-marinho e azul royal, superfícies em cinza azulado, carrosséis horizontais). Os demos mantêm a identidade de cada ramo e usam o mesmo componente de carrossel ([components/ui/Carrossel.tsx](components/ui/Carrossel.tsx)).
-- **Prévia ao vivo**: o demo personalizado roda num iframe do próprio site, e o visitante troca entre celular, tablet e computador sem recarregar a página.
+- **Prévia ao vivo**: o demo personalizado (ou um site do portfólio) roda num iframe do próprio site, e o visitante troca entre celular, tablet e computador sem recarregar a página.
+- **Portfólio interativo**: quatro sites de serviços profissionais, cada um com identidade própria e uma peça que funciona de verdade: triagem do caso, agenda calculada do expediente ([lib/consultas.ts](lib/consultas.ts)), galeria filtrável com ficha e simulador de impostos pelas tabelas do Simples Nacional ([lib/regimes.ts](lib/regimes.ts)).
 - **Personalização segura** ([lib/tema.ts](lib/tema.ts)): validação estrita, nome renderizado só como texto, cor aplicada como variável CSS e contraste WCAG AA calculado automaticamente (o texto do botão nunca fica ilegível).
 - **Offline de verdade** (Serwist): as páginas ficam em cache e os parâmetros da URL são ignorados na busca, então qualquer link personalizado novo abre sem internet.
 - **Páginas estáticas**: a personalização é lida no navegador, o que mantém o site rápido e compatível com o cache.
@@ -84,8 +89,9 @@ app/                 rotas, layout, manifesto do PWA e service worker (sw.ts)
 components/ui/       componentes base (botão, card, seção, container, carrossel)
 components/nichos/   blocos compartilhados dos demos e pastas por nicho
 components/sagital/  gerador de link e QR, prévia ao vivo, pacotes, marca e contato
-data/                conteúdo fictício de cada nicho e da Sagital
-lib/                 tema, agenda, links, WhatsApp e formatação (com testes)
+components/portfolio/ cabeçalho compartilhado e as peças interativas de cada site do portfólio
+data/                conteúdo fictício de cada nicho, do portfólio e da Sagital
+lib/                 tema, agenda, consultas, regimes tributários, links, WhatsApp e formatação (com testes)
 public/imagens/      fotos locais (Unsplash) e capturas dos demos
 public/icons/        ícones do PWA
 ```
