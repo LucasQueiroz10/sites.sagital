@@ -1,4 +1,4 @@
-import { Code, MessageCircle } from "lucide-react";
+import { ArrowDown, Code, MessageCircle } from "lucide-react";
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,7 +33,8 @@ export const metadata: Metadata = {
     "Sites para academias, mercados, restaurantes e tabacarias. Veja o site do seu negócio, com o seu nome, antes de pagar.",
 };
 
-export const viewport: Viewport = { themeColor: "#ffffff" };
+// A barra do navegador no celular acompanha o topo escuro da abertura.
+export const viewport: Viewport = { themeColor: "#111a3d" };
 
 const navegacao = [
   { rotulo: "Demos", href: "#demos" },
@@ -44,6 +45,9 @@ const navegacao = [
 const tituloDeSecao =
   "sg-titulo text-[clamp(1.75rem,5.6vw,2.75rem)] max-w-[22ch]";
 const apoioDeSecao = "mt-3 max-w-[52ch] text-base text-texto-suave sm:text-lg";
+/** Ponto entre os fatos da abertura (preço · pagamento · prazo). */
+const pontoDeFato =
+  "inline-flex items-center before:mx-3 before:size-1 before:shrink-0 before:rounded-full before:bg-white/40";
 
 export default function PaginaSagital() {
   const opcoes = demos.map(
@@ -56,40 +60,38 @@ export default function PaginaSagital() {
     }),
   );
   const menorPreco = Math.min(...pacotes.map((p) => p.preco));
+  const prazoDoMenor = pacotes.find((p) => p.preco === menorPreco)?.prazo;
 
   return (
     <div
       data-pagina="sagital"
-      className={`${jakarta.variable} flex flex-1 flex-col bg-fundo font-texto text-texto`}
+      className={`${jakarta.variable} relative flex flex-1 flex-col bg-fundo font-texto text-texto`}
     >
       <ProvedorDaEscolha demos={opcoes}>
-        <header>
+        {/* O cabeçalho flutua sobre a abertura escura, que é a primeira seção. */}
+        <header className="sg-foco-claro absolute inset-x-0 top-0 z-10">
           <Container
             largura="larga"
             className="flex min-h-16 items-center justify-between gap-4"
           >
-            <MarcaSagital className="text-[var(--sg-tinta-forte)]" />
+            <MarcaSagital className="text-white" />
             <nav aria-label="Seções" className="hidden items-center md:flex">
               {navegacao.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="inline-flex min-h-11 items-center rounded-[10px] px-3 text-[0.9375rem] font-medium text-texto-suave transition-colors hover:bg-superficie hover:text-texto"
+                  className="inline-flex min-h-11 items-center rounded-[10px] px-3 text-[0.9375rem] font-medium text-white/75 transition-colors hover:bg-white/10 hover:text-white"
                 >
                   {link.rotulo}
                 </a>
               ))}
-              <BotaoContato
-                variante="escuro"
-                tamanho="medio"
-                className="ml-3"
-              />
+              <BotaoContato variante="vidro" tamanho="medio" className="ml-3" />
             </nav>
             <a
               href={montarLinkWhatsApp(mensagemDeContato)}
               target="_blank"
               rel="noopener noreferrer"
-              className="sg-pressiona grid size-11 place-items-center rounded-full bg-superficie text-texto md:hidden"
+              className="sg-pressiona grid size-11 place-items-center rounded-full bg-white/14 text-white hover:bg-white/22 md:hidden"
             >
               <MessageCircle
                 aria-hidden
@@ -104,19 +106,73 @@ export default function PaginaSagital() {
         </header>
 
         <main id="topo" className="flex-1">
-          <section aria-labelledby="titulo-principal">
+          <section
+            aria-labelledby="titulo-principal"
+            className="sg-abertura flex flex-col items-center px-4 pt-28 pb-16 text-center sm:px-6 sm:pt-36 sm:pb-24 lg:pt-44 lg:pb-32"
+          >
+            <h1
+              id="titulo-principal"
+              className="sg-display max-w-[16ch] text-[clamp(2.25rem,9.6vw,4.75rem)] text-white"
+            >
+              O site que leva o cliente do celular{" "}
+              <span className="text-[var(--sg-ceu)]">
+                direto para a sua porta.
+              </span>
+            </h1>
+            <ul
+              aria-label="Resumo"
+              className="sg-entra mt-6 flex flex-wrap justify-center gap-y-1 text-[0.9375rem] font-medium text-white/75 sm:mt-8 sm:text-base"
+            >
+              <li className="sg-num basis-full font-bold text-[var(--sg-ceu)] sm:basis-auto">
+                A partir de {formatarPrecoRedondo(menorPreco)}
+              </li>
+              {/* No celular o preço fica sozinho na 1ª linha: sem ponto antes. */}
+              <li className={`${pontoDeFato} before:hidden sm:before:block`}>
+                Pagamento único
+              </li>
+              <li className={`${pontoDeFato} before:block`}>
+                No ar em {prazoDoMenor}
+              </li>
+            </ul>
+            <p className="sg-entra mt-4 max-w-[44ch] text-[1.0625rem] leading-relaxed text-white/75 [--ordem:1] sm:text-lg">
+              Rápido no celular, com horário, endereço e um botão de WhatsApp
+              com a mensagem pronta. Para academias, mercados, restaurantes e
+              tabacarias.
+            </p>
+            <div className="sg-entra mt-8 flex w-full max-w-sm flex-col gap-3 [--ordem:2] sm:w-auto sm:max-w-none sm:flex-row">
+              <BotaoContato
+                rotulo="Pedir orçamento no WhatsApp"
+                variante="inverso"
+                className="sm:px-6"
+              />
+              <BotaoSagital href="#seu-demo" variante="vidro">
+                Ver como fica o meu site
+                <ArrowDown
+                  aria-hidden
+                  className="size-[18px]"
+                  strokeWidth={1.75}
+                />
+              </BotaoSagital>
+            </div>
+          </section>
+
+          <section
+            id="seu-demo"
+            aria-labelledby="seu-demo-titulo"
+            className="scroll-mt-4"
+          >
             <Container
               largura="larga"
-              className="grid gap-10 pt-4 pb-10 sm:pt-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-center lg:gap-14 lg:pt-10 lg:pb-20"
+              className="grid gap-10 pt-14 pb-10 sm:pt-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-center lg:gap-14 lg:pb-20"
             >
               <div>
-                <h1
-                  id="titulo-principal"
-                  className="sg-display max-w-[14ch] text-[clamp(2.5rem,10.4vw,4.25rem)]"
+                <h2
+                  id="seu-demo-titulo"
+                  className="sg-display max-w-[14ch] text-[clamp(2.25rem,8.8vw,3.75rem)]"
                 >
                   Veja o site do seu negócio{" "}
                   <span className="text-destaque">antes de pagar.</span>
-                </h1>
+                </h2>
                 <p className="mt-4 max-w-[44ch] text-[1.0625rem] leading-relaxed text-texto-suave">
                   Sites para academias, mercados, restaurantes e tabacarias, já
                   com o nome e a cor da sua loja.

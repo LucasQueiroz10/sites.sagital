@@ -120,6 +120,69 @@
     color: #ffffff;
   }
 
+  /* Abertura: a noite de ponta a ponta, com o brilho turquesa no alto (atrás
+     do título) e uma grade fina que some para as bordas. */
+  [data-pagina="sagital"] .sg-abertura {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+      radial-gradient(
+        70% 55% at 50% -8%,
+        rgb(42 154 196 / 0.34) 0%,
+        rgb(42 154 196 / 0) 70%
+      ),
+      radial-gradient(
+        65% 45% at 50% 118%,
+        rgb(31 72 194 / 0.5) 0%,
+        rgb(31 72 194 / 0) 70%
+      ),
+      linear-gradient(180deg, #111a3d 0%, #141b3b 55%, #17225a 100%);
+    color: #ffffff;
+  }
+
+  [data-pagina="sagital"] .sg-abertura::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: 50% 0;
+    mask-image: radial-gradient(
+      ellipse 90% 75% at 50% 0%,
+      #000 15%,
+      transparent 100%
+    );
+  }
+
+  @media (min-width: 1024px) {
+    [data-pagina="sagital"] .sg-abertura::before {
+      background-size: 64px 64px;
+    }
+  }
+
+  /* O anel royal some no marinho: no escuro (a abertura e o cabeçalho que
+     flutua sobre ela), o foco é branco. */
+  [data-pagina="sagital"] :is(.sg-abertura, .sg-foco-claro) :focus-visible {
+    outline-color: #ffffff;
+  }
+
+  /* O título chega pronto (é o LCP); o resto sobe logo atrás, em sequência. */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-pagina="sagital"] .sg-abertura::before {
+      animation: sg-aparece 1200ms var(--sg-curva) both;
+    }
+
+    [data-pagina="sagital"] .sg-entra {
+      animation: sg-entra 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: calc(120ms + var(--ordem, 0) * 90ms);
+    }
+  }
+
   /* Pressionar = escala .98, sem bounce. */
   [data-pagina="sagital"] .sg-pressiona {
     transition:
@@ -195,6 +258,14 @@ dialog.sg-previa[open] {
   from {
     opacity: 0;
     transform: scale(0.5) rotate(-12deg);
+  }
+}
+
+/* Abertura: fatos, apoio e botões sobem 14px logo depois do título. */
+@keyframes sg-entra {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
   }
 }
 
