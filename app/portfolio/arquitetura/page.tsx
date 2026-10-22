@@ -127,12 +127,12 @@ export default function PaginaArquitetura() {
                   key={passo.etapa}
                   className="border-b border-borda py-8 sm:pr-8 lg:border-r lg:border-b-0 lg:px-6 lg:first:pl-0 lg:last:border-r-0"
                 >
-                  <p className="numero text-sm text-texto-suave">
-                    {String(i + 1).padStart(2, "0")} · {passo.prazo}
-                  </p>
-                  <h3 className="mt-6 text-[2rem] leading-none font-semibold tracking-[-0.02em] [font-stretch:75%] uppercase">
+                  <h3 className="text-[2rem] leading-none font-semibold tracking-[-0.02em] [font-stretch:75%] uppercase">
                     {passo.etapa}
                   </h3>
+                  <p className="numero mt-2 text-sm text-texto-suave">
+                    Etapa {i + 1} · {passo.prazo}
+                  </p>
                   <p className="mt-4 leading-relaxed text-texto-suave">
                     {passo.texto}
                   </p>

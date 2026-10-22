@@ -69,10 +69,9 @@ export default function PaginaOdontologia() {
             className="grid gap-10 pt-8 pb-16 lg:grid-cols-12 lg:items-center lg:gap-12 lg:pt-12 lg:pb-24"
           >
             <div className="lg:col-span-6">
-              <ProximoHorario turnos={dados.turnos} />
               <h1
                 id="titulo-principal"
-                className="mt-7 text-[clamp(2.75rem,10.5vw,5.25rem)] leading-[1] text-balance"
+                className="text-[clamp(2.75rem,10.5vw,5.25rem)] leading-[1] text-balance"
               >
                 {inicioDoTitulo}
                 <span className="text-destaque">{dados.destaqueDoTitulo}</span>
@@ -93,6 +92,9 @@ export default function PaginaOdontologia() {
                 >
                   Tratamentos
                 </a>
+              </div>
+              <div className="mt-5">
+                <ProximoHorario turnos={dados.turnos} />
               </div>
             </div>
 
@@ -384,7 +386,8 @@ export default function PaginaOdontologia() {
             <p className="sm:text-right">
               {dados.endereco.logradouro} · {dados.endereco.bairro}
               <br />
-              Responsável técnica: Dra. Marina Lopes
+              Responsável técnica: Dra. Marina Lopes · CRO-UF 00000 (registro
+              fictício)
             </p>
           </div>
           <AssinaturaDoPortfolio className="border-t border-white/10 pt-6 text-sm text-white/60" />

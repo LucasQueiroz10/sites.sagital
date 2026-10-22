@@ -10,7 +10,8 @@ type Props = {
   nomeDoSite: string;
   atividades: { valor: Atividade; rotulo: string }[];
   faturamento: { minimo: number; maximo: number; inicial: number };
-  dasMei: number;
+  /** DAS mensal do MEI de cada atividade, em reais. */
+  dasMei: Record<Atividade, number>;
 };
 
 const reais = new Intl.NumberFormat("pt-BR", {
@@ -62,7 +63,7 @@ export function SimuladorDeRegime({
 
   const mensal = paraValor(posicao, faturamento.minimo, faturamento.maximo);
   const anual = mensal * 12;
-  const resultado = enquadrar(anual, atividade, dasMei);
+  const resultado = enquadrar(anual, atividade, dasMei[atividade]);
   const nomeDaAtividade =
     atividades.find((a) => a.valor === atividade)?.rotulo.toLowerCase() ?? "";
   const progresso = `${posicao / 10}%`;

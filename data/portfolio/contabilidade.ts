@@ -3,7 +3,6 @@ import atelie from "@/public/imagens/portfolio/contabilidade/atelie.jpg";
 import bia from "@/public/imagens/portfolio/contabilidade/bia.jpg";
 import cozinha from "@/public/imagens/portfolio/contabilidade/cozinha.jpg";
 import loja from "@/public/imagens/portfolio/contabilidade/loja.jpg";
-import relatorio from "@/public/imagens/portfolio/contabilidade/relatorio.jpg";
 import reuniao from "@/public/imagens/portfolio/contabilidade/reuniao.jpg";
 import salao from "@/public/imagens/portfolio/contabilidade/salao.jpg";
 import socia from "@/public/imagens/portfolio/contabilidade/socia.jpg";
@@ -12,6 +11,13 @@ import type { Atividade } from "@/lib/regimes";
 
 // Escritório fictício. Planos e valores são ilustrativos. Fotos do Unsplash
 // (licença livre), salvas localmente.
+
+export type RelatorioDeExemplo = {
+  mes: string;
+  empresa: string;
+  linhas: { rotulo: string; centavos: number; total?: boolean }[];
+  avisos: { texto: string; emDia: boolean }[];
+};
 
 export type Plano = {
   nome: string;
@@ -42,8 +48,15 @@ export const contabilidade = {
     { rotulo: "Planos", href: "#planos" },
     { rotulo: "Contato", href: "#contato" },
   ],
-  /** DAS mensal do MEI usado no simulador (comércio e serviços, em reais). */
-  dasMei: 81.05,
+  /**
+   * DAS mensal do MEI no simulador, em reais: 5% do salário mínimo de INSS
+   * mais R$ 1 de ICMS (comércio e indústria) ou R$ 5 de ISS (serviços).
+   */
+  dasMei: {
+    comercio: 82.05,
+    industria: 82.05,
+    servicos: 86.05,
+  } satisfies Record<Atividade, number>,
   atividades: [
     { valor: "comercio", rotulo: "Comércio" },
     { valor: "servicos", rotulo: "Serviços" },
@@ -170,15 +183,27 @@ export const contabilidade = {
       src: reuniao,
       alt: "Equipe reunida em volta de uma mesa clara, conversando sobre documentos",
     } satisfies Imagem,
-    relatorio: {
-      src: relatorio,
-      alt: "Calculadora de celular sobre gráficos de um relatório financeiro",
-    } satisfies Imagem,
   },
+  relatorio: {
+    mes: "setembro",
+    empresa: "Ateliê Fio de Ouro",
+    linhas: [
+      { rotulo: "Faturamento", centavos: 4820000 },
+      { rotulo: "Despesas", centavos: 2975000 },
+      { rotulo: "Impostos (Simples)", centavos: 256400 },
+      { rotulo: "Lucro do mês", centavos: 1588600, total: true },
+    ],
+    avisos: [
+      { texto: "DAS de setembro pago em 18/09", emDia: true },
+      { texto: "Folha e FGTS enviados", emDia: true },
+      { texto: "Férias de uma funcionária em novembro", emDia: false },
+    ],
+  } satisfies RelatorioDeExemplo,
   contato: {
     endereco: "Rua XV de Novembro, 640, sala 32",
     bairro: "Centro",
     horario: "Segunda a sexta, das 8h30 às 17h30",
-    crc: "CRC 1SP 000000/O-0",
+    /** Registro no conselho: número fictício, só para mostrar onde ele entra. */
+    crc: "CRC UF-000000/O-0 (registro fictício)",
   },
 };

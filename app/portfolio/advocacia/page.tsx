@@ -68,7 +68,7 @@ export default function PaginaAdvocacia() {
         >
           <Container
             largura="larga"
-            className="grid gap-12 pt-12 pb-14 lg:grid-cols-12 lg:items-end lg:gap-14 lg:pt-20 lg:pb-20"
+            className="grid gap-8 pt-6 pb-14 lg:grid-cols-12 lg:items-end lg:gap-14 lg:pt-20 lg:pb-20"
           >
             <div className="lg:col-span-7 lg:pb-6">
               <h1
@@ -101,15 +101,16 @@ export default function PaginaAdvocacia() {
               </div>
             </div>
 
-            <figure className="lg:col-span-5">
-              <div className="retrato-entra relative aspect-[4/5] overflow-hidden rounded-tema bg-[var(--cor-floresta-funda)] sm:aspect-[5/4] lg:aspect-[4/5]">
+            {/* No celular o retrato vem antes do título, num recorte largo. */}
+            <figure className="order-first lg:order-none lg:col-span-5">
+              <div className="retrato-entra relative aspect-[5/4] overflow-hidden rounded-tema bg-[var(--cor-floresta-funda)] lg:aspect-[4/5]">
                 <Image
                   src={dados.socia.imagem.src}
                   alt={dados.socia.imagem.alt}
                   fill
                   preload
                   sizes="(min-width: 1280px) 500px, (min-width: 1024px) 40vw, 100vw"
-                  className="object-cover object-[50%_25%]"
+                  className="object-cover object-[50%_28%] lg:object-[50%_25%]"
                   placeholder="blur"
                 />
               </div>
@@ -329,6 +330,7 @@ export default function PaginaAdvocacia() {
                 {dados.contato.endereco} · {dados.contato.bairro}
               </p>
               <p className="mt-1">{dados.contato.horario}</p>
+              <p className="mt-1">{dados.contato.registro}</p>
             </div>
           </div>
           <AssinaturaDoPortfolio className="border-t border-white/10 pt-6 text-sm text-white/60" />

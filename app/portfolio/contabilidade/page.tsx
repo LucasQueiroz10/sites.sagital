@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import { AssinaturaDoPortfolio } from "@/components/portfolio/AssinaturaDoPortfolio";
 import { CabecalhoDoPortfolio } from "@/components/portfolio/CabecalhoDoPortfolio";
+import { RelatorioDoMes } from "@/components/portfolio/contabilidade/RelatorioDoMes";
 import { SimuladorDeRegime } from "@/components/portfolio/contabilidade/SimuladorDeRegime";
 import { Carrossel } from "@/components/ui/Carrossel";
 import { Container } from "@/components/ui/Container";
@@ -175,28 +176,17 @@ export default function PaginaContabilidade() {
           <Container largura="larga" className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-4">
               <h2 id="servicos-titulo">Do CNPJ ao relatório do mês</h2>
-              <div className="relative mt-10 hidden aspect-[3/4] overflow-hidden rounded-tema lg:block">
-                <Image
-                  src={dados.imagens.relatorio.src}
-                  alt={dados.imagens.relatorio.alt}
-                  fill
-                  sizes="30vw"
-                  className="object-cover"
-                  placeholder="blur"
-                />
+              <div className="mt-10">
+                <RelatorioDoMes relatorio={dados.relatorio} />
               </div>
             </div>
             <ul className="grid content-start gap-x-10 sm:grid-cols-2 lg:col-span-8">
               {dados.servicos.map((servico) => (
                 <li key={servico.titulo} className="border-t border-borda py-7">
-                  <h3 className="flex items-center gap-3 text-xl font-semibold tracking-[-0.02em]">
-                    <span
-                      aria-hidden
-                      className="h-5 w-1 rounded-full bg-destaque"
-                    />
+                  <h3 className="text-xl font-semibold tracking-[-0.02em]">
                     {servico.titulo}
                   </h3>
-                  <p className="mt-2 pl-4 leading-relaxed text-texto-suave">
+                  <p className="mt-2 leading-relaxed text-texto-suave">
                     {servico.texto}
                   </p>
                 </li>

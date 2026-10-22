@@ -244,5 +244,7 @@ export const advocacia = {
     endereco: "Av. das Acácias, 1200, sala 804",
     bairro: "Centro",
     horario: "Segunda a sexta, das 9h às 18h",
+    /** Registro da sociedade na OAB: número fictício, só para mostrar onde ele entra. */
+    registro: "Sociedade de advogados · OAB/UF 00.000 (registro fictício)",
   },
 };
