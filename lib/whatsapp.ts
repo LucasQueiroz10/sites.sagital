@@ -49,3 +49,22 @@ export function mensagemDoDemo(
     `(Enviado pelo site demonstrativo de ${rotuloDoNicho.toLowerCase()} da Sagital.)`
   );
 }
+
+/**
+ * Mensagem dos sites conceituais do portfólio: o pedido de quem visita e uma
+ * linha que diz de qual site veio o contato.
+ */
+export function mensagemDoPortfolio(
+  pedido: string,
+  nomeDoSite: string,
+): string {
+  return (
+    `Olá, ${nomeDoSite}! ${pedido}\n\n` +
+    `(Enviado pelo site conceitual de ${nomeDoSite} no portfólio da Sagital.)`
+  );
+}
+
+/** Link de WhatsApp de um site do portfólio, com a mensagem já escrita. */
+export function linkDoPortfolio(pedido: string, nomeDoSite: string): string {
+  return montarLinkWhatsApp(mensagemDoPortfolio(pedido, nomeDoSite));
+}

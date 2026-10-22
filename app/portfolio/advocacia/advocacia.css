@@ -1,0 +1,61 @@
+/*
+ * Duarte Moreira Advogados: verde-floresta profundo nas faixas de impacto,
+ * branco e pedra esverdeada no resto, sálvia como luz sobre o verde.
+ * Caslon nos títulos, Geist no texto, cantos quase retos.
+ */
+[data-portfolio="advocacia"] {
+  --cor-fundo: #ffffff;
+  --cor-superficie: #eef0ec;
+  --cor-texto: #12211c;
+  --cor-texto-suave: #4c5a54;
+  --cor-borda: #d8ddd6;
+  --cor-primaria: #143a30;
+  --cor-primaria-hover: #0d2a22;
+  --cor-primaria-texto: #ffffff;
+  --cor-destaque: #1b4d40;
+  --cor-floresta: #0f2b24;
+  --cor-floresta-funda: #0a1f1a;
+  --cor-salvia: #b9d3c5;
+  --raio: 2px;
+  --fonte-titulo: var(--font-caslon), Georgia, serif;
+  --fonte-texto: var(--font-geist), system-ui, sans-serif;
+  color-scheme: light;
+}
+
+[data-portfolio="advocacia"] :is(h1, h2) {
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+[data-portfolio="advocacia"] h2 {
+  font-size: clamp(2.25rem, 7vw, 3.5rem);
+  line-height: 1.05;
+}
+
+/* O retrato da sócia sobe de baixo ao abrir; a troca de área cruza. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-portfolio="advocacia"] .retrato-entra {
+    animation: retrato-entra 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  [data-portfolio="advocacia"] .area-entra {
+    animation: area-entra 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes retrato-entra {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes area-entra {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

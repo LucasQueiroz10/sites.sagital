@@ -1,0 +1,27 @@
+/*
+ * Base dos sites do portfólio. Cada site declara os tokens do projeto
+ * (--cor-*, --raio, --fonte-*) no seu [data-portfolio="..."], para usar as
+ * mesmas peças de estrutura dos demos, e o --cor-foco do anel de foco.
+ */
+[data-portfolio] :focus-visible {
+  outline: 2px solid var(--cor-foco, var(--cor-destaque));
+  outline-offset: 3px;
+}
+
+/* Sobre as faixas escuras, o foco fica claro. */
+[data-portfolio] .escuro {
+  --cor-foco: #ffffff;
+}
+
+[data-portfolio] ::selection {
+  background: var(--cor-primaria);
+  color: var(--cor-primaria-texto);
+}
+
+[data-portfolio] details > summary {
+  list-style: none;
+}
+
+[data-portfolio] details > summary::-webkit-details-marker {
+  display: none;
+}

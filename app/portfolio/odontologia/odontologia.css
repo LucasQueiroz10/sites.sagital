@@ -1,0 +1,71 @@
+/*
+ * Lumi Odontologia: branco de consultório, gelo azulado nas faixas e tinta
+ * azul-petróleo; verde-azulado como a única cor de ação. Albert Sans leve e
+ * grande nos títulos, cantos bem arredondados e botões em pílula.
+ */
+[data-portfolio="odontologia"] {
+  --cor-fundo: #ffffff;
+  --cor-superficie: #eef4f7;
+  --cor-gelo-forte: #e1ebf0;
+  --cor-texto: #0f2233;
+  --cor-texto-suave: #4c5e6d;
+  --cor-borda: #d6e1e8;
+  --cor-primaria: #0b6a74;
+  --cor-primaria-hover: #08535b;
+  --cor-primaria-texto: #ffffff;
+  --cor-destaque: #0b6a74;
+  /* Status de horário livre e de "aberto agora". */
+  --cor-livre: #1f9d6b;
+  --cor-aberto: #1f9d6b;
+  --raio: 14px;
+  --fonte-titulo: var(--font-albert), system-ui, sans-serif;
+  --fonte-texto: var(--font-albert), system-ui, sans-serif;
+  color-scheme: light;
+}
+
+[data-portfolio="odontologia"] :is(h1, h2) {
+  font-weight: 300;
+  letter-spacing: -0.035em;
+}
+
+[data-portfolio="odontologia"] h2 {
+  font-size: clamp(2.25rem, 7vw, 3.5rem);
+  line-height: 1.04;
+}
+
+[data-portfolio="odontologia"] .numero {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* O ponto do próximo horário pulsa devagar, como um "ao vivo". */
+  [data-portfolio="odontologia"] .pulso::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: var(--cor-livre);
+    animation: pulso 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+
+  [data-portfolio="odontologia"] .foto-que-assenta {
+    animation: assentar-lumi 1200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes pulso {
+  from {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+@keyframes assentar-lumi {
+  from {
+    transform: scale(1.06);
+  }
+}

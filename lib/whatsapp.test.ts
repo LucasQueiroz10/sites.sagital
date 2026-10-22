@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   mensagemDoDemo,
+  mensagemDoPortfolio,
   montarLinkWhatsApp,
   normalizarNumero,
 } from "./whatsapp";
@@ -45,5 +46,18 @@ describe("mensagemDoDemo", () => {
     );
     expect(mensagem).toContain("Olá, Iron Gym! Quero agendar");
     expect(mensagem).toContain("demonstrativo de academia da Sagital");
+  });
+});
+
+describe("mensagemDoPortfolio", () => {
+  it("cumprimenta o site e diz que veio do portfólio", () => {
+    const mensagem = mensagemDoPortfolio(
+      "Quero agendar uma conversa.",
+      "Duarte Moreira Advogados",
+    );
+    expect(mensagem.startsWith("Olá, Duarte Moreira Advogados! Quero")).toBe(
+      true,
+    );
+    expect(mensagem).toContain("portfólio da Sagital");
   });
 });
