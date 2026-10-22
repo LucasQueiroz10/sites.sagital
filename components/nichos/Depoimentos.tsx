@@ -1,19 +1,37 @@
+import type { ReactNode } from "react";
+import { Carrossel } from "@/components/ui/Carrossel";
+import { Container } from "@/components/ui/Container";
 import type { Depoimento } from "@/data/tipos";
 import { classes } from "@/lib/classes";
 
 type Props = {
   depoimentos: Depoimento[];
-  className?: string;
+  cabecalho: ReactNode;
   classeDoTexto?: string;
+  classeDasSetas?: string;
 };
 
-export function Depoimentos({ depoimentos, className, classeDoTexto }: Props) {
+/** Depoimentos num carrossel; o aviso de que são ilustrativos fica embaixo. */
+export function Depoimentos({
+  depoimentos,
+  cabecalho,
+  classeDoTexto,
+  classeDasSetas,
+}: Props) {
   return (
-    <div className={className}>
-      <ul className="grid gap-10 md:grid-cols-3 md:gap-8">
+    <>
+      <Carrossel
+        rotulo="Depoimentos"
+        cabecalho={cabecalho}
+        classeDasSetas={classeDasSetas}
+        className="gap-6 sm:gap-8"
+      >
         {depoimentos.map((depoimento) => (
-          <li key={depoimento.autoria}>
-            <figure>
+          <li
+            key={depoimento.autoria}
+            className="w-[85%] max-w-[26rem] shrink-0 snap-start sm:w-[26rem] lg:w-[calc((100%-4rem)/3)] lg:max-w-none"
+          >
+            <figure className="h-full border-t border-borda pt-6">
               <blockquote
                 className={classes(
                   "text-xl leading-snug text-pretty",
@@ -28,10 +46,12 @@ export function Depoimentos({ depoimentos, className, classeDoTexto }: Props) {
             </figure>
           </li>
         ))}
-      </ul>
-      <p className="mt-10 text-sm text-texto-suave">
-        Depoimentos ilustrativos, criados para este site demonstrativo.
-      </p>
-    </div>
+      </Carrossel>
+      <Container largura="larga">
+        <p className="mt-8 text-sm text-texto-suave">
+          Depoimentos ilustrativos, criados para este site demonstrativo.
+        </p>
+      </Container>
+    </>
   );
 }

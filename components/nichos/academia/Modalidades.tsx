@@ -1,13 +1,20 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
+import { Carrossel } from "@/components/ui/Carrossel";
 import type { Modalidade } from "@/data/tipos";
 import type { Aula } from "@/lib/agenda";
 
-type Props = { modalidades: Modalidade[]; grade: Aula[] };
+type Props = { modalidades: Modalidade[]; grade: Aula[]; cabecalho: ReactNode };
 
-export function Modalidades({ modalidades, grade }: Props) {
+/** Estrutura e modalidades numa faixa de fotos: desliza como a vitrine da recepção. */
+export function Modalidades({ modalidades, grade, cabecalho }: Props) {
   return (
-    <ul className="grid gap-x-6 gap-y-12 md:grid-cols-3">
-      {modalidades.map((modalidade, i) => {
+    <Carrossel
+      rotulo="Estrutura e modalidades"
+      cabecalho={cabecalho}
+      classeDasSetas="rounded-tema border border-borda bg-superficie text-texto"
+    >
+      {modalidades.map((modalidade) => {
         const aulasNaSemana = modalidade.naGrade
           ? grade.filter((aula) =>
               modalidade.naGrade?.includes(aula.modalidade),
@@ -16,31 +23,15 @@ export function Modalidades({ modalidades, grade }: Props) {
         return (
           <li
             key={modalidade.nome}
-            className={i === 0 ? "md:col-span-3" : undefined}
+            className="w-[82%] max-w-[24rem] shrink-0 snap-start sm:w-[24rem] lg:w-[calc((100%-2rem)/3)] lg:max-w-none"
           >
-            <figure
-              className={
-                i === 0
-                  ? "grid gap-6 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] md:items-end"
-                  : "grid gap-5"
-              }
-            >
-              <div
-                className={
-                  i === 0
-                    ? "relative -mx-4 aspect-[16/10] overflow-hidden sm:mx-0"
-                    : "relative -mx-4 aspect-[4/3] overflow-hidden sm:mx-0"
-                }
-              >
+            <figure className="grid gap-5">
+              <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
                   src={modalidade.imagem.src}
                   alt={modalidade.imagem.alt}
                   fill
-                  sizes={
-                    i === 0
-                      ? "(min-width: 768px) 60vw, 100vw"
-                      : "(min-width: 768px) 33vw, 100vw"
-                  }
+                  sizes="(min-width: 1024px) 30vw, (min-width: 640px) 24rem, 82vw"
                   className="object-cover"
                   placeholder="blur"
                 />
@@ -60,6 +51,6 @@ export function Modalidades({ modalidades, grade }: Props) {
           </li>
         );
       })}
-    </ul>
+    </Carrossel>
   );
 }

@@ -10,8 +10,7 @@ export const metadata: Metadata = {
     default: "Sagital — Sites para negócios locais",
     template: "%s | Sagital",
   },
-  description:
-    "Sites sob medida para academias, mercados, restaurantes e tabacarias.",
+  description: "Sites sob medida para elevar o nível do seu negócio.",
   appleWebApp: {
     capable: true,
     title: "Sagital",
@@ -22,7 +21,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#3b2bd9",
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

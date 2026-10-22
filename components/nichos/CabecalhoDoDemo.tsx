@@ -47,7 +47,7 @@ export function CabecalhoDoDemo({
           <NomeDoEstabelecimento />
         </a>
 
-        <nav aria-label="Seções" className="hidden items-center gap-6 md:flex">
+        <nav aria-label="Seções" className="hidden items-center gap-6 lg:flex">
           {navegacao.map((link) => (
             <a
               key={link.href}
@@ -69,7 +69,7 @@ export function CabecalhoDoDemo({
           aria-controls="menu-do-demo"
           onClick={() => setAberto((valor) => !valor)}
           className={classes(
-            "inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-tema px-2 text-sm font-medium md:hidden",
+            "inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-tema px-2 text-sm font-medium lg:hidden",
             foco,
           )}
         >
@@ -88,7 +88,7 @@ export function CabecalhoDoDemo({
         id="menu-do-demo"
         aria-label="Seções"
         hidden={!aberto}
-        className="border-t border-borda md:hidden"
+        className="border-t border-borda lg:hidden"
       >
         <Container largura="larga" className="flex flex-col py-2">
           {navegacao.map((link) => (

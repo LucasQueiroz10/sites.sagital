@@ -1,26 +1,35 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
+import { Carrossel } from "@/components/ui/Carrossel";
 import type { Imagem } from "@/data/tipos";
 import { classes } from "@/lib/classes";
 
-type Props = { imagens: Imagem[]; className?: string };
+type Props = {
+  imagens: Imagem[];
+  cabecalho: ReactNode;
+  classeDasSetas?: string;
+};
 
-/** Mosaico de fotos: a primeira ocupa duas linhas no desktop. */
-export function Galeria({ imagens, className }: Props) {
+/**
+ * As fotos numa faixa horizontal, em formatos alternados (a primeira mais
+ * larga), para a galeria ter ritmo de álbum e não de grade.
+ */
+export function Galeria({ imagens, cabecalho, classeDasSetas }: Props) {
   return (
-    <ul
-      className={classes(
-        "grid grid-cols-2 gap-2 sm:gap-3 md:auto-rows-[15rem] md:grid-cols-3",
-        className,
-      )}
+    <Carrossel
+      rotulo="Fotos"
+      cabecalho={cabecalho}
+      classeDasSetas={classeDasSetas}
+      className="items-end gap-2 sm:gap-3"
     >
       {imagens.map((imagem, i) => (
         <li
           key={imagem.alt}
           className={classes(
-            "relative overflow-hidden rounded-tema",
-            i === 0
-              ? "col-span-2 aspect-[4/3] md:col-span-1 md:row-span-2 md:aspect-auto"
-              : "aspect-square md:aspect-auto",
+            "relative shrink-0 snap-start overflow-hidden rounded-tema",
+            i % 3 === 0
+              ? "aspect-[4/3] w-[86%] sm:w-[32rem]"
+              : "aspect-[4/5] w-[62%] sm:w-[20rem]",
           )}
         >
           <Image
@@ -28,15 +37,15 @@ export function Galeria({ imagens, className }: Props) {
             alt={imagem.alt}
             fill
             sizes={
-              i === 0
-                ? "(min-width: 768px) 33vw, 100vw"
-                : "(min-width: 768px) 33vw, 50vw"
+              i % 3 === 0
+                ? "(min-width: 640px) 32rem, 86vw"
+                : "(min-width: 640px) 20rem, 62vw"
             }
             className="object-cover"
             placeholder="blur"
           />
         </li>
       ))}
-    </ul>
+    </Carrossel>
   );
 }

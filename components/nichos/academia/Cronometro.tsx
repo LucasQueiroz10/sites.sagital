@@ -27,7 +27,7 @@ export function Cronometro({ grade }: { grade: Aula[] }) {
           <span>{quandoFalar(proxima.diasDepois, agora)}</span>
         )}
       </div>
-      <p className="cronometro my-3 text-[clamp(3rem,16.5vw,5.75rem)] leading-none text-primaria">
+      <p className="cronometro my-3 text-[clamp(3rem,16.5vw,5.75rem)] lg:text-[clamp(3rem,7.5vw,5.75rem)] leading-none text-primaria">
         <MostradorLed texto={contagem} />
         <span className="sr-only">
           {proxima

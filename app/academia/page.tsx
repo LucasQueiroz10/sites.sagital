@@ -13,7 +13,7 @@ import { Funcionamento } from "@/components/nichos/Funcionamento";
 import { RodapeDoDemo } from "@/components/nichos/RodapeDoDemo";
 import { Botao } from "@/components/ui/Botao";
 import { Container } from "@/components/ui/Container";
-import { Secao } from "@/components/ui/Secao";
+import { Secao, TituloDaSecao } from "@/components/ui/Secao";
 import { academia as dados } from "@/data/academia";
 import "./academia.css";
 import { archivo } from "./fontes";
@@ -46,7 +46,7 @@ export default function PaginaAcademia() {
         <section aria-labelledby="titulo-principal">
           <Container
             largura="larga"
-            className="grid gap-10 pt-6 pb-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-stretch md:gap-12 md:py-14"
+            className="grid gap-10 pt-6 pb-4 sm:pb-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-stretch lg:gap-12 lg:py-14"
           >
             <div className="flex flex-col justify-center">
               <Cronometro grade={dados.grade} />
@@ -73,13 +73,13 @@ export default function PaginaAcademia() {
                 </Botao>
               </div>
             </div>
-            <div className="relative -mx-4 aspect-[4/3] sm:mx-0 md:aspect-auto md:min-h-[36rem]">
+            <div className="relative -mx-4 aspect-[4/3] sm:mx-0 sm:aspect-[16/9] lg:aspect-auto lg:min-h-[36rem]">
               <Image
                 src={dados.imagemPrincipal.src}
                 alt={dados.imagemPrincipal.alt}
                 fill
                 preload
-                sizes="(min-width: 768px) 50vw, 100vw"
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
                 placeholder="blur"
               />
@@ -87,8 +87,11 @@ export default function PaginaAcademia() {
           </Container>
         </section>
 
-        <Secao id="planos" titulo="Planos" largura="larga">
-          <TabelaDePlanos planos={dados.planos} />
+        <Secao id="planos" cheia>
+          <TabelaDePlanos
+            planos={dados.planos}
+            cabecalho={<TituloDaSecao id="planos">Planos</TituloDaSecao>}
+          />
         </Secao>
 
         <Secao
@@ -100,24 +103,30 @@ export default function PaginaAcademia() {
           <GradeDeAulas grade={dados.grade} />
         </Secao>
 
-        <Secao
-          id="estrutura"
-          titulo="Estrutura e modalidades"
-          largura="larga"
-          className="border-t border-borda"
-        >
-          <Modalidades modalidades={dados.modalidades} grade={dados.grade} />
+        <Secao id="estrutura" cheia className="border-t border-borda">
+          <Modalidades
+            modalidades={dados.modalidades}
+            grade={dados.grade}
+            cabecalho={
+              <TituloDaSecao id="estrutura">
+                Estrutura e modalidades
+              </TituloDaSecao>
+            }
+          />
         </Secao>
 
         <Secao
           id="depoimentos"
-          titulo="Quem treina aqui"
-          largura="larga"
+          cheia
           className="border-t border-borda bg-superficie"
         >
           <Depoimentos
             depoimentos={dados.depoimentos}
             classeDoTexto="text-2xl font-semibold"
+            classeDasSetas="rounded-tema border border-borda bg-fundo text-texto"
+            cabecalho={
+              <TituloDaSecao id="depoimentos">Quem treina aqui</TituloDaSecao>
+            }
           />
         </Secao>
 

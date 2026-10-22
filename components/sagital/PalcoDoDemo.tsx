@@ -1,0 +1,72 @@
+"use client";
+
+import { Eye } from "lucide-react";
+import Image from "next/image";
+import { classes } from "@/lib/classes";
+import { useEscolha } from "./EscolhaDoDemo";
+
+/**
+ * O palco do topo no desktop: a captura real do demo escolhido no navegador
+ * e no celular, trocando junto com o ramo. Abre a prévia ao vivo.
+ */
+export function PalcoDoDemo() {
+  const { demos, nicho, demo, abrirPrevia } = useEscolha();
+
+  return (
+    <div className="sg-noite relative hidden aspect-[6/5] overflow-hidden rounded-[32px] lg:block">
+      {demos.map((d) => {
+        const atual = d.nicho === nicho;
+        return (
+          <div
+            key={d.nicho}
+            aria-hidden={!atual}
+            className={classes(
+              "absolute inset-0 transition-[opacity,translate] duration-[360ms] ease-[cubic-bezier(.2,.8,.2,1)]",
+              atual ? "opacity-100" : "translate-y-3 opacity-0",
+            )}
+          >
+            {d.capturaDesktop && (
+              <div className="absolute top-[11%] left-[7%] w-[74%] overflow-hidden rounded-xl bg-[#e9eef4] shadow-[0_24px_60px_rgb(5_10_30/0.45)]">
+                <div className="flex h-7 items-center gap-1.5 px-3">
+                  <span className="size-2 rounded-full bg-[#ff5f57]" />
+                  <span className="size-2 rounded-full bg-[#febc2e]" />
+                  <span className="size-2 rounded-full bg-[#28c840]" />
+                </div>
+                <div className="relative aspect-[1440/900]">
+                  <Image
+                    src={d.capturaDesktop.src}
+                    alt={atual ? d.capturaDesktop.alt : ""}
+                    fill
+                    sizes="(min-width: 1280px) 520px, 40vw"
+                    className="object-cover object-top"
+                  />
+                </div>
+              </div>
+            )}
+            {d.captura && (
+              <div className="sg-celular absolute top-[27%] right-[6%] w-[25%] rounded-[1.75rem] p-1.5">
+                <div className="relative aspect-[390/844] overflow-hidden rounded-[1.4rem]">
+                  <Image
+                    src={d.captura.src}
+                    alt={atual ? d.captura.alt : ""}
+                    fill
+                    sizes="(min-width: 1280px) 180px, 14vw"
+                    className="object-cover object-top"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+      <button
+        type="button"
+        onClick={() => abrirPrevia()}
+        className="sg-pressiona absolute bottom-6 left-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-white/14 px-4 text-sm font-semibold text-white hover:bg-white/22 focus-visible:outline-white"
+      >
+        <Eye aria-hidden className="size-[18px]" strokeWidth={1.75} />
+        Ver {demo.rotulo.toLowerCase()} ao vivo
+      </button>
+    </div>
+  );
+}

@@ -11,7 +11,7 @@ import { Galeria } from "@/components/nichos/Galeria";
 import { RodapeDoDemo } from "@/components/nichos/RodapeDoDemo";
 import { DiretorioDaLoja } from "@/components/nichos/tabacaria/DiretorioDaLoja";
 import { Container } from "@/components/ui/Container";
-import { Secao } from "@/components/ui/Secao";
+import { Secao, TituloDaSecao } from "@/components/ui/Secao";
 import { tabacaria as dados } from "@/data/tabacaria";
 import { jost, marcellus } from "./fontes";
 import "./tabacaria.css";
@@ -139,13 +139,12 @@ export default function PaginaTabacaria() {
             </div>
           </Secao>
 
-          <Secao
-            id="galeria"
-            titulo="O ambiente"
-            largura="larga"
-            className="border-t border-borda"
-          >
-            <Galeria imagens={dados.galeria} />
+          <Secao id="galeria" cheia className="border-t border-borda">
+            <Galeria
+              imagens={dados.galeria}
+              cabecalho={<TituloDaSecao id="galeria">O ambiente</TituloDaSecao>}
+              classeDasSetas="moldura rounded-none bg-superficie text-[var(--cor-latao)]"
+            />
           </Secao>
 
           <Secao

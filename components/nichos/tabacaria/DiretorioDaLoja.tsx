@@ -23,26 +23,26 @@ export function DiretorioDaLoja({ categorias, imagensDaLoja }: Props) {
         ))}
       </ul>
 
-      <div className="relative grid content-start gap-4">
+      <div className="relative grid grid-cols-2 content-start gap-3 md:grid-cols-1 md:gap-4">
         {principal && (
           <div className="relative aspect-[3/4] overflow-hidden">
             <Image
               src={principal.src}
               alt={principal.alt}
               fill
-              sizes="(min-width: 768px) 40vw, 100vw"
+              sizes="(min-width: 768px) 40vw, 48vw"
               className="object-cover"
               placeholder="blur"
             />
           </div>
         )}
         {detalhe && (
-          <div className="moldura relative aspect-[4/3] overflow-hidden md:-mt-28 md:-ml-10 md:w-3/4">
+          <div className="moldura relative aspect-[3/4] overflow-hidden md:-mt-28 md:-ml-10 md:aspect-[4/3] md:w-3/4">
             <Image
               src={detalhe.src}
               alt={detalhe.alt}
               fill
-              sizes="(min-width: 768px) 30vw, 100vw"
+              sizes="(min-width: 768px) 30vw, 48vw"
               className="object-cover"
               placeholder="blur"
             />

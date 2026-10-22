@@ -1,95 +1,124 @@
+import { Carrossel } from "@/components/ui/Carrossel";
+import { Container } from "@/components/ui/Container";
 import type { CategoriaDoCardapio } from "@/data/tipos";
 import { formatarPreco } from "@/lib/formato";
 
 const foco =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
 
-/** O cardápio impresso: categorias, pontilhado até o preço e marcação vegetariana. */
+/**
+ * O cardápio impresso, uma folha por categoria, lado a lado: no celular, uma
+ * folha por vez; no desktop, duas, como o cardápio aberto na mesa. Pontilhado
+ * até o preço e marcação vegetariana.
+ */
 export function Cardapio({
   categorias,
 }: {
   categorias: CategoriaDoCardapio[];
 }) {
   return (
-    <div className="mx-auto max-w-3xl rounded-tema bg-white px-5 py-8 ring-1 ring-cobalto/25 ring-offset-4 ring-offset-white outline outline-cobalto/70 -outline-offset-8 sm:px-12 sm:py-12">
-      <nav aria-label="Categorias do cardápio" className="mb-10">
-        <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-          {categorias.map((categoria) => (
-            <li key={categoria.id}>
-              <a
-                href={`#cardapio-${categoria.id}`}
-                className={`inline-flex min-h-11 items-center text-sm font-semibold tracking-wide text-cobalto uppercase underline-offset-4 hover:underline ${foco}`}
+    <>
+      <Carrossel
+        rotulo="Folhas do cardápio"
+        classeDasSetas="rounded-tema border border-cobalto/40 bg-esmalte text-cobalto"
+        classeDoPonto={{ atual: "bg-cobalto", outros: "bg-cobalto/25" }}
+        className="gap-4 py-3 sm:gap-6"
+        cabecalho={
+          <div className="grid justify-items-center gap-6">
+            <h2
+              id="cardapio-titulo"
+              className="w-fit rounded-tema border-2 border-cobalto bg-esmalte px-8 py-4 text-center text-4xl text-cobalto shadow-[0_0_0_12px_var(--cor-esmalte)] sm:text-5xl"
+            >
+              Cardápio
+            </h2>
+            <nav
+              aria-label="Categorias do cardápio"
+              className="rounded-tema bg-esmalte px-3"
+            >
+              <ul className="flex flex-wrap justify-center gap-x-3 sm:gap-x-5">
+                {categorias.map((categoria) => (
+                  <li key={categoria.id}>
+                    <a
+                      href={`#cardapio-${categoria.id}`}
+                      className={`inline-flex min-h-11 items-center text-sm font-semibold tracking-wide text-cobalto uppercase underline-offset-4 hover:underline ${foco}`}
+                    >
+                      {categoria.nome}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        }
+      >
+        {categorias.map((categoria) => (
+          <li
+            key={categoria.id}
+            className="w-[88%] max-w-[34rem] shrink-0 snap-start sm:w-[34rem] lg:w-[calc((100%-1.5rem)/2)] lg:max-w-none"
+          >
+            <section
+              id={`cardapio-${categoria.id}`}
+              aria-labelledby={`titulo-${categoria.id}`}
+              className="h-full scroll-mt-24 rounded-tema bg-white px-6 py-8 ring-1 ring-cobalto/25 ring-offset-4 ring-offset-white outline outline-cobalto/70 -outline-offset-8 sm:px-10 sm:py-10"
+            >
+              <h3
+                id={`titulo-${categoria.id}`}
+                className="mb-6 flex items-center gap-4 text-3xl text-cobalto"
               >
                 {categoria.nome}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <div className="grid gap-12">
-        {categorias.map((categoria) => (
-          <section
-            key={categoria.id}
-            id={`cardapio-${categoria.id}`}
-            aria-labelledby={`titulo-${categoria.id}`}
-            className="scroll-mt-24"
-          >
-            <h3
-              id={`titulo-${categoria.id}`}
-              className="mb-6 flex items-center gap-4 text-3xl text-cobalto"
-            >
-              {categoria.nome}
-              <span aria-hidden className="h-px flex-1 bg-cobalto/30" />
-            </h3>
-            <ul className="grid gap-5">
-              {categoria.itens.map((item) => (
-                <li key={item.nome}>
-                  <div className="flex items-baseline gap-3">
-                    <span className="font-semibold">
-                      {item.vegetariano ? (
-                        <>
-                          {item.nome.split(" ").slice(0, -1).join(" ")}{" "}
-                          {/* A última palavra e o selo ficam juntos: o "V" nunca quebra sozinho. */}
-                          <span className="whitespace-nowrap">
-                            {item.nome.split(" ").at(-1)}
-                            <abbr
-                              title="Vegetariano"
-                              className="ml-2 inline-grid size-5 translate-y-[-0.1em] place-items-center rounded-full border border-cobalto text-[0.65rem] font-bold text-cobalto no-underline"
-                            >
-                              V
-                            </abbr>
-                          </span>
-                        </>
-                      ) : (
-                        item.nome
-                      )}
-                    </span>
-                    <span
-                      aria-hidden
-                      className="min-w-6 flex-1 translate-y-[-0.3em] border-b border-dotted border-texto-suave/60"
-                    />
-                    <span className="font-semibold tabular-nums">
-                      {formatarPreco(item.preco)}
-                    </span>
-                  </div>
-                  {item.descricao && (
-                    <p className="mt-1 max-w-[52ch] text-texto-suave">
-                      {item.descricao}
-                    </p>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </section>
+                <span aria-hidden className="h-px flex-1 bg-cobalto/30" />
+              </h3>
+              <ul className="grid gap-5">
+                {categoria.itens.map((item) => (
+                  <li key={item.nome}>
+                    <div className="flex items-baseline gap-3">
+                      <span className="font-semibold">
+                        {item.vegetariano ? (
+                          <>
+                            {item.nome.split(" ").slice(0, -1).join(" ")}{" "}
+                            {/* A última palavra e o selo ficam juntos: o "V" nunca quebra sozinho. */}
+                            <span className="whitespace-nowrap">
+                              {item.nome.split(" ").at(-1)}
+                              <abbr
+                                title="Vegetariano"
+                                className="ml-2 inline-grid size-5 translate-y-[-0.1em] place-items-center rounded-full border border-cobalto text-[0.65rem] font-bold text-cobalto no-underline"
+                              >
+                                V
+                              </abbr>
+                            </span>
+                          </>
+                        ) : (
+                          item.nome
+                        )}
+                      </span>
+                      <span
+                        aria-hidden
+                        className="min-w-6 flex-1 translate-y-[-0.3em] border-b border-dotted border-texto-suave/60"
+                      />
+                      <span className="font-semibold tabular-nums">
+                        {formatarPreco(item.preco)}
+                      </span>
+                    </div>
+                    {item.descricao && (
+                      <p className="mt-1 max-w-[52ch] text-texto-suave">
+                        {item.descricao}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </li>
         ))}
-      </div>
-      <p className="mt-12 text-center text-sm text-texto-suave">
-        <abbr title="Vegetariano" className="no-underline">
-          V
-        </abbr>{" "}
-        = vegetariano. Preços em reais, serviço não incluso.
-      </p>
-    </div>
+      </Carrossel>
+      <Container largura="larga">
+        <p className="mx-auto mt-6 w-fit rounded-tema bg-esmalte px-3 py-1 text-center text-sm text-texto-suave">
+          <abbr title="Vegetariano" className="no-underline">
+            V
+          </abbr>{" "}
+          = vegetariano. Preços em reais, serviço não incluso.
+        </p>
+      </Container>
+    </>
   );
 }

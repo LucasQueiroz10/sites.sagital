@@ -3,6 +3,7 @@
 import { CloudDownload, CloudOff, Check } from "lucide-react";
 import { useState } from "react";
 import { classes } from "@/lib/classes";
+import { BotaoSagital } from "./BotaoSagital";
 
 type Estado =
   | { tipo: "parado" }
@@ -76,18 +77,34 @@ export function PreparadorOffline({ paginas }: Props) {
   return (
     <section
       aria-labelledby="offline-titulo"
-      className="placa mt-8 grid gap-4 rounded-tema bg-white p-5 sm:grid-cols-[1fr_auto] sm:items-center sm:p-6 print:hidden"
+      className="mt-4 grid gap-4 rounded-3xl bg-superficie p-5 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-5 sm:p-6 print:hidden"
     >
-      <div>
-        <h2 id="offline-titulo" className="flex items-center gap-2 text-xl">
-          {estado.tipo === "pronto" ? (
-            <Check aria-hidden className="size-6 text-destaque" />
-          ) : (
-            <CloudOff aria-hidden className="size-6 text-texto-suave" />
-          )}
+      <span
+        aria-hidden
+        className={classes(
+          "grid size-11 place-items-center rounded-full",
+          estado.tipo === "pronto"
+            ? "bg-[#e8f8ef] text-[#0f8f48]"
+            : "bg-white text-destaque",
+        )}
+      >
+        {estado.tipo === "pronto" ? (
+          <Check className="size-5" strokeWidth={2.25} />
+        ) : (
+          <CloudOff className="size-5" strokeWidth={1.75} />
+        )}
+      </span>
+      <div className="min-w-0">
+        <h2
+          id="offline-titulo"
+          className="text-[1.0625rem] font-bold tracking-[-0.01em]"
+        >
           Modo offline
         </h2>
-        <p className="mt-2 text-texto-suave" aria-live="polite">
+        <p
+          className="mt-1 text-[0.9375rem] text-texto-suave"
+          aria-live="polite"
+        >
           {estado.tipo === "parado" &&
             "Antes de sair para as visitas, prepare este aparelho: os quatro demos passam a abrir sem internet, com qualquer nome e cor."}
           {estado.tipo === "preparando" &&
@@ -97,27 +114,34 @@ export function PreparadorOffline({ paginas }: Props) {
           {estado.tipo === "erro" && estado.mensagem}
         </p>
         {preparando && (
-          <progress
-            className="mt-3 h-2 w-full accent-[var(--cor-primaria)]"
-            value={estado.feito}
-            max={estado.total || 1}
-          />
+          <div
+            role="progressbar"
+            aria-label="Fotos baixadas"
+            aria-valuemin={0}
+            aria-valuemax={estado.total || 1}
+            aria-valuenow={estado.feito}
+            className="mt-3 h-1.5 overflow-hidden rounded-full bg-[var(--cor-borda)]"
+          >
+            <div
+              className="h-full rounded-full bg-destaque transition-[width] duration-200"
+              style={{
+                width: `${Math.round((estado.feito / (estado.total || 1)) * 100)}%`,
+              }}
+            />
+          </div>
         )}
       </div>
-      <button
-        type="button"
+      <BotaoSagital
+        variante="escuro"
         onClick={preparar}
         disabled={preparando}
-        className={classes(
-          "inline-flex min-h-12 items-center justify-center gap-2 rounded-tema bg-primaria px-5 font-semibold text-primaria-texto hover:bg-primaria-hover disabled:opacity-60",
-          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque",
-        )}
+        className="w-full sm:w-auto"
       >
-        <CloudDownload aria-hidden className="size-5" />
+        <CloudDownload aria-hidden className="size-5" strokeWidth={1.75} />
         {estado.tipo === "pronto"
           ? "Preparar de novo"
           : "Preparar modo offline"}
-      </button>
+      </BotaoSagital>
     </section>
   );
 }

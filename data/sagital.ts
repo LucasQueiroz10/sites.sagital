@@ -1,7 +1,11 @@
 import demoAcademia from "@/public/imagens/sagital/demo-academia.png";
+import demoAcademiaDesktop from "@/public/imagens/sagital/demo-academia-desktop.png";
 import demoMercado from "@/public/imagens/sagital/demo-mercado.png";
+import demoMercadoDesktop from "@/public/imagens/sagital/demo-mercado-desktop.png";
 import demoRestaurante from "@/public/imagens/sagital/demo-restaurante.png";
+import demoRestauranteDesktop from "@/public/imagens/sagital/demo-restaurante-desktop.png";
 import demoTabacaria from "@/public/imagens/sagital/demo-tabacaria.png";
+import demoTabacariaDesktop from "@/public/imagens/sagital/demo-tabacaria-desktop.png";
 import arenaFight from "@/public/imagens/sagital/variacao-arena-fight.png";
 import boxVilaNova from "@/public/imagens/sagital/variacao-box-vila-nova.png";
 import ironGym from "@/public/imagens/sagital/variacao-iron-gym.png";
@@ -22,7 +26,10 @@ export type Demo = {
   rotulo: string;
   padrao: PadraoDoTema;
   descricao: string;
+  /** Primeira tela no celular (390px). */
   captura: Imagem;
+  /** Primeira tela no computador (1440px). */
+  capturaDesktop: Imagem;
   /** Etiqueta de origem: a paleta e a fonte de cada demo. */
   paleta: `#${string}`[];
   fonte: string;
@@ -39,6 +46,10 @@ export const demos: Demo[] = [
       src: demoAcademia,
       alt: "Primeira tela do demo de academia no celular",
     },
+    capturaDesktop: {
+      src: demoAcademiaDesktop,
+      alt: "Primeira tela do demo de academia no computador",
+    },
     paleta: ["#0d0e0f", "#ff4b1f", "#f1f1ec"],
     fonte: "Archivo",
   },
@@ -51,6 +62,10 @@ export const demos: Demo[] = [
     captura: {
       src: demoMercado,
       alt: "Primeira tela do demo de mercado no celular",
+    },
+    capturaDesktop: {
+      src: demoMercadoDesktop,
+      alt: "Primeira tela do demo de mercado no computador",
     },
     paleta: ["#ffd60a", "#e0101b", "#141414"],
     fonte: "Barlow Condensed",
@@ -65,6 +80,10 @@ export const demos: Demo[] = [
       src: demoRestaurante,
       alt: "Primeira tela do demo de restaurante no celular",
     },
+    capturaDesktop: {
+      src: demoRestauranteDesktop,
+      alt: "Primeira tela do demo de restaurante no computador",
+    },
     paleta: ["#f8f7f3", "#1f3f95", "#8a1c3c"],
     fonte: "Young Serif",
   },
@@ -78,23 +97,74 @@ export const demos: Demo[] = [
       src: demoTabacaria,
       alt: "Primeira tela do demo de tabacaria no celular",
     },
+    capturaDesktop: {
+      src: demoTabacariaDesktop,
+      alt: "Primeira tela do demo de tabacaria no computador",
+    },
     paleta: ["#120e0b", "#a8835a", "#efe6d8"],
     fonte: "Marcellus",
   },
 ];
 
-/** O mesmo demo em quatro clientes: a prova de que a personalização é real. */
-export const variacoes: Imagem[] = [
-  { src: ironGym, alt: "Demo de academia com o nome Iron Gym, em laranja" },
+export type Variacao = {
+  /** Nome fictício do cliente, como vai na URL. */
+  nome: string;
+  cor: `#${string}`;
+  nomeDaCor: string;
+  captura: Imagem;
+};
+
+/**
+ * O mesmo demo em quatro clientes: a prova de que a personalização é real.
+ * As cores são as mesmas do gerador de link.
+ */
+export const variacoes: Variacao[] = [
   {
-    src: boxVilaNova,
-    alt: "Demo de academia com o nome Box Vila Nova, em verde",
+    nome: "Iron Gym",
+    cor: "#f97316",
+    nomeDaCor: "Laranja",
+    captura: {
+      src: ironGym,
+      alt: "Demo de academia com o nome Iron Gym, em laranja",
+    },
   },
   {
-    src: studioCorpo,
-    alt: "Demo de academia com o nome Studio Corpo, em roxo",
+    nome: "Box Vila Nova",
+    cor: "#16a34a",
+    nomeDaCor: "Verde",
+    captura: {
+      src: boxVilaNova,
+      alt: "Demo de academia com o nome Box Vila Nova, em verde",
+    },
   },
-  { src: arenaFight, alt: "Demo de academia com o nome Arena Fight, em azul" },
+  {
+    nome: "Studio Corpo",
+    cor: "#7c3aed",
+    nomeDaCor: "Roxo",
+    captura: {
+      src: studioCorpo,
+      alt: "Demo de academia com o nome Studio Corpo, em roxo",
+    },
+  },
+  {
+    nome: "Arena Fight",
+    cor: "#2563eb",
+    nomeDaCor: "Azul",
+    captura: {
+      src: arenaFight,
+      alt: "Demo de academia com o nome Arena Fight, em azul",
+    },
+  },
+];
+
+/** Cores prontas do gerador de link: as mesmas das variações e mais duas. */
+export const coresDoGerador: { nome: string; valor: `#${string}` }[] = [
+  { nome: "Vermelho", valor: "#e11d48" },
+  { nome: "Laranja", valor: "#f97316" },
+  { nome: "Verde", valor: "#16a34a" },
+  { nome: "Azul", valor: "#2563eb" },
+  { nome: "Roxo", valor: "#7c3aed" },
+  { nome: "Grafite", valor: "#1f2937" },
 ];
 
 export const processo = [
@@ -164,5 +234,10 @@ export const observacoesDosPacotes =
 
 export const mensagemDeContato =
   "Olá! Vi o site da Sagital e quero um site para o meu negócio.";
+
+/** Mensagem do botão de cada pacote: o vendedor já sabe qual interessou. */
+export function mensagemDoPacote(nome: string): string {
+  return `Olá! Vi o site da Sagital e quero saber mais sobre o pacote ${nome}.`;
+}
 
 export const urlDoCodigo = "https://github.com/LucasQueiroz10/sites.sagital";

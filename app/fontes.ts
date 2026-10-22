@@ -1,9 +1,9 @@
-import { Lexend } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 
-// Lexend: desenhada para leitura fácil, com o tom direto das placas de
-// balcão e de sinalização. É a voz da Sagital.
-export const lexend = Lexend({
+// Plus Jakarta Sans, a fonte única do Sagital Design System: o peso e o
+// tamanho fazem a hierarquia. Variável de 200 a 800, servida pelo próprio site.
+export const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-lexend",
+  variable: "--font-jakarta",
   display: "swap",
 });

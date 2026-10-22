@@ -59,6 +59,34 @@ body {
   color: var(--cor-primaria-texto);
 }
 
+/*
+ * Trilha dos carrosséis: vai de borda a borda da tela, mas o primeiro item
+ * começa na margem do conteúdo (a mesma do Container: 16px, 24px a partir de
+ * 640px, centralizado na largura máxima).
+ */
+.trilho {
+  --margem-trilho: max(
+    1rem,
+    calc((100% - var(--trilho-largura, 80rem)) / 2 + 1rem)
+  );
+  padding-inline: var(--margem-trilho);
+  scroll-padding-inline: var(--margem-trilho);
+  scrollbar-width: none;
+}
+
+.trilho::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .trilho {
+    --margem-trilho: max(
+      1.5rem,
+      calc((100% - var(--trilho-largura, 80rem)) / 2 + 1.5rem)
+    );
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

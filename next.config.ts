@@ -19,6 +19,9 @@ const desenvolvimento = process.env.NODE_ENV === "development";
  *   code gerado no navegador para download.
  * - upgrade-insecure-requests: só na Vercel (HTTPS); no localhost quebraria
  *   o servidor de teste em HTTP.
+ * - frame-ancestors 'self': a prévia ao vivo da página inicial mostra o demo
+ *   num iframe do próprio site. Nenhum outro site pode emoldurar as páginas
+ *   (proteção contra clickjacking mantida); o X-Frame-Options acompanha.
  */
 const csp = [
   "default-src 'self'",
@@ -32,7 +35,8 @@ const csp = [
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
-  "frame-ancestors 'none'",
+  "frame-src 'self'",
+  "frame-ancestors 'self'",
   ...(process.env.VERCEL ? ["upgrade-insecure-requests"] : []),
 ].join("; ");
 
@@ -43,7 +47,7 @@ const cabecalhosDeSeguranca = [
     value: "max-age=63072000; includeSubDomains; preload",
   },
   { key: "X-Content-Type-Options", value: "nosniff" },
-  { key: "X-Frame-Options", value: "DENY" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   {
     key: "Permissions-Policy",

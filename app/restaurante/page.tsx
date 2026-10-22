@@ -11,7 +11,7 @@ import { Cardapio } from "@/components/nichos/restaurante/Cardapio";
 import { ReservaDeMesa } from "@/components/nichos/restaurante/ReservaDeMesa";
 import { Botao } from "@/components/ui/Botao";
 import { Container } from "@/components/ui/Container";
-import { Secao } from "@/components/ui/Secao";
+import { Secao, TituloDaSecao } from "@/components/ui/Secao";
 import { restaurante as dados } from "@/data/restaurante";
 import { figtree, youngSerif } from "./fontes";
 import "./restaurante.css";
@@ -98,15 +98,7 @@ export default function PaginaRestaurante() {
           className="relative isolate scroll-mt-20 py-16 sm:py-24"
         >
           <Azulejo tamanho={64} className="absolute inset-0 -z-10 size-full" />
-          <Container largura="larga">
-            <h2
-              id="cardapio-titulo"
-              className="mx-auto mb-10 w-fit rounded-tema border-2 border-cobalto bg-esmalte px-8 py-4 text-center text-4xl text-cobalto shadow-[0_0_0_12px_var(--cor-esmalte)] sm:text-5xl"
-            >
-              Cardápio
-            </h2>
-            <Cardapio categorias={dados.cardapio} />
-          </Container>
+          <Cardapio categorias={dados.cardapio} />
         </section>
 
         <Secao id="casa" titulo="A casa" largura="larga">
@@ -137,13 +129,12 @@ export default function PaginaRestaurante() {
           </div>
         </Secao>
 
-        <Secao
-          id="galeria"
-          titulo="Galeria"
-          largura="larga"
-          className="border-t border-borda"
-        >
-          <Galeria imagens={dados.galeria} />
+        <Secao id="galeria" cheia className="border-t border-borda">
+          <Galeria
+            imagens={dados.galeria}
+            cabecalho={<TituloDaSecao id="galeria">Galeria</TituloDaSecao>}
+            classeDasSetas="rounded-tema border border-borda bg-fundo text-cobalto"
+          />
         </Secao>
 
         <Secao

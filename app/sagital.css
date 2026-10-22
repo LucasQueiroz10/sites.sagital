@@ -1,59 +1,201 @@
-/* Mundo da Sagital: a placa de QR do balcão. */
-[data-pagina="sagital"] {
-  --cor-fundo: #ecebe7;
-  --cor-superficie: #f7f6f3;
-  --cor-texto: #121212;
-  --cor-texto-suave: #4a4946;
-  --cor-borda: #cfcdc6;
-  --cor-primaria: #3b2bd9;
-  --cor-primaria-hover: #3024b8;
-  --cor-primaria-texto: #ffffff;
-  --cor-destaque: #3b2bd9;
-  --raio: 14px;
-  --fonte-titulo: var(--font-lexend), system-ui, sans-serif;
-  --fonte-texto: var(--font-lexend), system-ui, sans-serif;
-  color-scheme: light;
+/*
+ * Mundo da Sagital: o Sagital Design System (UI kit do app). Branco de app,
+ * cinza azulado no lugar de bordas, tinta azul-marinho, azul royal como única
+ * cor de ação e o degradê céu→royal só no botão principal de cada tela.
+ */
+@layer base {
+  [data-pagina="sagital"] {
+    /* Tokens compartilhados com os componentes de components/ui. */
+    --cor-fundo: #ffffff;
+    --cor-superficie: #f1f5fa;
+    --cor-texto: #111a3d;
+    --cor-texto-suave: #5b6478;
+    --cor-borda: #dce2ea;
+    --cor-primaria: #1f48c2;
+    --cor-primaria-hover: #1a39a0;
+    --cor-primaria-texto: #ffffff;
+    --cor-destaque: #1f48c2;
+    --raio: 12px;
+    --fonte-titulo: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+    --fonte-texto: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+
+    /* Próprios do design system. */
+    --sg-tinta-forte: #0b0f1e;
+    --sg-terciario: #6b7486;
+    --sg-campo: #f7f9fc;
+    --sg-pressionado: #e9eef4;
+    --sg-borda-sutil: #e9eef4;
+    --sg-ceu: #6fcaef;
+    --sg-marinho-800: #1a2756;
+    /* O início do degradê é o céu um tom abaixo do kit (#1381c0 no lugar de
+       #1a9bdc): assim o texto branco do botão passa de 4,5:1 em toda a largura. */
+    --sg-degrade: linear-gradient(90deg, #1381c0 0%, #1f48c2 100%);
+    --sg-degrade-pressionado: linear-gradient(90deg, #1170a8 0%, #1a39a0 100%);
+    --sg-noite:
+      radial-gradient(120% 90% at 0% 100%, #2a9ac4 0%, rgb(42 154 196 / 0) 45%),
+      linear-gradient(160deg, #141b3b 0%, #18266a 55%, #1f3cae 100%);
+    --sg-promo: linear-gradient(100deg, #15214a 0%, #22357f 70%, #2c44a3 100%);
+    --sg-sombra-sm: 0 2px 8px rgb(17 26 61 / 0.06);
+    --sg-sombra-md: 0 6px 20px rgb(17 26 61 / 0.08);
+    --sg-sombra-lg: 0 16px 48px rgb(17 26 61 / 0.14);
+    --sg-sombra-botao: 0 6px 16px rgb(31 72 194 / 0.24);
+    --sg-sombra-folha: 0 -12px 40px rgb(10 16 41 / 0.16);
+    --sg-curva: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --sg-curva-enfatica: cubic-bezier(0.3, 0, 0, 1);
+
+    color-scheme: light;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01" 0;
+  }
+
+  [data-pagina="sagital"] :is(h1, h2, h3) {
+    font-family: var(--fonte-titulo);
+    color: var(--sg-tinta-forte);
+    text-wrap: balance;
+  }
+
+  /* Display: negrito, tracking apertado e uma frase em azul. */
+  [data-pagina="sagital"] .sg-display {
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+  }
+
+  [data-pagina="sagital"] .sg-titulo {
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+
+  [data-pagina="sagital"] .sg-num {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  [data-pagina="sagital"] ::selection {
+    background: #b9d0f8;
+    color: var(--cor-texto);
+  }
+
+  [data-pagina="sagital"] input {
+    caret-color: var(--cor-primaria);
+  }
+
+  [data-pagina="sagital"] input::placeholder {
+    color: var(--sg-terciario);
+    opacity: 1;
+  }
+
+  [data-pagina="sagital"] :focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 2px;
+  }
 }
 
-[data-pagina="sagital"] :is(h1, h2, h3) {
-  font-family: var(--fonte-titulo);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.04;
+@layer components {
+  /* Botão principal: o degradê do kit, com o "pressionado" escurecendo. */
+  [data-pagina="sagital"] .sg-degrade {
+    background-image: var(--sg-degrade);
+    color: #ffffff;
+    box-shadow: var(--sg-sombra-botao);
+  }
+
+  [data-pagina="sagital"] .sg-degrade:active {
+    background-image: var(--sg-degrade-pressionado);
+  }
+
+  @media (hover: hover) {
+    [data-pagina="sagital"] .sg-degrade:hover {
+      background-image: var(--sg-degrade-pressionado);
+    }
+  }
+
+  [data-pagina="sagital"] .sg-noite {
+    background: var(--sg-noite);
+    color: #ffffff;
+  }
+
+  [data-pagina="sagital"] .sg-promo {
+    background: var(--sg-promo);
+    color: #ffffff;
+  }
+
+  /* Pressionar = escala .98, sem bounce. */
+  [data-pagina="sagital"] .sg-pressiona {
+    transition:
+      transform 140ms var(--sg-curva),
+      background-color 140ms var(--sg-curva),
+      box-shadow 140ms var(--sg-curva),
+      color 140ms var(--sg-curva);
+  }
+
+  [data-pagina="sagital"] .sg-pressiona:active:not(:disabled) {
+    transform: scale(0.98);
+  }
 }
 
-/* Placa de acrílico: papel branco, borda fina e sombra de objeto sobre o balcão. */
-[data-pagina="sagital"] .placa {
-  border: 1px solid #d9d7d0;
+/* Moldura de aparelho para as capturas: celular de bisel escuro e navegador. */
+[data-pagina="sagital"] .sg-celular {
+  background: #16181b;
   box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.9) inset,
-    0 28px 44px -28px rgb(18 18 18 / 0.45),
-    0 3px 8px -3px rgb(18 18 18 / 0.18);
+    0 0 0 1px #34373c,
+    var(--sg-sombra-lg);
+}
+
+/* Diálogos: a folha sobe de baixo no celular; no desktop, aparece no centro. */
+[data-pagina="sagital"] dialog::backdrop,
+dialog.sg-dialogo::backdrop {
+  background: rgb(17 26 61 / 0.32);
+  backdrop-filter: blur(3px);
+}
+
+dialog.sg-dialogo[open] {
+  animation: sg-folha-sobe 360ms cubic-bezier(0.3, 0, 0, 1);
+}
+
+dialog.sg-dialogo[open]::backdrop {
+  animation: sg-aparece 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+dialog.sg-previa[open] {
+  animation: sg-aparece 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes sg-folha-sobe {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes sg-aparece {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (min-width: 640px) {
+  @keyframes sg-folha-sobe {
+    from {
+      transform: translateY(24px);
+      opacity: 0;
+    }
+  }
 }
 
 /* Enquanto o link não existe, um QR "apagado" ocupa o lugar. */
 [data-pagina="sagital"] .qr-fantasma {
   background-image: conic-gradient(
-    #121212 25%,
+    #111a3d 25%,
     transparent 0 50%,
-    #121212 0 75%,
+    #111a3d 0 75%,
     transparent 0
   );
   background-size: 14px 14px;
   opacity: 0.07;
 }
 
-[data-pagina="sagital"] .adesivo {
-  border: 6px solid #ffffff;
-  box-shadow: 0 10px 22px -14px rgb(18 18 18 / 0.5);
-}
-
 @media print {
   [data-pagina="sagital"] {
     background: #ffffff;
-  }
-  [data-pagina="sagital"] .placa {
-    border: 0;
-    box-shadow: none;
   }
 }

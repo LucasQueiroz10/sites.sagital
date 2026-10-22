@@ -9,6 +9,8 @@ import {
   SprayCan,
   type LucideIcon,
 } from "lucide-react";
+import type { ReactNode } from "react";
+import { Carrossel } from "@/components/ui/Carrossel";
 import type { Corredor, IconeDoCorredor } from "@/data/tipos";
 import { textoSobre, type CorHex } from "@/lib/tema";
 
@@ -24,16 +26,26 @@ const icones: Record<IconeDoCorredor, LucideIcon> = {
 };
 
 /** Os departamentos como as placas penduradas sobre os corredores da loja. */
-export function Corredores({ corredores }: { corredores: Corredor[] }) {
+export function Corredores({
+  corredores,
+  cabecalho,
+}: {
+  corredores: Corredor[];
+  cabecalho: ReactNode;
+}) {
   return (
-    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <Carrossel
+      rotulo="Corredores da loja"
+      cabecalho={cabecalho}
+      classeDasSetas="rounded-full border border-borda bg-white text-texto"
+    >
       {corredores.map((corredor) => {
         const Icone = icones[corredor.icone];
         const cor = corredor.cor as CorHex;
         return (
           <li
             key={corredor.numero}
-            className="overflow-hidden rounded-tema border border-borda bg-white"
+            className="w-[78%] max-w-[20rem] shrink-0 snap-start overflow-hidden rounded-tema border border-borda bg-white sm:w-[20rem] lg:w-[calc((100%-3rem)/4)] lg:max-w-none"
           >
             <div
               className="flex items-center gap-3 px-4 py-3"
@@ -52,6 +64,6 @@ export function Corredores({ corredores }: { corredores: Corredor[] }) {
           </li>
         );
       })}
-    </ul>
+    </Carrossel>
   );
 }

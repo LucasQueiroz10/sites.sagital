@@ -9,7 +9,7 @@ import { CapaDoEncarte } from "@/components/nichos/mercado/CapaDoEncarte";
 import { Corredores } from "@/components/nichos/mercado/Corredores";
 import { CupomDeEntrega } from "@/components/nichos/mercado/CupomDeEntrega";
 import { GradeDeOfertas } from "@/components/nichos/mercado/GradeDeOfertas";
-import { Secao } from "@/components/ui/Secao";
+import { Secao, TituloDaSecao } from "@/components/ui/Secao";
 import { mercado as dados } from "@/data/mercado";
 import { barlow, barlowCondensed } from "./fontes";
 import "./mercado.css";
@@ -48,25 +48,23 @@ export default function PaginaMercado() {
           rotuloDoNicho={dados.rotulo}
         />
 
-        <Secao
-          id="ofertas"
-          titulo="Todas as ofertas"
-          largura="larga"
-          className="pt-12 sm:pt-16"
-        >
+        <Secao id="ofertas" cheia className="pt-12 sm:pt-16">
           <GradeDeOfertas
             ofertas={dados.ofertas}
             rotuloDoNicho={dados.rotulo}
+            cabecalho={
+              <TituloDaSecao id="ofertas">Todas as ofertas</TituloDaSecao>
+            }
           />
         </Secao>
 
-        <Secao
-          id="corredores"
-          titulo="Encontre na loja"
-          largura="larga"
-          className="bg-superficie"
-        >
-          <Corredores corredores={dados.corredores} />
+        <Secao id="corredores" cheia className="bg-superficie">
+          <Corredores
+            corredores={dados.corredores}
+            cabecalho={
+              <TituloDaSecao id="corredores">Encontre na loja</TituloDaSecao>
+            }
+          />
         </Secao>
 
         <Secao id="entrega" titulo="Entrega e retirada" largura="larga">

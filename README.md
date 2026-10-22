@@ -8,7 +8,7 @@ Portfólio de vendas da Sagital: uma página de apresentação e um site demonst
 
 | Rota           | O que é                                                                                         |
 | -------------- | ----------------------------------------------------------------------------------------------- |
-| `/`            | Página da Sagital: gera o demo personalizado na hora, mostra os demos, os pacotes e o contato   |
+| `/`            | Página da Sagital: monta o demo personalizado, mostra a prévia ao vivo, os demos e os pacotes   |
 | `/academia`    | Demo de academia: cronômetro até a próxima aula, planos, grade da semana                        |
 | `/mercado`     | Demo de mercado: encarte de ofertas da semana com pedido de cada item                           |
 | `/restaurante` | Demo de restaurante: reserva de mesa com dia e horário, cardápio, delivery                      |
@@ -19,10 +19,12 @@ Personalização: `/academia?nome=Iron+Gym&cor=ff6600`. Nome com até 40 caracte
 
 ## Destaques técnicos
 
+- **Design system próprio**: a página da Sagital segue o Sagital Design System (Plus Jakarta Sans, azul-marinho e azul royal, superfícies em cinza azulado, carrosséis horizontais). Os demos mantêm a identidade de cada ramo e usam o mesmo componente de carrossel ([components/ui/Carrossel.tsx](components/ui/Carrossel.tsx)).
+- **Prévia ao vivo**: o demo personalizado roda num iframe do próprio site, e o visitante troca entre celular, tablet e computador sem recarregar a página.
 - **Personalização segura** ([lib/tema.ts](lib/tema.ts)): validação estrita, nome renderizado só como texto, cor aplicada como variável CSS e contraste WCAG AA calculado automaticamente (o texto do botão nunca fica ilegível).
 - **Offline de verdade** (Serwist): as páginas ficam em cache e os parâmetros da URL são ignorados na busca, então qualquer link personalizado novo abre sem internet.
 - **Páginas estáticas**: a personalização é lida no navegador, o que mantém o site rápido e compatível com o cache.
-- **Segurança**: CSP com cada exceção documentada em [next.config.ts](next.config.ts), HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy` e `Permissions-Policy`; imagens só locais; nenhum segredo no código.
+- **Segurança**: CSP com cada exceção documentada em [next.config.ts](next.config.ts), HSTS, `nosniff`, `X-Frame-Options: SAMEORIGIN` e `frame-ancestors 'self'` (só o próprio site pode emoldurar as páginas, para a prévia ao vivo), `Referrer-Policy` e `Permissions-Policy`; imagens só locais; nenhum segredo no código.
 - **Acessibilidade**: HTML semântico, navegação por teclado com foco visível, áreas de toque de 44px, `prefers-reduced-motion` e o aviso de maioridade em `<dialog>` modal.
 - **Qualidade**: TypeScript strict, ESLint, Prettier, testes com Vitest e CI no GitHub Actions.
 - **Reaproveitamento**: componentes compartilhados em `components/` e conteúdo em `data/`. Cada nicho tem uma identidade visual própria, definida por tokens.
@@ -79,9 +81,9 @@ No celular, o fluxo é o mesmo: abra o site uma vez com internet, use **Preparar
 
 ```
 app/                 rotas, layout, manifesto do PWA e service worker (sw.ts)
-components/ui/       componentes base (botão, card, seção, container)
+components/ui/       componentes base (botão, card, seção, container, carrossel)
 components/nichos/   blocos compartilhados dos demos e pastas por nicho
-components/sagital/  placa geradora de link e QR, marca e contato
+components/sagital/  gerador de link e QR, prévia ao vivo, pacotes, marca e contato
 data/                conteúdo fictício de cada nicho e da Sagital
 lib/                 tema, agenda, links, WhatsApp e formatação (com testes)
 public/imagens/      fotos locais (Unsplash) e capturas dos demos
