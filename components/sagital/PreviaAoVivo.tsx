@@ -1,7 +1,7 @@
 "use client";
 
 import { LoaderCircle, Monitor, Smartphone, Tablet, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { classes } from "@/lib/classes";
 import {
   CURVA_CHEGADA,
@@ -9,8 +9,6 @@ import {
   prefereMenosMovimento,
 } from "@/lib/movimento";
 import { BotaoSagital } from "./BotaoSagital";
-import type { OpcaoDeDemo } from "./EscolhaDoDemo";
-import { SeletorDeCor } from "./SeletorDeCor";
 
 export type Aparelho = "celular" | "tablet" | "computador";
 
@@ -42,28 +40,36 @@ type Props = {
   aoFechar: () => void;
   aparelho: Aparelho;
   escolherAparelho: (aparelho: Aparelho) => void;
-  demo: OpcaoDeDemo;
-  nomeExibido: string;
-  cor: string | null;
+  /** Nome do que está na tela, ex.: "Academia" ou "Lumi Odontologia". */
+  titulo: string;
+  /** Linha de apoio abaixo do título. */
+  subtitulo: string;
+  /** Título do iframe, para leitores de tela. */
+  tituloDoSite: string;
   link: string | null;
-  escolherCor: (cor: string | null) => void;
+  /** Controles extras na barra de baixo, como o seletor de cor dos demos. */
+  controles?: ReactNode;
+  /** Texto do botão que abre o site fora da prévia. */
+  rotuloDoBotao?: string;
 };
 
 /**
- * Prévia ao vivo: o demo personalizado roda de verdade num iframe, em tela
- * cheia azul-noite. Trocar de aparelho só muda o tamanho do quadro, sem
- * recarregar: o visitante vê o mesmo site se reorganizando.
+ * Prévia ao vivo: o site (um demo personalizado ou um site do portfólio)
+ * roda de verdade num iframe, em tela cheia azul-noite. Trocar de aparelho só
+ * muda o tamanho do quadro, sem recarregar: o visitante vê o mesmo site se
+ * reorganizando.
  */
 export function PreviaAoVivo({
   aberta,
   aoFechar,
   aparelho,
   escolherAparelho,
-  demo,
-  nomeExibido,
-  cor,
+  titulo,
+  subtitulo,
+  tituloDoSite,
   link,
-  escolherCor,
+  controles,
+  rotuloDoBotao = "Abrir o site",
 }: Props) {
   const dialogo = useRef<HTMLDialogElement>(null);
   const palco = useRef<HTMLDivElement>(null);
@@ -163,11 +169,9 @@ export function PreviaAoVivo({
             id="previa-titulo"
             className="text-[0.9375rem] font-semibold text-white"
           >
-            {demo.rotulo}
+            {titulo}
           </h2>
-          <p className="truncate text-[0.8125rem] text-white/75">
-            Prévia ao vivo · {nomeExibido}
-          </p>
+          <p className="truncate text-[0.8125rem] text-white/75">{subtitulo}</p>
         </div>
         <span aria-hidden />
       </div>
@@ -234,7 +238,7 @@ export function PreviaAoVivo({
               <iframe
                 key={link}
                 src={link}
-                title={`Demo de ${demo.rotulo.toLowerCase()} para ${nomeExibido}`}
+                title={tituloDoSite}
                 onLoad={() => setCarregado(link)}
                 className="relative block origin-top-left border-0 bg-white transition-[clip-path] duration-[640ms] ease-[cubic-bezier(.16,1,.3,1)]"
                 style={{
@@ -249,7 +253,14 @@ export function PreviaAoVivo({
         )}
       </div>
 
-      <div className="mx-auto grid w-full max-w-5xl gap-3 px-4 pt-2 pb-[max(1rem,env(safe-area-inset-bottom))] lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-6 lg:pb-6">
+      <div
+        className={classes(
+          "mx-auto grid w-full max-w-5xl gap-3 px-4 pt-2 pb-[max(1rem,env(safe-area-inset-bottom))] lg:items-center lg:gap-6 lg:pb-6",
+          controles
+            ? "lg:grid-cols-[auto_1fr_auto]"
+            : "sm:flex sm:items-center sm:justify-between",
+        )}
+      >
         <div
           role="radiogroup"
           aria-label="Tamanho da tela"
@@ -288,18 +299,10 @@ export function PreviaAoVivo({
             );
           })}
         </div>
-        <div className="flex justify-center">
-          <SeletorDeCor
-            nome="cor-da-previa"
-            valor={cor}
-            aoEscolher={escolherCor}
-            padrao={demo.padrao}
-            fundo="escuro"
-          />
-        </div>
+        {controles && <div className="flex justify-center">{controles}</div>}
         {link && (
           <BotaoSagital href={link} variante="inverso" className="lg:px-6">
-            Abrir o demo
+            {rotuloDoBotao}
           </BotaoSagital>
         )}
       </div>

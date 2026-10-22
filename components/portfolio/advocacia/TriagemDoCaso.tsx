@@ -38,16 +38,21 @@ export function TriagemDoCaso({
   const [passo, setPasso] = useState(0);
   const [respostas, setRespostas] = useState<Respostas>({});
   const titulo = useRef<HTMLHeadingElement>(null);
-  const primeiraVez = useRef(true);
+  // Só depois de um clique em Continuar, Voltar ou Recomeçar: ao abrir a
+  // página, o foco não pode puxar a rolagem até aqui.
+  const focarPergunta = useRef(false);
 
   // A cada troca de passo, o foco vai para a pergunta nova.
   useEffect(() => {
-    if (primeiraVez.current) {
-      primeiraVez.current = false;
-      return;
-    }
+    if (!focarPergunta.current) return;
+    focarPergunta.current = false;
     titulo.current?.focus();
   }, [passo]);
+
+  const irPara = (proximo: number) => {
+    focarPergunta.current = true;
+    setPasso(proximo);
+  };
 
   const responder = (campo: keyof Respostas, valor: string) =>
     setRespostas((atuais) => ({ ...atuais, [campo]: valor }));
@@ -135,7 +140,7 @@ export function TriagemDoCaso({
           <div className="mt-8 flex items-center justify-between gap-3">
             <button
               type="button"
-              onClick={() => setPasso((p) => Math.max(0, p - 1))}
+              onClick={() => irPara(Math.max(0, passo - 1))}
               className={classes(
                 "inline-flex min-h-11 items-center gap-2 px-1 text-[0.9375rem] text-white/75 hover:text-white",
                 passo === 0 && "invisible",
@@ -147,7 +152,7 @@ export function TriagemDoCaso({
             <button
               type="button"
               disabled={!completo}
-              onClick={() => setPasso((p) => p + 1)}
+              onClick={() => irPara(passo + 1)}
               className="inline-flex min-h-12 items-center gap-2 rounded-tema bg-[var(--cor-salvia)] px-6 font-medium text-[var(--cor-floresta)] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[var(--cor-salvia)]"
             >
               {passo === TOTAL - 1 ? "Ver resumo" : "Continuar"}
@@ -182,7 +187,7 @@ export function TriagemDoCaso({
               type="button"
               onClick={() => {
                 setRespostas({});
-                setPasso(0);
+                irPara(0);
               }}
               className="inline-flex min-h-11 items-center gap-2 px-1 text-[0.9375rem] text-white/75 hover:text-white"
             >

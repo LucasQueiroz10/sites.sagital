@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BotaoContato } from "@/components/sagital/BotaoContato";
 import { BotaoDePrevia } from "@/components/sagital/BotaoDePrevia";
+import { BotaoDePreviaDoSite } from "@/components/sagital/BotaoDePreviaDoSite";
 import { BotaoSagital } from "@/components/sagital/BotaoSagital";
 import { CabecalhoSagital } from "@/components/sagital/CabecalhoSagital";
 import { ProvedorDaEscolha } from "@/components/sagital/EscolhaDoDemo";
@@ -21,8 +22,8 @@ import {
   processo,
   recursos,
   urlDoCodigo,
-  variacoes,
 } from "@/data/sagital";
+import { sitesDoPortfolio } from "@/data/portfolio";
 import { formatarPrecoRedondo } from "@/lib/formato";
 import { jakarta } from "./fontes";
 import "./sagital.css";
@@ -244,64 +245,100 @@ export default function PaginaSagital() {
           </section>
 
           <section
-            aria-labelledby="variacoes-titulo"
-            className="bg-superficie py-14 sm:py-20"
+            id="portfolio"
+            aria-labelledby="portfolio-titulo"
+            className="scroll-mt-20 bg-superficie py-14 sm:py-20"
           >
             <Carrossel
-              rotulo="Variações do demo de academia"
+              rotulo="Portfólio"
               classeDasSetas="bg-white text-texto"
               cabecalho={
                 <>
-                  <h2 id="variacoes-titulo" className={tituloDeSecao}>
-                    Um demo, quatro clientes
+                  <h2 id="portfolio-titulo" className={tituloDeSecao}>
+                    Portfólio
                   </h2>
                   <p className={apoioDeSecao}>
-                    O mesmo site de academia com o nome e a cor de cada negócio.
-                    Na visita, o seu aparece em segundos, até sem internet.
+                    Sites completos para escritórios e clínicas, cada um com
+                    identidade e recursos próprios. Toque no olho e navegue no
+                    celular, no tablet e no computador.
                   </p>
                 </>
               }
             >
-              {variacoes.map((variacao) => {
-                const busca = new URLSearchParams({
-                  nome: variacao.nome,
-                  cor: variacao.cor.slice(1),
-                });
-                return (
-                  <li
-                    key={variacao.nome}
-                    className="w-[62%] max-w-[15rem] shrink-0 snap-start sm:w-[15rem] lg:w-[calc((100%-3rem)/4)] lg:max-w-none"
+              {sitesDoPortfolio.map((site) => (
+                <li
+                  key={site.id}
+                  className="w-[78%] max-w-[19rem] shrink-0 snap-start sm:w-[19rem] lg:w-[calc((100%-3rem)/4)] lg:max-w-none"
+                >
+                  <article
+                    aria-labelledby={`portfolio-${site.id}`}
+                    className="flex h-full flex-col"
                   >
                     <Link
-                      href={`/academia?${busca.toString()}`}
-                      className="group block"
+                      href={site.href}
+                      tabIndex={-1}
+                      aria-hidden
+                      className="group relative block aspect-[4/5] overflow-hidden rounded-xl bg-white px-5 pt-5"
                     >
-                      <span className="relative block aspect-[390/600] overflow-hidden rounded-xl bg-white shadow-[var(--sg-sombra-sm)]">
+                      <span className="relative block h-full overflow-hidden rounded-t-[1.25rem] shadow-[0_2px_10px_rgb(17_26_61/0.1)]">
                         <Image
-                          src={variacao.captura.src}
-                          alt={variacao.captura.alt}
+                          src={site.captura.src}
+                          alt={site.captura.alt}
                           fill
-                          sizes="(min-width: 1024px) 18rem, (min-width: 640px) 15rem, 60vw"
+                          sizes="(min-width: 1024px) 18rem, (min-width: 640px) 17rem, 70vw"
                           className="object-cover object-top transition-transform duration-[360ms] ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-[1.03]"
                         />
                       </span>
-                      <span className="mt-3 flex items-center gap-2">
-                        <span
-                          aria-hidden
-                          className="size-3 rounded-full"
-                          style={{ backgroundColor: variacao.cor }}
-                        />
-                        <span className="text-base font-semibold">
-                          {variacao.nome}
-                        </span>
-                        <span className="text-sm text-texto-suave">
-                          {variacao.nomeDaCor}
-                        </span>
-                      </span>
                     </Link>
-                  </li>
-                );
-              })}
+                    <div className="mt-4 flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <h3
+                          id={`portfolio-${site.id}`}
+                          className="text-lg leading-snug font-bold tracking-[-0.015em]"
+                        >
+                          {site.nome}
+                        </h3>
+                        <p className="text-[0.9375rem] text-texto-suave">
+                          {site.ramo}
+                        </p>
+                      </div>
+                      <span aria-hidden className="mt-1 flex shrink-0">
+                        {site.paleta.map((cor) => (
+                          <span
+                            key={cor}
+                            className="-ml-1.5 size-5 rounded-full border-2 border-white shadow-[0_0_0_1px_var(--sg-borda-sutil)] first:ml-0"
+                            style={{ backgroundColor: cor }}
+                          />
+                        ))}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-[0.9375rem] text-texto-suave">
+                      {site.destaque}
+                    </p>
+                    <p className="mt-1.5 text-[0.8125rem] text-[var(--sg-terciario)]">
+                      Fonte {site.fonte}
+                    </p>
+                    <div className="mt-auto flex gap-2 pt-4">
+                      <BotaoSagital
+                        href={site.href}
+                        variante="escuro"
+                        tamanho="medio"
+                        className="flex-1"
+                      >
+                        Abrir o site
+                        <span className="sr-only"> de {site.nome}</span>
+                      </BotaoSagital>
+                      <BotaoDePreviaDoSite
+                        site={{
+                          nome: site.nome,
+                          ramo: site.ramo,
+                          href: site.href,
+                        }}
+                      />
+                    </div>
+                  </article>
+                </li>
+              ))}
             </Carrossel>
           </section>
 

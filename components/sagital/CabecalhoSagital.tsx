@@ -10,6 +10,7 @@ import { MarcaSagital } from "./MarcaSagital";
 
 const navegacao = [
   { rotulo: "Demos", href: "#demos" },
+  { rotulo: "Portfólio", href: "#portfolio" },
   { rotulo: "Como funciona", href: "#como-funciona" },
   { rotulo: "Pacotes", href: "#pacotes" },
 ];

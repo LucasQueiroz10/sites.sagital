@@ -6,10 +6,6 @@ import demoTabacaria from "@/public/imagens/sagital/demo-tabacaria.png";
 import demoTabacariaDesktop from "@/public/imagens/sagital/demo-tabacaria-desktop.png";
 import demoVarejo from "@/public/imagens/sagital/demo-varejo.png";
 import demoVarejoDesktop from "@/public/imagens/sagital/demo-varejo-desktop.png";
-import arenaFight from "@/public/imagens/sagital/variacao-arena-fight.png";
-import boxVilaNova from "@/public/imagens/sagital/variacao-box-vila-nova.png";
-import ironGym from "@/public/imagens/sagital/variacao-iron-gym.png";
-import studioCorpo from "@/public/imagens/sagital/variacao-studio-corpo.png";
 import type { Nicho } from "@/lib/link";
 import type { PadraoDoTema } from "@/lib/tema";
 import { academia } from "./academia";
@@ -106,58 +102,7 @@ export const demos: Demo[] = [
   },
 ];
 
-export type Variacao = {
-  /** Nome fictício do cliente, como vai na URL. */
-  nome: string;
-  cor: `#${string}`;
-  nomeDaCor: string;
-  captura: Imagem;
-};
-
-/**
- * O mesmo demo em quatro clientes: a prova de que a personalização é real.
- * As cores são as mesmas do gerador de link.
- */
-export const variacoes: Variacao[] = [
-  {
-    nome: "Iron Gym",
-    cor: "#f97316",
-    nomeDaCor: "Laranja",
-    captura: {
-      src: ironGym,
-      alt: "Demo de academia com o nome Iron Gym, em laranja",
-    },
-  },
-  {
-    nome: "Box Vila Nova",
-    cor: "#16a34a",
-    nomeDaCor: "Verde",
-    captura: {
-      src: boxVilaNova,
-      alt: "Demo de academia com o nome Box Vila Nova, em verde",
-    },
-  },
-  {
-    nome: "Studio Corpo",
-    cor: "#7c3aed",
-    nomeDaCor: "Roxo",
-    captura: {
-      src: studioCorpo,
-      alt: "Demo de academia com o nome Studio Corpo, em roxo",
-    },
-  },
-  {
-    nome: "Arena Fight",
-    cor: "#2563eb",
-    nomeDaCor: "Azul",
-    captura: {
-      src: arenaFight,
-      alt: "Demo de academia com o nome Arena Fight, em azul",
-    },
-  },
-];
-
-/** Cores prontas do gerador de link: as mesmas das variações e mais duas. */
+/** Cores prontas do gerador de link. */
 export const coresDoGerador: { nome: string; valor: `#${string}` }[] = [
   { nome: "Vermelho", valor: "#e11d48" },
   { nome: "Laranja", valor: "#f97316" },

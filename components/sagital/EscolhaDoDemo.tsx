@@ -13,6 +13,7 @@ import {
 import { montarLinkDoDemo, type Nicho } from "@/lib/link";
 import { validarCor, validarNome, type PadraoDoTema } from "@/lib/tema";
 import { PreviaAoVivo, type Aparelho } from "./PreviaAoVivo";
+import { SeletorDeCor } from "./SeletorDeCor";
 
 type Captura = { src: StaticImageData; alt: string };
 
@@ -42,7 +43,12 @@ type Contexto = {
   escolherCor: (cor: string | null) => void;
   /** Abre a prévia ao vivo, opcionalmente já num outro ramo. */
   abrirPrevia: (nicho?: Nicho) => void;
+  /** Abre a prévia de um site do portfólio, sem personalização. */
+  abrirSite: (site: SiteNaPrevia) => void;
 };
+
+/** Um site do portfólio na prévia: só o endereço e o nome. */
+export type SiteNaPrevia = { nome: string; ramo: string; href: string };
 
 const ContextoDaEscolha = createContext<Contexto | null>(null);
 
@@ -68,6 +74,8 @@ export function ProvedorDaEscolha({
   const [nome, setNome] = useState("");
   const [cor, setCor] = useState<string | null>(null);
   const [previaAberta, setPreviaAberta] = useState(false);
+  // Com um site do portfólio escolhido, a prévia mostra ele no lugar do demo.
+  const [site, setSite] = useState<SiteNaPrevia | null>(null);
   const [aparelho, setAparelho] = useState<Aparelho>("celular");
 
   const demo = demos.find((d) => d.nicho === nicho) ?? demos[0];
@@ -80,9 +88,8 @@ export function ProvedorDaEscolha({
     ? montarLinkDoDemo(origem, demo.nicho, nome, cor ?? "")
     : null;
 
-  const abrirPrevia = useCallback((outro?: Nicho) => {
-    if (outro) setNicho(outro);
-    // No computador a prévia abre na tela grande; no celular, na tela dele.
+  // No computador a prévia abre na tela grande; no celular, na tela dele.
+  const abrirNoAparelhoCerto = useCallback(() => {
     setAparelho(
       window.matchMedia("(min-width: 1024px)").matches
         ? "computador"
@@ -90,6 +97,23 @@ export function ProvedorDaEscolha({
     );
     setPreviaAberta(true);
   }, []);
+
+  const abrirPrevia = useCallback(
+    (outro?: Nicho) => {
+      if (outro) setNicho(outro);
+      setSite(null);
+      abrirNoAparelhoCerto();
+    },
+    [abrirNoAparelhoCerto],
+  );
+
+  const abrirSite = useCallback(
+    (escolhido: SiteNaPrevia) => {
+      setSite(escolhido);
+      abrirNoAparelhoCerto();
+    },
+    [abrirNoAparelhoCerto],
+  );
 
   const valor = useMemo<Contexto>(
     () => ({
@@ -105,24 +129,61 @@ export function ProvedorDaEscolha({
       escolherNome: setNome,
       escolherCor: setCor,
       abrirPrevia,
+      abrirSite,
     }),
-    [demos, demo, nicho, nome, cor, nomeExibido, corEfetiva, link, abrirPrevia],
+    [
+      demos,
+      demo,
+      nicho,
+      nome,
+      cor,
+      nomeExibido,
+      corEfetiva,
+      link,
+      abrirPrevia,
+      abrirSite,
+    ],
   );
+
+  const linkDoSite =
+    site && origem ? new URL(site.href, origem).toString() : null;
 
   return (
     <ContextoDaEscolha.Provider value={valor}>
       {children}
-      <PreviaAoVivo
-        aberta={previaAberta}
-        aoFechar={() => setPreviaAberta(false)}
-        aparelho={aparelho}
-        escolherAparelho={setAparelho}
-        demo={demo}
-        nomeExibido={nomeExibido}
-        cor={cor}
-        link={link}
-        escolherCor={setCor}
-      />
+      {site ? (
+        <PreviaAoVivo
+          aberta={previaAberta}
+          aoFechar={() => setPreviaAberta(false)}
+          aparelho={aparelho}
+          escolherAparelho={setAparelho}
+          titulo={site.nome}
+          subtitulo={`Portfólio · ${site.ramo}`}
+          tituloDoSite={`Site conceitual de ${site.nome}`}
+          link={linkDoSite}
+        />
+      ) : (
+        <PreviaAoVivo
+          aberta={previaAberta}
+          aoFechar={() => setPreviaAberta(false)}
+          aparelho={aparelho}
+          escolherAparelho={setAparelho}
+          titulo={demo.rotulo}
+          subtitulo={`Prévia ao vivo · ${nomeExibido}`}
+          tituloDoSite={`Demo de ${demo.rotulo.toLowerCase()} para ${nomeExibido}`}
+          link={link}
+          rotuloDoBotao="Abrir o demo"
+          controles={
+            <SeletorDeCor
+              nome="cor-da-previa"
+              valor={cor}
+              aoEscolher={setCor}
+              padrao={demo.padrao}
+              fundo="escuro"
+            />
+          }
+        />
+      )}
     </ContextoDaEscolha.Provider>
   );
 }

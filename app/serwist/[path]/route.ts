@@ -16,6 +16,10 @@ const paginas = [
   "/varejo",
   "/restaurante",
   "/tabacaria",
+  "/portfolio/advocacia",
+  "/portfolio/odontologia",
+  "/portfolio/arquitetura",
+  "/portfolio/contabilidade",
   "/gerar",
   "/~offline",
 ];
