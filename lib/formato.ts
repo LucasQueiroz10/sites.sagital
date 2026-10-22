@@ -23,3 +23,18 @@ export function formatarPrecoRedondo(centavos: number): string {
     maximumFractionDigits: 0,
   }).format(centavos / 100);
 }
+
+/**
+ * Parcelamento sem juros de uma peça: o maior número de parcelas, até
+ * `vezes`, em que cada uma não fica abaixo de `parcelaMinima`. Abaixo de duas
+ * parcelas, a peça é só à vista e a função devolve `null`.
+ */
+export function parcelar(
+  centavos: number,
+  vezes: number,
+  parcelaMinima: number,
+): { vezes: number; valor: number } | null {
+  const possiveis = Math.min(vezes, Math.floor(centavos / parcelaMinima));
+  if (possiveis < 2) return null;
+  return { vezes: possiveis, valor: Math.round(centavos / possiveis) };
+}

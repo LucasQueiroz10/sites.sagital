@@ -72,41 +72,47 @@ export type DadosDaAcademia = DadosDoNicho & {
   depoimentos: Depoimento[];
 };
 
-export type Oferta = {
-  produto: string;
-  unidade: string;
-  /** Valores em centavos. */
-  precoAntigo: number;
-  precoNovo: number;
-  imagem?: Imagem;
-  destaque?: boolean;
-};
+export type Tamanho = "PP" | "P" | "M" | "G" | "GG";
 
-export type IconeDoCorredor =
-  | "hortifruti"
-  | "acougue"
-  | "padaria"
-  | "mercearia"
-  | "laticinios"
-  | "bebidas"
-  | "limpeza"
-  | "congelados";
-
-export type Corredor = {
-  numero: number;
+export type Peca = {
   nome: string;
-  exemplos: string;
-  icone: IconeDoCorredor;
-  /** Cor da placa do corredor (fixa, não muda com a personalização). */
-  cor: `#${string}`;
+  /** Centavos. */
+  preco: number;
+  /** Preço de antes, em centavos, quando a peça está em promoção. */
+  precoAntigo?: number;
+  /** Tamanhos da grade da peça, do menor para o maior. */
+  tamanhos: Tamanho[];
+  /** Tamanhos da grade que acabaram na loja. */
+  esgotados?: Tamanho[];
+  /** Selo curto sobre a foto, ex.: "Novo". */
+  selo?: string;
+  imagem: Imagem;
+  /** Ponto da foto que fica no recorte 3:4 (object-position). */
+  foco?: string;
 };
 
-export type DadosDoMercado = DadosDoNicho & {
+export type Setor = {
+  /** Âncora da seção, ex.: "feminino". */
+  id: string;
+  nome: string;
+  /** Linha de apoio abaixo do título. */
   chamada: string;
-  ofertas: Oferta[];
-  corredores: Corredor[];
-  entrega: { linhas: { item: string; valor: string }[]; pagamento: string };
-  imagemDaLoja: Imagem;
+  /** Foto de abertura da prateleira, com a etiqueta de vidro. */
+  banner: Imagem & { titulo: string; foco?: string };
+  pecas: Peca[];
+};
+
+export type IconeDoBeneficio = "troca" | "parcelas" | "retirada" | "entrega";
+
+export type DadosDoVarejo = DadosDoNicho & {
+  slogan: string;
+  chamada: string;
+  campanha: Imagem;
+  beneficios: { texto: string; icone: IconeDoBeneficio }[];
+  /** Parcelas sem juros no cartão e o valor mínimo de cada uma, em centavos. */
+  parcelamento: { vezes: number; parcelaMinima: number };
+  setores: Setor[];
+  comoComprar: { titulo: string; texto: string }[];
 };
 
 export type ItemDoCardapio = {

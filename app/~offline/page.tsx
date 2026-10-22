@@ -15,7 +15,7 @@ export const viewport: Viewport = { themeColor: "#ffffff" };
 
 const demos = [
   { rotulo: "Academia", href: "/academia" },
-  { rotulo: "Mercado", href: "/mercado" },
+  { rotulo: "Varejo", href: "/varejo" },
   { rotulo: "Restaurante", href: "/restaurante" },
   { rotulo: "Tabacaria", href: "/tabacaria" },
 ];

@@ -29,7 +29,7 @@ import "./sagital.css";
 
 export const metadata: Metadata = {
   description:
-    "Sites para academias, mercados, restaurantes e tabacarias. Veja o site do seu negócio, com o seu nome, antes de pagar.",
+    "Sites para academias, lojas, restaurantes e tabacarias. Veja o site do seu negócio, com o seu nome, antes de pagar.",
 };
 
 // A barra do navegador no celular acompanha o topo escuro da abertura.
@@ -106,7 +106,7 @@ export default function PaginaSagital() {
             </ul>
             <p className="sg-entra mt-4 max-w-[44ch] text-[1.0625rem] leading-relaxed text-white/75 [--ordem:1] sm:text-lg">
               Rápido no celular, com horário, endereço e um botão de WhatsApp
-              com a mensagem pronta. Para academias, mercados, restaurantes e
+              com a mensagem pronta. Para academias, lojas, restaurantes e
               tabacarias.
             </p>
             <div className="sg-entra mt-8 flex w-full max-w-sm flex-col gap-3 [--ordem:2] sm:w-auto sm:max-w-none sm:flex-row">
@@ -144,7 +144,7 @@ export default function PaginaSagital() {
                   <span className="text-destaque">antes de pagar.</span>
                 </h2>
                 <p className="mt-4 max-w-[44ch] text-[1.0625rem] leading-relaxed text-texto-suave">
-                  Sites para academias, mercados, restaurantes e tabacarias, já
+                  Sites para academias, lojas, restaurantes e tabacarias, já
                   com o nome e a cor da sua loja.
                 </p>
                 <div data-cta-principal className="mt-6">

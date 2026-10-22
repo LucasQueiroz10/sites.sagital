@@ -1,11 +1,11 @@
 import demoAcademia from "@/public/imagens/sagital/demo-academia.png";
 import demoAcademiaDesktop from "@/public/imagens/sagital/demo-academia-desktop.png";
-import demoMercado from "@/public/imagens/sagital/demo-mercado.png";
-import demoMercadoDesktop from "@/public/imagens/sagital/demo-mercado-desktop.png";
 import demoRestaurante from "@/public/imagens/sagital/demo-restaurante.png";
 import demoRestauranteDesktop from "@/public/imagens/sagital/demo-restaurante-desktop.png";
 import demoTabacaria from "@/public/imagens/sagital/demo-tabacaria.png";
 import demoTabacariaDesktop from "@/public/imagens/sagital/demo-tabacaria-desktop.png";
+import demoVarejo from "@/public/imagens/sagital/demo-varejo.png";
+import demoVarejoDesktop from "@/public/imagens/sagital/demo-varejo-desktop.png";
 import arenaFight from "@/public/imagens/sagital/variacao-arena-fight.png";
 import boxVilaNova from "@/public/imagens/sagital/variacao-box-vila-nova.png";
 import ironGym from "@/public/imagens/sagital/variacao-iron-gym.png";
@@ -13,10 +13,10 @@ import studioCorpo from "@/public/imagens/sagital/variacao-studio-corpo.png";
 import type { Nicho } from "@/lib/link";
 import type { PadraoDoTema } from "@/lib/tema";
 import { academia } from "./academia";
-import { mercado } from "./mercado";
 import { restaurante } from "./restaurante";
 import { tabacaria } from "./tabacaria";
 import type { Imagem } from "./tipos";
+import { varejo } from "./varejo";
 
 // Página da Sagital. As capturas dos demos foram feitas do próprio site.
 // Pacotes, valores e prazos são um ponto de partida: edite à vontade.
@@ -54,21 +54,21 @@ export const demos: Demo[] = [
     fonte: "Sofia Sans Condensed",
   },
   {
-    nicho: "mercado",
-    rotulo: mercado.rotulo,
-    padrao: mercado.padrao,
+    nicho: "varejo",
+    rotulo: varejo.rotulo,
+    padrao: varejo.padrao,
     descricao:
-      "Encarte de ofertas da semana, pedido de cada item e entrega no mesmo dia.",
+      "Vitrines Feminino e Masculino, escolha de tamanho e pedido pelo WhatsApp.",
     captura: {
-      src: demoMercado,
-      alt: "Primeira tela do demo de mercado no celular",
+      src: demoVarejo,
+      alt: "Primeira tela do demo de varejo no celular",
     },
     capturaDesktop: {
-      src: demoMercadoDesktop,
-      alt: "Primeira tela do demo de mercado no computador",
+      src: demoVarejoDesktop,
+      alt: "Primeira tela do demo de varejo no computador",
     },
-    paleta: ["#ffd60a", "#e0101b", "#141414"],
-    fonte: "Barlow Condensed",
+    paleta: ["#ffffff", "#f5f5f5", "#121212"],
+    fonte: "Hanken Grotesk",
   },
   {
     nicho: "restaurante",

@@ -1,0 +1,68 @@
+/*
+ * Demo de varejo: loja de básicos no padrão das grandes redes de moda, em
+ * versão de bairro. Branco, cinza claro atrás das peças e tinta quase preta;
+ * controles em pílula; etiquetas de vidro escuro sobre as fotos. A cor do
+ * cliente (lib/tema.ts) fica para os botões de ação e o preço em promoção.
+ */
+[data-nicho="varejo"] {
+  --cor-superficie: #f5f5f5;
+  --cor-texto: #121212;
+  --cor-texto-suave: #5c5c5c;
+  --cor-borda: #e6e6e6;
+  /* Fio dos controles em pílula (chips de tamanho, setas). */
+  --cor-fio: #d1d1d1;
+  /* Botões em pílula; cards e fotos usam raios próprios (8px e 16px). */
+  --raio: 9999px;
+  --fonte-titulo: var(--font-hanken), system-ui, sans-serif;
+  --fonte-texto: var(--font-hanken), system-ui, sans-serif;
+  color-scheme: light;
+}
+
+[data-nicho="varejo"] :is(h1, h2, h3) {
+  letter-spacing: -0.02em;
+}
+
+/* Títulos de seção contidos, como nas vitrines de rede. */
+[data-nicho="varejo"] h2 {
+  font-size: clamp(1.625rem, 6vw, 2.125rem);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+[data-nicho="varejo"] .marca {
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+/* Preços e parcelas com algarismos que não dançam. */
+[data-nicho="varejo"] .numero {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/*
+ * Etiqueta de vidro escuro sobre as fotos. Preto a 56% mantém o texto branco
+ * acima de 4,5:1 mesmo sobre o branco do estúdio.
+ */
+[data-nicho="varejo"] .vidro {
+  background: rgb(0 0 0 / 0.56);
+  color: #ffffff;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+[data-nicho="varejo"] .vidro :focus-visible {
+  outline-color: #ffffff;
+}
+
+/* A foto da campanha assenta no lugar ao abrir; o resto já está à vista. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-nicho="varejo"] .foto-que-assenta {
+    animation: assentar-varejo 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes assentar-varejo {
+  from {
+    transform: scale(1.04);
+  }
+}

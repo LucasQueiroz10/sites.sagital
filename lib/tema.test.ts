@@ -44,7 +44,7 @@ describe("validarNome", () => {
     ["Zé & Cia.", "Zé & Cia."],
     ["D'Ávila", "D'Ávila"],
     ["D’Ávila", "D’Ávila"],
-    ["Mercado 24-7", "Mercado 24-7"],
+    ["Loja 24-7", "Loja 24-7"],
     ["A".repeat(40), "A".repeat(40)],
   ])("aceita %j", (entrada, esperado) => {
     expect(validarNome(entrada)).toBe(esperado);

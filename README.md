@@ -1,6 +1,6 @@
 # Sagital — sites para negócios locais
 
-Portfólio de vendas da Sagital: uma página de apresentação e um site demonstrativo completo para cada nicho (academia, mercado, restaurante e tabacaria). Os demos são mostrados em visitas presenciais, aceitam o nome e a cor do cliente pela URL e funcionam sem internet.
+Portfólio de vendas da Sagital: uma página de apresentação e um site demonstrativo completo para cada nicho (academia, varejo, restaurante e tabacaria). Os demos são mostrados em visitas presenciais, aceitam o nome e a cor do cliente pela URL e funcionam sem internet.
 
 > Todo o conteúdo dos demos é fictício (nomes, preços e depoimentos).
 
@@ -10,7 +10,7 @@ Portfólio de vendas da Sagital: uma página de apresentação e um site demonst
 | -------------- | ----------------------------------------------------------------------------------------------- |
 | `/`            | Página da Sagital: monta o demo personalizado, mostra a prévia ao vivo, os demos e os pacotes   |
 | `/academia`    | Demo de academia: visual claro e comercial, planos com preço, grade com agendar em cada aula    |
-| `/mercado`     | Demo de mercado: encarte de ofertas da semana com pedido de cada item                           |
+| `/varejo`      | Demo de varejo: loja de básicos com vitrines Feminino e Masculino e pedido por tamanho          |
 | `/restaurante` | Demo de restaurante: reserva de mesa com dia e horário, cardápio, delivery                      |
 | `/tabacaria`   | Demo de tabacaria: aviso de maioridade, lounge e avisos legais                                  |
 | `/gerar`       | Ferramenta do vendedor: link personalizado, QR code (PNG e impressão) e preparo do modo offline |
@@ -64,7 +64,7 @@ O service worker só funciona no build de produção.
 3. Ainda no `/gerar`, clique em **Preparar modo offline** e espere a mensagem "Pronto".
 4. Em **Application > Cache storage**, confira os caches `serwist-precache…` (páginas, JS, CSS e fontes) e `imagens-dos-demos` (fotos).
 5. Na aba **Network**, troque _No throttling_ por **Offline**.
-6. Abra um link personalizado novo, por exemplo `http://localhost:3000/mercado?nome=Teste&cor=0a7d3b`. A página abre com o nome e a cor, sem internet.
+6. Abra um link personalizado novo, por exemplo `http://localhost:3000/varejo?nome=Teste&cor=0a7d3b`. A página abre com o nome e a cor, sem internet.
 7. Uma rota que não existe (por exemplo `/barbearia`) mostra a página "Sem internet por aqui".
 
 No celular, o fluxo é o mesmo: abra o site uma vez com internet, use **Preparar modo offline** no `/gerar` e, se quiser, instale o app pelo menu do navegador (**Adicionar à tela inicial**).

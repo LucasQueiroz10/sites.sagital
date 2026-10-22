@@ -28,8 +28,6 @@ type Props = {
   classeDoPonto?: { atual: string; outros: string };
   /** Largura máxima do conteúdo da página, para a trilha alinhar com ela. */
   largura?: "normal" | "larga";
-  /** Duas linhas: os itens enchem coluna por coluna (encarte de ofertas). */
-  linhas?: 1 | 2;
 };
 
 const larguras = { normal: "72rem", larga: "80rem" } as const;
@@ -37,19 +35,16 @@ const larguras = { normal: "72rem", larga: "80rem" } as const;
 const recuoDa = (el: HTMLElement) =>
   Number.parseFloat(getComputedStyle(el).scrollPaddingInlineStart) || 0;
 
-/** Onde começa cada coluna da trilha (com duas linhas, dois itens dividem uma). */
-function posicoesDasColunas(el: HTMLElement): number[] {
-  const posicoes = new Set<number>();
-  for (const item of Array.from(el.children) as HTMLElement[]) {
-    posicoes.add(item.offsetLeft);
-  }
-  return [...posicoes].sort((a, b) => a - b);
+/** Onde começa cada item da trilha. */
+function posicoesDosItens(el: HTMLElement): number[] {
+  return (Array.from(el.children) as HTMLElement[]).map(
+    (item) => item.offsetLeft,
+  );
 }
 
 /**
  * Trilha horizontal: rola com o dedo no celular e com as setas no desktop.
- * Cada item é um <li> com "shrink-0 snap-start" e a sua largura (com duas
- * linhas, a largura vai em auto-cols-[...] na trilha). O primeiro
+ * Cada item é um <li> com "shrink-0 snap-start" e a sua largura. O primeiro
  * item alinha com a margem do conteúdo e a trilha vai até a borda da tela,
  * para o item seguinte aparecer cortado e convidar a deslizar.
  */
@@ -61,12 +56,9 @@ export function Carrossel({
   classeDasSetas,
   classeDoPonto = { atual: "bg-texto-suave", outros: "bg-borda" },
   largura = "larga",
-  linhas = 1,
 }: Props) {
   const trilha = useRef<HTMLUListElement>(null);
-  const [colunas, setColunas] = useState(() =>
-    Math.ceil(Children.count(children) / linhas),
-  );
+  const [colunas, setColunas] = useState(() => Children.count(children));
   const [atual, setAtual] = useState(0);
   const [cabe, setCabe] = useState(true);
   const [noInicio, setNoInicio] = useState(true);
@@ -75,7 +67,7 @@ export function Carrossel({
   const medir = useCallback(() => {
     const el = trilha.current;
     if (!el) return;
-    const posicoes = posicoesDasColunas(el);
+    const posicoes = posicoesDosItens(el);
     const inicio = el.scrollLeft + recuoDa(el);
     let maisPerto = 0;
     let menorDistancia = Number.POSITIVE_INFINITY;
@@ -116,7 +108,7 @@ export function Carrossel({
   function irPara(passo: 1 | -1) {
     const el = trilha.current;
     if (!el) return;
-    const posicoes = posicoesDasColunas(el);
+    const posicoes = posicoesDosItens(el);
     const alvo =
       posicoes[Math.min(Math.max(atual + passo, 0), posicoes.length - 1)];
     if (alvo === undefined) return;
@@ -171,8 +163,7 @@ export function Carrossel({
         aria-label={rotulo}
         tabIndex={cabe ? undefined : 0}
         className={classes(
-          "trilho relative snap-x snap-mandatory overflow-x-auto overscroll-x-contain",
-          linhas === 2 ? "grid grid-flow-col grid-rows-2" : "flex",
+          "trilho relative flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain",
           "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-destaque",
           cabecalho ? "mt-6" : undefined,
           className ?? "gap-3 sm:gap-4",

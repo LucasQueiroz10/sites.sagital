@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Sagital — Sites para negócios locais",
     short_name: "Sagital",
     description:
-      "Demos de sites para academias, mercados, restaurantes e tabacarias, com link e QR code personalizados.",
+      "Demos de sites para academias, lojas, restaurantes e tabacarias, com link e QR code personalizados.",
     lang: "pt-BR",
     start_url: "/",
     scope: "/",
@@ -26,7 +26,7 @@ export default function manifest(): MetadataRoute.Manifest {
     shortcuts: [
       { name: "Gerar link e QR code", url: "/gerar" },
       { name: "Demo de academia", url: "/academia" },
-      { name: "Demo de mercado", url: "/mercado" },
+      { name: "Demo de varejo", url: "/varejo" },
       { name: "Demo de restaurante", url: "/restaurante" },
     ],
   };

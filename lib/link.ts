@@ -3,7 +3,7 @@ import { validarCor, validarNome } from "./tema";
 /** Rotas dos demos. Um nicho novo entra aqui e em data/. */
 export const NICHOS = [
   "academia",
-  "mercado",
+  "varejo",
   "restaurante",
   "tabacaria",
 ] as const;

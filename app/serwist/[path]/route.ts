@@ -13,7 +13,7 @@ const revisao =
 const paginas = [
   "/",
   "/academia",
-  "/mercado",
+  "/varejo",
   "/restaurante",
   "/tabacaria",
   "/gerar",

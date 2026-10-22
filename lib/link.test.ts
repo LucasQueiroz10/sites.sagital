@@ -19,11 +19,11 @@ describe("montarLinkDoDemo", () => {
   });
 
   it("deixa de fora valores inválidos", () => {
-    expect(montarLinkDoDemo(origem, "mercado", "<b>oi</b>", "vermelho")).toBe(
-      "https://sagital.example/mercado",
+    expect(montarLinkDoDemo(origem, "varejo", "<b>oi</b>", "vermelho")).toBe(
+      "https://sagital.example/varejo",
     );
-    expect(montarLinkDoDemo(origem, "mercado", "", "00aa00")).toBe(
-      "https://sagital.example/mercado?cor=00aa00",
+    expect(montarLinkDoDemo(origem, "varejo", "", "00aa00")).toBe(
+      "https://sagital.example/varejo?cor=00aa00",
     );
   });
 });
@@ -38,6 +38,6 @@ describe("nicho e arquivo do QR", () => {
     expect(nomeDoArquivoQr("academia", "Força Total Gym")).toBe(
       "qr-academia-forca-total-gym.png",
     );
-    expect(nomeDoArquivoQr("mercado", "")).toBe("qr-mercado.png");
+    expect(nomeDoArquivoQr("varejo", "")).toBe("qr-varejo.png");
   });
 });
