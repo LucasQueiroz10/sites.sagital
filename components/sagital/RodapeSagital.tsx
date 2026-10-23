@@ -12,7 +12,7 @@ import { formatarTelefone } from "@/lib/formato";
 import { montarLinkWhatsApp, NUMERO_WHATSAPP } from "@/lib/whatsapp";
 import { MarcaSagital } from "./MarcaSagital";
 
-const link = classeDoLinkDeContato();
+const link = classeDoLinkDeContato("escuro");
 
 const navegacao = [
   { rotulo: "Demos", href: "#demos" },
@@ -22,7 +22,7 @@ const navegacao = [
 ];
 
 /**
- * Rodapé da página da Sagital. É um negócio real: nada aqui é inventado. O
+ * Rodapé da página da Sagital, em preto com a escrita clara. É um negócio real: nada aqui é inventado. O
  * que não estiver preenchido em contatoDaSagital (e-mail, redes, CNPJ)
  * simplesmente não aparece.
  */
@@ -31,8 +31,9 @@ export function RodapeSagital() {
 
   return (
     <RodapeCompleto
-      className="border-t border-[var(--sg-borda-sutil)] pb-28 md:pb-10"
-      marca={<MarcaSagital className="text-[var(--sg-tinta-forte)]" />}
+      tom="escuro"
+      className="sg-foco-claro bg-[#0a0a0a] pb-28 md:pb-10"
+      marca={<MarcaSagital className="text-white" />}
       descricao="Sites para qualquer negócio, rápidos no celular e com o cliente a um toque do seu WhatsApp."
       redes={redes.map(({ rede, usuario, url }) => ({
         rede,
@@ -40,18 +41,23 @@ export function RodapeSagital() {
         href: url,
       }))}
       colunas={[
-        { titulo: "Navegação", conteudo: <LinksDoRodape links={navegacao} /> },
+        {
+          titulo: "Navegação",
+          conteudo: <LinksDoRodape tom="escuro" links={navegacao} />,
+        },
         {
           titulo: "Exemplos",
           conteudo: (
             <div className="grid grid-cols-2 gap-x-6">
               <LinksDoRodape
+                tom="escuro"
                 links={demos.map((demo) => ({
                   rotulo: demo.rotulo,
                   href: `/${demo.nicho}`,
                 }))}
               />
               <LinksDoRodape
+                tom="escuro"
                 links={sitesDoPortfolio.map((site) => ({
                   rotulo: site.id.charAt(0).toUpperCase() + site.id.slice(1),
                   href: site.href,
