@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(URL_DO_SITE),
   applicationName: "Sagital",
   title: {
-    default: "Sagital — Sites para negócios locais",
+    default: "Sagital — Sites para o seu negócio",
     template: "%s | Sagital",
   },
   description: "Sites sob medida para elevar o nível do seu negócio.",

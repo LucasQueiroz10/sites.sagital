@@ -114,9 +114,9 @@ export const coresDoGerador: { nome: string; valor: `#${string}` }[] = [
 
 export const processo = [
   {
-    titulo: "Visita na sua loja",
+    titulo: "Conversa no WhatsApp",
     texto:
-      "Mostro no celular o demo do seu ramo, já com o nome e a cor do seu negócio.",
+      "Você conta sobre o seu negócio e recebe o demo, já com o seu nome e a sua cor.",
   },
   {
     titulo: "Conteúdo e ajustes",
@@ -130,7 +130,7 @@ export const processo = [
   },
   {
     titulo: "Atualizações",
-    texto: "Mudou o cardápio, a oferta ou o horário? É só mandar uma mensagem.",
+    texto: "Mudou um preço, um serviço ou o horário? É só mandar uma mensagem.",
   },
 ];
 
@@ -153,19 +153,19 @@ export const recursos: { nome: string; inclui: (boolean | string)[] }[] = [
   { nome: "Site com a cara do seu negócio", inclui: [true, true, true] },
   { nome: "Botão de WhatsApp com mensagem pronta", inclui: [true, true, true] },
   {
-    nome: "Horários, endereço e status “aberto agora”",
+    nome: "Horários, contatos e status “aberto agora”",
     inclui: [true, true, true],
   },
   { nome: "Rápido no celular e acessível", inclui: [true, true, true] },
   {
-    nome: "Cardápio, planos, ofertas ou catálogo",
+    nome: "Catálogo, serviços, cardápio ou planos",
     inclui: [false, true, true],
   },
   {
     nome: "Funciona sem internet e pode ser instalado",
     inclui: [false, true, true],
   },
-  { nome: "QR code para imprimir no balcão", inclui: [false, true, true] },
+  { nome: "QR code para imprimir e divulgar", inclui: [false, true, true] },
   { nome: "Fotos e textos produzidos com você", inclui: [false, false, true] },
   { nome: "Páginas extras", inclui: [false, false, "até 3"] },
   {

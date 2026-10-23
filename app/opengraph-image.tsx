@@ -53,7 +53,7 @@ export default function ImagemDeCompartilhamento() {
           color: "#5b6478",
         }}
       >
-        <span>Sites para academias, lojas, restaurantes e tabacarias</span>
+        <span>Sites para qualquer negócio, de qualquer ramo</span>
         <span
           style={{
             display: "flex",

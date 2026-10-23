@@ -33,7 +33,7 @@ import "./sagital.css";
 
 export const metadata: Metadata = {
   description:
-    "Sites para academias, lojas, restaurantes e tabacarias. Veja o site do seu negócio, com o seu nome, antes de pagar.",
+    "Sites para qualquer negócio: lojas, restaurantes, clínicas, escritórios, profissionais autônomos e quem vende pela internet. Veja o seu site, com o seu nome, antes de pagar.",
 };
 
 // A barra do navegador no celular acompanha o topo escuro da abertura.
@@ -91,7 +91,7 @@ export default function PaginaSagital() {
             >
               O site que leva o cliente do celular{" "}
               <span className="text-[var(--sg-ceu)]">
-                direto para a sua porta.
+                direto para o seu WhatsApp.
               </span>
             </h1>
             <ul
@@ -110,9 +110,9 @@ export default function PaginaSagital() {
               </li>
             </ul>
             <p className="sg-entra mt-4 max-w-[44ch] text-[1.0625rem] leading-relaxed text-white/90 [--ordem:1] sm:text-lg">
-              Rápido no celular, com horário, endereço e um botão de WhatsApp
-              com a mensagem pronta. Para academias, lojas, restaurantes e
-              tabacarias.
+              Rápido no celular, com tudo o que o seu cliente procura e um botão
+              de WhatsApp com a mensagem pronta. Para lojas, restaurantes,
+              clínicas, escritórios, autônomos e quem vende só pela internet.
             </p>
             <div className="sg-entra mt-8 flex w-full max-w-sm flex-col gap-3 [--ordem:2] sm:w-auto sm:max-w-none sm:flex-row">
               <BotaoContato
@@ -149,8 +149,8 @@ export default function PaginaSagital() {
                   <span className="text-destaque">antes de pagar.</span>
                 </h2>
                 <p className="mt-4 max-w-[44ch] text-[1.0625rem] leading-relaxed text-texto-suave">
-                  Sites para academias, lojas, restaurantes e tabacarias, já com
-                  o nome e a cor da sua loja.
+                  Escolha um modelo, digite o nome do seu negócio e a cor da sua
+                  marca: o site aparece pronto, na hora.
                 </p>
                 <div data-cta-principal className="mt-6">
                   <GeradorDeLink modo="compacto" />
@@ -173,8 +173,9 @@ export default function PaginaSagital() {
                     Quatro demos, cada um com a cara do ramo
                   </h2>
                   <p className={apoioDeSecao}>
-                    Toque no olho e veja o demo ao vivo no celular, no tablet e
-                    no computador.
+                    São pontos de partida, não limites: o seu site é feito para
+                    o seu negócio, seja qual for o ramo. Toque no olho e veja o
+                    demo ao vivo no celular, no tablet e no computador.
                   </p>
                 </>
               }
@@ -382,7 +383,8 @@ export default function PaginaSagital() {
                     Pacotes
                   </h2>
                   <p className={apoioDeSecao}>
-                    Pagamento único, com o prazo de entrega combinado na visita.
+                    Pagamento único, com o prazo de entrega combinado antes de
+                    começar.
                   </p>
                 </>
               }
@@ -407,9 +409,10 @@ export default function PaginaSagital() {
               </h2>
               <div className="grid max-w-[60ch] gap-4 text-[1.0625rem] leading-relaxed text-texto-suave">
                 <p>
-                  A Sagital faz sites para o comércio de bairro. O atendimento é
-                  presencial: eu vou até a sua loja, mostro o demo do seu ramo
-                  com o nome do seu negócio e a gente decide junto o que entra.
+                  A Sagital faz sites para negócios de todo tipo e tamanho, da
+                  loja de rua ao profissional que atende só pelo celular. Tudo é
+                  combinado pelo WhatsApp: você vê o demo com o nome do seu
+                  negócio e a gente decide junto o que entra.
                 </p>
                 <p>
                   Cada site é feito para abrir rápido no celular, funcionar até
@@ -451,11 +454,13 @@ export default function PaginaSagital() {
                     className="sg-display max-w-[14ch] text-[clamp(2.25rem,7vw,3.75rem)] text-white"
                   >
                     Quer ver o site{" "}
-                    <span className="text-[var(--sg-ceu)]">da sua loja?</span>
+                    <span className="text-[var(--sg-ceu)]">
+                      do seu negócio?
+                    </span>
                   </h2>
                   <p className="mt-4 max-w-[40ch] text-[1.0625rem] text-white/80">
-                    Mande uma mensagem. Eu levo o demo até você, com o nome e a
-                    cor do seu negócio.
+                    Mande uma mensagem e receba o demo com o nome e a cor do seu
+                    negócio, onde você estiver.
                   </p>
                 </div>
                 <BotaoContato

@@ -3,10 +3,10 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/",
-    name: "Sagital — Sites para negócios locais",
+    name: "Sagital — Sites para o seu negócio",
     short_name: "Sagital",
     description:
-      "Demos de sites para academias, lojas, restaurantes e tabacarias, com link e QR code personalizados.",
+      "Demos de sites para qualquer negócio, com link e QR code personalizados.",
     lang: "pt-BR",
     start_url: "/",
     scope: "/",

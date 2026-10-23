@@ -1,6 +1,6 @@
 # Sagital — sites para negócios locais
 
-Portfólio de vendas da Sagital: uma página de apresentação, um site demonstrativo completo para cada nicho (academia, varejo, restaurante e tabacaria) e quatro sites conceituais de serviços profissionais (advocacia, odontologia, arquitetura e contabilidade). Os demos são mostrados em visitas presenciais, aceitam o nome e a cor do cliente pela URL e funcionam sem internet.
+Portfólio de vendas da Sagital: uma página de apresentação, um site demonstrativo completo para cada nicho (academia, varejo, restaurante e tabacaria) e quatro sites conceituais de serviços profissionais (advocacia, odontologia, arquitetura e contabilidade). Os demos aceitam o nome e a cor do cliente pela URL e funcionam sem internet.
 
 > Todo o conteúdo dos demos e dos sites do portfólio é fictício (nomes, preços e depoimentos).
 
