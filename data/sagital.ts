@@ -10,6 +10,7 @@ import cenarioAcademia from "@/public/imagens/academia/bike.jpg";
 import cenarioRestaurante from "@/public/imagens/restaurante/limoes.jpg";
 import cenarioTabacaria from "@/public/imagens/tabacaria/poltrona-lareira.jpg";
 import cenarioVarejo from "@/public/imagens/varejo/feminino-banner.jpg";
+import { formatarPrecoRedondo } from "@/lib/formato";
 import type { Nicho } from "@/lib/link";
 import type { PadraoDoTema } from "@/lib/tema";
 import { academia } from "./academia";
@@ -181,6 +182,10 @@ export type Pacote = {
   recomendado?: boolean;
   /** Ao lado do nome, no título da página do pacote. */
   chamada: string;
+  /** Uma frase sob o preço, nos cartões de /pacotes. */
+  resumo: string;
+  /** O que distingue o pacote, nos cartões de /pacotes. */
+  destaques: string[];
   introducao: string;
   /** Para quem é: uma frase e os casos em que encaixa. */
   paraQuem: string;
@@ -198,6 +203,14 @@ export const pacotes: Pacote[] = [
     preco: 89000,
     prazo: "7 dias",
     chamada: "o primeiro site do negócio",
+    resumo: "Uma página com o essencial e o seu WhatsApp a um toque.",
+    destaques: [
+      "Uma página com o que o cliente procura",
+      "Botão de WhatsApp com mensagem pronta",
+      "Horários, contatos e “aberto agora”",
+      "Rápido no celular e acessível",
+      "15 dias de ajustes depois de publicar",
+    ],
     introducao:
       "Uma página só, bem feita, com o que o cliente procura antes de chamar: o que você faz, onde está, quando atende e um botão que abre o seu WhatsApp com a mensagem pronta.",
     paraQuem:
@@ -245,6 +258,15 @@ export const pacotes: Pacote[] = [
     prazo: "12 dias",
     recomendado: true,
     chamada: "tudo o que você vende",
+    resumo:
+      "Catálogo, cardápio ou planos, com o pedido de cada item no WhatsApp.",
+    destaques: [
+      "Tudo o que o Essencial tem",
+      "Catálogo, serviços, cardápio ou planos",
+      "Funciona sem internet e pode ser instalado",
+      "QR code para imprimir e divulgar",
+      "30 dias de ajustes depois de publicar",
+    ],
     introducao:
       "O site com o seu catálogo, serviços, cardápio ou planos, cada item com preço e pedido direto no WhatsApp. Abre rápido mesmo com sinal fraco, pode ser instalado no celular e vem com um QR code pronto para imprimir.",
     paraQuem:
@@ -291,6 +313,14 @@ export const pacotes: Pacote[] = [
     preco: 229000,
     prazo: "20 dias",
     chamada: "pensado do zero com você",
+    resumo: "Fotos, textos e páginas extras feitos junto com você.",
+    destaques: [
+      "Tudo o que o Completo tem",
+      "Fotos e textos produzidos com você",
+      "Até três páginas extras",
+      "Duas conversas e um roteiro antes de começar",
+      "90 dias de ajustes depois de publicar",
+    ],
     introducao:
       "Tudo o que o Completo tem, mais fotos e textos produzidos com você e até três páginas extras. O site conta a história do seu negócio do jeito que você contaria pessoalmente.",
     paraQuem:
@@ -366,6 +396,95 @@ export const recursos: { nome: string; inclui: (boolean | string)[] }[] = [
 
 export const observacoesDosPacotes =
   "Domínio .com.br: cerca de R$ 40 por ano, pago direto ao Registro.br. Manutenção mensal opcional: R$ 79.";
+
+/**
+ * A tabela "lado a lado" de /pacotes, em grupos. O que cada pacote inclui
+ * vem de `recursos`; prazos e preços, de `pacotes`.
+ */
+export function comparacaoDosPacotes(): {
+  grupo: string;
+  linhas: { nome: string; valores: (boolean | string)[] }[];
+}[] {
+  const ajustes = recursos.find((r) => r.nome.startsWith("Ajustes"));
+  return [
+    {
+      grupo: "Escopo",
+      linhas: [
+        {
+          nome: "Páginas",
+          valores: ["Uma", "Uma, com catálogo", "Até quatro"],
+        },
+        { nome: "Prazo", valores: pacotes.map((p) => p.prazo) },
+        {
+          nome: "Rodadas de ajuste antes de publicar",
+          valores: ["Uma", "Duas", "Até ficar certo"],
+        },
+        {
+          nome: "Ajustes depois de publicar",
+          valores: ajustes?.inclui ?? [],
+        },
+      ],
+    },
+    {
+      grupo: "Inclui",
+      linhas: recursos
+        .filter((r) => r !== ajustes && !r.nome.startsWith("Páginas"))
+        .map((r) => ({ nome: r.nome, valores: r.inclui })),
+    },
+    {
+      grupo: "Valores",
+      linhas: [
+        {
+          nome: "Preço",
+          valores: pacotes.map((p) => formatarPrecoRedondo(p.preco)),
+        },
+        { nome: "Pagamento", valores: pacotes.map(() => "Único") },
+        {
+          nome: "Domínio .com.br",
+          valores: pacotes.map(() => "Cerca de R$ 40 por ano"),
+        },
+        {
+          nome: "Manutenção mensal",
+          valores: pacotes.map(() => "Opcional, R$ 79"),
+        },
+      ],
+    },
+  ];
+}
+
+/** Perguntas de /pacotes: só o que já está combinado em outras partes do site. */
+export const perguntasDosPacotes: { pergunta: string; resposta: string }[] = [
+  {
+    pergunta: "Por que o preço é fechado?",
+    resposta:
+      "Para você saber quanto vai pagar antes de começar. O que entra no site e o prazo de entrega ficam combinados na primeira conversa, e o valor não muda no meio do caminho.",
+  },
+  {
+    pergunta: "Posso ver como fica antes de pagar?",
+    resposta:
+      "Pode. Nos demos você vê um site do seu ramo com o nome do seu negócio, no celular, no tablet e no computador, antes de fechar qualquer pacote.",
+  },
+  {
+    pergunta: "E se eu precisar mudar algo depois que o site estiver no ar?",
+    resposta:
+      "Cada pacote tem um período de ajustes inclusos depois de publicar: 15, 30 ou 90 dias. Depois disso, existe a manutenção mensal opcional de R$ 79: mudou um preço, um serviço ou o horário, é só mandar uma mensagem.",
+  },
+  {
+    pergunta: "Preciso pagar pelo endereço do site?",
+    resposta:
+      "O domínio .com.br custa cerca de R$ 40 por ano e é pago direto ao Registro.br, então o endereço fica no nome do seu negócio.",
+  },
+  {
+    pergunta: "Dá para começar pelo Essencial e crescer depois?",
+    resposta:
+      "Dá. O site cresce a partir do que já existe: o catálogo, o QR code ou as páginas extras entram quando você quiser, com o valor combinado antes.",
+  },
+  {
+    pergunta: "O cliente consegue pagar pelo site?",
+    resposta:
+      "Não: o pedido chega no seu WhatsApp com a mensagem pronta, e o pagamento você combina com o cliente do jeito que já faz hoje.",
+  },
+];
 
 export const mensagemDeContato =
   "Olá! Vi o site da Sagital e quero um site para o meu negócio.";

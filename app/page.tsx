@@ -1,4 +1,4 @@
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -314,13 +314,27 @@ export default function PaginaSagital() {
                 </>
               }
             />
-            <Container largura="larga">
-              <p
-                data-revela
-                className="mt-6 max-w-[64ch] text-sm text-texto-suave"
-              >
+            <Container
+              largura="larga"
+              className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8"
+            >
+              <p data-revela className="max-w-[64ch] text-sm text-texto-suave">
                 {observacoesDosPacotes}
               </p>
+              <BotaoSagital
+                data-revela
+                href="/pacotes"
+                variante="contorno"
+                tamanho="medio"
+                className="group shrink-0 self-start sm:self-auto"
+              >
+                Comparar planos
+                <ArrowRight
+                  aria-hidden
+                  className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+                  strokeWidth={2}
+                />
+              </BotaoSagital>
             </Container>
           </section>
 
