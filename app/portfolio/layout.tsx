@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { VoltarParaSagital } from "@/components/VoltarParaSagital";
 import "./portfolio.css";
 
 // Os sites do portfólio são conceituais: ficam fora dos buscadores, como os
@@ -10,5 +11,10 @@ export const metadata: Metadata = {
 export default function LayoutDoPortfolio({
   children,
 }: LayoutProps<"/portfolio">) {
-  return children;
+  return (
+    <>
+      {children}
+      <VoltarParaSagital />
+    </>
+  );
 }

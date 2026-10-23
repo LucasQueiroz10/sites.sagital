@@ -18,6 +18,7 @@ import {
   type VariaveisDoTema,
 } from "@/lib/tema";
 import { classes } from "@/lib/classes";
+import { VoltarParaSagital } from "./VoltarParaSagital";
 
 const ContextoDoTema = createContext<Tema | null>(null);
 
@@ -62,6 +63,7 @@ export function TemaDoNicho({
         )}
       >
         {children}
+        <VoltarParaSagital acimaDaBarra />
       </div>
     </ContextoDoTema.Provider>
   );
