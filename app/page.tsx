@@ -39,7 +39,8 @@ export const viewport: Viewport = { themeColor: COR_DA_NOITE };
 
 /** As cores dos capítulos da página, de cima para baixo. */
 const CAPITULO = {
-  royal: "#1f48c2",
+  // Azul puxado para o marinho: mais escuro que o royal, mais claro que a capa.
+  anil: "#15327f",
   profundo: "#060b1d",
   papel: "#ffffff",
 } as const;
@@ -170,14 +171,14 @@ export default function PaginaSagital() {
             </Container>
           </section>
 
-          {/* Capítulos: a capa no marinho com o feixe; os demos no royal; os
+          {/* Capítulos: a capa no marinho com o feixe; os demos no anil; os
               trabalhos no marinho profundo; e a parte de ler e decidir no
               papel branco. Cada troca é uma faixa de retícula. */}
-          <PassagemReticulada para={CAPITULO.royal} />
-          <div style={{ backgroundColor: CAPITULO.royal }}>
+          <PassagemReticulada para={CAPITULO.anil} />
+          <div style={{ backgroundColor: CAPITULO.anil }}>
             <VitrineDeDemos demos={demos} />
           </div>
-          <PassagemReticulada de={CAPITULO.royal} para={CAPITULO.profundo} />
+          <PassagemReticulada de={CAPITULO.anil} para={CAPITULO.profundo} />
           <div style={{ backgroundColor: CAPITULO.profundo }}>
             <VitrineDeTrabalhos sites={sitesDoPortfolio} />
           </div>
