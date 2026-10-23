@@ -30,7 +30,7 @@ export function PercursoDoProcesso({ passos }: { passos: Passo[] }) {
     <ol
       ref={ref}
       data-em-vista={emVista || undefined}
-      className="sg-percurso grid md:grid-cols-4 md:gap-x-4"
+      className="sg-percurso grid md:grid-cols-5 md:gap-x-4"
     >
       {passos.map((passo, i) => (
         <li

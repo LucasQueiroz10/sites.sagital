@@ -311,7 +311,7 @@
 
 /*
  * Percurso de "Como funciona": a luz leva 1s por trecho e para em cada
- * número; o ciclo tem 6s (3s acendendo, o rastro se apaga do 1 ao último e
+ * número; o ciclo tem 8s (4s acendendo, o rastro se apaga do 1 ao último e
  * meio segundo de pausa). Cada passo entra atrasado pelo seu --passo.
  */
 [data-pagina="sagital"] .sg-trilha-rastro {
@@ -370,7 +370,7 @@
     .sg-percurso[data-em-vista]
     :is(.sg-trilha-rastro, .sg-trilha-cometa, .sg-parada),
   [data-pagina="sagital"] .sg-percurso[data-em-vista] .sg-parada::after {
-    animation-duration: 6s;
+    animation-duration: 8s;
     animation-iteration-count: infinite;
     animation-delay: calc(var(--passo) * 1s);
   }
@@ -402,19 +402,19 @@
   }
 }
 
-/* 16.667% do ciclo = 1s, o tempo de um trecho. */
+/* 12.5% do ciclo = 1s, o tempo de um trecho. */
 @keyframes sg-rastro-y {
   0% {
     transform: scaleY(0);
     opacity: 1;
     animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
   }
-  16.667%,
+  12.5%,
   50% {
     transform: scaleY(1);
     opacity: 1;
   }
-  58%,
+  56.25%,
   100% {
     transform: scaleY(1);
     opacity: 0;
@@ -427,12 +427,12 @@
     opacity: 1;
     animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
   }
-  16.667%,
+  12.5%,
   50% {
     transform: scaleX(1);
     opacity: 1;
   }
-  58%,
+  56.25%,
   100% {
     transform: scaleX(1);
     opacity: 0;
@@ -445,11 +445,11 @@
     opacity: 1;
     animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
   }
-  16.667% {
+  12.5% {
     transform: translateY(0);
     opacity: 1;
   }
-  21%,
+  15.75%,
   100% {
     transform: translateY(0);
     opacity: 0;
@@ -462,11 +462,11 @@
     opacity: 1;
     animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
   }
-  16.667% {
+  12.5% {
     transform: translateX(0);
     opacity: 1;
   }
-  21%,
+  15.75%,
   100% {
     transform: translateX(0);
     opacity: 0;
@@ -478,11 +478,11 @@
   0% {
     background-color: var(--sg-escuro-fundo);
   }
-  3%,
+  2.25%,
   50% {
     background-color: var(--cor-destaque);
   }
-  58%,
+  56.25%,
   100% {
     background-color: var(--sg-escuro-fundo);
   }
@@ -516,7 +516,7 @@
     opacity: 0.6;
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   }
-  14%,
+  10.5%,
   100% {
     transform: scale(1.9);
     opacity: 0;

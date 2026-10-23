@@ -124,6 +124,11 @@ export const processo = [
       "Fotos, preços, horários e textos. Você aprova cada parte pelo WhatsApp.",
   },
   {
+    titulo: "Desenvolvimento",
+    texto:
+      "Montamos o site com o seu conteúdo e você acompanha tudo por um link, antes de ir ao ar.",
+  },
+  {
     titulo: "Site no ar",
     texto:
       "Publicado com endereço próprio, rápido no celular e funcionando até sem internet.",

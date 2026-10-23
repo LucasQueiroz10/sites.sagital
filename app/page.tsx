@@ -366,7 +366,7 @@ export default function PaginaSagital() {
           >
             <Container
               largura="larga"
-              className="grid gap-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-14"
+              className="grid gap-8 xl:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] xl:gap-14"
             >
               <div>
                 <h2 id="processo-titulo" data-revela className={tituloDeSecao}>
