@@ -160,7 +160,7 @@ export function ProvedorDaEscolha({
           aparelho={aparelho}
           escolherAparelho={setAparelho}
           titulo={site.nome}
-          subtitulo={`Portfólio · ${site.ramo}`}
+          subtitulo={`Trabalho · ${site.ramo}`}
           tituloDoSite={`Site conceitual de ${site.nome}`}
           link={linkDoSite}
         />

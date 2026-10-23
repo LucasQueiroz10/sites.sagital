@@ -12,7 +12,7 @@ import "./arquitetura.css";
 import { archivo } from "./fontes";
 
 export const metadata: Metadata = {
-  title: { absolute: `${dados.nome} — Portfólio Sagital` },
+  title: { absolute: `${dados.nome} — Trabalhos da Sagital` },
   description: dados.apoio,
 };
 

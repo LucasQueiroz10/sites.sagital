@@ -65,7 +65,12 @@ export default function PaginaGerar() {
             </div>
             <GeradorDeLink />
             <PreparadorOffline
-              paginas={["/", "/demos", ...opcoes.map((d) => `/${d.nicho}`)]}
+              paginas={[
+                "/",
+                "/demos",
+                "/trabalhos",
+                ...opcoes.map((d) => `/${d.nicho}`),
+              ]}
             />
           </Container>
         </main>

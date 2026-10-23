@@ -5,7 +5,7 @@ export function AssinaturaDoPortfolio({ className }: { className?: string }) {
   return (
     <p className={className}>
       Site conceitual com empresa e conteúdo fictícios, feito pela{" "}
-      <Link href="/#portfolio" className="underline underline-offset-4">
+      <Link href="/trabalhos" className="underline underline-offset-4">
         Sagital
       </Link>
       .

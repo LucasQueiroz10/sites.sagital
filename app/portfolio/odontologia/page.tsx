@@ -14,7 +14,7 @@ import { albert } from "./fontes";
 import "./odontologia.css";
 
 export const metadata: Metadata = {
-  title: { absolute: `${dados.nome} — Portfólio Sagital` },
+  title: { absolute: `${dados.nome} — Trabalhos da Sagital` },
   description: dados.apoio,
 };
 

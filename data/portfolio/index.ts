@@ -2,6 +2,10 @@ import capturaAdvocacia from "@/public/imagens/sagital/portfolio-advocacia.png";
 import capturaArquitetura from "@/public/imagens/sagital/portfolio-arquitetura.png";
 import capturaContabilidade from "@/public/imagens/sagital/portfolio-contabilidade.png";
 import capturaOdontologia from "@/public/imagens/sagital/portfolio-odontologia.png";
+import desktopAdvocacia from "@/public/imagens/sagital/portfolio-advocacia-desktop.png";
+import desktopArquitetura from "@/public/imagens/sagital/portfolio-arquitetura-desktop.png";
+import desktopContabilidade from "@/public/imagens/sagital/portfolio-contabilidade-desktop.png";
+import desktopOdontologia from "@/public/imagens/sagital/portfolio-odontologia-desktop.png";
 import type { Imagem } from "@/data/tipos";
 
 // Os sites conceituais do portfólio: empresas fictícias de serviços
@@ -17,8 +21,12 @@ export type SiteDoPortfolio = {
   href: `/portfolio/${string}`;
   /** Primeira tela no celular (390px). */
   captura: Imagem;
+  /** Primeira tela no computador (1440px), na janela da vitrine. */
+  capturaDesktop: Imagem;
   paleta: `#${string}`[];
   fonte: string;
+  /** Fundo do cartão na vitrine: uma cor da paleta do site, escura o bastante para o texto branco. */
+  cor: `#${string}`;
 };
 
 export const sitesDoPortfolio: SiteDoPortfolio[] = [
@@ -33,8 +41,13 @@ export const sitesDoPortfolio: SiteDoPortfolio[] = [
       src: capturaAdvocacia,
       alt: "Primeira tela do site do escritório Duarte Moreira Advogados no celular",
     },
+    capturaDesktop: {
+      src: desktopAdvocacia,
+      alt: "Primeira tela do site de Duarte Moreira Advogados no computador",
+    },
     paleta: ["#0f2b24", "#b9d3c5", "#ffffff"],
     fonte: "Libre Caslon Display",
+    cor: "#0f2b24",
   },
   {
     id: "odontologia",
@@ -47,8 +60,13 @@ export const sitesDoPortfolio: SiteDoPortfolio[] = [
       src: capturaOdontologia,
       alt: "Primeira tela do site da clínica Lumi Odontologia no celular",
     },
+    capturaDesktop: {
+      src: desktopOdontologia,
+      alt: "Primeira tela do site de Lumi Odontologia no computador",
+    },
     paleta: ["#ffffff", "#0b6a74", "#0f2233"],
     fonte: "Albert Sans",
+    cor: "#0b6a74",
   },
   {
     id: "arquitetura",
@@ -61,8 +79,13 @@ export const sitesDoPortfolio: SiteDoPortfolio[] = [
       src: capturaArquitetura,
       alt: "Primeira tela do site do Atelier Vão Arquitetura no celular",
     },
+    capturaDesktop: {
+      src: desktopArquitetura,
+      alt: "Primeira tela do site de Atelier Vão Arquitetura no computador",
+    },
     paleta: ["#f4f1ec", "#1c1b19", "#9c4a2c"],
     fonte: "Archivo",
+    cor: "#9c4a2c",
   },
   {
     id: "contabilidade",
@@ -74,7 +97,12 @@ export const sitesDoPortfolio: SiteDoPortfolio[] = [
       src: capturaContabilidade,
       alt: "Primeira tela do site da Prumo Contabilidade no celular",
     },
+    capturaDesktop: {
+      src: desktopContabilidade,
+      alt: "Primeira tela do site de Prumo Contabilidade no computador",
+    },
     paleta: ["#102a43", "#9fe3c9", "#f1f4f8"],
     fonte: "Schibsted Grotesk",
+    cor: "#102a43",
   },
 ];

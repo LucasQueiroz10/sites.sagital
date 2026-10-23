@@ -50,7 +50,7 @@ describe("mensagemDoDemo", () => {
 });
 
 describe("mensagemDoPortfolio", () => {
-  it("cumprimenta o site e diz que veio do portfólio", () => {
+  it("cumprimenta o site e diz que veio dos trabalhos", () => {
     const mensagem = mensagemDoPortfolio(
       "Quero agendar uma conversa.",
       "Duarte Moreira Advogados",
@@ -58,6 +58,6 @@ describe("mensagemDoPortfolio", () => {
     expect(mensagem.startsWith("Olá, Duarte Moreira Advogados! Quero")).toBe(
       true,
     );
-    expect(mensagem).toContain("portfólio da Sagital");
+    expect(mensagem).toContain("trabalhos da Sagital");
   });
 });

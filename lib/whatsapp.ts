@@ -60,7 +60,7 @@ export function mensagemDoPortfolio(
 ): string {
   return (
     `Olá, ${nomeDoSite}! ${pedido}\n\n` +
-    `(Enviado pelo site conceitual de ${nomeDoSite} no portfólio da Sagital.)`
+    `(Enviado pelo site conceitual de ${nomeDoSite} nos trabalhos da Sagital.)`
   );
 }
 

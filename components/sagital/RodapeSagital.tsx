@@ -17,7 +17,7 @@ const link = classeDoLinkDeContato("escuro");
 // Os mesmos destinos do cabeçalho: valem na página inicial e em /demos.
 const navegacao = [
   { rotulo: "Demos", href: "/demos" },
-  { rotulo: "Portfólio", href: "/#portfolio" },
+  { rotulo: "Trabalhos", href: "/trabalhos" },
   { rotulo: "Como funciona", href: "/#como-funciona" },
   { rotulo: "Pacotes", href: "/#pacotes" },
 ];
@@ -67,7 +67,7 @@ export function RodapeSagital({
           ),
         },
         {
-          titulo: "Portfólio",
+          titulo: "Trabalhos",
           conteudo: (
             <LinksDoRodape
               tom="escuro"
@@ -121,7 +121,7 @@ export function RodapeSagital({
       }
       legais={[
         ...(cnpj ? [`CNPJ ${cnpj}`] : []),
-        "Os demos e o portfólio usam nomes, preços e depoimentos fictícios.",
+        "Os demos e os trabalhos usam nomes, preços e depoimentos fictícios.",
       ]}
     />
   );
