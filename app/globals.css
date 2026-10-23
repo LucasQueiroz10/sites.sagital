@@ -55,6 +55,17 @@ body {
   color: var(--cor-primaria-texto);
 }
 
+/* Sem palavra sozinha na última linha dos parágrafos. Na camada base, para
+   um text-balance ou text-wrap de utilitário continuar valendo. */
+@layer base {
+  p,
+  li,
+  dd,
+  figcaption {
+    text-wrap: pretty;
+  }
+}
+
 /*
  * Trilha dos carrosséis: vai de borda a borda da tela, mas o primeiro item
  * começa na margem do conteúdo (a mesma do Container: 16px, 24px a partir de

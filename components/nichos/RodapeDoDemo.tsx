@@ -56,7 +56,7 @@ export function RodapeDoDemo({
 
   return (
     <RodapeCompleto
-      className={classes("border-t border-borda pb-28 lg:pb-10", className)}
+      className={classes("border-t border-borda pb-36 lg:pb-20", className)}
       marca={<p className={classeDaMarca}>{nome}</p>}
       descricao={dados.descricao}
       redes={dados.redes.map((rede) => ({ rede, usuario: apelido }))}

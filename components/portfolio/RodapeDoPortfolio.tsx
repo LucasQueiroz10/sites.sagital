@@ -1,6 +1,7 @@
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import type { ReactNode } from "react";
 import { AnoAtual } from "@/components/ui/AnoAtual";
+import { classes } from "@/lib/classes";
 import {
   classeDoLinkDeContato,
   ItemDeContato,
@@ -38,7 +39,7 @@ export function RodapeDoPortfolio({
   return (
     <RodapeCompleto
       tom={tom}
-      className={className}
+      className={classes("pb-20", className)}
       classeDoTitulo={classeDoTitulo}
       marca={marca}
       descricao={rodape.descricao}

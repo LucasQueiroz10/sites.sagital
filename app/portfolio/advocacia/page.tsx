@@ -5,6 +5,7 @@ import { CabecalhoDoPortfolio } from "@/components/portfolio/CabecalhoDoPortfoli
 import { RodapeDoPortfolio } from "@/components/portfolio/RodapeDoPortfolio";
 import { AreasDeAtuacao } from "@/components/portfolio/advocacia/AreasDeAtuacao";
 import { TriagemDoCaso } from "@/components/portfolio/advocacia/TriagemDoCaso";
+import { Carrossel } from "@/components/ui/Carrossel";
 import { Container } from "@/components/ui/Container";
 import { advocacia as dados } from "@/data/portfolio/advocacia";
 import { linkDoPortfolio } from "@/lib/whatsapp";
@@ -220,32 +221,44 @@ export default function PaginaAdvocacia() {
           aria-labelledby="equipe-titulo"
           className="scroll-mt-20 border-t border-borda py-20 lg:py-28"
         >
-          <Container largura="larga">
-            <h2 id="equipe-titulo">Equipe</h2>
-            <ul className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-6 lg:mt-16 lg:gap-8">
-              {dados.equipe.map((pessoa) => (
-                <li key={pessoa.nome} className="group">
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-tema bg-superficie">
-                    <Image
-                      src={pessoa.imagem.src}
-                      alt={pessoa.imagem.alt}
-                      fill
-                      sizes="(min-width: 1280px) 400px, (min-width: 640px) 33vw, 100vw"
-                      style={{ objectPosition: pessoa.foco }}
-                      className="object-cover grayscale transition-[filter] duration-500 group-hover:grayscale-0"
-                      placeholder="blur"
-                    />
-                  </div>
-                  <h3 className="mt-5 font-titulo text-[1.625rem] leading-tight">
-                    {pessoa.nome}
-                  </h3>
-                  <p className="mt-1 text-texto-suave">
-                    {pessoa.funcao} · {pessoa.areas}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </Container>
+          {/* No celular, os retratos deslizam lado a lado, com o próximo
+              cortado; a partir de 640px, os três cabem e a trilha para. */}
+          <Carrossel
+            rotulo="Equipe"
+            className="gap-4 sm:gap-6 lg:gap-8"
+            classeDasSetas="rounded-tema border border-borda bg-fundo text-texto hover:border-texto"
+            classeDoPonto={{ atual: "bg-texto", outros: "bg-borda" }}
+            cabecalho={
+              <h2 id="equipe-titulo" className="pb-6 lg:pb-10">
+                Equipe
+              </h2>
+            }
+          >
+            {dados.equipe.map((pessoa) => (
+              <li
+                key={pessoa.nome}
+                className="group w-[78%] max-w-[20rem] shrink-0 snap-start sm:w-[calc((100%-3rem)/3)] sm:max-w-none lg:w-[calc((100%-4rem)/3)]"
+              >
+                <div className="relative aspect-[4/5] overflow-hidden rounded-tema bg-superficie">
+                  <Image
+                    src={pessoa.imagem.src}
+                    alt={pessoa.imagem.alt}
+                    fill
+                    sizes="(min-width: 1280px) 400px, (min-width: 640px) 33vw, 78vw"
+                    style={{ objectPosition: pessoa.foco }}
+                    className="object-cover grayscale transition-[filter] duration-500 group-hover:grayscale-0"
+                    placeholder="blur"
+                  />
+                </div>
+                <h3 className="mt-5 font-titulo text-[1.625rem] leading-tight">
+                  {pessoa.nome}
+                </h3>
+                <p className="mt-1 text-texto-suave">
+                  {pessoa.funcao} · {pessoa.areas}
+                </p>
+              </li>
+            ))}
+          </Carrossel>
         </section>
 
         <section

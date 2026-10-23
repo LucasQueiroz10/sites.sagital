@@ -58,15 +58,12 @@ export default function PaginaRestaurante() {
             className="grid gap-12 pt-8 pb-16 lg:grid-cols-12 lg:items-center lg:gap-14 lg:pt-14 lg:pb-24"
           >
             <div className="lg:col-span-6">
-              <p className="condensada inline-flex rounded-[50%] border-[1.5px] border-current px-5 py-2 text-[0.8125rem] tracking-[0.12em]">
-                Natural e de verdade
-              </p>
               <h1
                 id="titulo-principal"
-                className="mt-6 text-[clamp(3rem,12vw,5.75rem)] text-balance"
+                className="text-[clamp(3rem,12vw,5.75rem)] text-balance"
               >
                 {dados.slogan.serifa}{" "}
-                <span className="manuscrito mt-1 ml-[0.35em] inline-block -rotate-6 text-[1.3em] text-[var(--cor-pervinca-tinta)]">
+                <span className="manuscrito mt-1 inline-block -rotate-6 text-[1.3em] text-[var(--cor-pervinca-tinta)]">
                   {dados.slogan.manuscrito}
                 </span>
               </h1>

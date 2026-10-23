@@ -140,19 +140,19 @@ export default function PaginaOdontologia() {
               {dados.tratamentos.map((item) => (
                 <li
                   key={item.id}
-                  className="flex flex-col border-t border-borda pt-6 pb-10"
+                  className="grid grid-cols-[1fr_auto] items-center gap-x-4 border-t border-borda pt-6 pb-8 sm:flex sm:flex-col sm:items-stretch sm:pb-10"
                 >
-                  <h3 className="text-[1.625rem] leading-tight font-light tracking-[-0.025em]">
+                  <h3 className="col-span-2 text-[1.625rem] leading-tight font-light tracking-[-0.025em]">
                     {item.nome}
                   </h3>
-                  <p className="mt-3 leading-relaxed text-texto-suave">
+                  <p className="col-span-2 mt-3 leading-relaxed text-texto-suave">
                     {item.descricao}
                   </p>
                   <p className="numero mt-4 flex items-center gap-1.5 text-sm text-texto-suave">
                     <Clock aria-hidden className="size-4" />
                     {item.duracao} min · {item.sessoes}
                   </p>
-                  <div className="mt-auto pt-4">
+                  <div className="mt-4 sm:mt-auto sm:pt-4">
                     <BotaoAgendarTratamento id={item.id} nome={item.nome} />
                   </div>
                 </li>
@@ -268,23 +268,27 @@ export default function PaginaOdontologia() {
                 Os mesmos dois dentistas do começo ao fim do tratamento.
               </p>
             </div>
-            <ul className="grid gap-8 sm:grid-cols-2 lg:col-span-8">
+            {/* Os dois lado a lado desde o celular: são só dois, e empilhados
+                viravam duas telas inteiras de retrato. */}
+            <ul className="grid grid-cols-2 gap-4 sm:gap-8 lg:col-span-8">
               {dados.equipe.map((pessoa) => (
                 <li key={pessoa.nome}>
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-superficie">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-superficie sm:rounded-[1.75rem]">
                     <Image
                       src={pessoa.imagem.src}
                       alt={pessoa.imagem.alt}
                       fill
-                      sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
+                      sizes="(min-width: 1024px) 30vw, 50vw"
                       className="object-cover object-top"
                       placeholder="blur"
                     />
                   </div>
-                  <h3 className="mt-5 text-2xl font-light tracking-[-0.025em]">
+                  <h3 className="mt-4 text-xl font-light tracking-[-0.025em] sm:mt-5 sm:text-2xl">
                     {pessoa.nome}
                   </h3>
-                  <p className="mt-1 text-texto-suave">{pessoa.area}</p>
+                  <p className="mt-1 text-[0.9375rem] text-texto-suave sm:text-base">
+                    {pessoa.area}
+                  </p>
                 </li>
               ))}
             </ul>

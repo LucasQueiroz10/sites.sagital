@@ -77,7 +77,9 @@ export function RodapeCompleto({
   return (
     <footer
       className={classes(
-        "pt-14 pb-10 text-[0.9375rem] leading-relaxed",
+        // O respiro de baixo fica com quem usa o rodapé: cada página reserva o
+        // espaço da sua barra fixa e do botão de volta à Sagital.
+        "pt-14 text-[0.9375rem] leading-relaxed",
         tom === "claro" ? "text-texto-suave" : "text-white/70",
         className,
       )}

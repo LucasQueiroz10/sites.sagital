@@ -141,10 +141,12 @@ export function SimuladorDeRegime({
           {resultado.regime}
         </p>
 
-        <dl className="mt-8 grid grid-cols-2 gap-6 border-t border-white/15 pt-6">
+        {/* O imposto leva a coluna mais larga: chega a "R$ 40.000,00", e o
+            "/mês" desce de linha antes de encostar na alíquota. */}
+        <dl className="mt-8 grid grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-x-4 gap-y-6 border-t border-white/15 pt-6 sm:gap-6">
           <div>
             <dt className="text-sm text-white/65">Imposto estimado</dt>
-            <dd className="numero mt-1 text-2xl font-semibold">
+            <dd className="numero mt-1 flex flex-wrap items-baseline gap-x-1 text-xl font-semibold sm:text-2xl">
               {resultado.impostoMensal === null
                 ? "Sob análise"
                 : `${reaisComCentavos.format(resultado.impostoMensal)}`}
@@ -155,7 +157,7 @@ export function SimuladorDeRegime({
           </div>
           <div>
             <dt className="text-sm text-white/65">Alíquota efetiva</dt>
-            <dd className="numero mt-1 text-2xl font-semibold">
+            <dd className="numero mt-1 text-xl font-semibold sm:text-2xl">
               {resultado.aliquota === null
                 ? resultado.regime === "MEI"
                   ? "Valor fixo"

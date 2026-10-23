@@ -37,7 +37,7 @@ export function BannerDeCampanha({
           fill
           preload
           sizes="(min-width: 1280px) 1232px, 100vw"
-          className="foto-que-assenta object-cover object-[50%_12%] lg:object-[50%_30%]"
+          className="foto-que-assenta object-cover object-[50%_12%] lg:object-[50%_16%]"
           placeholder="blur"
         />
         {/* No celular e no tablet, a etiqueta é uma faixa encostada na base da

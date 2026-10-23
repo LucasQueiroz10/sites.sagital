@@ -77,13 +77,16 @@ export default function PaginaVarejo() {
         >
           <Container largura="larga">
             <div className="rounded-2xl bg-superficie px-5 py-8 sm:px-10 sm:py-12">
-              <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+              {/* O botão fica ao lado do título a partir de 640px; no
+                  celular, desce para depois dos passos, que o explicam. */}
+              <div className="flex items-end justify-between gap-5">
                 <h2 id="como-comprar-titulo">Como comprar</h2>
-                <BotaoWhatsApp
-                  acao={dados.acaoPrincipal}
-                  rotuloDoNicho={dados.rotulo}
-                  className="self-start sm:self-auto"
-                />
+                <div className="hidden sm:block">
+                  <BotaoWhatsApp
+                    acao={dados.acaoPrincipal}
+                    rotuloDoNicho={dados.rotulo}
+                  />
+                </div>
               </div>
               <ol className="mt-8 grid gap-6 sm:grid-cols-3 sm:gap-8">
                 {dados.comoComprar.map((passo, i) => (
@@ -106,6 +109,12 @@ export default function PaginaVarejo() {
                   </li>
                 ))}
               </ol>
+              <div className="mt-8 sm:hidden">
+                <BotaoWhatsApp
+                  acao={dados.acaoPrincipal}
+                  rotuloDoNicho={dados.rotulo}
+                />
+              </div>
             </div>
           </Container>
         </section>

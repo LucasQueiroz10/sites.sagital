@@ -61,6 +61,9 @@ export const arquitetura = {
     { valor: "14", rotulo: "anos de estúdio" },
     { valor: "9", rotulo: "pessoas na equipe" },
   ],
+  // A ordem também monta o mosaico: as colunas se enchem na sequência, e as
+  // três paisagens (mais baixas) entre os quatro primeiros fazem as três
+  // colunas do desktop terminarem quase na mesma altura.
   projetos: [
     {
       id: "casa-ipe",
@@ -108,29 +111,6 @@ export const arquitetura = {
         {
           src: salaLinho,
           alt: "Sala em tons de areia com sofá curvo, mesas baixas e uma grande janela",
-        },
-      ],
-      formato: "retrato",
-    },
-    {
-      id: "casa-patio",
-      nome: "Casa Pátio",
-      categoria: "residencial",
-      local: "Jardim Europa",
-      ano: 2023,
-      area: "410 m²",
-      resumo:
-        "Uma casa térrea organizada em volta da piscina, com a fachada fechada para a rua e aberta por inteiro para dentro.",
-      ficha: [
-        { rotulo: "Tipo", valor: "Casa unifamiliar" },
-        { rotulo: "Área", valor: "410 m²" },
-        { rotulo: "Obra", valor: "16 meses" },
-        { rotulo: "Materiais", valor: "Reboco branco, vidro, pedra" },
-      ],
-      imagens: [
-        {
-          src: casaPatio,
-          alt: "Casa térrea branca com piscina e jardim de arbustos podados",
         },
       ],
       formato: "retrato",
@@ -188,6 +168,29 @@ export const arquitetura = {
         },
       ],
       formato: "paisagem",
+    },
+    {
+      id: "casa-patio",
+      nome: "Casa Pátio",
+      categoria: "residencial",
+      local: "Jardim Europa",
+      ano: 2023,
+      area: "410 m²",
+      resumo:
+        "Uma casa térrea organizada em volta da piscina, com a fachada fechada para a rua e aberta por inteiro para dentro.",
+      ficha: [
+        { rotulo: "Tipo", valor: "Casa unifamiliar" },
+        { rotulo: "Área", valor: "410 m²" },
+        { rotulo: "Obra", valor: "16 meses" },
+        { rotulo: "Materiais", valor: "Reboco branco, vidro, pedra" },
+      ],
+      imagens: [
+        {
+          src: casaPatio,
+          alt: "Casa térrea branca com piscina e jardim de arbustos podados",
+        },
+      ],
+      formato: "retrato",
     },
     {
       id: "edificio-taipa",
