@@ -65,28 +65,33 @@
   }
 
   /*
-   * Tema azul (só a página inicial, em teste): o degradê animado atrás de
-   * tudo e os tokens invertidos, com texto claro e superfícies de vidro.
+   * Tema azul (só a página inicial): a retícula do feixe diagonal atrás de
+   * tudo (lib/reticula.ts) e os tokens invertidos, com texto claro.
    */
   [data-pagina="sagital"][data-tema="azul"] {
-    --cor-fundo: #062334;
-    --cor-superficie: rgb(255 255 255 / 0.07);
+    --cor-fundo: #0b1536;
+    /* Superfícies sólidas: os cartões ficam por cima da retícula como papel
+       sobre a impressão, sem os pontos passando por trás do texto. */
+    --cor-superficie: #121d47;
     --cor-texto: #ffffff;
     --cor-texto-suave: rgb(255 255 255 / 0.74);
     --cor-borda: rgb(255 255 255 / 0.16);
     --cor-primaria: #6fcaef;
     --cor-primaria-hover: #9adbf5;
-    --cor-primaria-texto: #062334;
+    --cor-primaria-texto: #0b1536;
     --cor-destaque: #6fcaef;
     --sg-tinta-forte: #ffffff;
     --sg-terciario: rgb(255 255 255 / 0.6);
-    --sg-pressionado: rgb(255 255 255 / 0.13);
+    --sg-pressionado: #1a285b;
     --sg-borda-sutil: rgb(255 255 255 / 0.12);
     --sg-escuro-fundo: #ffffff;
     --sg-escuro-texto: #111a3d;
     --sg-escuro-hover: #e3ecf9;
+    /* As superfícies azuis da página (o palco) ficam no mesmo marinho, sem
+       o degradê: a retícula delas é desenhada por cima. */
+    --sg-noite: #0b1536;
     isolation: isolate;
-    background: var(--sg-soffit-fundo);
+    background: #0b1536;
     color-scheme: dark;
   }
 
@@ -116,7 +121,7 @@
 
   [data-pagina="sagital"][data-tema="azul"] ::selection {
     background: #6fcaef;
-    color: #062334;
+    color: #0b1536;
   }
 
   [data-pagina="sagital"] :is(h1, h2, h3) {
@@ -192,14 +197,14 @@
   /* Vidro sobre o degradê: escuro, e não branco, para o texto continuar
      legível quando o azul-claro passa por baixo. */
   [data-pagina="sagital"] .sg-vidro {
-    background-color: rgb(6 35 52 / 0.6);
+    background-color: rgb(11 21 54 / 0.6);
     box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.16);
     color: #ffffff;
   }
 
   @media (hover: hover) {
     [data-pagina="sagital"] .sg-vidro:hover {
-      background-color: rgb(6 35 52 / 0.75);
+      background-color: rgb(11 21 54 / 0.78);
     }
   }
 
@@ -219,21 +224,54 @@
     opacity: 1;
   }
 
-  /* O degradê da página toda: preso à tela, atrás de tudo. */
-  [data-pagina="sagital"] .sg-soffit-fixo {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
+  /* Retícula (lib/reticula.ts): o canvas some até o primeiro desenho. */
+  [data-pagina="sagital"] .sg-reticula {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 700ms var(--sg-curva);
   }
 
-  /* Véu azul-noite por cima do degradê, que aparece ao descer a página. */
-  [data-pagina="sagital"] .sg-veu {
+  [data-pagina="sagital"] .sg-reticula[data-pronto] {
+    opacity: 1;
+  }
+
+  /* A retícula da página: presa à tela, um quarto mais alta que ela, para
+     ter o que subir enquanto a página rola. Sem rolagem ligada à animação
+     (ou com movimento reduzido), fica parada e um pouco mais fraca. */
+  [data-pagina="sagital"] .sg-fundo-fixo {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: -2;
+    height: 125lvh;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      [data-pagina="sagital"] .sg-fundo-fixo {
+        animation: sg-feixe-sobe linear both;
+        animation-timeline: scroll(root);
+      }
+    }
+  }
+
+  /* Grão de papel sobre a retícula: tira o liso de tela do marinho. Fixo e
+     sem eventos, para não repintar ao rolar. */
+  [data-pagina="sagital"] .sg-grao {
     position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background: rgb(4 24 37 / 0.62);
-    opacity: 0;
+    opacity: 0.09;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   }
 
   /* No tema azul a abertura é transparente: o degradê já está atrás. */
@@ -252,31 +290,6 @@
     outline-color: #1f48c2;
   }
 
-  /* Abertura: uma grade fina por cima do degradê, que some para as bordas. */
-  [data-pagina="sagital"] .sg-abertura::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image:
-      linear-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(255 255 255 / 0.06) 1px, transparent 1px);
-    background-size: 48px 48px;
-    background-position: 50% 0;
-    mask-image: radial-gradient(
-      ellipse 90% 75% at 50% 0%,
-      #000 15%,
-      transparent 100%
-    );
-  }
-
-  @media (min-width: 1024px) {
-    [data-pagina="sagital"] .sg-abertura::before {
-      background-size: 64px 64px;
-    }
-  }
-
   /* O anel royal some no marinho: no escuro (a abertura e o cabeçalho que
      flutua sobre ela), o foco é branco. */
   [data-pagina="sagital"] :is(.sg-abertura, .sg-foco-claro) :focus-visible {
@@ -285,10 +298,6 @@
 
   /* O título chega pronto (é o LCP); o resto sobe logo atrás, em sequência. */
   @media (prefers-reduced-motion: no-preference) {
-    [data-pagina="sagital"] .sg-abertura::before {
-      animation: sg-aparece 1200ms var(--sg-curva) both;
-    }
-
     [data-pagina="sagital"] .sg-entra {
       animation: sg-entra 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
       animation-delay: calc(120ms + var(--ordem, 0) * 90ms);
@@ -619,6 +628,22 @@ dialog.sg-previa[open] {
 }
 
 /* Abertura: fatos, apoio e botões sobem 14px logo depois do título. */
+/* A retícula sobe devagar com a rolagem e, logo depois da abertura, desce
+   à metade da força: forte no primeiro olhar, calma onde há texto miúdo. */
+@keyframes sg-feixe-sobe {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  9% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.5;
+    transform: translateY(-20%);
+  }
+}
+
 @keyframes sg-entra {
   from {
     opacity: 0;

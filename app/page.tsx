@@ -23,7 +23,7 @@ import {
 } from "@/data/sagital";
 import { sitesDoPortfolio } from "@/data/portfolio";
 import { formatarPrecoRedondo } from "@/lib/formato";
-import { COR_DO_SOFFIT } from "@/lib/soffit";
+import { COR_DA_NOITE } from "@/lib/reticula";
 import { jakarta } from "./fontes";
 import "./sagital.css";
 
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
     "Sites para qualquer negócio: lojas, restaurantes, clínicas, escritórios, profissionais autônomos e quem vende pela internet. Veja o seu site, com o seu nome, antes de pagar.",
 };
 
-// A barra do navegador no celular acompanha o topo escuro da abertura.
-export const viewport: Viewport = { themeColor: COR_DO_SOFFIT };
+// A barra do navegador no celular acompanha o marinho da página.
+export const viewport: Viewport = { themeColor: COR_DA_NOITE };
 
 const tituloDeSecao =
   "sg-titulo text-[clamp(1.75rem,5.6vw,2.75rem)] max-w-[22ch]";
@@ -61,7 +61,7 @@ export default function PaginaSagital() {
       data-tema="azul"
       className={`${jakarta.variable} relative flex flex-1 flex-col font-texto text-texto`}
     >
-      {/* Teste: o degradê animado da abertura atrás da página inteira. */}
+      {/* A retícula do feixe diagonal atrás da página inteira. */}
       <FundoDaPagina />
       <ProvedorDaEscolha demos={opcoes}>
         <CabecalhoSagital tema="azul" />

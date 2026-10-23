@@ -3,8 +3,9 @@
 import { Eye } from "lucide-react";
 import Image from "next/image";
 import { classes } from "@/lib/classes";
+import { RETICULA_DO_PALCO } from "@/lib/reticula";
 import { useEscolha } from "./EscolhaDoDemo";
-import { FundoSoffit } from "./FundoSoffit";
+import { FundoReticulado } from "./FundoReticulado";
 
 /**
  * O palco da seção "Veja o site do seu negócio": a captura real do demo
@@ -17,7 +18,7 @@ export function PalcoDoDemo() {
 
   return (
     <div className="sg-noite relative aspect-square overflow-hidden rounded-3xl text-left ring-1 ring-white/15 sm:aspect-[16/10] sm:rounded-[32px]">
-      <FundoSoffit />
+      <FundoReticulado opcoes={RETICULA_DO_PALCO} />
       {demos.map((d) => {
         const atual = d.nicho === nicho;
         return (

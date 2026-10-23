@@ -43,9 +43,9 @@ export function CabecalhoSagital({
         claro
           ? "border-[var(--sg-borda-sutil)] bg-white"
           : passouDaAbertura
-            ? "sg-foco-claro border-white/10 bg-[rgb(4_26_39/0.82)] backdrop-blur-md"
+            ? "sg-foco-claro border-white/10 bg-[rgb(11_21_54/0.84)] backdrop-blur-md"
             : rolou
-              ? "sg-foco-claro border-white/10 bg-[var(--sg-soffit-fundo)]"
+              ? "sg-foco-claro border-white/10 bg-[#0b1536]"
               : "sg-foco-claro border-transparent bg-transparent",
       )}
     >
