@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ShoppingBag } from "lucide-react";
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import { BotaoWhatsApp } from "@/components/BotaoWhatsApp";
@@ -82,6 +82,18 @@ export default function PaginaRestaurante() {
                   rotuloDoNicho={dados.rotulo}
                   tamanho="grande"
                 />
+                {/* O vermelho do iFood (com ! para vencer o fundo da variante), um tom
+                    mais escuro para o texto branco passar de 4.5:1. */}
+                <Botao
+                  href={dados.delivery.url}
+                  externo
+                  tamanho="grande"
+                  className="bg-[#d81e2b]! text-white! hover:bg-[#b91824]!"
+                >
+                  <ShoppingBag aria-hidden className="size-5 shrink-0" />
+                  {dados.delivery.rotulo}
+                  <span className="sr-only"> (abre em nova aba)</span>
+                </Botao>
                 <Botao href="#cardapio" variante="secundario" tamanho="grande">
                   Ver o cardápio
                 </Botao>

@@ -26,8 +26,8 @@ import wrapFrango from "@/public/imagens/restaurante/wrap-frango.jpg";
 import type { DadosDoRestaurante } from "./tipos";
 
 // Conteúdo fictício. Fotos do Unsplash (licença livre), salvas localmente,
-// com a origem gravada em cada arquivo. O link de delivery aponta para um
-// domínio de exemplo (example.com).
+// com a origem gravada em cada arquivo. O botão do iFood abre a página
+// inicial do iFood, como as redes do rodapé: a loja do cliente entra no lugar.
 
 export const restaurante: DadosDoRestaurante = {
   nicho: "restaurante",
@@ -55,8 +55,8 @@ export const restaurante: DadosDoRestaurante = {
     pedido: "Quero fazer um pedido.",
   },
   delivery: {
-    rotulo: "Pedir pelo delivery",
-    url: "https://delivery.example.com/restaurante",
+    rotulo: "Abrir no iFood",
+    url: "https://www.ifood.com.br/",
   },
   imagemPrincipal: {
     src: principal,
