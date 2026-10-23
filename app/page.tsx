@@ -4,6 +4,8 @@ import { BotaoContato } from "@/components/sagital/BotaoContato";
 import { BotaoSagital } from "@/components/sagital/BotaoSagital";
 import { CabecalhoSagital } from "@/components/sagital/CabecalhoSagital";
 import { FundoDaPagina } from "@/components/sagital/FundoDaPagina";
+import { FundoReticulado } from "@/components/sagital/FundoReticulado";
+import { PassagemReticulada } from "@/components/sagital/PassagemReticulada";
 import { ProvedorDaEscolha } from "@/components/sagital/EscolhaDoDemo";
 import { Pacotes } from "@/components/sagital/Pacotes";
 import { PalcoDoDemo } from "@/components/sagital/PalcoDoDemo";
@@ -23,7 +25,7 @@ import {
 } from "@/data/sagital";
 import { sitesDoPortfolio } from "@/data/portfolio";
 import { formatarPrecoRedondo } from "@/lib/formato";
-import { COR_DA_NOITE } from "@/lib/reticula";
+import { COR_DA_NOITE, RETICULA_DO_CARTAO } from "@/lib/reticula";
 import { jakarta } from "./fontes";
 import "./sagital.css";
 
@@ -34,6 +36,13 @@ export const metadata: Metadata = {
 
 // A barra do navegador no celular acompanha o marinho da página.
 export const viewport: Viewport = { themeColor: COR_DA_NOITE };
+
+/** As cores dos capítulos da página, de cima para baixo. */
+const CAPITULO = {
+  royal: "#1f48c2",
+  profundo: "#060b1d",
+  papel: "#ffffff",
+} as const;
 
 const tituloDeSecao =
   "sg-titulo text-[clamp(1.75rem,5.6vw,2.75rem)] max-w-[22ch]";
@@ -161,147 +170,168 @@ export default function PaginaSagital() {
             </Container>
           </section>
 
-          <VitrineDeDemos demos={demos} />
+          {/* Capítulos: a capa no marinho com o feixe; os demos no royal; os
+              trabalhos no marinho profundo; e a parte de ler e decidir no
+              papel branco. Cada troca é uma faixa de retícula. */}
+          <PassagemReticulada para={CAPITULO.royal} />
+          <div style={{ backgroundColor: CAPITULO.royal }}>
+            <VitrineDeDemos demos={demos} />
+          </div>
+          <PassagemReticulada de={CAPITULO.royal} para={CAPITULO.profundo} />
+          <div style={{ backgroundColor: CAPITULO.profundo }}>
+            <VitrineDeTrabalhos sites={sitesDoPortfolio} />
+          </div>
+          <PassagemReticulada de={CAPITULO.profundo} para={CAPITULO.papel} />
 
-          <VitrineDeTrabalhos sites={sitesDoPortfolio} />
-
-          <section
-            id="como-funciona"
-            data-revela-grupo
-            aria-labelledby="processo-titulo"
-            className="scroll-mt-20 py-14 sm:py-20"
-          >
-            <Container
-              largura="larga"
-              className="grid gap-8 xl:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] xl:gap-14"
+          <div className="sg-claro bg-white text-texto">
+            <section
+              id="como-funciona"
+              data-revela-grupo
+              aria-labelledby="processo-titulo"
+              className="scroll-mt-20 py-14 sm:py-20"
             >
-              <div>
-                <h2 id="processo-titulo" data-revela className={tituloDeSecao}>
-                  Como funciona
-                </h2>
-                <p data-revela className={apoioDeSecao}>
-                  Do primeiro “oi” ao site no ar, sem você precisar entender de
-                  site.
-                </p>
-              </div>
-              <PercursoDoProcesso passos={processo} />
-            </Container>
-          </section>
-
-          <section
-            id="pacotes"
-            data-revela-grupo
-            aria-labelledby="pacotes-titulo"
-            className="scroll-mt-20 border-t border-[var(--sg-borda-sutil)] py-14 sm:py-20"
-          >
-            <Pacotes
-              tema="azul"
-              pacotes={pacotes}
-              recursos={recursos}
-              cabecalho={
-                <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
-                  <div>
-                    <h2
-                      id="pacotes-titulo"
-                      data-revela
-                      className={tituloDeSecao}
-                    >
-                      Pacotes
-                    </h2>
-                    <p data-revela className={apoioDeSecao}>
-                      Pagamento único, com o prazo de entrega combinado antes de
-                      começar.
-                    </p>
-                  </div>
-                  <BotaoSagital
-                    data-revela
-                    href="/pacotes"
-                    variante="contorno"
-                    tamanho="medio"
-                    className="group shrink-0 self-start sm:self-auto"
-                  >
-                    Comparar planos
-                    <ArrowRight
-                      aria-hidden
-                      className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
-                      strokeWidth={2}
-                    />
-                  </BotaoSagital>
-                </div>
-              }
-            />
-            <Container largura="larga">
-              <p
-                data-revela
-                className="mt-6 max-w-[64ch] text-sm text-texto-suave"
-              >
-                {observacoesDosPacotes}
-              </p>
-            </Container>
-          </section>
-
-          <section
-            aria-labelledby="sobre-titulo"
-            data-revela-grupo
-            className="border-t border-[var(--sg-borda-sutil)] py-14 sm:py-20"
-          >
-            <Container
-              largura="larga"
-              className="grid gap-6 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-14"
-            >
-              <h2 id="sobre-titulo" data-revela className={tituloDeSecao}>
-                Quem faz
-              </h2>
-              <div
-                data-revela
-                className="grid max-w-[60ch] gap-4 text-[1.0625rem] leading-relaxed text-texto-suave"
-              >
-                <p>
-                  A Sagital faz sites para negócios de todo tipo e tamanho, da
-                  loja de rua ao profissional que atende só pelo celular. Tudo é
-                  combinado pelo WhatsApp: você vê o demo com o nome do seu
-                  negócio e a gente decide junto o que entra.
-                </p>
-                <p>
-                  Cada site é feito para abrir rápido no celular, funcionar até
-                  com sinal fraco e levar o cliente direto para o seu WhatsApp.
-                </p>
-              </div>
-            </Container>
-          </section>
-
-          <section aria-labelledby="contato-titulo" className="pb-14 sm:pb-20">
-            <Container largura="larga">
-              <div
-                data-revela
-                className="grid gap-8 overflow-hidden rounded-[32px] bg-white/[0.06] px-6 py-12 ring-1 ring-white/15 backdrop-blur-sm sm:px-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end"
+              <Container
+                largura="larga"
+                className="grid gap-8 xl:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] xl:gap-14"
               >
                 <div>
                   <h2
-                    id="contato-titulo"
-                    className="sg-display max-w-[14ch] text-[clamp(2.25rem,7vw,3.75rem)] text-white"
+                    id="processo-titulo"
+                    data-revela
+                    className={tituloDeSecao}
                   >
-                    Quer ver o site{" "}
-                    <span className="text-[var(--sg-ceu)]">
-                      do seu negócio?
-                    </span>
+                    Como funciona
                   </h2>
-                  <p className="mt-4 max-w-[40ch] text-[1.0625rem] text-white/80">
-                    Mande uma mensagem e receba o demo com o nome e a cor do seu
-                    negócio, onde você estiver.
+                  <p data-revela className={apoioDeSecao}>
+                    Do primeiro “oi” ao site no ar, sem você precisar entender
+                    de site.
                   </p>
                 </div>
-                <BotaoContato
-                  rotulo="Chamar no WhatsApp"
-                  variante="inverso"
-                  className="w-full sm:w-auto sm:px-7"
-                />
-              </div>
-            </Container>
-          </section>
+                <PercursoDoProcesso passos={processo} />
+              </Container>
+            </section>
+
+            <section
+              id="pacotes"
+              data-revela-grupo
+              aria-labelledby="pacotes-titulo"
+              className="scroll-mt-20 border-t border-[var(--sg-borda-sutil)] py-14 sm:py-20"
+            >
+              <Pacotes
+                tema="claro"
+                pacotes={pacotes}
+                recursos={recursos}
+                cabecalho={
+                  <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
+                    <div>
+                      <h2
+                        id="pacotes-titulo"
+                        data-revela
+                        className={tituloDeSecao}
+                      >
+                        Pacotes
+                      </h2>
+                      <p data-revela className={apoioDeSecao}>
+                        Pagamento único, com o prazo de entrega combinado antes
+                        de começar.
+                      </p>
+                    </div>
+                    <BotaoSagital
+                      data-revela
+                      href="/pacotes"
+                      variante="contorno"
+                      tamanho="medio"
+                      className="group shrink-0 self-start sm:self-auto"
+                    >
+                      Comparar planos
+                      <ArrowRight
+                        aria-hidden
+                        className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+                        strokeWidth={2}
+                      />
+                    </BotaoSagital>
+                  </div>
+                }
+              />
+              <Container largura="larga">
+                <p
+                  data-revela
+                  className="mt-6 max-w-[64ch] text-sm text-texto-suave"
+                >
+                  {observacoesDosPacotes}
+                </p>
+              </Container>
+            </section>
+
+            <section
+              aria-labelledby="sobre-titulo"
+              data-revela-grupo
+              className="border-t border-[var(--sg-borda-sutil)] py-14 sm:py-20"
+            >
+              <Container
+                largura="larga"
+                className="grid gap-6 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-14"
+              >
+                <h2 id="sobre-titulo" data-revela className={tituloDeSecao}>
+                  Quem faz
+                </h2>
+                <div
+                  data-revela
+                  className="grid max-w-[60ch] gap-4 text-[1.0625rem] leading-relaxed text-texto-suave"
+                >
+                  <p>
+                    A Sagital faz sites para negócios de todo tipo e tamanho, da
+                    loja de rua ao profissional que atende só pelo celular. Tudo
+                    é combinado pelo WhatsApp: você vê o demo com o nome do seu
+                    negócio e a gente decide junto o que entra.
+                  </p>
+                  <p>
+                    Cada site é feito para abrir rápido no celular, funcionar
+                    até com sinal fraco e levar o cliente direto para o seu
+                    WhatsApp.
+                  </p>
+                </div>
+              </Container>
+            </section>
+
+            <section
+              aria-labelledby="contato-titulo"
+              className="pb-14 sm:pb-20"
+            >
+              <Container largura="larga">
+                {/* A contracapa: o marinho com a retícula, como a abertura. */}
+                <div
+                  data-revela
+                  className="sg-noite sg-foco-claro grid gap-8 rounded-[32px] px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end"
+                >
+                  <FundoReticulado opcoes={RETICULA_DO_CARTAO} />
+                  <div>
+                    <h2
+                      id="contato-titulo"
+                      className="sg-display max-w-[14ch] text-[clamp(2.25rem,7vw,3.75rem)] text-white"
+                    >
+                      Quer ver o site{" "}
+                      <span className="text-[var(--sg-ceu)]">
+                        do seu negócio?
+                      </span>
+                    </h2>
+                    <p className="mt-4 max-w-[40ch] text-[1.0625rem] text-white/80">
+                      Mande uma mensagem e receba o demo com o nome e a cor do
+                      seu negócio, onde você estiver.
+                    </p>
+                  </div>
+                  <BotaoContato
+                    rotulo="Chamar no WhatsApp"
+                    variante="inverso"
+                    className="w-full sm:w-auto sm:px-7"
+                  />
+                </div>
+              </Container>
+            </section>
+          </div>
         </main>
 
-        <RodapeSagital fundo="bg-[rgb(3_17_27/0.88)]" />
+        <RodapeSagital />
 
         <RevelarAoRolar />
 

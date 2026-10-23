@@ -54,6 +54,17 @@ export const RETICULA_DO_PALCO: OpcoesDaReticula = {
   base: 0.04,
 };
 
+/** Cartões com texto (o pacote recomendado, a contracapa): o feixe só
+    risca o canto de cima, longe das linhas de texto. */
+export const RETICULA_DO_CARTAO: OpcoesDaReticula = {
+  passo: 6,
+  de: [1.08, -0.2],
+  para: [0.5, 0.55],
+  largura: 0.13,
+  forca: 0.5,
+  base: 0,
+};
+
 const suave = (a: number, b: number, x: number) => {
   const t = Math.min(Math.max((x - a) / (b - a), 0), 1);
   return t * t * (3 - 2 * t);
@@ -160,5 +171,51 @@ export function desenharReticula(
     ctx.fill(caminho);
   });
 
+  return true;
+}
+
+/**
+ * A passagem entre dois capítulos da página: pontos de uma cor só, numa
+ * grade a 45°, que nascem no alto da faixa e crescem até se fundir num
+ * chapado embaixo, como o degradê de uma retícula impressa. O fundo da
+ * faixa é o capítulo de cima; a tinta, o de baixo.
+ */
+export function desenharPassagem(
+  canvas: HTMLCanvasElement,
+  tinta: string,
+  passo: number,
+): boolean {
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  const ctx = canvas.getContext("2d");
+  if (!ctx || w === 0 || h === 0) return false;
+
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.round(w * dpr);
+  canvas.height = Math.round(h * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+
+  // Grade a 45°: fileiras a meio passo, cada uma deslocada meio passo. O
+  // lado da célula fica em passo/√2, e com raio de 0,52 do passo os pontos
+  // já se sobrepõem: o fim da faixa vira chapado.
+  const raioCheio = passo * 0.52;
+  const caminho = new Path2D();
+  const linha = passo / 2;
+  for (let fila = -1; fila * linha <= h + passo; fila++) {
+    const y = fila * linha;
+    const desvio = fila % 2 === 0 ? 0 : passo / 2;
+    const c = suave(0, 1, y / h) ** 1.15;
+    const r = raioCheio * Math.sqrt(c);
+    if (r < 0.35) continue;
+    for (let x = -passo + desvio; x <= w + passo; x += passo) {
+      caminho.moveTo(x + r, y);
+      caminho.arc(x, y, r, 0, Math.PI * 2);
+    }
+  }
+  ctx.fillStyle = tinta;
+  ctx.fill(caminho);
+  // A última fileira de pontos deixa frestas: o pé da faixa é chapado.
+  ctx.fillRect(0, h - 1, w, 1);
   return true;
 }

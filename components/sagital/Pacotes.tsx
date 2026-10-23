@@ -6,7 +6,8 @@ import { classes } from "@/lib/classes";
 import { formatarPrecoRedondo } from "@/lib/formato";
 import { BotaoContato } from "./BotaoContato";
 import { BotaoSagital } from "./BotaoSagital";
-import { FundoSoffit } from "./FundoSoffit";
+import { RETICULA_DO_CARTAO } from "@/lib/reticula";
+import { FundoReticulado } from "./FundoReticulado";
 
 type Props = {
   pacotes: Pacote[];
@@ -56,7 +57,7 @@ export function Pacotes({
                     : "bg-superficie",
               )}
             >
-              {escuro && <FundoSoffit />}
+              {escuro && <FundoReticulado opcoes={RETICULA_DO_CARTAO} />}
               <div className="flex items-center justify-between gap-3">
                 <h3
                   id={`pacote-${i}`}

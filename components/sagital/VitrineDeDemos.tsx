@@ -54,7 +54,7 @@ export function VitrineDeDemos({ demos }: { demos: Demo[] }) {
           <Link
             href="/demos"
             data-revela
-            className="group inline-flex min-h-11 items-center gap-2 text-[0.75rem] font-bold tracking-[0.16em] text-[var(--sg-ceu)] uppercase sm:mb-2"
+            className="group inline-flex min-h-11 items-center gap-2 text-[0.75rem] font-bold tracking-[0.16em] text-white uppercase sm:mb-2"
           >
             Ver todos os demos
             <ArrowRight
@@ -142,16 +142,16 @@ function QuadroDoDemo({
             {demo.padrao.nome}
           </span>
           <span
-            className={`${serifaItalica} text-[1.125rem] text-white/65 sm:text-[1.3125rem]`}
+            className={`${serifaItalica} text-[1.125rem] text-white/80 sm:text-[1.3125rem]`}
           >
             {demo.resumo}
           </span>
         </p>
         <span className="flex shrink-0 items-center gap-3 pt-0.5">
-          <span className="rounded-full border border-white/35 px-2.5 py-1 text-[0.625rem] leading-none font-bold tracking-[0.14em] text-white/85 uppercase">
+          <span className="rounded-full border border-white/55 px-2.5 py-1 text-[0.625rem] leading-none font-bold tracking-[0.14em] text-white/85 uppercase">
             {demo.rotulo}
           </span>
-          <span className="text-[0.75rem] text-white/55 tabular-nums">
+          <span className="text-[0.75rem] text-white/75 tabular-nums">
             {ANO}
           </span>
         </span>
