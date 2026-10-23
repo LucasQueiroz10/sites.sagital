@@ -4,6 +4,7 @@
  * `projetosPremium` à medida que ficarem prontos.
  */
 
+import capturaLaMaree from "@/public/imagens/sagital/premium-la-maree.png";
 import type { Imagem } from "./tipos";
 
 export type ProjetoPremium = {
@@ -20,7 +21,22 @@ export type ProjetoPremium = {
   paleta: string[];
 };
 
-export const projetosPremium: ProjetoPremium[] = [];
+export const projetosPremium: ProjetoPremium[] = [
+  {
+    id: "la-maree",
+    nome: "La Marée",
+    ramo: "Restaurante de frutos do mar",
+    destaque:
+      "Cardápio em folhas coloridas por aba e reserva com dia, horário e ocasião direto no WhatsApp.",
+    href: "/premium/la-maree",
+    captura: {
+      src: capturaLaMaree,
+      alt: "Primeira tela do site do restaurante La Marée no celular",
+    },
+    fonte: "Noto Serif Display",
+    paleta: ["#e26127", "#cccca2", "#0c0b09"],
+  },
+];
 
 /** O que um projeto premium tem a mais que os pacotes. */
 export const diferenciaisDoPremium = [

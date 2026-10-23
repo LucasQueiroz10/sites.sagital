@@ -68,3 +68,14 @@ export function mensagemDoPortfolio(
 export function linkDoPortfolio(pedido: string, nomeDoSite: string): string {
   return montarLinkWhatsApp(mensagemDoPortfolio(pedido, nomeDoSite));
 }
+
+/**
+ * Link de WhatsApp de um site premium, com o pedido de quem visita e uma
+ * linha que diz de qual site veio o contato.
+ */
+export function linkDoPremium(pedido: string, nomeDoSite: string): string {
+  return montarLinkWhatsApp(
+    `Olá, ${nomeDoSite}! ${pedido}\n\n` +
+      `(Enviado pelo site conceitual de ${nomeDoSite} nos projetos premium da Sagital.)`,
+  );
+}

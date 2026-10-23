@@ -1,0 +1,268 @@
+/*
+ * La Marée: o cardápio em papel colorido das referências levado para a tela.
+ * Seis cores de papel (laranja, pêssego, creme, sálvia, oliva e a tinta quase
+ * preta), gravuras antigas pintadas em qualquer uma delas por máscara, fotos
+ * com tratamento de filme e um grão fixo por cima de tudo. Cantos retos em
+ * tudo, como papel cortado.
+ */
+
+/* Na camada de componentes: os utilitários do Tailwind (px-*, text-*) ainda
+   ajustam cada uso das classes lm-*. */
+@layer components {
+  [data-premium="la-maree"] {
+    --cor-laranja: #e26127;
+    --cor-pessego: #dda27a;
+    --cor-creme: #f4eab5;
+    --cor-salvia: #cccca2;
+    --cor-oliva: #89822f;
+    --cor-tinta: #0c0b09;
+    --cor-tinta-2: #16140f;
+
+    /* Tokens que as peças compartilhadas (rodapé, contêiner) leem. */
+    --cor-fundo: var(--cor-tinta);
+    --cor-superficie: var(--cor-tinta-2);
+    --cor-texto: var(--cor-creme);
+    --cor-texto-suave: rgb(244 234 181 / 0.72);
+    --cor-borda: rgb(244 234 181 / 0.18);
+    --cor-primaria: var(--cor-laranja);
+    --cor-primaria-hover: #c9521d;
+    --cor-primaria-texto: var(--cor-tinta);
+    --cor-destaque: var(--cor-laranja);
+    --cor-foco: var(--cor-creme);
+    --raio: 0px;
+    --fonte-titulo: var(--font-serifa), Georgia, serif;
+    --fonte-texto: var(--font-grotesca), system-ui, sans-serif;
+
+    --curva-saida: cubic-bezier(0.23, 1, 0.32, 1);
+    color-scheme: dark;
+  }
+
+  [data-premium="la-maree"] :focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: 3px;
+  }
+
+  /* Sobre os papéis claros, o foco fica na tinta. */
+  [data-premium="la-maree"] .papel-claro {
+    --cor-foco: var(--cor-tinta);
+  }
+
+  [data-premium="la-maree"] ::selection {
+    background: var(--cor-laranja);
+    color: var(--cor-tinta);
+  }
+
+  /* ---------- As três vozes ---------- */
+
+  /* A serifa estreita e alta dos nomes: sempre em caixa-alta. */
+  [data-premium="la-maree"] .lm-serifa {
+    font-family: var(--font-serifa), Georgia, serif;
+    font-stretch: 62.5%;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    line-height: 0.9;
+  }
+
+  /* A caligrafia de pena: só palavras soltas, nunca frases inteiras. As
+     hastes descem muito: a linha é alta para não cortar. */
+  [data-premium="la-maree"] .lm-caligrafia {
+    font-family: var(--font-caligrafia), cursive;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 1.1;
+  }
+
+  /* Os selos em grotesca: caixa-alta pequena, como "FINE DINING". */
+  [data-premium="la-maree"] .lm-selo {
+    font-family: var(--font-grotesca), system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  /* As descrições dos pratos: caixa-alta estreita. */
+  [data-premium="la-maree"] .lm-descricao {
+    font-family: var(--font-grotesca), system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-stretch: 85%;
+    font-weight: 450;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  /* A frase espalhada de ponta a ponta das referências ("WHERE PROVENÇAL
+     FLAVORS"): justificada inclusive na última linha. */
+  [data-premium="la-maree"] .lm-espalhado {
+    text-align: justify;
+    text-align-last: justify;
+    text-wrap: wrap;
+    hyphens: none;
+  }
+
+  /* ---------- Gravuras ---------- */
+
+  /* A gravura é uma máscara: pinta com a cor do texto (currentColor). */
+  [data-premium="la-maree"] .lm-gravura {
+    display: block;
+    background-color: currentColor;
+    -webkit-mask: var(--gravura) center / contain no-repeat;
+    mask: var(--gravura) center / contain no-repeat;
+  }
+
+  /* ---------- Grão de filme ---------- */
+
+  /* Fixo e fora do fluxo: não repinta ao rolar. */
+  [data-premium="la-maree"] .lm-grao {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    opacity: 0.16;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 1.4 -0.2'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+  }
+
+  /* ---------- Botões ---------- */
+
+  [data-premium="la-maree"] .lm-botao {
+    display: inline-flex;
+    min-height: 2.875rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    padding: 0 1.5rem;
+    font-family: var(--font-grotesca), system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border: 1px solid currentColor;
+    transition:
+      background-color 200ms ease,
+      color 200ms ease,
+      border-color 200ms ease,
+      transform 160ms var(--curva-saida);
+  }
+
+  [data-premium="la-maree"] .lm-botao:active {
+    transform: scale(0.97);
+  }
+
+  [data-premium="la-maree"] .lm-botao-cheio {
+    background: var(--cor-creme);
+    border-color: var(--cor-creme);
+    color: var(--cor-tinta);
+  }
+
+  [data-premium="la-maree"] .lm-botao-tinta {
+    background: var(--cor-tinta);
+    border-color: var(--cor-tinta);
+    color: var(--cor-creme);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    [data-premium="la-maree"] .lm-botao-cheio:hover {
+      background: var(--cor-laranja);
+      border-color: var(--cor-laranja);
+    }
+
+    [data-premium="la-maree"] .lm-botao-tinta:hover {
+      background: var(--cor-tinta-2);
+      color: var(--cor-laranja);
+    }
+
+    [data-premium="la-maree"] .lm-botao-contorno:hover {
+      background: var(--cor-creme);
+      border-color: var(--cor-creme);
+      color: var(--cor-tinta);
+    }
+  }
+
+  /* ---------- Movimento ---------- */
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* A abertura: a marca aparece em sequência, como se fosse impressa. */
+    [data-premium="la-maree"] .lm-entra {
+      animation: lm-entra 900ms var(--curva-saida) both;
+      animation-delay: calc(var(--ordem, 0) * 110ms + 150ms);
+    }
+
+    /* O traço do selo se desenha da esquerda para a direita. */
+    [data-premium="la-maree"] .lm-traco {
+      transform-origin: left center;
+      animation: lm-traco 900ms var(--curva-saida) both;
+      animation-delay: calc(var(--ordem, 0) * 110ms + 150ms);
+    }
+
+    /* A folha do cardápio sai do envelope ao trocar de parte. */
+    [data-premium="la-maree"] .lm-folha {
+      animation: lm-folha 420ms var(--curva-saida) both;
+    }
+
+    /* Ao entrar na tela, cada bloco sobe um pouco. */
+    @supports (animation-timeline: view()) {
+      [data-premium="la-maree"] .lm-revela {
+        animation: lm-revela linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 55%;
+      }
+
+      /* A faixa de gravuras anda devagar enquanto atravessa a tela. */
+      [data-premium="la-maree"] .lm-deriva {
+        animation: lm-deriva linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+    }
+  }
+
+  @keyframes lm-entra {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+      filter: blur(6px);
+    }
+  }
+
+  @keyframes lm-traco {
+    from {
+      transform: scaleX(0);
+    }
+  }
+
+  @keyframes lm-folha {
+    from {
+      opacity: 0;
+      transform: translateY(28px) rotate(-0.6deg);
+    }
+  }
+
+  @keyframes lm-revela {
+    from {
+      opacity: 0;
+      transform: translateY(32px);
+    }
+  }
+
+  @keyframes lm-deriva {
+    from {
+      transform: translateX(4%);
+    }
+    to {
+      transform: translateX(-4%);
+    }
+  }
+
+  /* Cada linha da frase espalhada é um span: todas vão de ponta a ponta. */
+  [data-premium="la-maree"] .lm-espalhado > span {
+    display: block;
+    text-align: justify;
+    text-align-last: justify;
+  }
+}
