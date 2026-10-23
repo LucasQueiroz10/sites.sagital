@@ -173,16 +173,169 @@ export const processo = [
 
 export type Pacote = {
   nome: string;
+  /** Endereço da página do pacote: /pacotes/{slug}. */
+  slug: string;
   /** Centavos. */
   preco: number;
   prazo: string;
   recomendado?: boolean;
+  /** Ao lado do nome, no título da página do pacote. */
+  chamada: string;
+  introducao: string;
+  /** Para quem é: uma frase e os casos em que encaixa. */
+  paraQuem: string;
+  idealPara: string[];
+  /** Quando outro pacote (ou outra solução) serve melhor. */
+  naoIndicado: string[];
+  /** Como o prazo corre, do primeiro contato ao site no ar. */
+  etapas: { quando: string; titulo: string; texto: string }[];
 };
 
 export const pacotes: Pacote[] = [
-  { nome: "Essencial", preco: 89000, prazo: "7 dias" },
-  { nome: "Completo", preco: 149000, prazo: "12 dias", recomendado: true },
-  { nome: "Sob medida", preco: 229000, prazo: "20 dias" },
+  {
+    nome: "Essencial",
+    slug: "essencial",
+    preco: 89000,
+    prazo: "7 dias",
+    chamada: "o primeiro site do negócio",
+    introducao:
+      "Uma página só, bem feita, com o que o cliente procura antes de chamar: o que você faz, onde está, quando atende e um botão que abre o seu WhatsApp com a mensagem pronta.",
+    paraQuem:
+      "Você ainda não tem site, ou tem um perfil que ninguém acha. Precisa de um endereço próprio para mandar aos clientes e aparecer quando alguém procura o seu nome.",
+    idealPara: [
+      "Autônomos e profissionais liberais",
+      "Quem vende pelo WhatsApp e quer um link para divulgar",
+      "Negócios com poucos serviços e preço sob consulta",
+    ],
+    naoIndicado: [
+      "Mostrar catálogo, cardápio ou planos (veja o Completo)",
+      "Fotos e textos produzidos com você (veja o Sob medida)",
+      "Loja com carrinho e pagamento no próprio site",
+    ],
+    etapas: [
+      {
+        quando: "Dia 1",
+        titulo: "Conversa e conteúdo",
+        texto:
+          "Uma conversa pelo WhatsApp: nome, serviços, horários, contatos e as fotos que você já tem.",
+      },
+      {
+        quando: "Dias 2 a 5",
+        titulo: "Montagem",
+        texto:
+          "O site toma forma e você acompanha tudo por um link, no próprio celular.",
+      },
+      {
+        quando: "Dia 6",
+        titulo: "Ajustes",
+        texto: "Você aponta o que mudar e a gente ajusta numa rodada.",
+      },
+      {
+        quando: "Dia 7",
+        titulo: "Site no ar",
+        texto:
+          "Publicado no endereço do seu negócio, com 15 dias de ajustes depois.",
+      },
+    ],
+  },
+  {
+    nome: "Completo",
+    slug: "completo",
+    preco: 149000,
+    prazo: "12 dias",
+    recomendado: true,
+    chamada: "tudo o que você vende",
+    introducao:
+      "O site com o seu catálogo, serviços, cardápio ou planos, cada item com preço e pedido direto no WhatsApp. Abre rápido mesmo com sinal fraco, pode ser instalado no celular e vem com um QR code pronto para imprimir.",
+    paraQuem:
+      "Você já tem clientes e quer que eles vejam tudo o que você oferece antes de chamar, sem precisar mandar foto por foto no WhatsApp.",
+    idealPara: [
+      "Lojas, restaurantes, academias e clínicas",
+      "Quem recebe as mesmas perguntas de preço todo dia",
+      "Quem quer um QR code no balcão, na mesa ou na vitrine",
+    ],
+    naoIndicado: [
+      "Só um cartão de visitas on-line (veja o Essencial)",
+      "Mais de uma página ou fotos produzidas (veja o Sob medida)",
+      "Loja com carrinho e pagamento no próprio site",
+    ],
+    etapas: [
+      {
+        quando: "Dias 1 e 2",
+        titulo: "Conversa e conteúdo",
+        texto:
+          "Você manda a lista do que vende, com preços e fotos. A gente organiza por categoria.",
+      },
+      {
+        quando: "Dias 3 a 8",
+        titulo: "Montagem",
+        texto:
+          "Site e catálogo montados com o seu conteúdo, e você acompanha cada passo por um link.",
+      },
+      {
+        quando: "Dias 9 e 10",
+        titulo: "Ajustes",
+        texto: "Duas rodadas de ajustes no que você pedir.",
+      },
+      {
+        quando: "Dias 11 e 12",
+        titulo: "Site no ar",
+        texto:
+          "Publicado, com o QR code pronto para imprimir e 30 dias de ajustes depois.",
+      },
+    ],
+  },
+  {
+    nome: "Sob medida",
+    slug: "sob-medida",
+    preco: 229000,
+    prazo: "20 dias",
+    chamada: "pensado do zero com você",
+    introducao:
+      "Tudo o que o Completo tem, mais fotos e textos produzidos com você e até três páginas extras. O site conta a história do seu negócio do jeito que você contaria pessoalmente.",
+    paraQuem:
+      "Você quer se destacar dos concorrentes e não tem tempo, ou jeito, de escrever os textos e escolher as fotos sozinho.",
+    idealPara: [
+      "Escritórios, consultórios e estúdios",
+      "Negócios com mais de um serviço ou unidade",
+      "Quem quer textos e fotos próprios, sem banco de imagens",
+    ],
+    naoIndicado: [
+      "Quem precisa do site no ar em uma semana (veja o Essencial)",
+      "Um catálogo simples, sem páginas extras (veja o Completo)",
+      "Loja com carrinho e pagamento no próprio site",
+    ],
+    etapas: [
+      {
+        quando: "Dias 1 a 3",
+        titulo: "Conversa e roteiro",
+        texto:
+          "Duas conversas sobre o negócio e um roteiro com as páginas, os textos e as fotos que faltam.",
+      },
+      {
+        quando: "Dias 4 a 7",
+        titulo: "Fotos e textos",
+        texto:
+          "Combinamos as fotos e escrevemos os textos juntos, no jeito de falar do seu negócio.",
+      },
+      {
+        quando: "Dias 8 a 16",
+        titulo: "Montagem",
+        texto:
+          "O site e as páginas extras tomam forma, e você acompanha tudo por um link.",
+      },
+      {
+        quando: "Dias 17 e 18",
+        titulo: "Ajustes",
+        texto: "Rodadas de ajustes até ficar do jeito que você quer.",
+      },
+      {
+        quando: "Dias 19 e 20",
+        titulo: "Site no ar",
+        texto: "Publicado, com o QR code pronto e 90 dias de ajustes depois.",
+      },
+    ],
+  },
 ];
 
 /** Linhas da tabela de pacotes: o que cada um inclui, na ordem dos pacotes. */

@@ -1,10 +1,11 @@
-import { Check, Minus } from "lucide-react";
+import { ArrowRight, Check, Minus } from "lucide-react";
 import type { ReactNode } from "react";
 import { Carrossel } from "@/components/ui/Carrossel";
 import { mensagemDoPacote, type Pacote } from "@/data/sagital";
 import { classes } from "@/lib/classes";
 import { formatarPrecoRedondo } from "@/lib/formato";
 import { BotaoContato } from "./BotaoContato";
+import { BotaoSagital } from "./BotaoSagital";
 import { FundoSoffit } from "./FundoSoffit";
 
 type Props = {
@@ -143,7 +144,7 @@ export function Pacotes({
                 })}
               </ul>
 
-              <div className="mt-auto pt-6">
+              <div className="mt-auto grid gap-2 pt-6">
                 <BotaoContato
                   rotulo="Quero este pacote"
                   complementoAcessivel={`(${pacote.nome})`}
@@ -153,6 +154,19 @@ export function Pacotes({
                   }
                   className="w-full"
                 />
+                <BotaoSagital
+                  href={`/pacotes/${pacote.slug}`}
+                  variante={escuro ? "vidro" : "contorno"}
+                  className="group w-full"
+                >
+                  Ver plano
+                  <span className="sr-only"> {pacote.nome}</span>
+                  <ArrowRight
+                    aria-hidden
+                    className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+                    strokeWidth={2}
+                  />
+                </BotaoSagital>
               </div>
             </article>
           </li>
