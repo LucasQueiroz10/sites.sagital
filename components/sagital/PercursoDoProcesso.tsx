@@ -34,6 +34,7 @@ export function PercursoDoProcesso({ passos }: { passos: Passo[] }) {
     >
       {passos.map((passo, i) => (
         <li
+          data-revela
           key={passo.titulo}
           style={{ "--passo": i } as CSSProperties}
           className="relative flex gap-4 pb-8 last:pb-0 md:flex-col md:gap-3 md:pb-0"

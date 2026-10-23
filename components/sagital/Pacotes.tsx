@@ -29,6 +29,7 @@ export function Pacotes({ pacotes, recursos, cabecalho }: Props) {
         const escuro = pacote.recomendado;
         return (
           <li
+            data-revela
             key={pacote.nome}
             className="w-[86%] max-w-[22rem] shrink-0 snap-start sm:w-[22rem] lg:w-[calc((100%-2rem)/3)] lg:max-w-none"
           >

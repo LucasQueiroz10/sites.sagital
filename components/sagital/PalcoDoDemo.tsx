@@ -15,7 +15,10 @@ export function PalcoDoDemo() {
   const { demos, nicho, demo, abrirPrevia } = useEscolha();
 
   return (
-    <div className="sg-noite relative hidden aspect-[6/5] overflow-hidden rounded-[32px] lg:block">
+    <div
+      data-revela
+      className="sg-noite relative hidden aspect-[6/5] overflow-hidden rounded-[32px] lg:block"
+    >
       <FundoSoffit />
       {demos.map((d) => {
         const atual = d.nicho === nicho;

@@ -14,6 +14,7 @@ import { MarcaSagital } from "@/components/sagital/MarcaSagital";
 import { Pacotes } from "@/components/sagital/Pacotes";
 import { PalcoDoDemo } from "@/components/sagital/PalcoDoDemo";
 import { PercursoDoProcesso } from "@/components/sagital/PercursoDoProcesso";
+import { RevelarAoRolar } from "@/components/sagital/RevelarAoRolar";
 import { BarraFixa } from "@/components/ui/BarraFixa";
 import { Carrossel } from "@/components/ui/Carrossel";
 import { Container } from "@/components/ui/Container";
@@ -133,6 +134,7 @@ export default function PaginaSagital() {
 
           <section
             id="seu-demo"
+            data-revela-grupo
             aria-labelledby="seu-demo-titulo"
             className="scroll-mt-20"
           >
@@ -140,7 +142,7 @@ export default function PaginaSagital() {
               largura="larga"
               className="grid gap-10 pt-14 pb-10 sm:pt-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-center lg:gap-14 lg:pb-20"
             >
-              <div>
+              <div data-revela>
                 <h2
                   id="seu-demo-titulo"
                   className="sg-display max-w-[14ch] text-[clamp(2.25rem,8.8vw,3.75rem)]"
@@ -162,6 +164,7 @@ export default function PaginaSagital() {
 
           <section
             id="demos"
+            data-revela-grupo
             aria-labelledby="demos-titulo"
             className="scroll-mt-20 pt-6 pb-14 sm:pb-20"
           >
@@ -169,10 +172,10 @@ export default function PaginaSagital() {
               rotulo="Demos"
               cabecalho={
                 <>
-                  <h2 id="demos-titulo" className={tituloDeSecao}>
+                  <h2 id="demos-titulo" data-revela className={tituloDeSecao}>
                     Quatro demos, cada um com a cara do ramo
                   </h2>
-                  <p className={apoioDeSecao}>
+                  <p data-revela className={apoioDeSecao}>
                     São pontos de partida, não limites: o seu site é feito para
                     o seu negócio, seja qual for o ramo. Toque no olho e veja o
                     demo ao vivo no celular, no tablet e no computador.
@@ -182,6 +185,7 @@ export default function PaginaSagital() {
             >
               {demos.map((demo) => (
                 <li
+                  data-revela
                   key={demo.nicho}
                   className="w-[78%] max-w-[19rem] shrink-0 snap-start sm:w-[19rem] lg:w-[calc((100%-3rem)/4)] lg:max-w-none"
                 >
@@ -251,6 +255,7 @@ export default function PaginaSagital() {
 
           <section
             id="portfolio"
+            data-revela-grupo
             aria-labelledby="portfolio-titulo"
             className="scroll-mt-20 bg-superficie py-14 sm:py-20"
           >
@@ -259,10 +264,14 @@ export default function PaginaSagital() {
               classeDasSetas="bg-white text-texto"
               cabecalho={
                 <>
-                  <h2 id="portfolio-titulo" className={tituloDeSecao}>
+                  <h2
+                    id="portfolio-titulo"
+                    data-revela
+                    className={tituloDeSecao}
+                  >
                     Portfólio
                   </h2>
-                  <p className={apoioDeSecao}>
+                  <p data-revela className={apoioDeSecao}>
                     Sites completos para escritórios e clínicas, cada um com
                     identidade e recursos próprios. Toque no olho e navegue no
                     celular, no tablet e no computador.
@@ -272,6 +281,7 @@ export default function PaginaSagital() {
             >
               {sitesDoPortfolio.map((site) => (
                 <li
+                  data-revela
                   key={site.id}
                   className="w-[78%] max-w-[19rem] shrink-0 snap-start sm:w-[19rem] lg:w-[calc((100%-3rem)/4)] lg:max-w-none"
                 >
@@ -349,6 +359,7 @@ export default function PaginaSagital() {
 
           <section
             id="como-funciona"
+            data-revela-grupo
             aria-labelledby="processo-titulo"
             className="scroll-mt-20 py-14 sm:py-20"
           >
@@ -357,10 +368,10 @@ export default function PaginaSagital() {
               className="grid gap-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-14"
             >
               <div>
-                <h2 id="processo-titulo" className={tituloDeSecao}>
+                <h2 id="processo-titulo" data-revela className={tituloDeSecao}>
                   Como funciona
                 </h2>
-                <p className={apoioDeSecao}>
+                <p data-revela className={apoioDeSecao}>
                   Do primeiro “oi” ao site no ar, sem você precisar entender de
                   site.
                 </p>
@@ -371,6 +382,7 @@ export default function PaginaSagital() {
 
           <section
             id="pacotes"
+            data-revela-grupo
             aria-labelledby="pacotes-titulo"
             className="scroll-mt-20 border-t border-[var(--sg-borda-sutil)] py-14 sm:py-20"
           >
@@ -379,10 +391,10 @@ export default function PaginaSagital() {
               recursos={recursos}
               cabecalho={
                 <>
-                  <h2 id="pacotes-titulo" className={tituloDeSecao}>
+                  <h2 id="pacotes-titulo" data-revela className={tituloDeSecao}>
                     Pacotes
                   </h2>
-                  <p className={apoioDeSecao}>
+                  <p data-revela className={apoioDeSecao}>
                     Pagamento único, com o prazo de entrega combinado antes de
                     começar.
                   </p>
@@ -390,7 +402,10 @@ export default function PaginaSagital() {
               }
             />
             <Container largura="larga">
-              <p className="mt-6 max-w-[64ch] text-sm text-texto-suave">
+              <p
+                data-revela
+                className="mt-6 max-w-[64ch] text-sm text-texto-suave"
+              >
                 {observacoesDosPacotes}
               </p>
             </Container>
@@ -398,16 +413,20 @@ export default function PaginaSagital() {
 
           <section
             aria-labelledby="sobre-titulo"
+            data-revela-grupo
             className="border-t border-[var(--sg-borda-sutil)] py-14 sm:py-20"
           >
             <Container
               largura="larga"
               className="grid gap-6 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-14"
             >
-              <h2 id="sobre-titulo" className={tituloDeSecao}>
+              <h2 id="sobre-titulo" data-revela className={tituloDeSecao}>
                 Quem faz
               </h2>
-              <div className="grid max-w-[60ch] gap-4 text-[1.0625rem] leading-relaxed text-texto-suave">
+              <div
+                data-revela
+                className="grid max-w-[60ch] gap-4 text-[1.0625rem] leading-relaxed text-texto-suave"
+              >
                 <p>
                   A Sagital faz sites para negócios de todo tipo e tamanho, da
                   loja de rua ao profissional que atende só pelo celular. Tudo é
@@ -446,7 +465,10 @@ export default function PaginaSagital() {
 
           <section aria-labelledby="contato-titulo" className="pb-14 sm:pb-20">
             <Container largura="larga">
-              <div className="sg-noite grid gap-8 overflow-hidden rounded-[32px] px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+              <div
+                data-revela
+                className="sg-noite grid gap-8 overflow-hidden rounded-[32px] px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end"
+              >
                 <FundoSoffit />
                 <div>
                   <h2
@@ -482,6 +504,8 @@ export default function PaginaSagital() {
             <p>Os demos usam nomes, preços e depoimentos fictícios.</p>
           </Container>
         </footer>
+
+        <RevelarAoRolar />
 
         <BarraFixa>
           <div className="flex items-center gap-3">
