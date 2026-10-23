@@ -152,11 +152,15 @@ export function PreviaAoVivo({
     <dialog
       ref={dialogo}
       aria-labelledby="previa-titulo"
+      // No React, o cancel e o close de um <dialog> de dentro (a folha do QR
+      // code) sobem até aqui: só os da própria prévia a fecham.
       onCancel={(evento) => {
+        if (evento.target !== evento.currentTarget) return;
         evento.preventDefault();
         fechar();
       }}
-      onClose={() => {
+      onClose={(evento) => {
+        if (evento.target !== evento.currentTarget) return;
         document.documentElement.style.overflow = "";
         aoFechar();
       }}
