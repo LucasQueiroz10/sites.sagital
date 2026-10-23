@@ -7,6 +7,7 @@ import { BotaoDePrevia } from "@/components/sagital/BotaoDePrevia";
 import { BotaoDePreviaDoSite } from "@/components/sagital/BotaoDePreviaDoSite";
 import { BotaoSagital } from "@/components/sagital/BotaoSagital";
 import { CabecalhoSagital } from "@/components/sagital/CabecalhoSagital";
+import { FundoSoffit } from "@/components/sagital/FundoSoffit";
 import { ProvedorDaEscolha } from "@/components/sagital/EscolhaDoDemo";
 import { GeradorDeLink } from "@/components/sagital/GeradorDeLink";
 import { MarcaSagital } from "@/components/sagital/MarcaSagital";
@@ -25,6 +26,7 @@ import {
 } from "@/data/sagital";
 import { sitesDoPortfolio } from "@/data/portfolio";
 import { formatarPrecoRedondo } from "@/lib/formato";
+import { COR_DO_SOFFIT } from "@/lib/soffit";
 import { jakarta } from "./fontes";
 import "./sagital.css";
 
@@ -34,7 +36,7 @@ export const metadata: Metadata = {
 };
 
 // A barra do navegador no celular acompanha o topo escuro da abertura.
-export const viewport: Viewport = { themeColor: "#111a3d" };
+export const viewport: Viewport = { themeColor: COR_DO_SOFFIT };
 
 const tituloDeSecao =
   "sg-titulo text-[clamp(1.75rem,5.6vw,2.75rem)] max-w-[22ch]";
@@ -69,6 +71,7 @@ export default function PaginaSagital() {
             aria-labelledby="titulo-principal"
             className="sg-abertura flex flex-col items-center px-4 pt-28 pb-16 text-center sm:px-6 sm:pt-36 sm:pb-24 lg:pt-44 lg:pb-32"
           >
+            <FundoSoffit />
             {/* Marcadores do cabeçalho fixo: um no topo da abertura e outro
                 a 64px do fim, a altura do cabeçalho. */}
             <span
@@ -105,7 +108,7 @@ export default function PaginaSagital() {
                 No ar em {prazoDoMenor}
               </li>
             </ul>
-            <p className="sg-entra mt-4 max-w-[44ch] text-[1.0625rem] leading-relaxed text-white/75 [--ordem:1] sm:text-lg">
+            <p className="sg-entra mt-4 max-w-[44ch] text-[1.0625rem] leading-relaxed text-white/90 [--ordem:1] sm:text-lg">
               Rápido no celular, com horário, endereço e um botão de WhatsApp
               com a mensagem pronta. Para academias, lojas, restaurantes e
               tabacarias.
@@ -467,6 +470,7 @@ export default function PaginaSagital() {
           <section aria-labelledby="contato-titulo" className="pb-14 sm:pb-20">
             <Container largura="larga">
               <div className="sg-noite grid gap-8 overflow-hidden rounded-[32px] px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+                <FundoSoffit />
                 <div>
                   <h2
                     id="contato-titulo"

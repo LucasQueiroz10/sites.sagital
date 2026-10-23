@@ -5,6 +5,7 @@ import { mensagemDoPacote, type Pacote } from "@/data/sagital";
 import { classes } from "@/lib/classes";
 import { formatarPrecoRedondo } from "@/lib/formato";
 import { BotaoContato } from "./BotaoContato";
+import { FundoSoffit } from "./FundoSoffit";
 
 type Props = {
   pacotes: Pacote[];
@@ -35,9 +36,10 @@ export function Pacotes({ pacotes, recursos, cabecalho }: Props) {
               aria-labelledby={`pacote-${i}`}
               className={classes(
                 "flex h-full flex-col rounded-3xl p-5 sm:p-6",
-                escuro ? "sg-promo" : "bg-superficie",
+                escuro ? "sg-noite" : "bg-superficie",
               )}
             >
+              {escuro && <FundoSoffit />}
               <div className="flex items-center justify-between gap-3">
                 <h3
                   id={`pacote-${i}`}

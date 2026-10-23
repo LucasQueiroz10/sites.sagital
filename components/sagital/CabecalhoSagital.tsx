@@ -17,7 +17,7 @@ const navegacao = [
 
 /**
  * Cabeçalho fixo da página da Sagital, em três tempos: transparente sobre a
- * abertura no topo da página; azul-noite enquanto a abertura passa por baixo
+ * abertura no topo da página; no fundo do degradê enquanto a abertura passa por baixo
  * (o título não se mistura com o nome); barra branca depois dela.
  */
 export function CabecalhoSagital() {
@@ -34,7 +34,7 @@ export function CabecalhoSagital() {
         claro
           ? "border-[var(--sg-borda-sutil)] bg-white"
           : rolou
-            ? "sg-foco-claro border-white/10 bg-[#111a3d]"
+            ? "sg-foco-claro border-white/10 bg-[var(--sg-soffit-fundo)]"
             : "sg-foco-claro border-transparent bg-transparent",
       )}
     >
@@ -71,7 +71,7 @@ export function CabecalhoSagital() {
             "sg-pressiona grid size-11 place-items-center rounded-full md:hidden",
             claro
               ? "bg-superficie text-texto hover:bg-[var(--sg-pressionado)]"
-              : "bg-white/14 text-white hover:bg-white/22",
+              : "sg-vidro",
             barraVisivel && "invisible",
           )}
         >

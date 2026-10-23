@@ -31,10 +31,22 @@
        (só a ponta esquerda, onde não há texto, mede 4,3:1). */
     --sg-degrade: linear-gradient(90deg, #1381c0 0%, #1f48c2 100%);
     --sg-degrade-pressionado: linear-gradient(90deg, #1170a8 0%, #1a39a0 100%);
+    /* Fundos azuis: o degradê animado (lib/soffit.ts) pinta por cima. Estes
+       são a reserva em CSS, nas cores dele, para antes do primeiro quadro e
+       para navegador sem WebGL2. */
+    --sg-soffit-fundo: #062334;
     --sg-noite:
-      radial-gradient(120% 90% at 0% 100%, #2a9ac4 0%, rgb(42 154 196 / 0) 45%),
-      linear-gradient(160deg, #141b3b 0%, #18266a 55%, #1f3cae 100%);
-    --sg-promo: linear-gradient(100deg, #15214a 0%, #22357f 70%, #2c44a3 100%);
+      radial-gradient(
+        110% 80% at 30% 0%,
+        rgb(43 123 232 / 0.45) 0%,
+        rgb(43 123 232 / 0) 60%
+      ),
+      radial-gradient(
+        120% 70% at 50% 110%,
+        rgb(43 123 232 / 0.4) 0%,
+        rgb(43 123 232 / 0) 60%
+      ),
+      #062334;
     --sg-sombra-md: 0 6px 20px rgb(17 26 61 / 0.08);
     --sg-sombra-lg: 0 16px 48px rgb(17 26 61 / 0.14);
     --sg-sombra-botao: 0 6px 16px rgb(31 72 194 / 0.24);
@@ -109,37 +121,46 @@
     }
   }
 
-  [data-pagina="sagital"] .sg-noite {
+  /* Superfícies azuis: o canvas do degradê fica no fundo delas. */
+  [data-pagina="sagital"] :is(.sg-noite, .sg-abertura) {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     background: var(--sg-noite);
     color: #ffffff;
   }
 
-  [data-pagina="sagital"] .sg-promo {
-    background: var(--sg-promo);
+  /* Vidro sobre o degradê: escuro, e não branco, para o texto continuar
+     legível quando o azul-claro passa por baixo. */
+  [data-pagina="sagital"] .sg-vidro {
+    background-color: rgb(6 35 52 / 0.6);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.16);
     color: #ffffff;
   }
 
-  /* Abertura: a noite de ponta a ponta, com o brilho turquesa no alto (atrás
-     do título) e uma grade fina que some para as bordas. */
-  [data-pagina="sagital"] .sg-abertura {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    background:
-      radial-gradient(
-        70% 55% at 50% -8%,
-        rgb(42 154 196 / 0.34) 0%,
-        rgb(42 154 196 / 0) 70%
-      ),
-      radial-gradient(
-        65% 45% at 50% 118%,
-        rgb(31 72 194 / 0.5) 0%,
-        rgb(31 72 194 / 0) 70%
-      ),
-      linear-gradient(180deg, #111a3d 0%, #141b3b 55%, #17225a 100%);
-    color: #ffffff;
+  @media (hover: hover) {
+    [data-pagina="sagital"] .sg-vidro:hover {
+      background-color: rgb(6 35 52 / 0.75);
+    }
   }
 
+  [data-pagina="sagital"] .sg-soffit {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 600ms var(--sg-curva);
+  }
+
+  [data-pagina="sagital"] .sg-soffit[data-pronto] {
+    opacity: 1;
+  }
+
+  /* Abertura: uma grade fina por cima do degradê, que some para as bordas. */
   [data-pagina="sagital"] .sg-abertura::before {
     content: "";
     position: absolute;

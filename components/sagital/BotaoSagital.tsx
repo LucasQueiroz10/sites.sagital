@@ -38,7 +38,7 @@ const variantes: Record<VarianteSagital, string> = {
   inverso: "bg-white text-texto hover:bg-[#eef4fe]",
   contorno:
     "text-texto shadow-[inset_0_0_0_1px_var(--cor-borda)] hover:bg-superficie",
-  vidro: "bg-white/14 text-white hover:bg-white/22",
+  vidro: "sg-vidro",
 };
 
 const tamanhos: Record<Tamanho, string> = {

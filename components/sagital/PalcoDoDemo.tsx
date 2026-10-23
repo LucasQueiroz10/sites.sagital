@@ -4,6 +4,7 @@ import { Eye } from "lucide-react";
 import Image from "next/image";
 import { classes } from "@/lib/classes";
 import { useEscolha } from "./EscolhaDoDemo";
+import { FundoSoffit } from "./FundoSoffit";
 
 /**
  * O palco do topo no desktop: a captura real do demo escolhido no navegador
@@ -15,6 +16,7 @@ export function PalcoDoDemo() {
 
   return (
     <div className="sg-noite relative hidden aspect-[6/5] overflow-hidden rounded-[32px] lg:block">
+      <FundoSoffit />
       {demos.map((d) => {
         const atual = d.nicho === nicho;
         return (
@@ -75,7 +77,7 @@ export function PalcoDoDemo() {
       <button
         type="button"
         onClick={() => abrirPrevia()}
-        className="sg-pressiona absolute bottom-6 left-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-white/14 px-4 text-sm font-semibold text-white hover:bg-white/22 focus-visible:outline-white"
+        className="sg-pressiona absolute bottom-6 left-6 inline-flex min-h-11 items-center gap-2 rounded-full sg-vidro px-4 text-sm font-semibold focus-visible:outline-white"
       >
         <Eye aria-hidden className="size-[18px]" strokeWidth={1.75} />
         Ver {demo.rotulo.toLowerCase()} ao vivo

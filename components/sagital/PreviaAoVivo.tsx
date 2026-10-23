@@ -9,6 +9,7 @@ import {
   prefereMenosMovimento,
 } from "@/lib/movimento";
 import { BotaoSagital } from "./BotaoSagital";
+import { FundoSoffit } from "./FundoSoffit";
 
 export type Aparelho = "celular" | "tablet" | "computador";
 
@@ -155,11 +156,12 @@ export function PreviaAoVivo({
       }}
       className="sg-previa sg-noite fixed inset-0 m-0 hidden h-dvh max-h-none w-full max-w-none flex-col overflow-hidden p-0 text-white open:flex"
     >
+      <FundoSoffit />
       <div className="grid grid-cols-[2.75rem_1fr_2.75rem] items-center gap-2 px-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-2">
         <button
           type="button"
           onClick={fechar}
-          className="sg-pressiona grid size-11 place-items-center rounded-full bg-white/14 hover:bg-white/22 focus-visible:outline-white"
+          className="sg-pressiona grid size-11 place-items-center rounded-full sg-vidro focus-visible:outline-white"
         >
           <X aria-hidden className="size-6" />
           <span className="sr-only">Fechar a prévia</span>
