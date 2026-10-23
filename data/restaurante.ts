@@ -1,187 +1,346 @@
-import caipirinha from "@/public/imagens/restaurante/caipirinha.jpg";
-import cozinha from "@/public/imagens/restaurante/cozinha.jpg";
-import forno from "@/public/imagens/restaurante/forno.jpg";
-import peixe from "@/public/imagens/restaurante/peixe.jpg";
-import pratoPrincipal from "@/public/imagens/restaurante/prato-principal.jpg";
+import acai from "@/public/imagens/restaurante/acai.jpg";
+import almoco from "@/public/imagens/restaurante/almoco.jpg";
+import boloCenoura from "@/public/imagens/restaurante/bolo-cenoura.jpg";
+import bowlAtum from "@/public/imagens/restaurante/bowl-atum.jpg";
+import bowlFrango from "@/public/imagens/restaurante/bowl-frango.jpg";
+import bowlSalmao from "@/public/imagens/restaurante/bowl-salmao.jpg";
+import bowlVegano from "@/public/imagens/restaurante/bowl-vegano.jpg";
+import bowlsMesa from "@/public/imagens/restaurante/bowls-mesa.jpg";
+import burgerQuinoa from "@/public/imagens/restaurante/burger-quinoa.jpg";
+import burrataPessego from "@/public/imagens/restaurante/burrata-pessego.jpg";
+import caprese from "@/public/imagens/restaurante/caprese.jpg";
+import feira from "@/public/imagens/restaurante/feira.jpg";
+import iogurteGranola from "@/public/imagens/restaurante/iogurte-granola.jpg";
+import limoes from "@/public/imagens/restaurante/limoes.jpg";
+import limonadaHortela from "@/public/imagens/restaurante/limonada-hortela.jpg";
+import mesaBrunch from "@/public/imagens/restaurante/mesa-brunch.jpg";
+import principal from "@/public/imagens/restaurante/principal.jpg";
+import pudimChia from "@/public/imagens/restaurante/pudim-chia.jpg";
+import saladaCamarao from "@/public/imagens/restaurante/salada-camarao.jpg";
 import salao from "@/public/imagens/restaurante/salao.jpg";
-import sobremesa from "@/public/imagens/restaurante/sobremesa.jpg";
+import salaoSol from "@/public/imagens/restaurante/salao-sol.jpg";
+import smoothieManga from "@/public/imagens/restaurante/smoothie-manga.jpg";
+import sucoVerde from "@/public/imagens/restaurante/suco-verde.jpg";
+import toastAbacate from "@/public/imagens/restaurante/toast-abacate.jpg";
+import wrapFrango from "@/public/imagens/restaurante/wrap-frango.jpg";
 import type { DadosDoRestaurante } from "./tipos";
 
-// Conteúdo fictício. Fotos do Unsplash (licença livre), salvas localmente.
-// O link de delivery aponta para um domínio de exemplo (example.com).
+// Conteúdo fictício. Fotos do Unsplash (licença livre), salvas localmente,
+// com a origem gravada em cada arquivo. O link de delivery aponta para um
+// domínio de exemplo (example.com).
 
 export const restaurante: DadosDoRestaurante = {
   nicho: "restaurante",
   rotulo: "Restaurante",
   padrao: {
-    nome: "Restaurante Alecrim",
-    cor: "#8a1c3c",
-    fundo: "#f8f7f3",
+    nome: "Limoeiro",
+    cor: "#15355a",
+    fundo: "#fbf6ea",
   },
+  assinatura: "comida natural",
   descricao:
-    "Cozinha brasileira de forno a lenha. Cardápio, reservas pelo WhatsApp e delivery.",
-  slogan: "Forno a lenha, mesa posta.",
+    "Restaurante de comida natural: bowls, saladas, sanduíches e sucos feitos na hora. Cardápio, pedidos e reservas pelo WhatsApp.",
+  slogan: { serifa: "Comida de verdade, feita", manuscrito: "na hora" },
   chamada:
-    "Cozinha brasileira de estação, do almoço de terça ao jantar de domingo. Escolha o dia e o horário e reserve sua mesa.",
+    "Bowls, saladas e sucos com o que chega da feira de manhã. Peça pelo WhatsApp ou venha comer com calma no salão.",
   navegacao: [
     { rotulo: "Cardápio", href: "#cardapio" },
     { rotulo: "A casa", href: "#casa" },
+    { rotulo: "Reservas", href: "#reservas" },
     { rotulo: "Galeria", href: "#galeria" },
     { rotulo: "Contato", href: "#contato" },
   ],
   acaoPrincipal: {
-    rotulo: "Reservar mesa",
-    pedido: "Quero reservar uma mesa.",
+    rotulo: "Fazer pedido",
+    pedido: "Quero fazer um pedido.",
   },
   delivery: {
     rotulo: "Pedir pelo delivery",
     url: "https://delivery.example.com/restaurante",
   },
   imagemPrincipal: {
-    src: pratoPrincipal,
-    alt: "Filé de peixe grelhado sobre risoto, com aspargos e meio limão tostado, num prato fundo azul",
+    src: principal,
+    alt: "Prato azul com ovo cozido, abacate, rabanete, tomate e folhas verdes sobre uma mesa de madeira",
   },
   pessoas: [1, 2, 3, 4, 5, 6, 8],
   cardapio: [
     {
-      id: "entradas",
-      nome: "Entradas",
+      id: "bowls",
+      nome: "Bowls",
+      chamada:
+        "Base de arroz integral ou quinoa, legumes da estação e molho da casa.",
+      cor: "manteiga",
       itens: [
         {
-          nome: "Pão de fermentação natural",
-          descricao: "Saído do forno a lenha, com manteiga de garrafa",
-          preco: 2400,
-          vegetariano: true,
+          nome: "Bowl de salmão",
+          descricao: "Salmão fresco, edamame, pepino, alga e gergelim",
+          preco: 4890,
+          imagem: {
+            src: bowlSalmao,
+            alt: "Bowl de salmão em cubos com edamame, pepino, alga e gergelim, visto de cima",
+          },
+          selos: ["sem glúten", "da casa"],
         },
         {
-          nome: "Bolinho de feijoada",
-          descricao: "Com couve crocante e vinagrete de laranja",
-          preco: 3600,
+          nome: "Bowl de atum picante",
+          descricao: "Atum marinado, manga, abacate, broto de feijão e cenoura",
+          preco: 4690,
+          imagem: {
+            src: bowlAtum,
+            alt: "Bowl de atum com manga, abacate, tomate, alga e cenoura ralada",
+          },
+          selos: ["sem glúten"],
         },
         {
-          nome: "Burrata com tomates assados",
-          descricao: "Tomates da estação, manjericão e azeite",
-          preco: 5800,
-          vegetariano: true,
+          nome: "Bowl de frango grelhado",
+          descricao: "Frango na chapa, arroz vermelho, milho, tomate e brotos",
+          preco: 3990,
+          imagem: {
+            src: bowlFrango,
+            alt: "Bowl com arroz vermelho, frango em cubos, milho, tomate e brotos, sobre fundo rosa",
+          },
         },
         {
-          nome: "Carpaccio de abobrinha",
-          descricao: "Castanha-do-pará, limão-cravo e hortelã",
-          preco: 4200,
-          vegetariano: true,
+          nome: "Bowl verde",
+          descricao: "Grão-de-bico, couve, repolho roxo, tomate e tahine",
+          preco: 3690,
+          imagem: {
+            src: bowlVegano,
+            alt: "Prato de legumes coloridos com grão-de-bico e repolho roxo sobre uma tábua de madeira",
+          },
+          selos: ["vegano"],
         },
       ],
     },
     {
-      id: "pratos",
-      nome: "Pratos",
+      id: "saladas",
+      nome: "Saladas",
+      chamada:
+        "Folhas lavadas no dia e molhos feitos na cozinha, sem nada de pacote.",
+      cor: "folha",
       itens: [
         {
-          nome: "Peixe do dia na brasa",
-          descricao: "Pirão, risoto de limão e aspargos",
-          preco: 9800,
+          nome: "Salada de camarão",
+          descricao: "Camarão na chapa, espinafre, tomate e ovo de codorna",
+          preco: 4490,
+          imagem: {
+            src: saladaCamarao,
+            alt: "Salada de espinafre com camarões, tomates cereja e ovos de codorna num prato vermelho",
+          },
+          selos: ["sem glúten"],
         },
         {
-          nome: "Arroz de pato",
-          descricao: "Com laranja, linguiça artesanal e farofa de castanha",
-          preco: 8900,
+          nome: "Burrata com pêssego",
+          descricao: "Burrata, pêssego, figo, tomate e manjericão",
+          preco: 4290,
+          imagem: {
+            src: burrataPessego,
+            alt: "Burrata no centro de um prato com fatias de pêssego, figos e tomates, vista de cima",
+          },
+          selos: ["vegetariano"],
         },
         {
-          nome: "Costela no forno a lenha",
-          descricao: "Doze horas de forno, mandioca cremosa e couve",
-          preco: 9200,
-        },
-        {
-          nome: "Risoto de cogumelos",
-          descricao: "Cogumelos frescos e queijo canastra curado",
-          preco: 8400,
-          vegetariano: true,
-        },
-        {
-          nome: "Nhoque de abóbora",
-          descricao: "Manteiga de sálvia e amêndoas tostadas",
-          preco: 7200,
-          vegetariano: true,
+          nome: "Caprese da feira",
+          descricao: "Muçarela de búfala, tomate cereja, manjericão e azeite",
+          preco: 3490,
+          imagem: {
+            src: caprese,
+            alt: "Muçarela de búfala fatiada com tomates cereja e manjericão num prato de borda verde",
+          },
+          selos: ["vegetariano", "sem glúten"],
         },
       ],
     },
     {
-      id: "sobremesas",
-      nome: "Sobremesas",
+      id: "sanduiches",
+      nome: "Sanduíches",
+      chamada: "No pão de fermentação natural ou na tortilha integral.",
+      cor: "areia",
       itens: [
         {
-          nome: "Pudim de tapioca",
-          descricao: "Com calda de coco queimado",
-          preco: 3200,
-          vegetariano: true,
+          nome: "Toast de abacate",
+          descricao: "Pão de fermentação natural, abacate, ovo pochê e páprica",
+          preco: 3290,
+          imagem: {
+            src: toastAbacate,
+            alt: "Torrada com abacate fatiado e ovo pochê polvilhado com páprica num prato branco",
+          },
+          selos: ["vegetariano", "da casa"],
         },
         {
-          nome: "Torta de frutas vermelhas",
-          descricao: "Massa amanteigada e creme de baunilha",
-          preco: 3400,
-          vegetariano: true,
+          nome: "Wrap de frango",
+          descricao: "Tortilha integral, frango desfiado, folhas e tomate",
+          preco: 3190,
+          imagem: {
+            src: wrapFrango,
+            alt: "Wrap enrolado com folhas e tomate num prato branco sobre fundo azul",
+          },
         },
         {
-          nome: "Goiabada com queijo",
-          descricao: "Goiabada cascão e queijo minas meia cura",
-          preco: 2800,
-          vegetariano: true,
+          nome: "Burger de quinoa",
+          descricao: "Hambúrguer de quinoa, abacate, rúcula e tomate",
+          preco: 3890,
+          imagem: {
+            src: burgerQuinoa,
+            alt: "Hambúrguer de quinoa com abacate, rúcula e tomate num pão dourado",
+          },
+          selos: ["vegetariano"],
+        },
+      ],
+    },
+    {
+      id: "doces",
+      nome: "Doces e açaí",
+      chamada: "Adoçados com fruta, mel ou açúcar mascavo.",
+      cor: "pervinca",
+      itens: [
+        {
+          nome: "Açaí da casa",
+          descricao: "Açaí puro, banana, morango, mirtilo e granola",
+          preco: 2890,
+          imagem: {
+            src: acai,
+            alt: "Tigela de açaí coberta com banana, morangos, mirtilos e granola, vista de cima",
+          },
+          selos: ["vegano"],
+        },
+        {
+          nome: "Iogurte com granola",
+          descricao: "Iogurte natural, granola da casa, morango e mirtilo",
+          preco: 2290,
+          imagem: {
+            src: iogurteGranola,
+            alt: "Tigela de iogurte com granola, morangos e mirtilos sobre um pano cinza",
+          },
+          selos: ["vegetariano"],
+        },
+        {
+          nome: "Pudim de chia",
+          descricao: "Chia no leite de coco, frutas vermelhas e hortelã",
+          preco: 2190,
+          imagem: {
+            src: pudimChia,
+            alt: "Copo de pudim de chia com leite de coco, frutas vermelhas e uma folha de hortelã",
+          },
+          selos: ["vegano", "sem glúten"],
+        },
+        {
+          nome: "Bolo de cenoura",
+          descricao: "Massa integral, nozes e cobertura de cream cheese",
+          preco: 1890,
+          imagem: {
+            src: boloCenoura,
+            alt: "Fatia de bolo de cenoura em três camadas com cobertura branca e nozes",
+          },
+          selos: ["vegetariano"],
         },
       ],
     },
     {
       id: "bebidas",
       nome: "Bebidas",
+      chamada: "Sucos espremidos na hora, sem açúcar a não ser que você peça.",
+      cor: "marinho",
       itens: [
-        { nome: "Limonada de capim-santo", preco: 1600 },
-        { nome: "Suco do dia", preco: 1400 },
-        { nome: "Caipirinha de cachaça artesanal", preco: 3200 },
-        { nome: "Taça de vinho da casa", preco: 3400 },
-        { nome: "Água com ou sem gás", preco: 800 },
-        { nome: "Café espresso", preco: 900 },
+        {
+          nome: "Limonada de hortelã",
+          descricao: "Limão-taiti, hortelã e gelo, com ou sem açúcar",
+          preco: 1290,
+          imagem: {
+            src: limonadaHortela,
+            alt: "Copo alto de limonada com rodelas de limão, hortelã e gelo",
+          },
+          selos: ["vegano"],
+        },
+        {
+          nome: "Suco verde",
+          descricao: "Couve, maçã verde, gengibre e limão",
+          preco: 1490,
+          imagem: {
+            src: sucoVerde,
+            alt: "Suco verde sendo servido de uma jarra em dois copos",
+          },
+          selos: ["vegano"],
+        },
+        {
+          nome: "Smoothie de manga",
+          descricao: "Manga, banana e leite de aveia, batidos na hora",
+          preco: 1690,
+          imagem: {
+            src: smoothieManga,
+            alt: "Copo de smoothie de manga com canudo dourado ao lado de um smoothie de mirtilo",
+          },
+          selos: ["vegano"],
+        },
       ],
     },
   ],
   casa: {
-    destaque: "Tudo o que sai da cozinha passa pelo forno a lenha.",
+    titulo: { serifa: "O que vem da feira, vem com", manuscrito: "sabor" },
     paragrafos: [
-      "O forno fica no meio do salão e é aceso às dez da manhã. Dele saem o pão da mesa, a costela de doze horas e o peixe do dia, que chega toda manhã de pescadores da região.",
-      "O cardápio muda com a estação e com o que a feira tem de melhor. A casa é pequena, com vinte mesas, e por isso as reservas ajudam a garantir o seu lugar.",
+      "Toda manhã a gente passa na feira antes de abrir. O que chega bonito vira o bowl do dia; o que não chega, sai do cardápio até voltar.",
+      "Nada de congelado nem molho de pacote. A cozinha começa a picar às nove e monta cada prato na hora em que você pede.",
+    ],
+    pilares: [
+      {
+        titulo: "Da feira, toda manhã",
+        texto:
+          "Frutas, folhas e legumes comprados no dia, de quem planta perto.",
+      },
+      {
+        titulo: "Feito na hora",
+        texto: "Cada bowl e cada suco são montados quando o pedido chega.",
+      },
+      {
+        titulo: "Embalagem que volta",
+        texto: "Pedidos para levar em potes de papel e sacola de pano.",
+      },
     ],
     imagem: {
-      src: cozinha,
-      alt: "Cozinheira finalizando um prato com ervas sobre a bancada de madeira",
+      src: feira,
+      alt: "Barraca de frutas numa rua de pedra, sob um guarda-sol listrado de amarelo e branco",
+    },
+  },
+  salao: {
+    titulo: "Presença sem pressa.",
+    texto:
+      "Um salão claro, com luz natural e mesas para trabalhar, almoçar com calma ou dividir um açaí. No almoço de sexta e no brunch de sábado, a reserva garante o seu lugar.",
+    imagem: {
+      src: salao,
+      alt: "Salão claro com luminárias de palha, mesas de madeira, cadeiras brancas e plantas",
     },
   },
   galeria: [
-    { src: forno, alt: "Forno a lenha de tijolos aceso, com as brasas vivas" },
     {
-      src: peixe,
-      alt: "Peixe inteiro assado numa travessa, com pepino e molho",
+      src: mesaBrunch,
+      alt: "Mesa rosa de brunch vista de cima, com torradas, omelete, cafés e sucos",
     },
     {
-      src: salao,
-      alt: "Salão com mesas de madeira, luminárias pendentes e janelas altas",
+      src: limoes,
+      alt: "Limões inteiros e cortados sobre uma toalha verde, ao lado de flores",
     },
     {
-      src: caipirinha,
-      alt: "Caneca de caipirinha com limão e uma tigela de amendoim",
+      src: bowlsMesa,
+      alt: "Várias saladas coloridas em tigelas brancas, vistas de cima",
     },
     {
-      src: sobremesa,
-      alt: "Fatia de torta de frutas vermelhas num prato branco rendado",
+      src: salaoSol,
+      alt: "Mesas e cadeiras de madeira num salão iluminado pelo sol da tarde",
+    },
+    {
+      src: almoco,
+      alt: "Pessoa almoçando uma salada com suco de laranja ao lado",
     },
   ],
   expediente: [
-    { dias: [2, 3, 4, 5], turno: "almoço", abre: "11:30", fecha: "15:00" },
-    { dias: [2, 3, 4, 5], turno: "jantar", abre: "19:00", fecha: "23:00" },
-    { dias: [6], abre: "12:00", fecha: "23:00" },
-    { dias: [0], turno: "almoço", abre: "12:00", fecha: "17:00" },
+    { dias: [1, 2, 3, 4, 5], abre: "08:00", fecha: "21:00" },
+    { dias: [6], abre: "09:00", fecha: "17:00" },
+    { dias: [0], abre: "09:00", fecha: "15:00" },
   ],
   endereco: {
-    logradouro: "Rua dos Ipês, 88",
-    bairro: "Bairro Alto",
-    referencia: "Manobrista no jantar, de terça a sábado",
+    logradouro: "Rua dos Limoeiros, 214",
+    bairro: "Vila Jardim",
+    referencia: "Em frente à praça da feira de sábado",
   },
   redes: ["instagram", "facebook", "tiktok"],
 };

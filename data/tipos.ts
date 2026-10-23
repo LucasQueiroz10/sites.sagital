@@ -137,28 +137,47 @@ export type DadosDoVarejo = DadosDoNicho & {
   comoComprar: { titulo: string; texto: string }[];
 };
 
+/** Selos de um prato do cardápio. */
+export type SeloDoPrato = "vegano" | "vegetariano" | "sem glúten" | "da casa";
+
 export type ItemDoCardapio = {
   nome: string;
-  descricao?: string;
+  descricao: string;
   /** Centavos. */
   preco: number;
-  vegetariano?: boolean;
+  imagem: Imagem;
+  selos?: SeloDoPrato[];
 };
+
+/** Cor da aba de cada categoria, como as divisórias do cardápio impresso. */
+export type CorDaAba = "manteiga" | "folha" | "areia" | "pervinca" | "marinho";
 
 export type CategoriaDoCardapio = {
   id: string;
   nome: string;
+  /** Linha curta abaixo das abas, sobre a categoria. */
+  chamada: string;
+  cor: CorDaAba;
   itens: ItemDoCardapio[];
 };
 
 export type DadosDoRestaurante = DadosDoNicho & {
-  slogan: string;
+  /** O título do topo: a parte em serifa e o final escrito à mão. */
+  slogan: { serifa: string; manuscrito: string };
   chamada: string;
+  /** Assinatura curta abaixo do nome no cabeçalho, ex.: "comida natural". */
+  assinatura: string;
   imagemPrincipal: Imagem;
   delivery: { rotulo: string; url: string };
   cardapio: CategoriaDoCardapio[];
-  casa: { paragrafos: string[]; imagem: Imagem; destaque: string };
-  /** Cinco fotos: a primeira ocupa duas linhas no desktop e a grade fecha certinha. */
+  casa: {
+    titulo: { serifa: string; manuscrito: string };
+    paragrafos: string[];
+    pilares: { titulo: string; texto: string }[];
+    imagem: Imagem;
+  };
+  salao: { titulo: string; texto: string; imagem: Imagem };
+  /** Fotos da galeria, em formatos alternados (a primeira mais larga). */
   galeria: Imagem[];
   /** Pessoas por mesa no formulário de reserva; o último vale "ou mais". */
   pessoas: number[];

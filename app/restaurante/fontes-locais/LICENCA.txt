@@ -1,0 +1,4 @@
+Libre Caslon Condensed
+Copyright 2012 The Libre Caslon Project Authors (https://github.com/impallari/Libre-Caslon-Condensed)
+Licenciada sob a SIL Open Font License, versão 1.1: https://openfontlicense.org
+Arquivos .woff2 (subconjunto latino) baixados do Google Fonts.

@@ -1,26 +1,145 @@
 /* Tokens do demo de restaurante. As cores primárias e o fundo vêm de lib/tema.ts. */
 [data-nicho="restaurante"] {
-  --cor-superficie: #eef1f6;
-  --cor-texto: #16213d;
-  --cor-texto-suave: #4a5470;
-  --cor-borda: #d3d9e6;
-  --cor-esmalte: #f8f7f3;
-  --raio: 4px;
-  --fonte-titulo: var(--font-young-serif), Georgia, serif;
-  --fonte-texto: var(--font-figtree), system-ui, sans-serif;
+  --cor-superficie: #f4ead2;
+  --cor-texto: #15355a;
+  --cor-texto-suave: #4a5a72;
+  --cor-borda: #e3d7b9;
+  /* A paleta fixa da casa: manteiga, pervinca, areia, folha e marinho. */
+  --cor-creme: #fbf6ea;
+  --cor-manteiga: #f7eea0;
+  --cor-manteiga-clara: #fcf7cf;
+  --cor-pervinca: #8fb0f0;
+  /* Pervinca escurecida para texto sobre fundo claro (3:1 em título grande). */
+  --cor-pervinca-tinta: #4a72cf;
+  --cor-areia: #efe3c8;
+  --cor-folha: #2f5a3c;
+  --cor-marinho: #15355a;
+  --cor-aberto: #2f5a3c;
+  --raio: 6px;
+  --fonte-titulo: var(--font-caslon), Georgia, serif;
+  --fonte-texto: var(--font-barlow), system-ui, sans-serif;
+  --fonte-condensada: var(--font-barlow-condensada), "Arial Narrow", sans-serif;
+  --fonte-manuscrita: var(--font-kristi), cursive;
+  --fonte-marca: var(--font-kaushan), cursive;
   color-scheme: light;
 }
 
-[data-nicho="restaurante"] :is(h1, h2, h3, .marca, .destaque-casa) {
+[data-nicho="restaurante"] :is(h1, h2, h3) {
   font-family: var(--fonte-titulo);
-  font-weight: 400;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.02;
 }
 
-[data-nicho="restaurante"] :is(h1, h2) {
-  letter-spacing: -0.015em;
-  line-height: 1.04;
+/* A palavra escrita à mão. Kristi é fina: um contorno da própria cor dá o
+   peso de caneta de ponta grossa das referências. */
+[data-nicho="restaurante"] .manuscrito {
+  font-family: var(--fonte-manuscrita);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.8;
+  -webkit-text-stroke: 0.03em currentColor;
+  paint-order: stroke fill;
 }
 
 [data-nicho="restaurante"] .marca {
-  color: var(--cor-cobalto);
+  font-family: var(--fonte-marca);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--cor-marinho);
+}
+
+[data-nicho="restaurante"] .condensada {
+  font-family: var(--fonte-condensada);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Toldo listrado no alto do cabeçalho. */
+[data-nicho="restaurante"] .toldo::before {
+  content: "";
+  display: block;
+  height: 0.5rem;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--cor-pervinca) 0 1.5rem,
+    var(--cor-creme) 1.5rem 3rem
+  );
+}
+
+/* Listras da caixa de papelão, atrás da foto do topo. */
+[data-nicho="restaurante"] .listras-manteiga {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--cor-manteiga) 0 1.375rem,
+    var(--cor-manteiga-clara) 1.375rem 2.75rem
+  );
+}
+
+[data-nicho="restaurante"] .listras-pervinca {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--cor-pervinca) 0 1.375rem,
+    var(--cor-creme) 1.375rem 2.75rem
+  );
+}
+
+/* Xadrez da borda do cardápio impresso: duas fileiras, quatro cores. */
+[data-nicho="restaurante"] .xadrez {
+  --casa: 1.25rem;
+  height: calc(var(--casa) * 2);
+  background:
+    conic-gradient(
+        var(--cor-marinho) 25%,
+        var(--cor-pervinca) 0 50%,
+        var(--cor-marinho) 0 75%,
+        var(--cor-pervinca) 0
+      )
+      0 0 / calc(var(--casa) * 2) var(--casa) repeat-x,
+    conic-gradient(
+        var(--cor-manteiga) 25%,
+        var(--cor-folha) 0 50%,
+        var(--cor-manteiga) 0 75%,
+        var(--cor-folha) 0
+      )
+      var(--casa) var(--casa) / calc(var(--casa) * 2) var(--casa) repeat-x;
+}
+
+/* Abas do cardápio, nas cores das divisórias impressas. */
+[data-nicho="restaurante"] [data-aba="manteiga"] {
+  --aba-fundo: var(--cor-manteiga);
+  --aba-texto: var(--cor-marinho);
+}
+[data-nicho="restaurante"] [data-aba="folha"] {
+  --aba-fundo: var(--cor-folha);
+  --aba-texto: var(--cor-creme);
+}
+[data-nicho="restaurante"] [data-aba="areia"] {
+  --aba-fundo: var(--cor-areia);
+  --aba-texto: var(--cor-marinho);
+}
+[data-nicho="restaurante"] [data-aba="pervinca"] {
+  --aba-fundo: var(--cor-pervinca);
+  --aba-texto: var(--cor-marinho);
+}
+[data-nicho="restaurante"] [data-aba="marinho"] {
+  --aba-fundo: var(--cor-marinho);
+  --aba-texto: var(--cor-creme);
+}
+
+/* Os pratos chegam um a um quando a categoria muda. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-nicho="restaurante"] .prato-chegando {
+    animation: prato-chegando 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--ordem, 0) * 60ms);
+  }
+}
+
+@keyframes prato-chegando {
+  from {
+    opacity: 0;
+    translate: 0 0.75rem;
+  }
 }

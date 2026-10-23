@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { BotaoWhatsApp } from "@/components/BotaoWhatsApp";
 import { NomeDoEstabelecimento } from "@/components/TemaDoNicho";
 import { Container } from "@/components/ui/Container";
@@ -14,6 +14,8 @@ type Props = {
   rotuloDoNicho: string;
   /** Classes da marca (o nome do estabelecimento), para cada nicho estilizar. */
   classeDaMarca?: string;
+  /** Linha abaixo do nome, como a assinatura de uma marca. */
+  complementoDaMarca?: ReactNode;
   className?: string;
 };
 
@@ -25,6 +27,7 @@ export function CabecalhoDoDemo({
   acao,
   rotuloDoNicho,
   classeDaMarca,
+  complementoDaMarca,
   className,
 }: Props) {
   const [aberto, setAberto] = useState(false);
@@ -45,6 +48,7 @@ export function CabecalhoDoDemo({
           className={classes("min-w-0 truncate py-2", foco, classeDaMarca)}
         >
           <NomeDoEstabelecimento />
+          {complementoDaMarca}
         </a>
 
         <nav aria-label="Seções" className="hidden items-center gap-6 lg:flex">

@@ -120,7 +120,7 @@ export function ReservaDeMesa({ expediente, pessoas, rotuloDoNicho }: Props) {
     <form
       onSubmit={(e) => e.preventDefault()}
       aria-label="Reservar mesa"
-      className="grid gap-5 rounded-tema border border-borda bg-white p-4 shadow-[0_12px_32px_-20px_rgb(22_33_61/0.45)] sm:p-6"
+      className="grid gap-5"
     >
       <fieldset className="min-w-0">
         <legend className="mb-2 text-sm font-semibold">Pessoas</legend>
@@ -168,7 +168,9 @@ export function ReservaDeMesa({ expediente, pessoas, rotuloDoNicho }: Props) {
 
       <fieldset className="min-w-0">
         <legend className="mb-2 text-sm font-semibold">Horário</legend>
-        <div className="grid grid-cols-4 gap-2 sm:grid-cols-5">
+        {/* Do café ao fim da tarde são muitos horários: no celular, uma
+            fileira que desliza; no computador, todos à vista. */}
+        <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-wrap lg:px-0">
           {dia?.horarios.map((h) => (
             <Opcao
               key={h}
@@ -185,7 +187,7 @@ export function ReservaDeMesa({ expediente, pessoas, rotuloDoNicho }: Props) {
         </div>
       </fieldset>
 
-      <div data-cta-principal className="grid gap-2">
+      <div className="grid gap-2">
         <BotaoWhatsApp
           acao={{ rotulo: "Reservar pelo WhatsApp", pedido }}
           rotuloDoNicho={rotuloDoNicho}

@@ -1,124 +1,152 @@
+"use client";
+
+import Image from "next/image";
+import { useState, type CSSProperties } from "react";
+import { BotaoWhatsApp } from "@/components/BotaoWhatsApp";
 import { Carrossel } from "@/components/ui/Carrossel";
 import { Container } from "@/components/ui/Container";
-import type { CategoriaDoCardapio } from "@/data/tipos";
+import type { CategoriaDoCardapio, SeloDoPrato } from "@/data/tipos";
+import { classes } from "@/lib/classes";
 import { formatarPreco } from "@/lib/formato";
 
 const foco =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
 
-/**
- * O cardápio impresso, uma folha por categoria, lado a lado: no celular, uma
- * folha por vez; no desktop, duas, como o cardápio aberto na mesa. Pontilhado
- * até o preço e marcação vegetariana.
- */
-export function Cardapio({
-  categorias,
-}: {
+const coresDosSelos: Record<SeloDoPrato, string> = {
+  vegano: "bg-[var(--cor-folha)] text-[var(--cor-creme)]",
+  vegetariano: "bg-[var(--cor-manteiga)] text-[var(--cor-marinho)]",
+  "sem glúten": "bg-[var(--cor-creme)] text-[var(--cor-marinho)]",
+  "da casa": "bg-[var(--cor-pervinca)] text-[var(--cor-marinho)]",
+};
+
+type Props = {
   categorias: CategoriaDoCardapio[];
-}) {
+  rotuloDoNicho: string;
+};
+
+/**
+ * O cardápio como as divisórias coloridas de uma prancheta: uma aba por
+ * categoria e, embaixo, os pratos da aba numa trilha horizontal, com foto,
+ * preço e o pedido pronto para o WhatsApp.
+ */
+export function Cardapio({ categorias, rotuloDoNicho }: Props) {
+  const [idAtual, setIdAtual] = useState(categorias[0]?.id);
+  const atual = categorias.find((c) => c.id === idAtual) ?? categorias[0];
+  if (!atual) return null;
+
   return (
     <>
-      <Carrossel
-        rotulo="Folhas do cardápio"
-        classeDasSetas="rounded-tema border border-cobalto/40 bg-esmalte text-cobalto"
-        classeDoPonto={{ atual: "bg-cobalto", outros: "bg-cobalto/25" }}
-        className="gap-4 py-3 sm:gap-6"
-        cabecalho={
-          <div className="grid justify-items-center gap-6">
-            <h2
-              id="cardapio-titulo"
-              className="w-fit rounded-tema border-2 border-cobalto bg-esmalte px-8 py-4 text-center text-4xl text-cobalto shadow-[0_0_0_12px_var(--cor-esmalte)] sm:text-5xl"
-            >
-              Cardápio
-            </h2>
-            <nav
-              aria-label="Categorias do cardápio"
-              className="rounded-tema bg-esmalte px-3"
-            >
-              <ul className="flex flex-wrap justify-center gap-x-3 sm:gap-x-5">
-                {categorias.map((categoria) => (
-                  <li key={categoria.id}>
-                    <a
-                      href={`#cardapio-${categoria.id}`}
-                      className={`inline-flex min-h-11 items-center text-sm font-semibold tracking-wide text-cobalto uppercase underline-offset-4 hover:underline ${foco}`}
-                    >
-                      {categoria.nome}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-        }
-      >
-        {categorias.map((categoria) => (
-          <li
-            key={categoria.id}
-            className="w-[88%] max-w-[34rem] shrink-0 snap-start sm:w-[34rem] lg:w-[calc((100%-1.5rem)/2)] lg:max-w-none"
-          >
-            <section
-              id={`cardapio-${categoria.id}`}
-              aria-labelledby={`titulo-${categoria.id}`}
-              className="h-full scroll-mt-24 rounded-tema bg-white px-6 py-8 ring-1 ring-cobalto/25 ring-offset-4 ring-offset-white outline outline-cobalto/70 -outline-offset-8 sm:px-10 sm:py-10"
-            >
-              <h3
-                id={`titulo-${categoria.id}`}
-                className="mb-6 flex items-center gap-4 text-3xl text-cobalto"
+      <Container largura="larga">
+        <h2
+          id="cardapio-titulo"
+          className="text-[clamp(2.75rem,9vw,4.5rem)] text-balance"
+        >
+          Cardápio{" "}
+          <span className="manuscrito ml-1 inline-block -rotate-6 text-[1.1em] text-[var(--cor-pervinca-tinta)]">
+            do dia
+          </span>
+        </h2>
+        <div
+          role="group"
+          aria-label="Categorias do cardápio"
+          className="-mx-4 mt-8 flex items-end gap-1.5 overflow-x-auto border-b-2 border-[var(--cor-marinho)] px-4 sm:mx-0 sm:px-0"
+        >
+          {categorias.map((categoria) => {
+            const escolhida = categoria.id === atual.id;
+            return (
+              <button
+                key={categoria.id}
+                type="button"
+                data-aba={categoria.cor}
+                aria-pressed={escolhida}
+                onClick={() => setIdAtual(categoria.id)}
+                className={classes(
+                  "condensada shrink-0 rounded-t-tema bg-[var(--aba-fundo)] px-4 text-base whitespace-nowrap text-[var(--aba-texto)] transition-[padding] duration-200 ease-out sm:px-5 sm:text-lg",
+                  escolhida ? "pt-5 pb-3" : "pt-2.5 pb-2 hover:pt-3.5",
+                  foco,
+                )}
               >
                 {categoria.nome}
-                <span aria-hidden className="h-px flex-1 bg-cobalto/30" />
-              </h3>
-              <ul className="grid gap-5">
-                {categoria.itens.map((item) => (
-                  <li key={item.nome}>
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-semibold">
-                        {item.vegetariano ? (
-                          <>
-                            {item.nome.split(" ").slice(0, -1).join(" ")}{" "}
-                            {/* A última palavra e o selo ficam juntos: o "V" nunca quebra sozinho. */}
-                            <span className="whitespace-nowrap">
-                              {item.nome.split(" ").at(-1)}
-                              <abbr
-                                title="Vegetariano"
-                                className="ml-2 inline-grid size-5 translate-y-[-0.1em] place-items-center rounded-full border border-cobalto text-[0.65rem] font-bold text-cobalto no-underline"
-                              >
-                                V
-                              </abbr>
-                            </span>
-                          </>
-                        ) : (
-                          item.nome
+              </button>
+            );
+          })}
+        </div>
+        <p
+          aria-live="polite"
+          className="mt-4 max-w-[52ch] text-lg text-texto-suave"
+        >
+          {atual.chamada}
+        </p>
+      </Container>
+      <Carrossel
+        // Uma trilha nova por categoria: volta ao primeiro prato ao trocar.
+        // As abas ficam fora dela para o foco não se perder no clique.
+        key={atual.id}
+        rotulo={`Pratos: ${atual.nome}`}
+        classeDasSetas="rounded-full border-2 border-[var(--cor-marinho)] bg-fundo text-[var(--cor-marinho)]"
+        classeDoPonto={{
+          atual: "bg-[var(--cor-marinho)]",
+          outros: "bg-[var(--cor-marinho)]/25",
+        }}
+        className="mt-6 gap-4 pb-2 sm:gap-6"
+      >
+        {atual.itens.map((item, i) => (
+          <li
+            key={item.nome}
+            style={{ "--ordem": i } as CSSProperties}
+            className="prato-chegando w-[78%] max-w-[20rem] shrink-0 snap-start sm:w-[18rem] lg:w-[calc((100%-4.5rem)/4)] lg:max-w-none"
+          >
+            <article className="flex h-full flex-col">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-tema bg-superficie">
+                <Image
+                  src={item.imagem.src}
+                  alt={item.imagem.alt}
+                  fill
+                  sizes="(min-width: 1024px) 19rem, (min-width: 640px) 18rem, 78vw"
+                  className="object-cover"
+                  placeholder="blur"
+                />
+                {item.selos && (
+                  <ul className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                    {item.selos.map((selo) => (
+                      <li
+                        key={selo}
+                        className={classes(
+                          "condensada rounded-full px-2.5 py-0.5 text-[0.8125rem]",
+                          coresDosSelos[selo],
                         )}
-                      </span>
-                      <span
-                        aria-hidden
-                        className="min-w-6 flex-1 translate-y-[-0.3em] border-b border-dotted border-texto-suave/60"
-                      />
-                      <span className="font-semibold tabular-nums">
-                        {formatarPreco(item.preco)}
-                      </span>
-                    </div>
-                    {item.descricao && (
-                      <p className="mt-1 max-w-[52ch] text-texto-suave">
-                        {item.descricao}
-                      </p>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </section>
+                      >
+                        {selo}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <div className="flex flex-1 flex-col pt-4">
+                <div className="flex items-baseline justify-between gap-3">
+                  <h3 className="text-[1.625rem] text-balance">{item.nome}</h3>
+                  <p className="condensada shrink-0 text-xl tabular-nums">
+                    {formatarPreco(item.preco)}
+                  </p>
+                </div>
+                <p className="mt-1.5 text-texto-suave">{item.descricao}</p>
+                <div className="mt-auto pt-4">
+                  <BotaoWhatsApp
+                    acao={{
+                      rotulo: "Pedir",
+                      pedido: `Quero pedir: ${item.nome}.`,
+                    }}
+                    rotuloDoNicho={rotuloDoNicho}
+                    variante="secundario"
+                    complementoAcessivel={item.nome}
+                    className="px-5 text-[0.9375rem]"
+                  />
+                </div>
+              </div>
+            </article>
           </li>
         ))}
       </Carrossel>
-      <Container largura="larga">
-        <p className="mx-auto mt-6 w-fit rounded-tema bg-esmalte px-3 py-1 text-center text-sm text-texto-suave">
-          <abbr title="Vegetariano" className="no-underline">
-            V
-          </abbr>{" "}
-          = vegetariano. Preços em reais, serviço não incluso.
-        </p>
-      </Container>
     </>
   );
 }

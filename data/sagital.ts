@@ -71,7 +71,7 @@ export const demos: Demo[] = [
     rotulo: restaurante.rotulo,
     padrao: restaurante.padrao,
     descricao:
-      "Reserva de mesa com dia e horário, cardápio completo e delivery.",
+      "Cardápio em abas com fotos dos pratos, pedido pelo WhatsApp e reserva de mesa.",
     captura: {
       src: demoRestaurante,
       alt: "Primeira tela do demo de restaurante no celular",
@@ -80,8 +80,8 @@ export const demos: Demo[] = [
       src: demoRestauranteDesktop,
       alt: "Primeira tela do demo de restaurante no computador",
     },
-    paleta: ["#f8f7f3", "#1f3f95", "#8a1c3c"],
-    fonte: "Young Serif",
+    paleta: ["#fbf6ea", "#8fb0f0", "#15355a"],
+    fonte: "Libre Caslon Condensed",
   },
   {
     nicho: "tabacaria",
