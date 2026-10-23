@@ -12,13 +12,7 @@ export type LinkDeNavegacao = { rotulo: string; href: `#${string}` };
 
 /** Redes sociais que os rodapés sabem mostrar (ícone e nome em IconeDeRede). */
 export type Rede =
-  | "instagram"
-  | "facebook"
-  | "tiktok"
-  | "youtube"
-  | "linkedin"
-  | "pinterest"
-  | "github";
+  "instagram" | "facebook" | "tiktok" | "youtube" | "linkedin" | "pinterest";
 
 /** O que cada site do portfólio mostra no rodapé. */
 export type DadosDoRodape = {

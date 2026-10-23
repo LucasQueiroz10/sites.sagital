@@ -1,4 +1,4 @@
-import { ArrowDown, Code } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,7 +24,6 @@ import {
   pacotes,
   processo,
   recursos,
-  urlDoCodigo,
 } from "@/data/sagital";
 import { sitesDoPortfolio } from "@/data/portfolio";
 import { formatarPrecoRedondo } from "@/lib/formato";
@@ -437,28 +436,6 @@ export default function PaginaSagital() {
                   Cada site é feito para abrir rápido no celular, funcionar até
                   com sinal fraco e levar o cliente direto para o seu WhatsApp.
                 </p>
-                <a
-                  href={urlDoCodigo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group mt-2 flex min-h-14 items-center gap-3 rounded-xl bg-superficie px-4 py-3 text-texto transition-colors hover:bg-[var(--sg-pressionado)]"
-                >
-                  <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white text-texto">
-                    <Code
-                      aria-hidden
-                      className="size-[18px]"
-                      strokeWidth={1.75}
-                    />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-[0.9375rem] font-semibold">
-                      O código deste site é aberto
-                    </span>
-                    <span className="block text-[0.8125rem] text-texto-suave">
-                      Ver no GitHub (abre em nova aba)
-                    </span>
-                  </span>
-                </a>
               </div>
             </Container>
           </section>

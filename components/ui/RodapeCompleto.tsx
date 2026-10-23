@@ -119,7 +119,8 @@ export function RodapeCompleto({
           <div
             className={classes(
               "grid gap-10 sm:grid-cols-2 lg:col-span-8 lg:gap-8",
-              colunas.length >= 3 && "lg:grid-cols-3",
+              colunas.length === 3 && "lg:grid-cols-3",
+              colunas.length >= 4 && "lg:grid-cols-4",
             )}
           >
             {colunas.map((coluna) => (

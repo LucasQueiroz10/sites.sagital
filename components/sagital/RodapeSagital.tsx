@@ -46,24 +46,27 @@ export function RodapeSagital() {
           conteudo: <LinksDoRodape tom="escuro" links={navegacao} />,
         },
         {
-          titulo: "Exemplos",
+          titulo: "Demos",
           conteudo: (
-            <div className="grid grid-cols-2 gap-x-6">
-              <LinksDoRodape
-                tom="escuro"
-                links={demos.map((demo) => ({
-                  rotulo: demo.rotulo,
-                  href: `/${demo.nicho}`,
-                }))}
-              />
-              <LinksDoRodape
-                tom="escuro"
-                links={sitesDoPortfolio.map((site) => ({
-                  rotulo: site.id.charAt(0).toUpperCase() + site.id.slice(1),
-                  href: site.href,
-                }))}
-              />
-            </div>
+            <LinksDoRodape
+              tom="escuro"
+              links={demos.map((demo) => ({
+                rotulo: demo.rotulo,
+                href: `/${demo.nicho}`,
+              }))}
+            />
+          ),
+        },
+        {
+          titulo: "Portfólio",
+          conteudo: (
+            <LinksDoRodape
+              tom="escuro"
+              links={sitesDoPortfolio.map((site) => ({
+                rotulo: site.id.charAt(0).toUpperCase() + site.id.slice(1),
+                href: site.href,
+              }))}
+            />
           ),
         },
         {

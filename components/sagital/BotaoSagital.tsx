@@ -22,7 +22,7 @@ type PropsBase = {
 
 type PropsLink = PropsBase & {
   href: string;
-  /** Abre em nova aba com rel="noopener noreferrer" (WhatsApp, GitHub). */
+  /** Abre em nova aba com rel="noopener noreferrer" (ex.: WhatsApp). */
   externo?: boolean;
 } & Omit<ComponentPropsWithoutRef<"a">, keyof PropsBase | "href">;
 

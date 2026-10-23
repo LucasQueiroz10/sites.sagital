@@ -185,8 +185,6 @@ export function mensagemDoPacote(nome: string): string {
   return `Olá! Vi o site da Sagital e quero saber mais sobre o pacote ${nome}.`;
 }
 
-export const urlDoCodigo = "https://github.com/LucasQueiroz10/sites.sagital";
-
 /**
  * Contatos da Sagital no rodapé. Só aparece o que estiver preenchido: o
  * telefone e o WhatsApp vêm de NEXT_PUBLIC_WHATSAPP_NUMERO; e-mail, redes e
@@ -199,6 +197,6 @@ export const contatoDaSagital: {
   cnpj: string | null;
 } = {
   email: null,
-  redes: [{ rede: "github", usuario: "LucasQueiroz10", url: urlDoCodigo }],
+  redes: [],
   cnpj: null,
 };
