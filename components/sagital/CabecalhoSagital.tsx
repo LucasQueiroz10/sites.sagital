@@ -39,30 +39,48 @@ export function CabecalhoSagital() {
       )}
     >
       <div className="mx-auto flex min-h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
-        <MarcaSagital
-          className={claro ? "text-[var(--sg-tinta-forte)]" : "text-white"}
-        />
-        <nav aria-label="Seções" className="hidden items-center md:flex">
-          {navegacao.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={classes(
-                "inline-flex min-h-11 items-center rounded-[10px] px-3 text-[0.9375rem] font-medium transition-colors",
-                claro
-                  ? "text-texto-suave hover:bg-superficie hover:text-texto"
-                  : "text-white/75 hover:bg-white/10 hover:text-white",
-              )}
-            >
-              {link.rotulo}
-            </a>
-          ))}
+        {/* À esquerda, a marca e as seções; o nome é sempre o mais forte da
+            barra (extranegrito, cor cheia), e um fio fino o separa das
+            âncoras, que ficam menores e mais suaves. */}
+        <div className="flex min-w-0 items-center gap-5 lg:gap-6">
+          <MarcaSagital
+            className={claro ? "text-[var(--sg-tinta-forte)]" : "text-white"}
+          />
+          <span
+            aria-hidden
+            className={classes(
+              "hidden h-5 w-px md:block",
+              claro ? "bg-[var(--cor-borda)]" : "bg-white/20",
+            )}
+          />
+          <nav
+            aria-label="Seções"
+            className="-ml-3 hidden items-center md:flex"
+          >
+            {navegacao.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className={classes(
+                  "inline-flex min-h-11 items-center rounded-[10px] px-3 text-[0.9375rem] font-medium transition-colors",
+                  claro
+                    ? "text-texto-suave hover:bg-superficie hover:text-texto"
+                    : "text-white/75 hover:bg-white/10 hover:text-white",
+                )}
+              >
+                {link.rotulo}
+              </a>
+            ))}
+          </nav>
+        </div>
+        <div className="hidden md:block">
           <BotaoContato
+            rotulo="WhatsApp"
+            complementoAcessivel="da Sagital"
             variante={claro ? "escuro" : "vidro"}
             tamanho="medio"
-            className="ml-3"
           />
-        </nav>
+        </div>
         <a
           href={montarLinkWhatsApp(mensagemDeContato)}
           target="_blank"
@@ -80,7 +98,7 @@ export function CabecalhoSagital() {
             className="size-[22px]"
             strokeWidth={1.75}
           />
-          <span className="sr-only">Falar no WhatsApp (abre o WhatsApp)</span>
+          <span className="sr-only">WhatsApp da Sagital (abre o WhatsApp)</span>
         </a>
       </div>
     </header>
