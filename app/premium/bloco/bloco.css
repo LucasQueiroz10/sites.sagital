@@ -1,0 +1,576 @@
+/*
+ * Bloco: a identidade BRIX levada para uma agência brasileira. Cinza claro de
+ * estúdio, laranja em campos inteiros, títulos quadrados em caixa-alta entre
+ * colchetes com palavras em grafite e cinza, molduras de mira (só as quatro
+ * cantoneiras), mosaico de pixels em degrau na troca de cor e os blocos de
+ * montar translúcidos em WebGL. Botões e pílulas com 4px de raio; molduras e
+ * campos retos.
+ */
+
+@layer components {
+  [data-premium="bloco"] {
+    --cor-cinza: #e4e4e4;
+    --cor-cinza-claro: #f3f3f3;
+    --cor-cinza-pixel: #d8d8d8;
+    --cor-cinza-medio: #c9c9c9;
+    --cor-grafite: #333333;
+    --cor-tinta: #1c1c1c;
+    /* Palavras cinza dos títulos grandes: 3:1 sobre o cinza, só em texto grande. */
+    --cor-palavra: #767676;
+    --cor-texto-suave: #555555;
+    /* A cor da marca, nos pixels e detalhes. */
+    --cor-laranja: #e85102;
+    /* Títulos grandes laranja sobre o cinza (3:1). */
+    --cor-laranja-titulo: #e04d00;
+    /* Campos laranja com texto branco por cima (4,5:1). */
+    --cor-laranja-campo: #d24700;
+    /* Texto laranja pequeno sobre o cinza (4,5:1). */
+    --cor-laranja-tinta: #b03a00;
+    /* A linha escolhida dentro do campo laranja. */
+    --cor-laranja-fundo: #a63700;
+
+    /* Tokens que as peças compartilhadas (rodapé, contêiner) leem. */
+    --cor-fundo: var(--cor-cinza);
+    --cor-superficie: var(--cor-cinza-claro);
+    --cor-texto: var(--cor-tinta);
+    --cor-borda: rgb(28 28 28 / 0.14);
+    --cor-primaria: var(--cor-laranja-campo);
+    --cor-primaria-hover: var(--cor-laranja-fundo);
+    --cor-primaria-texto: #ffffff;
+    --cor-destaque: var(--cor-laranja);
+    --cor-foco: var(--cor-laranja-tinta);
+    --raio: 4px;
+    --fonte-titulo: var(--font-quadrada), system-ui, sans-serif;
+    --fonte-texto: var(--font-neutra), system-ui, sans-serif;
+
+    --curva-saida: cubic-bezier(0.23, 1, 0.32, 1);
+    --curva-meio: cubic-bezier(0.77, 0, 0.175, 1);
+    color-scheme: light;
+    caret-color: var(--cor-laranja-campo);
+    scrollbar-color: var(--cor-palavra) var(--cor-cinza);
+  }
+
+  [data-premium="bloco"] :focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: 3px;
+  }
+
+  /* Sobre o laranja e o grafite, o foco fica branco. */
+  [data-premium="bloco"] .bl-campo-laranja,
+  [data-premium="bloco"] .bl-campo-escuro {
+    --cor-foco: #ffffff;
+    caret-color: #ffffff;
+  }
+
+  [data-premium="bloco"] ::selection {
+    background: var(--cor-laranja-campo);
+    color: #ffffff;
+  }
+
+  /* ---------- As duas vozes ---------- */
+
+  /* A grotesca quadrada e estreita: sempre caixa-alta. */
+  [data-premium="bloco"] .bl-quadrada {
+    font-family: var(--font-quadrada), system-ui, sans-serif;
+    font-stretch: 72%;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    line-height: 0.92;
+    text-transform: uppercase;
+  }
+
+  /* Rótulos pequenos em caixa-alta, como "IMPLEMENTED PROJECTS". */
+  [data-premium="bloco"] .bl-rotulo {
+    font-family: var(--font-quadrada), system-ui, sans-serif;
+    font-stretch: 80%;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+
+  [data-premium="bloco"] .bl-cinza {
+    color: var(--cor-palavra);
+  }
+
+  [data-premium="bloco"] .bl-campo-laranja .bl-cinza {
+    color: rgb(255 255 255 / 0.78);
+  }
+
+  /*
+   * O título entre colchetes. O "[" fica no alto à esquerda, a primeira linha
+   * entra recuada e o "]" fecha embaixo, à direita da linha mais comprida. Os
+   * colchetes são só desenho: o leitor de tela não os lê.
+   */
+  [data-premium="bloco"] .bl-colchetes {
+    position: relative;
+    display: grid;
+    width: fit-content;
+    max-width: 100%;
+    padding-right: 0.55em;
+    font-size: clamp(2.125rem, 5.2vw, 4.25rem);
+  }
+
+  [data-premium="bloco"] .bl-colchetes > span {
+    display: block;
+  }
+
+  [data-premium="bloco"] .bl-colchetes > span:first-child {
+    padding-left: var(--recuo, 1.6em);
+  }
+
+  [data-premium="bloco"] .bl-colchetes::before,
+  [data-premium="bloco"] .bl-colchetes::after {
+    position: absolute;
+    color: var(--cor-laranja-titulo);
+    font-weight: 200;
+  }
+
+  [data-premium="bloco"] .bl-colchetes::before {
+    content: "[" / "";
+    top: 0;
+    left: -0.05em;
+  }
+
+  [data-premium="bloco"] .bl-colchetes::after {
+    content: "]" / "";
+    right: 0;
+    bottom: 0;
+  }
+
+  [data-premium="bloco"] .bl-campo-laranja .bl-colchetes::before,
+  [data-premium="bloco"] .bl-campo-laranja .bl-colchetes::after,
+  [data-premium="bloco"] .bl-campo-escuro .bl-colchetes::before,
+  [data-premium="bloco"] .bl-campo-escuro .bl-colchetes::after {
+    color: #ffffff;
+  }
+
+  /* O colchete pequeno da abertura, de três linhas desencontradas. */
+  [data-premium="bloco"] .bl-colchetes-menor {
+    font-size: clamp(1.25rem, 2.1vw, 1.75rem);
+    line-height: 1;
+  }
+
+  [data-premium="bloco"] .bl-colchetes-menor > span:nth-child(2) {
+    padding-left: 4.2em;
+  }
+
+  [data-premium="bloco"] .bl-colchetes-menor > span:nth-child(3) {
+    padding-left: 2.6em;
+  }
+
+  /* ---------- Molduras de mira ---------- */
+
+  /* Só as quatro cantoneiras, desenhadas no fundo: não ocupam espaço. */
+  [data-premium="bloco"] .bl-mira {
+    --mira: var(--cor-laranja);
+    --mira-t: 12px;
+    --mira-e: 1.5px;
+    background-image:
+      linear-gradient(var(--mira), var(--mira)),
+      linear-gradient(var(--mira), var(--mira)),
+      linear-gradient(var(--mira), var(--mira)),
+      linear-gradient(var(--mira), var(--mira)),
+      linear-gradient(var(--mira), var(--mira)),
+      linear-gradient(var(--mira), var(--mira)),
+      linear-gradient(var(--mira), var(--mira)),
+      linear-gradient(var(--mira), var(--mira));
+    background-repeat: no-repeat;
+    background-position:
+      top left,
+      top left,
+      top right,
+      top right,
+      bottom left,
+      bottom left,
+      bottom right,
+      bottom right;
+    background-size:
+      var(--mira-t) var(--mira-e),
+      var(--mira-e) var(--mira-t),
+      var(--mira-t) var(--mira-e),
+      var(--mira-e) var(--mira-t),
+      var(--mira-t) var(--mira-e),
+      var(--mira-e) var(--mira-t),
+      var(--mira-t) var(--mira-e),
+      var(--mira-e) var(--mira-t);
+  }
+
+  [data-premium="bloco"] .bl-mira-branca {
+    --mira: #ffffff;
+  }
+
+  [data-premium="bloco"] .bl-mira-escura {
+    --mira: var(--cor-grafite);
+  }
+
+  /* ---------- Botões ---------- */
+
+  [data-premium="bloco"] .bl-botao {
+    position: relative;
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    padding: 0 1.375rem;
+    border-radius: var(--raio);
+    font-family: var(--font-neutra), system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    transition:
+      background-color 200ms ease,
+      color 200ms ease,
+      border-color 200ms ease,
+      transform 160ms var(--curva-saida);
+  }
+
+  [data-premium="bloco"] .bl-botao:active {
+    transform: scale(0.97);
+  }
+
+  [data-premium="bloco"] .bl-botao svg {
+    transition: transform 200ms var(--curva-saida);
+  }
+
+  [data-premium="bloco"] .bl-botao-cheio {
+    background: var(--cor-laranja-campo);
+    color: #ffffff;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.22),
+      0 6px 16px -8px rgb(160 50 0 / 0.55);
+  }
+
+  /* Contorno fino com as cantoneiras laranja: "Pedir auditoria". */
+  [data-premium="bloco"] .bl-botao-mira {
+    border: 1px solid rgb(28 28 28 / 0.16);
+    border-radius: 0;
+    color: var(--cor-laranja-tinta);
+  }
+
+  /* Branco sobre o campo laranja. */
+  [data-premium="bloco"] .bl-botao-branco {
+    background: #ffffff;
+    color: var(--cor-laranja-fundo);
+  }
+
+  [data-premium="bloco"] .bl-botao-vazado {
+    border: 1px solid rgb(255 255 255 / 0.7);
+    color: #ffffff;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    [data-premium="bloco"] .bl-botao:hover svg {
+      transform: translate(2px, -2px);
+    }
+
+    [data-premium="bloco"] .bl-botao-cheio:hover {
+      background: var(--cor-laranja-fundo);
+    }
+
+    [data-premium="bloco"] .bl-botao-mira:hover {
+      background: rgb(255 255 255 / 0.6);
+      color: var(--cor-laranja-fundo);
+    }
+
+    [data-premium="bloco"] .bl-botao-branco:hover {
+      background: var(--cor-cinza-claro);
+    }
+
+    [data-premium="bloco"] .bl-botao-vazado:hover {
+      background: #ffffff;
+      color: var(--cor-laranja-fundo);
+    }
+  }
+
+  /* Botão quadrado de seta (carrosséis): laranja, 4px de raio. */
+  [data-premium="bloco"] .bl-seta {
+    display: inline-flex;
+    width: 3rem;
+    height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--raio);
+    background: var(--cor-laranja-campo);
+    color: #ffffff;
+    transition:
+      background-color 200ms ease,
+      opacity 200ms ease,
+      transform 160ms var(--curva-saida);
+  }
+
+  [data-premium="bloco"] .bl-seta:active {
+    transform: scale(0.95);
+  }
+
+  [data-premium="bloco"] .bl-seta:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    [data-premium="bloco"] .bl-seta:not(:disabled):hover {
+      background: var(--cor-laranja-fundo);
+    }
+  }
+
+  /* As etiquetas de contorno laranja dos cases. */
+  [data-premium="bloco"] .bl-etiqueta {
+    display: inline-flex;
+    min-height: 1.875rem;
+    align-items: center;
+    padding: 0 0.75rem;
+    border: 1px solid var(--cor-laranja-campo);
+    border-radius: var(--raio);
+    color: var(--cor-laranja-tinta);
+    font-size: 0.8125rem;
+    white-space: nowrap;
+  }
+
+  /* ---------- Campos do formulário (sobre o laranja) ---------- */
+
+  [data-premium="bloco"] .bl-entrada {
+    width: 100%;
+    min-height: 3rem;
+    padding: 1.375rem 0.875rem 0.5rem;
+    border: 1px solid rgb(255 255 255 / 0.7);
+    background: rgb(255 255 255 / 0.06);
+    color: #ffffff;
+    font-size: 1rem;
+    border-radius: 0;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease;
+  }
+
+  [data-premium="bloco"] .bl-entrada::placeholder {
+    color: rgb(255 255 255 / 0.72);
+  }
+
+  [data-premium="bloco"] .bl-entrada:focus {
+    border-color: #ffffff;
+    background: rgb(255 255 255 / 0.12);
+    outline: none;
+  }
+
+  [data-premium="bloco"] .bl-entrada[aria-invalid="true"] {
+    border-color: #ffffff;
+    border-width: 2px;
+  }
+
+  [data-premium="bloco"] select.bl-entrada option {
+    color: var(--cor-tinta);
+  }
+
+  /* O seletor com a seta branca desenhada no fundo. */
+  [data-premium="bloco"] .bl-escolha {
+    appearance: none;
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='white' stroke-width='1.5'><path d='M2 4l4 4 4-4'/></svg>");
+    background-position: right 0.875rem center;
+    background-repeat: no-repeat;
+  }
+
+  /* ---------- Pixels ---------- */
+
+  /* O mosaico em degrau da troca de cor: cada pixel acende com atraso. */
+  [data-premium="bloco"] .bl-pixel {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  /* ---------- Equipe ---------- */
+
+  [data-premium="bloco"] .bl-foto-da-equipe {
+    filter: grayscale(1) contrast(1.05);
+    transition:
+      filter 400ms ease,
+      transform 600ms var(--curva-saida);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    [data-premium="bloco"] .bl-cartao-da-equipe:hover .bl-foto-da-equipe {
+      filter: grayscale(0) contrast(1);
+      transform: scale(1.03);
+    }
+  }
+
+  /* Trilho com rolagem lateral sem a barra visível. */
+  [data-premium="bloco"] .bl-trilho {
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+  }
+
+  [data-premium="bloco"] .bl-trilho::-webkit-scrollbar {
+    display: none;
+  }
+
+  [data-premium="bloco"] .bl-trilho > * {
+    scroll-snap-align: start;
+  }
+
+  /* ---------- Dúvidas ---------- */
+
+  [data-premium="bloco"] .bl-resposta {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 280ms var(--curva-saida);
+  }
+
+  [data-premium="bloco"] .bl-resposta[data-aberta="true"] {
+    grid-template-rows: 1fr;
+  }
+
+  [data-premium="bloco"] .bl-resposta > div {
+    overflow: hidden;
+  }
+
+  /* ---------- Movimento ---------- */
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* A abertura chega em sequência: título, colchete, texto, botão. */
+    [data-premium="bloco"] .bl-entra {
+      animation: bl-entra 800ms var(--curva-saida) both;
+      animation-delay: calc(var(--ordem, 0) * 90ms + 120ms);
+    }
+
+    /* Os quadrados do fundo acendem como pixels, cada um no seu tempo. */
+    [data-premium="bloco"] .bl-quadrado {
+      animation: bl-acende 500ms var(--curva-saida) both;
+      animation-delay: calc(var(--atraso, 0) * 1ms + 300ms);
+    }
+
+    /* Cases: a foto nova entra como cortina, do lado da seta clicada. */
+    [data-premium="bloco"] .bl-cortina-direita {
+      animation: bl-cortina-direita 560ms var(--curva-meio) both;
+    }
+
+    [data-premium="bloco"] .bl-cortina-esquerda {
+      animation: bl-cortina-esquerda 560ms var(--curva-meio) both;
+    }
+
+    /* O título do case troca com um desfoque curto. */
+    [data-premium="bloco"] .bl-troca {
+      animation: bl-entra 420ms var(--curva-saida) both;
+    }
+
+    /* Etiquetas e métricas do case sobem em sequência. */
+    [data-premium="bloco"] .bl-sobe {
+      animation: bl-sobe 380ms var(--curva-saida) both;
+      animation-delay: calc(var(--ordem, 0) * 50ms + 120ms);
+    }
+
+    @supports (animation-timeline: view()) {
+      /* Ao entrar na tela, cada bloco sobe um pouco. */
+      [data-premium="bloco"] .bl-revela {
+        animation: bl-revela linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 60%;
+      }
+
+      /*
+       * A frase da agência se acende palavra por palavra, no ritmo da
+       * leitura: cada palavra começa apagada e chega à cor dela conforme a
+       * frase sobe na tela.
+       */
+      [data-premium="bloco"] .bl-frase {
+        view-timeline-name: --bl-frase;
+      }
+
+      [data-premium="bloco"] .bl-frase .bl-palavra {
+        animation: bl-palavra linear both;
+        animation-timeline: --bl-frase;
+        animation-range: cover calc(18% + var(--i) * 1.4%) cover
+          calc(24% + var(--i) * 1.4%);
+      }
+
+      /* Os pixels da troca de cor sobem quando a faixa entra na tela. */
+      [data-premium="bloco"] .bl-faixa-de-pixels .bl-pixel {
+        animation: bl-pixel linear both;
+        animation-timeline: view();
+        animation-range: entry calc(var(--atraso) * 70%) entry
+          calc(var(--atraso) * 70% + 30%);
+      }
+
+      /* A foto do escritório anda devagar enquanto atravessa a tela. */
+      [data-premium="bloco"] .bl-deriva {
+        animation: bl-deriva linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+    }
+  }
+
+  @keyframes bl-entra {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+      filter: blur(6px);
+    }
+  }
+
+  @keyframes bl-cortina-direita {
+    from {
+      clip-path: inset(0 0 0 100%);
+    }
+    to {
+      clip-path: inset(0);
+    }
+  }
+
+  @keyframes bl-cortina-esquerda {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0);
+    }
+  }
+
+  @keyframes bl-sobe {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+
+  @keyframes bl-acende {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+  }
+
+  @keyframes bl-revela {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+  }
+
+  @keyframes bl-palavra {
+    from {
+      color: #c4c4c4;
+    }
+  }
+
+  @keyframes bl-pixel {
+    from {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+  }
+
+  @keyframes bl-deriva {
+    from {
+      transform: translateY(-6%) scale(1.12);
+    }
+    to {
+      transform: translateY(6%) scale(1.12);
+    }
+  }
+}

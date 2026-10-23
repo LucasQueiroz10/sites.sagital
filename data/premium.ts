@@ -4,6 +4,7 @@
  * `projetosPremium` à medida que ficarem prontos.
  */
 
+import capturaBloco from "@/public/imagens/sagital/premium-bloco.png";
 import capturaLaMaree from "@/public/imagens/sagital/premium-la-maree.png";
 import type { Imagem } from "./tipos";
 
@@ -35,6 +36,20 @@ export const projetosPremium: ProjetoPremium[] = [
     },
     fonte: "Noto Serif Display",
     paleta: ["#e26127", "#cccca2", "#0c0b09"],
+  },
+  {
+    id: "bloco",
+    nome: "Bloco",
+    ramo: "Agência de marketing",
+    destaque:
+      "Blocos de montar em 3D ao vivo: cada serviço vira um bloco do mix, e o processo se monta conforme a rolagem.",
+    href: "/premium/bloco",
+    captura: {
+      src: capturaBloco,
+      alt: "Primeira tela do site da agência Bloco no celular",
+    },
+    fonte: "Saira",
+    paleta: ["#e85102", "#e4e4e4", "#333333"],
   },
 ];
 
