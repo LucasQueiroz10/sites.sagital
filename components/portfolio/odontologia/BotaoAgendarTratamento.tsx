@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowDown } from "lucide-react";
-import { prefereMenosMovimento } from "@/lib/movimento";
+import { rolarAte } from "@/lib/movimento";
 import { EVENTO_DO_TRATAMENTO } from "./AgendaDaClinica";
 
 /** Leva à agenda com o tratamento já escolhido. */
@@ -19,9 +19,8 @@ export function BotaoAgendarTratamento({
         window.dispatchEvent(
           new CustomEvent(EVENTO_DO_TRATAMENTO, { detail: id }),
         );
-        document.getElementById("agenda")?.scrollIntoView({
-          behavior: prefereMenosMovimento() ? "auto" : "smooth",
-        });
+        const agenda = document.getElementById("agenda");
+        if (agenda) void rolarAte(agenda);
       }}
       className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-destaque underline decoration-borda underline-offset-[6px] transition-colors hover:decoration-destaque"
     >

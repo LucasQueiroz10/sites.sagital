@@ -14,6 +14,68 @@ export function prefereMenosMovimento(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+/** cubic-bezier(0.65, 0, 0.35, 1): sai devagar, corre no meio e pousa. */
+function curvaDaViagem(t: number): number {
+  return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
+}
+
+const INTERRUPCOES = ["wheel", "touchstart", "pointerdown", "keydown"] as const;
+let viagemAtual: (() => void) | null = null;
+
+/**
+ * Rola a página até o elemento numa "viagem" com começo, meio e pouso: de
+ * 400ms (perto) a 900ms (longe), respeitando o scroll-margin-top dele. O
+ * destino é recalculado a cada quadro, então imagens que carregam no caminho
+ * não tiram o pouso do lugar. Qualquer gesto do usuário (roda, toque, tecla)
+ * interrompe a viagem e devolve a rolagem a ele. Com movimento reduzido, salta.
+ */
+export function rolarAte(elemento: HTMLElement): Promise<void> {
+  viagemAtual?.();
+  const destino = () =>
+    Math.max(
+      0,
+      Math.min(
+        elemento.getBoundingClientRect().top +
+          window.scrollY -
+          (parseFloat(getComputedStyle(elemento).scrollMarginTop) || 0),
+        document.documentElement.scrollHeight - window.innerHeight,
+      ),
+    );
+  const inicio = window.scrollY;
+  const distancia = Math.abs(destino() - inicio);
+
+  if (prefereMenosMovimento() || distancia < 2) {
+    window.scrollTo({ top: destino(), behavior: "instant" });
+    return Promise.resolve();
+  }
+
+  const duracao = Math.min(900, Math.max(400, 300 + distancia / 10));
+  return new Promise((resolver) => {
+    const comeco = performance.now();
+    let quadro = 0;
+    const parar = () => {
+      cancelAnimationFrame(quadro);
+      for (const evento of INTERRUPCOES)
+        window.removeEventListener(evento, parar);
+      viagemAtual = null;
+      resolver();
+    };
+    const passo = (agora: number) => {
+      const t = Math.min(1, (agora - comeco) / duracao);
+      window.scrollTo({
+        top: inicio + (destino() - inicio) * curvaDaViagem(t),
+        behavior: "instant",
+      });
+      if (t < 1) quadro = requestAnimationFrame(passo);
+      else parar();
+    };
+    for (const evento of INTERRUPCOES)
+      window.addEventListener(evento, parar, { passive: true });
+    viagemAtual = parar;
+    quadro = requestAnimationFrame(passo);
+  });
+}
+
 const fechando = new WeakSet<HTMLDialogElement>();
 
 /**

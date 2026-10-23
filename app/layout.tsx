@@ -1,5 +1,7 @@
 import { SerwistProvider } from "@serwist/turbopack/react";
 import type { Metadata, Viewport } from "next";
+import { TransicaoDePagina } from "@/components/TransicaoDePagina";
+import { ViagemAteAncora } from "@/components/ViagemAteAncora";
 import { URL_DO_SITE } from "@/lib/site";
 import "./globals.css";
 
@@ -30,8 +32,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         {/* reloadOnOnline desligado: a volta do sinal não recarrega a página no meio da apresentação. */}
         <SerwistProvider swUrl="/serwist/sw.js" reloadOnOnline={false}>
-          {children}
+          <TransicaoDePagina>{children}</TransicaoDePagina>
         </SerwistProvider>
+        <ViagemAteAncora />
       </body>
     </html>
   );

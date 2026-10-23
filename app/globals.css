@@ -93,3 +93,61 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/*
+ * Viagem entre páginas (components/TransicaoDePagina.tsx): a página que fica
+ * sai em 160ms, subindo 8px; a nova chega 80ms depois, subindo 24px até o
+ * lugar em 400ms (mais que os 300ms de um elemento: é a tela inteira que
+ * muda, e só a cada troca de página). Tudo na curva de chegada, que responde
+ * no primeiro quadro. Com movimento reduzido, só a troca de opacidade, sem
+ * deslocamento.
+ */
+::view-transition-old(.pagina-sai) {
+  animation: pagina-sai 160ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+::view-transition-new(.pagina-entra) {
+  animation:
+    pagina-surge 240ms cubic-bezier(0.16, 1, 0.3, 1) 80ms both,
+    pagina-sobe 400ms cubic-bezier(0.16, 1, 0.3, 1) 80ms both;
+}
+
+@keyframes pagina-sai {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pagina-surge {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes pagina-sobe {
+  from {
+    transform: translateY(24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(.pagina-sai) {
+    animation: pagina-some 160ms ease both;
+  }
+
+  ::view-transition-new(.pagina-entra) {
+    animation: pagina-surge 200ms ease both;
+  }
+
+  @keyframes pagina-some {
+    to {
+      opacity: 0;
+    }
+  }
+}
+
+/* Seção que recebe o foco ao fim da viagem até uma âncora: sem contorno. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
