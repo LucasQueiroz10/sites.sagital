@@ -48,7 +48,7 @@ export function PercursoDoProcesso({ passos }: { passos: Passo[] }) {
               <span className="sg-trilha-cometa absolute inset-0" />
             </span>
           )}
-          <span className="sg-parada sg-num relative grid size-8 shrink-0 place-items-center rounded-full bg-texto text-sm font-bold text-white">
+          <span className="sg-parada sg-num relative grid size-8 shrink-0 place-items-center rounded-full bg-[var(--sg-escuro-fundo)] text-sm font-bold text-[var(--sg-escuro-texto)]">
             {i + 1}
           </span>
           <div className="min-w-0 pt-1 md:pt-0">

@@ -7,7 +7,7 @@ import { BotaoDePrevia } from "@/components/sagital/BotaoDePrevia";
 import { BotaoDePreviaDoSite } from "@/components/sagital/BotaoDePreviaDoSite";
 import { BotaoSagital } from "@/components/sagital/BotaoSagital";
 import { CabecalhoSagital } from "@/components/sagital/CabecalhoSagital";
-import { FundoSoffit } from "@/components/sagital/FundoSoffit";
+import { FundoDaPagina } from "@/components/sagital/FundoDaPagina";
 import { ProvedorDaEscolha } from "@/components/sagital/EscolhaDoDemo";
 import { Pacotes } from "@/components/sagital/Pacotes";
 import { PalcoDoDemo } from "@/components/sagital/PalcoDoDemo";
@@ -61,17 +61,19 @@ export default function PaginaSagital() {
   return (
     <div
       data-pagina="sagital"
-      className={`${jakarta.variable} relative flex flex-1 flex-col bg-fundo font-texto text-texto`}
+      data-tema="azul"
+      className={`${jakarta.variable} relative flex flex-1 flex-col font-texto text-texto`}
     >
+      {/* Teste: o degradê animado da abertura atrás da página inteira. */}
+      <FundoDaPagina />
       <ProvedorDaEscolha demos={opcoes}>
-        <CabecalhoSagital />
+        <CabecalhoSagital tema="azul" />
 
         <main id="topo" className="flex-1">
           <section
             aria-labelledby="titulo-principal"
             className="sg-abertura flex flex-col items-center px-4 pt-28 pb-16 text-center sm:px-6 sm:pt-36 sm:pb-24 lg:pt-44 lg:pb-32"
           >
-            <FundoSoffit />
             {/* Marcadores do cabeçalho fixo: um no topo da abertura e outro
                 a 64px do fim, a altura do cabeçalho. */}
             <span
@@ -261,7 +263,6 @@ export default function PaginaSagital() {
           >
             <Carrossel
               rotulo="Portfólio"
-              classeDasSetas="bg-white text-texto"
               cabecalho={
                 <>
                   <h2
@@ -387,6 +388,7 @@ export default function PaginaSagital() {
             className="scroll-mt-20 border-t border-[var(--sg-borda-sutil)] py-14 sm:py-20"
           >
             <Pacotes
+              tema="azul"
               pacotes={pacotes}
               recursos={recursos}
               cabecalho={
@@ -445,9 +447,8 @@ export default function PaginaSagital() {
             <Container largura="larga">
               <div
                 data-revela
-                className="sg-noite grid gap-8 overflow-hidden rounded-[32px] px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end"
+                className="grid gap-8 overflow-hidden rounded-[32px] bg-white/[0.06] px-6 py-12 ring-1 ring-white/15 backdrop-blur-sm sm:px-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end"
               >
-                <FundoSoffit />
                 <div>
                   <h2
                     id="contato-titulo"
@@ -473,7 +474,7 @@ export default function PaginaSagital() {
           </section>
         </main>
 
-        <RodapeSagital />
+        <RodapeSagital fundo="bg-[rgb(3_17_27/0.88)]" />
 
         <RevelarAoRolar />
 

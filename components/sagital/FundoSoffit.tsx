@@ -9,7 +9,7 @@ import { iniciarSoffit } from "@/lib/soffit";
  * chega perto da tela: o palco escondido no celular e a prévia fechada não
  * custam nada. Sem WebGL2, fica o fundo em CSS da própria superfície.
  */
-export function FundoSoffit() {
+export function FundoSoffit({ className }: { className?: string }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -31,5 +31,11 @@ export function FundoSoffit() {
     };
   }, []);
 
-  return <canvas ref={ref} aria-hidden className="sg-soffit" />;
+  return (
+    <canvas
+      ref={ref}
+      aria-hidden
+      className={className ? `sg-soffit ${className}` : "sg-soffit"}
+    />
+  );
 }

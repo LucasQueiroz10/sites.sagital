@@ -26,6 +26,10 @@
     --sg-borda-sutil: #e9eef4;
     --sg-ceu: #6fcaef;
     --sg-marinho-800: #1a2756;
+    /* Botão "escuro" e números do percurso: marinho sobre o branco. */
+    --sg-escuro-fundo: #111a3d;
+    --sg-escuro-texto: #ffffff;
+    --sg-escuro-hover: #1a2756;
     /* O início do degradê é o céu um tom abaixo do kit (#1381c0 no lugar de
        #1a9bdc): o texto branco, sempre centralizado, fica acima de 4,5:1
        (só a ponta esquerda, onde não há texto, mede 4,3:1). */
@@ -58,6 +62,61 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "ss01" 0;
+  }
+
+  /*
+   * Tema azul (só a página inicial, em teste): o degradê animado atrás de
+   * tudo e os tokens invertidos, com texto claro e superfícies de vidro.
+   */
+  [data-pagina="sagital"][data-tema="azul"] {
+    --cor-fundo: #062334;
+    --cor-superficie: rgb(255 255 255 / 0.07);
+    --cor-texto: #ffffff;
+    --cor-texto-suave: rgb(255 255 255 / 0.74);
+    --cor-borda: rgb(255 255 255 / 0.16);
+    --cor-primaria: #6fcaef;
+    --cor-primaria-hover: #9adbf5;
+    --cor-primaria-texto: #062334;
+    --cor-destaque: #6fcaef;
+    --sg-tinta-forte: #ffffff;
+    --sg-terciario: rgb(255 255 255 / 0.6);
+    --sg-pressionado: rgb(255 255 255 / 0.13);
+    --sg-borda-sutil: rgb(255 255 255 / 0.12);
+    --sg-escuro-fundo: #ffffff;
+    --sg-escuro-texto: #111a3d;
+    --sg-escuro-hover: #e3ecf9;
+    isolation: isolate;
+    background: var(--sg-soffit-fundo);
+    color-scheme: dark;
+  }
+
+  /* As folhas de diálogo (o QR code), a prévia ao vivo (que já era escura
+     e foi desenhada sobre os tokens claros) e os cartões brancos (o pacote
+     recomendado) ficam como no tema claro. */
+  [data-pagina="sagital"][data-tema="azul"]
+    :is(.sg-dialogo, .sg-previa, .sg-claro) {
+    --cor-fundo: #ffffff;
+    --cor-superficie: #f1f5fa;
+    --cor-texto: #111a3d;
+    --cor-texto-suave: #5b6478;
+    --cor-borda: #dce2ea;
+    --cor-primaria: #1f48c2;
+    --cor-primaria-hover: #1a39a0;
+    --cor-primaria-texto: #ffffff;
+    --cor-destaque: #1f48c2;
+    --sg-tinta-forte: #0b0f1e;
+    --sg-terciario: #6b7486;
+    --sg-pressionado: #e9eef4;
+    --sg-borda-sutil: #e9eef4;
+    --sg-escuro-fundo: #111a3d;
+    --sg-escuro-texto: #ffffff;
+    --sg-escuro-hover: #1a2756;
+    color-scheme: light;
+  }
+
+  [data-pagina="sagital"][data-tema="azul"] ::selection {
+    background: #6fcaef;
+    color: #062334;
   }
 
   [data-pagina="sagital"] :is(h1, h2, h3) {
@@ -158,6 +217,39 @@
 
   [data-pagina="sagital"] .sg-soffit[data-pronto] {
     opacity: 1;
+  }
+
+  /* O degradê da página toda: preso à tela, atrás de tudo. */
+  [data-pagina="sagital"] .sg-soffit-fixo {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  /* Véu azul-noite por cima do degradê, que aparece ao descer a página. */
+  [data-pagina="sagital"] .sg-veu {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: rgb(4 24 37 / 0.62);
+    opacity: 0;
+  }
+
+  /* No tema azul a abertura é transparente: o degradê já está atrás. */
+  [data-pagina="sagital"][data-tema="azul"] .sg-abertura {
+    background: transparent;
+  }
+
+  /* No azul, o foco é sempre claro. */
+  [data-pagina="sagital"][data-tema="azul"] :focus-visible {
+    outline-color: #ffffff;
+  }
+
+  [data-pagina="sagital"][data-tema="azul"]
+    :is(.sg-dialogo, .sg-claro)
+    :focus-visible {
+    outline-color: #1f48c2;
   }
 
   /* Abertura: uma grade fina por cima do degradê, que some para as bordas. */
@@ -384,7 +476,7 @@
 /* O número acende quando a luz chega e apaga junto com o rastro. */
 @keyframes sg-parada {
   0% {
-    background-color: var(--cor-texto);
+    background-color: var(--sg-escuro-fundo);
   }
   3%,
   50% {
@@ -392,7 +484,29 @@
   }
   58%,
   100% {
-    background-color: var(--cor-texto);
+    background-color: var(--sg-escuro-fundo);
+  }
+}
+
+/* No tema azul, a luz do percurso é céu, e não royal. */
+[data-pagina="sagital"][data-tema="azul"] .sg-trilha-rastro {
+  background: linear-gradient(to bottom, rgb(111 202 239 / 0.25), #6fcaef);
+}
+
+[data-pagina="sagital"][data-tema="azul"] .sg-trilha-cometa::after {
+  background: #6fcaef;
+  box-shadow:
+    0 0 0 4px rgb(111 202 239 / 0.2),
+    0 0 14px rgb(111 202 239 / 0.7);
+}
+
+[data-pagina="sagital"][data-tema="azul"] .sg-parada::after {
+  border-color: #6fcaef;
+}
+
+@media (min-width: 48rem) {
+  [data-pagina="sagital"][data-tema="azul"] .sg-trilha-rastro {
+    background: linear-gradient(to right, rgb(111 202 239 / 0.25), #6fcaef);
   }
 }
 

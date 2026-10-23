@@ -20,9 +20,15 @@ const navegacao = [
  * abertura no topo da página; no fundo do degradê enquanto a abertura passa por baixo
  * (o título não se mistura com o nome); barra branca depois dela.
  */
-export function CabecalhoSagital() {
+export function CabecalhoSagital({
+  tema = "claro",
+}: {
+  /** "azul": a página toda é azul, e a barra fica escura depois da abertura. */
+  tema?: "claro" | "azul";
+}) {
   const rolou = usePassouDoTopo("[data-topo-da-abertura]");
-  const claro = usePassouDoTopo("[data-fim-da-abertura]");
+  const passouDaAbertura = usePassouDoTopo("[data-fim-da-abertura]");
+  const claro = passouDaAbertura && tema === "claro";
   // No celular, a barra fixa de baixo já leva ao WhatsApp: o botão redondo
   // some enquanto ela aparece, para não haver dois iguais à vista.
   const barraVisivel = usePassouDoTopo("[data-cta-principal]");
@@ -33,9 +39,11 @@ export function CabecalhoSagital() {
         "fixed inset-x-0 top-0 z-40 border-b transition-[background-color,border-color] duration-200 ease-[cubic-bezier(.2,.8,.2,1)]",
         claro
           ? "border-[var(--sg-borda-sutil)] bg-white"
-          : rolou
-            ? "sg-foco-claro border-white/10 bg-[var(--sg-soffit-fundo)]"
-            : "sg-foco-claro border-transparent bg-transparent",
+          : passouDaAbertura
+            ? "sg-foco-claro border-white/10 bg-[rgb(4_26_39/0.82)] backdrop-blur-md"
+            : rolou
+              ? "sg-foco-claro border-white/10 bg-[var(--sg-soffit-fundo)]"
+              : "sg-foco-claro border-transparent bg-transparent",
       )}
     >
       <div className="mx-auto flex min-h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">

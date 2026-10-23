@@ -34,8 +34,9 @@ type PropsAcao = PropsBase & { href?: undefined } & Omit<
 const variantes: Record<VarianteSagital, string> = {
   principal: "sg-degrade",
   secundario: "bg-superficie text-texto hover:bg-[var(--sg-pressionado)]",
-  escuro: "bg-texto text-white hover:bg-[var(--sg-marinho-800)]",
-  inverso: "bg-white text-texto hover:bg-[#eef4fe]",
+  escuro:
+    "bg-[var(--sg-escuro-fundo)] text-[var(--sg-escuro-texto)] hover:bg-[var(--sg-escuro-hover)]",
+  inverso: "bg-white text-[#111a3d] hover:bg-[#eef4fe]",
   contorno:
     "text-texto shadow-[inset_0_0_0_1px_var(--cor-borda)] hover:bg-superficie",
   vidro: "sg-vidro",

@@ -26,13 +26,18 @@ const navegacao = [
  * que não estiver preenchido em contatoDaSagital (e-mail, redes, CNPJ)
  * simplesmente não aparece.
  */
-export function RodapeSagital() {
+export function RodapeSagital({
+  fundo = "bg-[#0a0a0a]",
+}: {
+  /** Classe do fundo; o padrão é o preto. */
+  fundo?: string;
+}) {
   const { email, redes, cnpj } = contatoDaSagital;
 
   return (
     <RodapeCompleto
       tom="escuro"
-      className="sg-foco-claro bg-[#0a0a0a] pb-28 md:pb-10"
+      className={`sg-foco-claro ${fundo} pb-28 md:pb-10`}
       marca={<MarcaSagital className="text-white" />}
       descricao="Sites para qualquer negócio, rápidos no celular e com o cliente a um toque do seu WhatsApp."
       redes={redes.map(({ rede, usuario, url }) => ({

@@ -11,6 +11,11 @@ type Props = {
   pacotes: Pacote[];
   recursos: { nome: string; inclui: (boolean | string)[] }[];
   cabecalho: ReactNode;
+  /**
+   * "azul": a página já é azul, então o recomendado se destaca em branco
+   * (tokens claros), em vez de ganhar o próprio degradê.
+   */
+  tema?: "claro" | "azul";
 };
 
 /**
@@ -18,7 +23,12 @@ type Props = {
  * os três à vista. Cada linha do que inclui aparece em todos, com o traço
  * onde não inclui, para a comparação continuar possível.
  */
-export function Pacotes({ pacotes, recursos, cabecalho }: Props) {
+export function Pacotes({
+  pacotes,
+  recursos,
+  cabecalho,
+  tema = "claro",
+}: Props) {
   return (
     <Carrossel
       rotulo="Pacotes"
@@ -26,7 +36,8 @@ export function Pacotes({ pacotes, recursos, cabecalho }: Props) {
       className="gap-3 sm:gap-4"
     >
       {pacotes.map((pacote, i) => {
-        const escuro = pacote.recomendado;
+        const escuro = pacote.recomendado && tema === "claro";
+        const branco = pacote.recomendado && tema === "azul";
         return (
           <li
             data-revela
@@ -37,7 +48,11 @@ export function Pacotes({ pacotes, recursos, cabecalho }: Props) {
               aria-labelledby={`pacote-${i}`}
               className={classes(
                 "flex h-full flex-col rounded-3xl p-5 sm:p-6",
-                escuro ? "sg-noite" : "bg-superficie",
+                escuro
+                  ? "sg-noite"
+                  : branco
+                    ? "sg-claro bg-white"
+                    : "bg-superficie",
               )}
             >
               {escuro && <FundoSoffit />}
@@ -133,7 +148,9 @@ export function Pacotes({ pacotes, recursos, cabecalho }: Props) {
                   rotulo="Quero este pacote"
                   complementoAcessivel={`(${pacote.nome})`}
                   mensagem={mensagemDoPacote(pacote.nome)}
-                  variante={escuro ? "inverso" : "escuro"}
+                  variante={
+                    escuro ? "inverso" : branco ? "principal" : "escuro"
+                  }
                   className="w-full"
                 />
               </div>
