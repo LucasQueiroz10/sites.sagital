@@ -6,7 +6,7 @@ import loja from "@/public/imagens/portfolio/contabilidade/loja.jpg";
 import reuniao from "@/public/imagens/portfolio/contabilidade/reuniao.jpg";
 import salao from "@/public/imagens/portfolio/contabilidade/salao.jpg";
 import socia from "@/public/imagens/portfolio/contabilidade/socia.jpg";
-import type { Imagem } from "@/data/tipos";
+import type { DadosDoRodape, Imagem } from "@/data/tipos";
 import { enquadrar, type Atividade } from "@/lib/regimes";
 
 // Escritório fictício. Planos e valores são ilustrativos. Fotos do Unsplash
@@ -219,4 +219,17 @@ export const contabilidade = {
     /** Registro no conselho: número fictício, só para mostrar onde ele entra. */
     crc: "CRC UF-000000/O-0 (registro fictício)",
   },
+  rodape: {
+    descricao:
+      "Abertura de empresa, impostos em dia e um relatório que você entende, todo mês. Para MEI, comércio e serviços.",
+    endereco: "Rua XV de Novembro, 640, sala 32",
+    bairro: "Centro",
+    horarios: ["Segunda a sexta: 8h30 às 17h30"],
+    email: "contato@prumocontabilidade.exemplo",
+    redes: ["instagram", "linkedin", "youtube"],
+    legais: [
+      "CRC UF-000000/O-0 (registro fictício)",
+      "CNPJ 00.000.000/0001-00 (fictício)",
+    ],
+  } satisfies DadosDoRodape,
 };

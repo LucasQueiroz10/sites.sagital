@@ -38,3 +38,19 @@ export function parcelar(
   if (possiveis < 2) return null;
   return { vezes: possiveis, valor: Math.round(centavos / possiveis) };
 }
+
+/** Dígitos com código do país em "(11) 99999-9999"; sem DDD reconhecível, devolve como veio. */
+export function formatarTelefone(digitos: string): string {
+  const nacional = digitos.startsWith("55") ? digitos.slice(2) : digitos;
+  const partes = /^(\d{2})(\d{4,5})(\d{4})$/.exec(nacional);
+  return partes ? `(${partes[1]}) ${partes[2]}-${partes[3]}` : digitos;
+}
+
+/** "Academia Pulso" em "academiapulso": usuário de rede social e domínio de e-mail. */
+export function apelidoDoNome(nome: string): string {
+  return nome
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+}

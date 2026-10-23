@@ -137,4 +137,5 @@ export const tabacaria: DadosDaTabacaria = {
     bairro: "Centro",
     referencia: "Ao lado da galeria, entrada pela porta de madeira",
   },
+  redes: ["instagram", "facebook"],
 };

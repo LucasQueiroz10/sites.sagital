@@ -12,7 +12,7 @@ import escritorioVidro from "@/public/imagens/portfolio/arquitetura/escritorio-v
 import pranchas from "@/public/imagens/portfolio/arquitetura/pranchas.jpg";
 import salaExecutiva from "@/public/imagens/portfolio/arquitetura/sala-executiva.jpg";
 import salaLinho from "@/public/imagens/portfolio/arquitetura/sala-linho.jpg";
-import type { Imagem } from "@/data/tipos";
+import type { DadosDoRodape, Imagem } from "@/data/tipos";
 
 // Escritório e projetos fictícios. As fotos são do Unsplash (licença
 // livre), salvas localmente, e ilustram projetos que não existem.
@@ -362,4 +362,17 @@ export const arquitetura = {
     bairro: "Vila Madalena",
     email: "contato@ateliervao.exemplo",
   },
+  rodape: {
+    descricao:
+      "Casas, interiores e escritórios, do primeiro croqui à última luminária, com obra acompanhada de perto.",
+    endereco: "Rua dos Ipês, 410",
+    bairro: "Vila Madalena",
+    horarios: ["Segunda a sexta: 9h às 18h", "Visitas à obra com hora marcada"],
+    email: "contato@ateliervao.exemplo",
+    redes: ["instagram", "pinterest", "linkedin"],
+    legais: [
+      "CAU A000000-0 (registro fictício)",
+      "CNPJ 00.000.000/0001-00 (fictício)",
+    ],
+  } satisfies DadosDoRodape,
 };

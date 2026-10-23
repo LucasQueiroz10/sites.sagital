@@ -2,8 +2,8 @@ import { Check, Clock, MessageCircle, Plus } from "lucide-react";
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import { Funcionamento } from "@/components/nichos/Funcionamento";
-import { AssinaturaDoPortfolio } from "@/components/portfolio/AssinaturaDoPortfolio";
 import { CabecalhoDoPortfolio } from "@/components/portfolio/CabecalhoDoPortfolio";
+import { RodapeDoPortfolio } from "@/components/portfolio/RodapeDoPortfolio";
 import { AgendaDaClinica } from "@/components/portfolio/odontologia/AgendaDaClinica";
 import { BotaoAgendarTratamento } from "@/components/portfolio/odontologia/BotaoAgendarTratamento";
 import { ProximoHorario } from "@/components/portfolio/odontologia/ProximoHorario";
@@ -374,25 +374,21 @@ export default function PaginaOdontologia() {
         </section>
       </main>
 
-      <footer className="escuro bg-[var(--cor-texto)] pt-14 pb-10 text-[0.9375rem] text-white/70">
-        <Container largura="larga" className="grid gap-10">
-          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-            <p className="flex items-baseline gap-1.5 text-white">
-              <span className="text-[1.75rem] leading-none font-semibold tracking-[-0.05em]">
-                {dados.marca.principal}
-              </span>
-              <span className="font-light">{dados.marca.apoio}</span>
-            </p>
-            <p className="sm:text-right">
-              {dados.endereco.logradouro} · {dados.endereco.bairro}
-              <br />
-              Responsável técnica: Dra. Marina Lopes · CRO-UF 00000 (registro
-              fictício)
-            </p>
-          </div>
-          <AssinaturaDoPortfolio className="border-t border-white/10 pt-6 text-sm text-white/60" />
-        </Container>
-      </footer>
+      <RodapeDoPortfolio
+        nome={dados.nome}
+        navegacao={dados.navegacao}
+        rodape={dados.rodape}
+        tom="escuro"
+        className="escuro bg-[var(--cor-texto)]"
+        marca={
+          <p className="flex items-baseline gap-1.5 text-white">
+            <span className="text-[1.75rem] leading-none font-semibold tracking-[-0.05em]">
+              {dados.marca.principal}
+            </span>
+            <span className="font-light">{dados.marca.apoio}</span>
+          </p>
+        }
+      />
     </div>
   );
 }

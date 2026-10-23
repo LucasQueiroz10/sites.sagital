@@ -243,4 +243,5 @@ export const academia: DadosDaAcademia = {
     bairro: "Centro",
     referencia: "Em frente à praça, com estacionamento próprio",
   },
+  redes: ["instagram", "tiktok", "youtube", "facebook"],
 };

@@ -10,6 +10,31 @@ export type Imagem = {
 
 export type LinkDeNavegacao = { rotulo: string; href: `#${string}` };
 
+/** Redes sociais que os rodapés sabem mostrar (ícone e nome em IconeDeRede). */
+export type Rede =
+  | "instagram"
+  | "facebook"
+  | "tiktok"
+  | "youtube"
+  | "linkedin"
+  | "pinterest"
+  | "github";
+
+/** O que cada site do portfólio mostra no rodapé. */
+export type DadosDoRodape = {
+  /** Uma ou duas frases sobre a empresa. */
+  descricao: string;
+  endereco: string;
+  bairro: string;
+  /** Linhas de horário, já escritas. */
+  horarios: string[];
+  /** E-mail fictício (domínio .exemplo). */
+  email: string;
+  redes: Rede[];
+  /** Registro no conselho, CNPJ... todos fictícios e marcados como tal. */
+  legais: string[];
+};
+
 export type Endereco = {
   logradouro: string;
   bairro: string;
@@ -36,6 +61,8 @@ export type DadosDoNicho = {
   acaoPrincipal: AcaoWhatsApp;
   expediente: Expediente[];
   endereco: Endereco;
+  /** Redes do rodapé; o usuário sai do nome do estabelecimento. */
+  redes: Rede[];
 };
 
 export type Plano = {

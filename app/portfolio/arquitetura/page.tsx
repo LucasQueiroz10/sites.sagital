@@ -1,8 +1,8 @@
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
-import { AssinaturaDoPortfolio } from "@/components/portfolio/AssinaturaDoPortfolio";
 import { CabecalhoDoPortfolio } from "@/components/portfolio/CabecalhoDoPortfolio";
+import { RodapeDoPortfolio } from "@/components/portfolio/RodapeDoPortfolio";
 import { ConversaSobreProjeto } from "@/components/portfolio/arquitetura/ConversaSobreProjeto";
 import { GaleriaDeProjetos } from "@/components/portfolio/arquitetura/GaleriaDeProjetos";
 import { Container } from "@/components/ui/Container";
@@ -210,17 +210,18 @@ export default function PaginaArquitetura() {
         </section>
       </main>
 
-      <footer className="escuro bg-[var(--cor-grafite)] pb-10 text-sm text-white/60">
-        <Container
-          largura="larga"
-          className="flex flex-col justify-between gap-4 border-t border-white/15 pt-8 sm:flex-row"
-        >
-          <span className="text-[1.125rem] font-semibold tracking-[-0.03em] text-[var(--cor-cal)] [font-stretch:75%] uppercase">
+      <RodapeDoPortfolio
+        nome={dados.nome}
+        navegacao={dados.navegacao}
+        rodape={dados.rodape}
+        tom="escuro"
+        className="escuro border-t border-white/15 bg-[var(--cor-grafite)]"
+        marca={
+          <p className="text-[1.375rem] font-semibold tracking-[-0.03em] text-[var(--cor-cal)] [font-stretch:75%] uppercase">
             {dados.marca}
-          </span>
-          <AssinaturaDoPortfolio />
-        </Container>
-      </footer>
+          </p>
+        }
+      />
     </div>
   );
 }

@@ -183,4 +183,5 @@ export const restaurante: DadosDoRestaurante = {
     bairro: "Bairro Alto",
     referencia: "Manobrista no jantar, de terça a sábado",
   },
+  redes: ["instagram", "facebook", "tiktok"],
 };

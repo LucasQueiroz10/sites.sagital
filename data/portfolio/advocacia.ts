@@ -6,7 +6,7 @@ import camila from "@/public/imagens/portfolio/advocacia/camila.jpg";
 import rafael from "@/public/imagens/portfolio/advocacia/rafael.jpg";
 import reuniao from "@/public/imagens/portfolio/advocacia/reuniao.jpg";
 import socia from "@/public/imagens/portfolio/advocacia/socia.jpg";
-import type { Imagem } from "@/data/tipos";
+import type { DadosDoRodape, Imagem } from "@/data/tipos";
 
 // Escritório fictício. O texto segue a sobriedade que a OAB pede na
 // publicidade da advocacia: sem promessa de resultado, sem preço e sem
@@ -247,4 +247,17 @@ export const advocacia = {
     /** Registro da sociedade na OAB: número fictício, só para mostrar onde ele entra. */
     registro: "Sociedade de advogados · OAB/UF 00.000 (registro fictício)",
   },
+  rodape: {
+    descricao:
+      "Advocacia empresarial, trabalhista, de família e imobiliária, com atendimento no escritório ou por vídeo.",
+    endereco: "Av. das Acácias, 1200, sala 804",
+    bairro: "Centro",
+    horarios: ["Segunda a sexta: 9h às 18h", "Atendimento com hora marcada"],
+    email: "contato@duartemoreira.exemplo",
+    redes: ["linkedin", "instagram"],
+    legais: [
+      "Sociedade de advogados · OAB/UF 00.000 (registro fictício)",
+      "CNPJ 00.000.000/0001-00 (fictício)",
+    ],
+  } satisfies DadosDoRodape,
 };

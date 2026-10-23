@@ -119,7 +119,7 @@ export default function PaginaVarejo() {
         </Secao>
       </main>
 
-      <RodapeDoDemo endereco={dados.endereco} classeDaMarca="marca text-xl" />
+      <RodapeDoDemo dados={dados} classeDaMarca="marca text-xl" />
       <BarraWhatsApp acao={dados.acaoPrincipal} rotuloDoNicho={dados.rotulo} />
     </TemaDoNicho>
   );

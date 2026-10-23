@@ -1,8 +1,8 @@
 import { ArrowDown, MessageCircle, Plus } from "lucide-react";
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
-import { AssinaturaDoPortfolio } from "@/components/portfolio/AssinaturaDoPortfolio";
 import { CabecalhoDoPortfolio } from "@/components/portfolio/CabecalhoDoPortfolio";
+import { RodapeDoPortfolio } from "@/components/portfolio/RodapeDoPortfolio";
 import { AreasDeAtuacao } from "@/components/portfolio/advocacia/AreasDeAtuacao";
 import { TriagemDoCaso } from "@/components/portfolio/advocacia/TriagemDoCaso";
 import { Container } from "@/components/ui/Container";
@@ -316,26 +316,21 @@ export default function PaginaAdvocacia() {
         </section>
       </main>
 
-      <footer className="escuro bg-[var(--cor-floresta-funda)] pt-14 pb-10 text-[0.9375rem] text-white/70">
-        <Container largura="larga" className="grid gap-10">
-          <div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-end">
-            <div>
-              <p className="font-titulo text-[1.75rem] leading-none text-white">
-                {dados.marca.principal}
-              </p>
-              <p className="mt-2">{dados.marca.apoio}</p>
-            </div>
-            <div className="sm:text-right">
-              <p>
-                {dados.contato.endereco} · {dados.contato.bairro}
-              </p>
-              <p className="mt-1">{dados.contato.horario}</p>
-              <p className="mt-1">{dados.contato.registro}</p>
-            </div>
-          </div>
-          <AssinaturaDoPortfolio className="border-t border-white/10 pt-6 text-sm text-white/60" />
-        </Container>
-      </footer>
+      <RodapeDoPortfolio
+        nome={dados.nome}
+        navegacao={dados.navegacao}
+        rodape={dados.rodape}
+        tom="escuro"
+        className="escuro bg-[var(--cor-floresta-funda)]"
+        marca={
+          <>
+            <p className="font-titulo text-[1.75rem] leading-none text-white">
+              {dados.marca.principal}
+            </p>
+            <p className="mt-2 text-white/70">{dados.marca.apoio}</p>
+          </>
+        }
+      />
     </div>
   );
 }

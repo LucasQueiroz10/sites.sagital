@@ -9,7 +9,7 @@ import recepcao from "@/public/imagens/portfolio/odontologia/recepcao.jpg";
 import sorriso from "@/public/imagens/portfolio/odontologia/sorriso.jpg";
 import type { Expediente } from "@/lib/agenda";
 import type { TurnoDeAtendimento } from "@/lib/consultas";
-import type { Endereco, Imagem } from "@/data/tipos";
+import type { DadosDoRodape, Endereco, Imagem } from "@/data/tipos";
 
 // Clínica fictícia. Sem preços nem promoções: o código de ética da
 // odontologia não permite anunciar valores. Fotos do Unsplash (licença
@@ -207,4 +207,17 @@ export const odontologia = {
     bairro: "Jardim Botânico",
     referencia: "Estacionamento conveniado em frente",
   } satisfies Endereco,
+  rodape: {
+    descricao:
+      "Clínica odontológica com consultas sem pressa, explicação antes de cada passo e agenda aberta no site.",
+    endereco: "Rua Jasmim, 85, 2º andar",
+    bairro: "Jardim Botânico",
+    horarios: ["Segunda a sexta: 8h às 18h", "Sábado: 8h às 12h"],
+    email: "contato@lumiodontologia.exemplo",
+    redes: ["instagram", "facebook", "youtube"],
+    legais: [
+      "Responsável técnica: Dra. Marina Lopes · CRO-UF 00000 (registro fictício)",
+      "CNPJ 00.000.000/0001-00 (fictício)",
+    ],
+  } satisfies DadosDoRodape,
 };

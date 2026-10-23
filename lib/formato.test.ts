@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
+  apelidoDoNome,
   formatarPreco,
   formatarPrecoRedondo,
+  formatarTelefone,
   parcelar,
   partesDoPreco,
 } from "./formato";
@@ -28,5 +30,18 @@ describe("formatação de preços", () => {
     expect(parcelar(7990, 3, 2000)).toEqual({ vezes: 3, valor: 2663 });
     expect(parcelar(5990, 3, 2500)).toEqual({ vezes: 2, valor: 2995 });
     expect(parcelar(3990, 3, 2500)).toBeNull();
+  });
+});
+
+describe("contato no rodapé", () => {
+  it("formata celular e fixo com DDD, com ou sem o código do país", () => {
+    expect(formatarTelefone("5511999998888")).toBe("(11) 99999-8888");
+    expect(formatarTelefone("1133334444")).toBe("(11) 3333-4444");
+    expect(formatarTelefone("123")).toBe("123");
+  });
+
+  it("tira acentos, espaços e símbolos do nome", () => {
+    expect(apelidoDoNome("Academia Pulso")).toBe("academiapulso");
+    expect(apelidoDoNome("Casa do Algodão & Cia.")).toBe("casadoalgodaocia");
   });
 });

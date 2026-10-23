@@ -161,7 +161,7 @@ export default function PaginaTabacaria() {
         </main>
 
         <RodapeDoDemo
-          endereco={dados.endereco}
+          dados={dados}
           classeDaMarca="marca"
           avisos={
             <div className="moldura px-5 py-6 text-center">

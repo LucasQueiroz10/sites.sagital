@@ -235,4 +235,5 @@ export const varejo: DadosDoVarejo = {
     bairro: "Centro",
     referencia: "Provador amplo e estacionamento ao lado",
   },
+  redes: ["instagram", "tiktok", "pinterest", "facebook"],
 };

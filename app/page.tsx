@@ -10,11 +10,11 @@ import { CabecalhoSagital } from "@/components/sagital/CabecalhoSagital";
 import { FundoSoffit } from "@/components/sagital/FundoSoffit";
 import { ProvedorDaEscolha } from "@/components/sagital/EscolhaDoDemo";
 import { GeradorDeLink } from "@/components/sagital/GeradorDeLink";
-import { MarcaSagital } from "@/components/sagital/MarcaSagital";
 import { Pacotes } from "@/components/sagital/Pacotes";
 import { PalcoDoDemo } from "@/components/sagital/PalcoDoDemo";
 import { PercursoDoProcesso } from "@/components/sagital/PercursoDoProcesso";
 import { RevelarAoRolar } from "@/components/sagital/RevelarAoRolar";
+import { RodapeSagital } from "@/components/sagital/RodapeSagital";
 import { BarraFixa } from "@/components/ui/BarraFixa";
 import { Carrossel } from "@/components/ui/Carrossel";
 import { Container } from "@/components/ui/Container";
@@ -495,15 +495,7 @@ export default function PaginaSagital() {
           </section>
         </main>
 
-        <footer className="border-t border-[var(--sg-borda-sutil)] pt-6 pb-28 md:pb-8">
-          <Container
-            largura="larga"
-            className="flex flex-col gap-2 text-sm text-texto-suave sm:flex-row sm:items-center sm:justify-between"
-          >
-            <MarcaSagital className="text-[var(--sg-tinta-forte)]" />
-            <p>Os demos usam nomes, preços e depoimentos fictícios.</p>
-          </Container>
-        </footer>
+        <RodapeSagital />
 
         <RevelarAoRolar />
 

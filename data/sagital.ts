@@ -11,7 +11,7 @@ import type { PadraoDoTema } from "@/lib/tema";
 import { academia } from "./academia";
 import { restaurante } from "./restaurante";
 import { tabacaria } from "./tabacaria";
-import type { Imagem } from "./tipos";
+import type { Imagem, Rede } from "./tipos";
 import { varejo } from "./varejo";
 
 // Página da Sagital. As capturas dos demos foram feitas do próprio site.
@@ -186,3 +186,19 @@ export function mensagemDoPacote(nome: string): string {
 }
 
 export const urlDoCodigo = "https://github.com/LucasQueiroz10/sites.sagital";
+
+/**
+ * Contatos da Sagital no rodapé. Só aparece o que estiver preenchido: o
+ * telefone e o WhatsApp vêm de NEXT_PUBLIC_WHATSAPP_NUMERO; e-mail, redes e
+ * CNPJ, daqui. Ex.: email: "contato@seudominio.com.br" e, nas redes,
+ * { rede: "instagram", usuario: "sagital", url: "https://www.instagram.com/sagital/" }.
+ */
+export const contatoDaSagital: {
+  email: string | null;
+  redes: { rede: Rede; usuario: string; url: string }[];
+  cnpj: string | null;
+} = {
+  email: null,
+  redes: [{ rede: "github", usuario: "LucasQueiroz10", url: urlDoCodigo }],
+  cnpj: null,
+};

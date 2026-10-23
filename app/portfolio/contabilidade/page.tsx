@@ -1,8 +1,8 @@
 import { ArrowDown, Check, MessageCircle } from "lucide-react";
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
-import { AssinaturaDoPortfolio } from "@/components/portfolio/AssinaturaDoPortfolio";
 import { CabecalhoDoPortfolio } from "@/components/portfolio/CabecalhoDoPortfolio";
+import { RodapeDoPortfolio } from "@/components/portfolio/RodapeDoPortfolio";
 import { RelatorioDoMes } from "@/components/portfolio/contabilidade/RelatorioDoMes";
 import { SimuladorDeRegime } from "@/components/portfolio/contabilidade/SimuladorDeRegime";
 import { Carrossel } from "@/components/ui/Carrossel";
@@ -428,18 +428,29 @@ export default function PaginaContabilidade() {
         </section>
       </main>
 
-      <footer className="border-t border-borda py-10 text-sm text-texto-suave">
-        <Container
-          largura="larga"
-          className="flex flex-col justify-between gap-4 sm:flex-row"
-        >
-          <p>
-            <span className="font-bold text-texto">{dados.nome}</span> ·{" "}
-            {dados.contato.crc}
+      <RodapeDoPortfolio
+        nome={dados.nome}
+        navegacao={dados.navegacao}
+        rodape={dados.rodape}
+        tom="claro"
+        className="border-t border-borda"
+        marca={
+          <p className="flex items-center gap-2.5">
+            <svg
+              aria-hidden
+              viewBox="0 0 16 24"
+              className="h-6 w-4 text-destaque"
+              fill="currentColor"
+            >
+              <rect x="7.25" y="0" width="1.5" height="12" />
+              <path d="M8 11 L14 17 L8 24 L2 17 Z" />
+            </svg>
+            <span className="text-[1.5rem] leading-none font-bold tracking-[-0.05em]">
+              {dados.marca}
+            </span>
           </p>
-          <AssinaturaDoPortfolio />
-        </Container>
-      </footer>
+        }
+      />
     </div>
   );
 }
