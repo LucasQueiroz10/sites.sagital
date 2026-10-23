@@ -89,10 +89,21 @@ export function PreviaAoVivo({
     if (!el) return;
     if (aberta && !el.open) {
       el.showModal();
-      document.documentElement.style.overflow = "hidden";
     } else if (!aberta && el.open) {
       el.close();
     }
+  }, [aberta]);
+
+  // A página de trás não rola enquanto a prévia está aberta. A trava sai na
+  // limpeza do efeito, e não no close: o "Abrir o demo" navega e desmonta a
+  // prévia sem fechar o <dialog>, e o demo abriria sem rolar.
+  useEffect(() => {
+    if (!aberta) return;
+    const raiz = document.documentElement;
+    raiz.style.overflow = "hidden";
+    return () => {
+      raiz.style.overflow = "";
+    };
   }, [aberta]);
 
   useEffect(() => {
@@ -161,7 +172,6 @@ export function PreviaAoVivo({
       }}
       onClose={(evento) => {
         if (evento.target !== evento.currentTarget) return;
-        document.documentElement.style.overflow = "";
         aoFechar();
       }}
       className="sg-previa sg-noite fixed inset-0 m-0 hidden h-dvh max-h-none w-full max-w-none flex-col overflow-hidden p-0 text-white open:flex"

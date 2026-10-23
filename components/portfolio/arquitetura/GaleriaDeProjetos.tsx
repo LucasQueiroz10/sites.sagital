@@ -34,11 +34,20 @@ export function GaleriaDeProjetos({ projetos, nomeDoSite }: Props) {
 
   useEffect(() => {
     const el = dialogo.current;
-    if (aberto && el && !el.open) {
-      el.showModal();
-      document.documentElement.style.overflow = "hidden";
-    }
+    if (aberto && el && !el.open) el.showModal();
   }, [aberto]);
+
+  // A página não rola com a ficha aberta. A trava sai na limpeza do efeito,
+  // e não só no close, para não ficar presa se a ficha sumir sem fechar.
+  const fichaAberta = aberto !== null;
+  useEffect(() => {
+    if (!fichaAberta) return;
+    const raiz = document.documentElement;
+    raiz.style.overflow = "hidden";
+    return () => {
+      raiz.style.overflow = "";
+    };
+  }, [fichaAberta]);
 
   function fechar() {
     const el = dialogo.current;
@@ -154,7 +163,6 @@ export function GaleriaDeProjetos({ projetos, nomeDoSite }: Props) {
           fechar();
         }}
         onClose={() => {
-          document.documentElement.style.overflow = "";
           setAberto(null);
           origem.current?.focus();
         }}
