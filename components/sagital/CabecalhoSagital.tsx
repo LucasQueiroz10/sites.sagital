@@ -1,6 +1,7 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
+import Link from "next/link";
 import { mensagemDeContato } from "@/data/sagital";
 import { classes } from "@/lib/classes";
 import { usePassouDoTopo } from "@/lib/usePassouDoTopo";
@@ -8,11 +9,13 @@ import { montarLinkWhatsApp } from "@/lib/whatsapp";
 import { BotaoContato } from "./BotaoContato";
 import { MarcaSagital } from "./MarcaSagital";
 
+// "Demos" abre a página com todos os demos; o resto são seções da página
+// inicial (na própria página, a viagem até a âncora continua animada).
 const navegacao = [
-  { rotulo: "Demos", href: "#demos" },
-  { rotulo: "Portfólio", href: "#portfolio" },
-  { rotulo: "Como funciona", href: "#como-funciona" },
-  { rotulo: "Pacotes", href: "#pacotes" },
+  { rotulo: "Demos", href: "/demos" },
+  { rotulo: "Portfólio", href: "/#portfolio" },
+  { rotulo: "Como funciona", href: "/#como-funciona" },
+  { rotulo: "Pacotes", href: "/#pacotes" },
 ];
 
 /**
@@ -66,7 +69,7 @@ export function CabecalhoSagital({
             className="-ml-3 hidden items-center md:flex"
           >
             {navegacao.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className={classes(
@@ -77,7 +80,7 @@ export function CabecalhoSagital({
                 )}
               >
                 {link.rotulo}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>

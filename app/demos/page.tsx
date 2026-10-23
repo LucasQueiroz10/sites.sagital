@@ -8,6 +8,7 @@ import { ProvedorDaEscolha } from "@/components/sagital/EscolhaDoDemo";
 import { FundoDaPagina } from "@/components/sagital/FundoDaPagina";
 import { MarcaSagital } from "@/components/sagital/MarcaSagital";
 import { RevelarAoRolar } from "@/components/sagital/RevelarAoRolar";
+import { RodapeSagital } from "@/components/sagital/RodapeSagital";
 import { Carrossel } from "@/components/ui/Carrossel";
 import { Container } from "@/components/ui/Container";
 import { demos } from "@/data/sagital";
@@ -66,7 +67,7 @@ export default function PaginaDosDemos() {
           </Container>
         </header>
 
-        <main className="flex-1 pt-8 pb-16 sm:pt-14 sm:pb-24">
+        <main id="topo" className="flex-1 pt-8 pb-16 sm:pt-14 sm:pb-24">
           <section aria-labelledby="demos-titulo" data-revela-grupo>
             <Carrossel
               rotulo="Demos"
@@ -161,6 +162,7 @@ export default function PaginaDosDemos() {
           </section>
         </main>
 
+        <RodapeSagital fundo="bg-[rgb(3_17_27/0.88)]" comBarraFixa={false} />
         <RevelarAoRolar />
       </ProvedorDaEscolha>
     </div>

@@ -14,11 +14,12 @@ import { MarcaSagital } from "./MarcaSagital";
 
 const link = classeDoLinkDeContato("escuro");
 
+// Os mesmos destinos do cabeçalho: valem na página inicial e em /demos.
 const navegacao = [
-  { rotulo: "Demos", href: "#demos" },
-  { rotulo: "Portfólio", href: "#portfolio" },
-  { rotulo: "Como funciona", href: "#como-funciona" },
-  { rotulo: "Pacotes", href: "#pacotes" },
+  { rotulo: "Demos", href: "/demos" },
+  { rotulo: "Portfólio", href: "/#portfolio" },
+  { rotulo: "Como funciona", href: "/#como-funciona" },
+  { rotulo: "Pacotes", href: "/#pacotes" },
 ];
 
 /**
@@ -28,16 +29,19 @@ const navegacao = [
  */
 export function RodapeSagital({
   fundo = "bg-[#0a0a0a]",
+  comBarraFixa = true,
 }: {
   /** Classe do fundo; o padrão é o preto. */
   fundo?: string;
+  /** Reserva embaixo o espaço da barra fixa do celular (só a página inicial tem). */
+  comBarraFixa?: boolean;
 }) {
   const { email, redes, cnpj } = contatoDaSagital;
 
   return (
     <RodapeCompleto
       tom="escuro"
-      className={`sg-foco-claro ${fundo} pb-28 md:pb-10`}
+      className={`sg-foco-claro ${fundo} ${comBarraFixa ? "pb-28 md:pb-10" : "pb-10"}`}
       marca={<MarcaSagital className="text-white" />}
       descricao="Sites para qualquer negócio, rápidos no celular e com o cliente a um toque do seu WhatsApp."
       redes={redes.map(({ rede, usuario, url }) => ({
