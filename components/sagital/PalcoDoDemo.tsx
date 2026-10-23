@@ -17,7 +17,7 @@ export function PalcoDoDemo() {
   return (
     <div
       data-revela
-      className="sg-noite relative hidden aspect-[6/5] overflow-hidden rounded-[32px] lg:block"
+      className="sg-noite relative hidden aspect-[6/5] overflow-hidden rounded-[32px] lg:sticky lg:top-24 lg:block"
     >
       <FundoSoffit />
       {demos.map((d) => {

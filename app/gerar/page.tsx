@@ -20,10 +20,11 @@ export const viewport: Viewport = { themeColor: "#ffffff" };
 
 /** Ferramenta do vendedor: monta o link e o QR antes ou durante a visita. */
 export default function PaginaGerar() {
-  const opcoes = demos.map(({ nicho, rotulo, padrao }) => ({
+  const opcoes = demos.map(({ nicho, rotulo, padrao, captura }) => ({
     nicho,
     rotulo,
     padrao,
+    captura,
   }));
 
   return (

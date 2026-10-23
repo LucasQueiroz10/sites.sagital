@@ -9,7 +9,8 @@ import {
   Printer,
   QrCode,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { classes } from "@/lib/classes";
 import { nomeDoArquivoQr } from "@/lib/link";
 import { fecharDialogo } from "@/lib/movimento";
@@ -30,6 +31,15 @@ type Props = {
 };
 
 const COPIADO = "Link copiado.";
+const FALHA_AO_COPIAR =
+  "Não deu para copiar sozinho: o link está selecionado, é só copiar.";
+
+/** O link em duas partes, para a barra de endereço: o site e o caminho legível. */
+function partesDoEndereco(link: string): { host: string; caminho: string } {
+  const url = new URL(link);
+  const busca = decodeURIComponent(url.search.replace(/\+/g, " "));
+  return { host: url.host, caminho: `${url.pathname}${busca}` };
+}
 
 /**
  * O painel "Monte o seu demo": escolha o ramo, o nome e a cor, e saem o link,
@@ -53,18 +63,36 @@ export function GeradorDeLink({ modo }: Props) {
   } = useEscolha();
   const [aviso, setAviso] = useState("");
   const folhaDoQr = useRef<HTMLDialogElement>(null);
+  const campoDoLink = useRef<HTMLInputElement>(null);
   const completo = modo === "completo";
 
   const nomeComErro = nome.trim().length > 0 && !validarNome(nome);
+  const enderecoVisivel = link ? partesDoEndereco(link) : null;
   const variaveis = variaveisDoTema(corEfetiva as `#${string}`, "#ffffff");
+
+  // O "copiado" some sozinho em 2s; um erro fica até a próxima escolha.
+  useEffect(() => {
+    if (aviso !== COPIADO) return;
+    const tempo = window.setTimeout(() => setAviso(""), 2000);
+    return () => window.clearTimeout(tempo);
+  }, [aviso]);
 
   async function copiar() {
     if (!link) return;
+    // Esvazia antes, para o leitor de tela anunciar de novo uma cópia repetida.
+    setAviso("");
     try {
       await navigator.clipboard.writeText(link);
-      setAviso(COPIADO);
+      requestAnimationFrame(() => setAviso(COPIADO));
     } catch {
-      setAviso("Não deu para copiar. Toque e segure o link para copiar.");
+      if (completo) {
+        setAviso("Não deu para copiar. Toque e segure o link para copiar.");
+        return;
+      }
+      // No painel, a barra mostra só o caminho: na falha, ela vira um campo
+      // com o link inteiro, já selecionado, pronto para copiar à mão.
+      setAviso(FALHA_AO_COPIAR);
+      requestAnimationFrame(() => campoDoLink.current?.select());
     }
   }
 
@@ -100,20 +128,43 @@ export function GeradorDeLink({ modo }: Props) {
     setAviso("QR code baixado.");
   }
 
+  /** Fio fino entre as linhas da ficha. */
+  const linha = "border-t border-[var(--sg-borda-sutil)] pt-5 lg:pt-4";
+
+  /** "Abrir o demo": enquanto o link não existe, um botão desabilitado, fora do Tab. */
+  const botaoAbrir = (className?: string) => {
+    const conteudo = (
+      <>
+        Abrir o demo
+        <ArrowUpRight aria-hidden className="size-5" strokeWidth={1.75} />
+      </>
+    );
+    return link ? (
+      <BotaoSagital href={link} className={className}>
+        {conteudo}
+      </BotaoSagital>
+    ) : (
+      <BotaoSagital disabled className={className}>
+        {conteudo}
+      </BotaoSagital>
+    );
+  };
+
   const formulario = (
     <form
       onSubmit={(e) => e.preventDefault()}
-      className="grid min-w-0 gap-5 print:hidden"
+      className="grid min-w-0 grid-cols-1 gap-5 lg:gap-4 print:hidden"
     >
+      {/* Ramo: escolhido pela primeira tela real de cada demo. */}
       <fieldset className="min-w-0">
-        <legend className="mb-2.5 text-sm font-medium text-texto-suave">
+        <legend className="mb-3 text-[0.8125rem] font-medium text-texto-suave">
           Ramo
         </legend>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-4 gap-2 sm:gap-3">
           {demos.map((d) => {
             const marcado = d.nicho === nicho;
             return (
-              <label key={d.nicho} className="shrink-0 cursor-pointer">
+              <label key={d.nicho} className="group min-w-0 cursor-pointer">
                 <input
                   type="radio"
                   name={`nicho-${modo}`}
@@ -127,11 +178,37 @@ export function GeradorDeLink({ modo }: Props) {
                 />
                 <span
                   className={classes(
-                    "sg-pressiona flex min-h-11 items-center rounded-full px-4 text-[0.9375rem]",
-                    "peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-destaque",
+                    "relative block aspect-[4/5] overflow-hidden rounded-xl lg:aspect-[4/3] bg-superficie transition-[box-shadow,opacity,filter] duration-200 ease-[cubic-bezier(.2,.8,.2,1)]",
+                    "peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-destaque",
                     marcado
-                      ? "bg-texto font-semibold text-white"
-                      : "bg-white font-medium text-texto hover:bg-[var(--sg-pressionado)]",
+                      ? "shadow-[0_0_0_2px_#ffffff,0_0_0_4px_var(--cor-texto)]"
+                      : "opacity-75 saturate-[.8] shadow-[inset_0_0_0_1px_var(--sg-borda-sutil)] group-hover:opacity-100 group-hover:saturate-100",
+                  )}
+                >
+                  {d.captura ? (
+                    <Image
+                      src={d.captura.src}
+                      alt=""
+                      fill
+                      sizes="(min-width: 1024px) 7.5rem, (min-width: 640px) 9rem, 22vw"
+                      className="object-cover object-top transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04]"
+                    />
+                  ) : (
+                    <span
+                      aria-hidden
+                      className="absolute inset-0"
+                      style={{
+                        background: `linear-gradient(160deg, ${d.padrao.fundo} 0 55%, ${d.padrao.cor} 55% 100%)`,
+                      }}
+                    />
+                  )}
+                </span>
+                <span
+                  className={classes(
+                    "mt-2 block truncate text-center text-[0.8125rem] tracking-[-0.01em] transition-colors",
+                    marcado
+                      ? "font-semibold text-texto"
+                      : "font-medium text-texto-suave group-hover:text-texto",
                   )}
                 >
                   {d.rotulo}
@@ -142,65 +219,83 @@ export function GeradorDeLink({ modo }: Props) {
         </div>
       </fieldset>
 
-      <div>
-        <div
-          className={classes(
-            "rounded-[10px] bg-white px-3.5 pt-2 pb-2.5 transition-shadow duration-150",
-            nomeComErro
-              ? "shadow-[inset_0_0_0_1.5px_var(--cor-erro)]"
-              : "focus-within:shadow-[inset_0_0_0_1.5px_var(--cor-primaria)]",
-          )}
-        >
+      {/* Nome: campo de linha só, grande, com o contador à direita. */}
+      <div className={linha}>
+        <div className="flex items-baseline justify-between gap-3">
           <label
             htmlFor={`nome-${modo}`}
-            className="block text-[0.8125rem] text-texto-suave"
+            className="text-[0.8125rem] font-medium text-texto-suave"
           >
             Nome do negócio
           </label>
-          <input
-            id={`nome-${modo}`}
-            type="text"
-            value={nome}
-            onChange={(e) => {
-              escolherNome(e.target.value);
-              setAviso("");
-            }}
-            maxLength={NOME_MAXIMO}
-            placeholder={demo.padrao.nome}
-            autoComplete="off"
-            enterKeyHint="done"
-            aria-invalid={nomeComErro}
-            aria-describedby={`ajuda-${modo}`}
-            className="mt-0.5 w-full bg-transparent text-base font-semibold text-texto focus-visible:outline-none"
-          />
+          <span
+            aria-hidden
+            className="sg-num text-[0.8125rem] text-texto-suave"
+          >
+            {nome.length}/{NOME_MAXIMO}
+          </span>
         </div>
+        <input
+          id={`nome-${modo}`}
+          type="text"
+          value={nome}
+          onChange={(e) => {
+            escolherNome(e.target.value);
+            setAviso("");
+          }}
+          maxLength={NOME_MAXIMO}
+          placeholder={demo.padrao.nome}
+          autoComplete="off"
+          enterKeyHint="done"
+          aria-invalid={nomeComErro}
+          aria-describedby={`ajuda-${modo}`}
+          className={classes(
+            "mt-1 w-full bg-transparent pt-1 pb-2.5 text-[1.375rem] font-semibold tracking-[-0.02em] text-texto transition-shadow duration-200 placeholder:font-medium focus-visible:outline-none",
+            nomeComErro
+              ? "shadow-[inset_0_-2px_0_var(--cor-erro)]"
+              : "shadow-[inset_0_-1px_0_var(--sg-terciario)] focus:shadow-[inset_0_-2px_0_var(--cor-primaria)]",
+          )}
+        />
         <p
           id={`ajuda-${modo}`}
           className={classes(
-            "mt-1.5 px-0.5 text-[0.8125rem]",
+            "mt-2 text-[0.8125rem]",
             nomeComErro ? "text-erro" : "text-texto-suave",
           )}
         >
           {nomeComErro
             ? "Use só letras, números, espaços e & ' - . O demo vai mostrar o nome padrão."
-            : `Até ${NOME_MAXIMO} letras. Em branco, aparece “${demo.padrao.nome}”.`}
+            : `Em branco, aparece “${demo.padrao.nome}”.`}
         </p>
       </div>
 
-      <fieldset className="min-w-0">
-        <legend className="mb-1.5 text-sm font-medium text-texto-suave">
-          Cor da marca <span className="font-normal">· {nomeDaCor(cor)}</span>
+      <fieldset className={classes("min-w-0", linha)}>
+        <legend className="float-left text-[0.8125rem] font-medium text-texto-suave">
+          Cor da marca
         </legend>
-        <SeletorDeCor
-          nome={`cor-${modo}`}
-          valor={cor}
-          aoEscolher={(valor) => {
-            escolherCor(valor);
-            setAviso("");
-          }}
-          padrao={demo.padrao}
-          livre={completo}
-        />
+        {/* No painel, o nome da cor fica na outra ponta da linha; no /gerar,
+            com a coluna larga, logo depois do rótulo. */}
+        <span
+          className={classes(
+            "text-[0.8125rem] font-semibold text-texto",
+            completo ? "float-left ml-1.5" : "float-right",
+          )}
+        >
+          {completo && <span className="text-texto-suave">· </span>}
+          {nomeDaCor(cor)}
+        </span>
+        <div className="clear-both pt-3">
+          <SeletorDeCor
+            nome={`cor-${modo}`}
+            valor={cor}
+            aoEscolher={(valor) => {
+              escolherCor(valor);
+              setAviso("");
+            }}
+            padrao={demo.padrao}
+            livre={completo}
+          />
+        </div>
         {completo && (
           <p className="mt-3 flex flex-wrap items-center gap-3 text-[0.8125rem] text-texto-suave">
             <span
@@ -227,10 +322,84 @@ export function GeradorDeLink({ modo }: Props) {
       </fieldset>
 
       {!completo && (
-        <div className="grid gap-2">
+        <div className={classes("grid grid-cols-1 gap-3", linha)}>
+          {/* O link se monta enquanto o visitante escolhe: o endereço do
+              demo dele, pronto para copiar ou virar QR code. */}
+          <div className="flex min-w-0 gap-2">
+            <div className="flex min-h-11 min-w-0 flex-1 items-center rounded-[10px] bg-superficie pl-3.5">
+              {aviso === FALHA_AO_COPIAR && link ? (
+                <input
+                  ref={campoDoLink}
+                  readOnly
+                  value={link}
+                  aria-label="Link do demo"
+                  onFocus={(e) => e.currentTarget.select()}
+                  className="min-w-0 flex-1 bg-transparent font-mono text-xs text-texto focus-visible:outline-none"
+                />
+              ) : (
+                <p
+                  className="min-w-0 flex-1 truncate font-mono text-xs"
+                  title={link ?? undefined}
+                >
+                  {enderecoVisivel ? (
+                    <>
+                      <span className="hidden text-texto-suave sm:inline">
+                        {enderecoVisivel.host}
+                      </span>
+                      <span className="font-medium text-texto">
+                        {enderecoVisivel.caminho}
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-texto-suave">Montando o link…</span>
+                  )}
+                </p>
+              )}
+              <button
+                type="button"
+                onClick={copiar}
+                disabled={!link}
+                className="sg-pressiona grid size-11 shrink-0 place-items-center rounded-[10px] text-texto hover:bg-[var(--sg-pressionado)] disabled:opacity-40"
+              >
+                {aviso === COPIADO ? (
+                  <Check
+                    aria-hidden
+                    className="sg-confirma size-[18px] text-destaque"
+                  />
+                ) : (
+                  <Copy
+                    aria-hidden
+                    className="size-[18px]"
+                    strokeWidth={1.75}
+                  />
+                )}
+                <span className="sr-only">Copiar link</span>
+              </button>
+            </div>
+            <BotaoSagital
+              variante="secundario"
+              tamanho="medio"
+              onClick={() => folhaDoQr.current?.showModal()}
+              disabled={!link}
+              className="shrink-0 px-3.5"
+            >
+              <QrCode aria-hidden className="size-[18px]" strokeWidth={1.75} />
+              QR code
+            </BotaoSagital>
+          </div>
+          <p
+            className="-mt-1 text-[0.8125rem] text-texto-suave empty:hidden"
+            aria-live="polite"
+          >
+            {aviso === COPIADO ? (
+              <span className="sr-only">{aviso}</span>
+            ) : (
+              aviso
+            )}
+          </p>
           <div className="flex gap-2">
             <BotaoSagital
-              variante="inverso"
+              variante="secundario"
               onClick={() => abrirPrevia()}
               disabled={!link}
               className="shrink-0"
@@ -238,48 +407,9 @@ export function GeradorDeLink({ modo }: Props) {
               <Eye aria-hidden className="size-5" strokeWidth={1.75} />
               Ao vivo
             </BotaoSagital>
-            <BotaoSagital
-              href={link ?? "#"}
-              aria-disabled={!link}
-              className="flex-1"
-            >
-              Abrir o demo
-              <ArrowUpRight aria-hidden className="size-5" strokeWidth={1.75} />
-            </BotaoSagital>
-          </div>
-          <div className="flex justify-center gap-1">
-            <button
-              type="button"
-              onClick={copiar}
-              disabled={!link}
-              className="sg-pressiona inline-flex min-h-11 items-center gap-2 rounded-[10px] px-3 text-sm font-semibold text-destaque hover:bg-white disabled:opacity-40"
-            >
-              {aviso === COPIADO ? (
-                <Check aria-hidden className="sg-confirma size-[18px]" />
-              ) : (
-                <Copy aria-hidden className="size-[18px]" strokeWidth={1.75} />
-              )}
-              Copiar link
-            </button>
-            <button
-              type="button"
-              onClick={() => folhaDoQr.current?.showModal()}
-              disabled={!link}
-              className="sg-pressiona inline-flex min-h-11 items-center gap-2 rounded-[10px] px-3 text-sm font-semibold text-destaque hover:bg-white disabled:opacity-40"
-            >
-              <QrCode aria-hidden className="size-[18px]" strokeWidth={1.75} />
-              QR code
-            </button>
+            {botaoAbrir("flex-1")}
           </div>
         </div>
-      )}
-      {!completo && (
-        <p
-          className="-mt-3 text-center text-[0.8125rem] text-texto-suave empty:hidden"
-          aria-live="polite"
-        >
-          {aviso === COPIADO ? "" : aviso}
-        </p>
       )}
     </form>
   );
@@ -315,8 +445,8 @@ export function GeradorDeLink({ modo }: Props) {
 
   if (!completo) {
     return (
-      <div className="rounded-3xl bg-superficie p-4 sm:p-6">
-        <h2 className="mb-4 text-[1.0625rem] font-bold tracking-[-0.015em]">
+      <div className="rounded-3xl bg-white p-4 shadow-[inset_0_0_0_1px_var(--sg-borda-sutil),var(--sg-sombra-lg)] sm:p-7 lg:p-6">
+        <h2 className="mb-5 text-[1.0625rem] font-bold tracking-[-0.015em] lg:mb-4">
           Monte o seu demo
         </h2>
         {formulario}
@@ -381,10 +511,7 @@ export function GeradorDeLink({ modo }: Props) {
       <div className="area-impressao grid gap-4 rounded-3xl bg-white p-5 shadow-[var(--sg-sombra-md)] sm:p-6 print:shadow-none">
         {qr}
         <div className="grid gap-2 print:hidden">
-          <BotaoSagital href={link ?? "#"} aria-disabled={!link}>
-            Abrir o demo
-            <ArrowUpRight aria-hidden className="size-5" strokeWidth={1.75} />
-          </BotaoSagital>
+          {botaoAbrir()}
           <div className="grid grid-cols-2 gap-2">
             <BotaoSagital
               variante="secundario"

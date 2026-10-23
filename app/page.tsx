@@ -139,23 +139,30 @@ export default function PaginaSagital() {
           >
             <Container
               largura="larga"
-              className="grid gap-10 pt-14 pb-10 sm:pt-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-center lg:gap-14 lg:pb-20"
+              className="grid gap-6 pt-14 pb-10 sm:pt-20 lg:pt-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start lg:gap-x-14 lg:gap-y-10 lg:pb-20"
             >
-              <div data-revela>
+              {/* No desktop, o título ocupa a largura toda em duas linhas, com
+                  o apoio ao lado; embaixo, o painel e o palco lado a lado, para
+                  o painel inteiro caber na tela junto com o título. */}
+              <div
+                data-revela
+                className="lg:col-span-2 lg:flex lg:items-end lg:justify-between lg:gap-14"
+              >
                 <h2
                   id="seu-demo-titulo"
-                  className="sg-display max-w-[14ch] text-[clamp(2.25rem,8.8vw,3.75rem)]"
+                  className="sg-display max-w-[14ch] text-[clamp(2.25rem,8.8vw,3.75rem)] lg:max-w-none"
                 >
                   Veja o site do seu negócio{" "}
+                  <br aria-hidden className="hidden lg:inline" />
                   <span className="text-destaque">antes de pagar.</span>
                 </h2>
-                <p className="mt-4 max-w-[44ch] text-[1.0625rem] leading-relaxed text-texto-suave">
+                <p className="mt-4 max-w-[44ch] text-[1.0625rem] leading-relaxed text-texto-suave lg:mt-0 lg:max-w-[34ch] lg:pb-1.5">
                   Escolha um modelo, digite o nome do seu negócio e a cor da sua
                   marca: o site aparece pronto, na hora.
                 </p>
-                <div data-cta-principal className="mt-6">
-                  <GeradorDeLink modo="compacto" />
-                </div>
+              </div>
+              <div data-revela data-cta-principal>
+                <GeradorDeLink modo="compacto" />
               </div>
               <PalcoDoDemo />
             </Container>
