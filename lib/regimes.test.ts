@@ -35,3 +35,13 @@ describe("enquadrar", () => {
     expect(resultado.impostoMensal).toBeNull();
   });
 });
+
+describe("relatório de exemplo da contabilidade", () => {
+  it("usa o mesmo imposto que o simulador mostraria", async () => {
+    const { contabilidade } = await import("@/data/portfolio/contabilidade");
+    const imposto = contabilidade.relatorio.linhas[2]?.centavos;
+    // R$ 48.200 por mês no comércio: faixa 3 do Anexo I, 7,10%.
+    expect(imposto).toBe(342400);
+    expect(contabilidade.relatorio.linhas[3]?.centavos).toBe(1502600);
+  });
+});

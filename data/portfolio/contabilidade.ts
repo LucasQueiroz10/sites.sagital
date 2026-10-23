@@ -7,7 +7,7 @@ import reuniao from "@/public/imagens/portfolio/contabilidade/reuniao.jpg";
 import salao from "@/public/imagens/portfolio/contabilidade/salao.jpg";
 import socia from "@/public/imagens/portfolio/contabilidade/socia.jpg";
 import type { Imagem } from "@/data/tipos";
-import type { Atividade } from "@/lib/regimes";
+import { enquadrar, type Atividade } from "@/lib/regimes";
 
 // Escritório fictício. Planos e valores são ilustrativos. Fotos do Unsplash
 // (licença livre), salvas localmente.
@@ -27,6 +27,15 @@ export type Plano = {
   inclui: string[];
   destaque?: boolean;
 };
+
+// Relatório de exemplo: o imposto sai da mesma conta do simulador da página,
+// para os dois nunca discordarem. Centavos.
+const faturamentoDoExemplo = 4820000;
+const despesasDoExemplo = 2975000;
+const impostoDoExemplo = Math.round(
+  (enquadrar((faturamentoDoExemplo / 100) * 12, "comercio", 0).impostoMensal ??
+    0) * 100,
+);
 
 export const contabilidade = {
   nome: "Prumo Contabilidade",
@@ -188,10 +197,14 @@ export const contabilidade = {
     mes: "setembro",
     empresa: "Ateliê Fio de Ouro",
     linhas: [
-      { rotulo: "Faturamento", centavos: 4820000 },
-      { rotulo: "Despesas", centavos: 2975000 },
-      { rotulo: "Impostos (Simples)", centavos: 256400 },
-      { rotulo: "Lucro do mês", centavos: 1588600, total: true },
+      { rotulo: "Faturamento", centavos: faturamentoDoExemplo },
+      { rotulo: "Despesas", centavos: despesasDoExemplo },
+      { rotulo: "Impostos (Simples, comércio)", centavos: impostoDoExemplo },
+      {
+        rotulo: "Lucro do mês",
+        centavos: faturamentoDoExemplo - despesasDoExemplo - impostoDoExemplo,
+        total: true,
+      },
     ],
     avisos: [
       { texto: "DAS de setembro pago em 18/09", emDia: true },
