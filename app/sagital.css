@@ -217,6 +217,198 @@
   }
 }
 
+/*
+ * Percurso de "Como funciona": a luz leva 1s por trecho e para em cada
+ * número; o ciclo tem 6s (3s acendendo, o rastro se apaga do 1 ao último e
+ * meio segundo de pausa). Cada passo entra atrasado pelo seu --passo.
+ */
+[data-pagina="sagital"] .sg-trilha-rastro {
+  background: linear-gradient(to bottom, rgb(31 72 194 / 0.25), #1f48c2);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+[data-pagina="sagital"] .sg-trilha-cometa {
+  opacity: 0;
+}
+
+/* A cabeça da luz: um ponto royal com brilho, na ponta do trecho. */
+[data-pagina="sagital"] .sg-trilha-cometa::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 9999px;
+  background: #1f48c2;
+  box-shadow:
+    0 0 0 4px rgb(31 72 194 / 0.16),
+    0 0 14px rgb(31 72 194 / 0.55);
+}
+
+[data-pagina="sagital"] .sg-parada::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid #1f48c2;
+  border-radius: inherit;
+  opacity: 0;
+}
+
+@media (min-width: 48rem) {
+  [data-pagina="sagital"] .sg-trilha-rastro {
+    background: linear-gradient(to right, rgb(31 72 194 / 0.25), #1f48c2);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  [data-pagina="sagital"] .sg-trilha-cometa::after {
+    top: 50%;
+    right: -4px;
+    bottom: auto;
+    left: auto;
+    margin: -4px 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-pagina="sagital"]
+    .sg-percurso[data-em-vista]
+    :is(.sg-trilha-rastro, .sg-trilha-cometa, .sg-parada),
+  [data-pagina="sagital"] .sg-percurso[data-em-vista] .sg-parada::after {
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    animation-delay: calc(var(--passo) * 1s);
+  }
+
+  [data-pagina="sagital"] .sg-percurso[data-em-vista] .sg-trilha-rastro {
+    animation-name: sg-rastro-y;
+  }
+
+  [data-pagina="sagital"] .sg-percurso[data-em-vista] .sg-trilha-cometa {
+    animation-name: sg-cometa-y;
+  }
+
+  [data-pagina="sagital"] .sg-percurso[data-em-vista] .sg-parada {
+    animation-name: sg-parada;
+  }
+
+  [data-pagina="sagital"] .sg-percurso[data-em-vista] .sg-parada::after {
+    animation-name: sg-parada-anel;
+  }
+
+  @media (min-width: 48rem) {
+    [data-pagina="sagital"] .sg-percurso[data-em-vista] .sg-trilha-rastro {
+      animation-name: sg-rastro-x;
+    }
+
+    [data-pagina="sagital"] .sg-percurso[data-em-vista] .sg-trilha-cometa {
+      animation-name: sg-cometa-x;
+    }
+  }
+}
+
+/* 16.667% do ciclo = 1s, o tempo de um trecho. */
+@keyframes sg-rastro-y {
+  0% {
+    transform: scaleY(0);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  16.667%,
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  58%,
+  100% {
+    transform: scaleY(1);
+    opacity: 0;
+  }
+}
+
+@keyframes sg-rastro-x {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  16.667%,
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  58%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+@keyframes sg-cometa-y {
+  0% {
+    transform: translateY(-100%);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  16.667% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  21%,
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
+
+@keyframes sg-cometa-x {
+  0% {
+    transform: translateX(-100%);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  16.667% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  21%,
+  100% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+}
+
+/* O número acende quando a luz chega e apaga junto com o rastro. */
+@keyframes sg-parada {
+  0% {
+    background-color: var(--cor-texto);
+  }
+  3%,
+  50% {
+    background-color: var(--cor-destaque);
+  }
+  58%,
+  100% {
+    background-color: var(--cor-texto);
+  }
+}
+
+@keyframes sg-parada-anel {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  14%,
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
 /* Moldura de aparelho para as capturas: celular de bisel escuro e navegador. */
 [data-pagina="sagital"] .sg-celular {
   background: #16181b;

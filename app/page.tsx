@@ -13,6 +13,7 @@ import { GeradorDeLink } from "@/components/sagital/GeradorDeLink";
 import { MarcaSagital } from "@/components/sagital/MarcaSagital";
 import { Pacotes } from "@/components/sagital/Pacotes";
 import { PalcoDoDemo } from "@/components/sagital/PalcoDoDemo";
+import { PercursoDoProcesso } from "@/components/sagital/PercursoDoProcesso";
 import { BarraFixa } from "@/components/ui/BarraFixa";
 import { Carrossel } from "@/components/ui/Carrossel";
 import { Container } from "@/components/ui/Container";
@@ -363,34 +364,7 @@ export default function PaginaSagital() {
                   site.
                 </p>
               </div>
-              <ol className="grid sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-4">
-                {processo.map((passo, i) => (
-                  <li
-                    key={passo.titulo}
-                    className="group relative flex gap-4 pb-7 last:pb-0 sm:flex-col sm:gap-3 sm:pb-8"
-                  >
-                    <span
-                      aria-hidden
-                      className="absolute top-9 bottom-0 left-[15px] w-0.5 rounded-full bg-[var(--cor-borda)] group-last:hidden sm:hidden"
-                    />
-                    <span
-                      aria-hidden
-                      className="hidden h-[3px] rounded-full bg-[var(--cor-borda)] group-first:bg-destaque sm:block"
-                    />
-                    <span className="sg-num relative grid size-8 shrink-0 place-items-center rounded-full bg-texto text-sm font-bold text-white sm:mt-2">
-                      {i + 1}
-                    </span>
-                    <div className="min-w-0 pt-1 sm:pt-0">
-                      <h3 className="text-[1.0625rem] font-bold tracking-[-0.01em]">
-                        {passo.titulo}
-                      </h3>
-                      <p className="mt-1 text-[0.9375rem] text-texto-suave">
-                        {passo.texto}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <PercursoDoProcesso passos={processo} />
             </Container>
           </section>
 
