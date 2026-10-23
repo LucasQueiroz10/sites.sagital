@@ -63,7 +63,7 @@ export default function PaginaGerar() {
                 acesso.
               </p>
             </div>
-            <GeradorDeLink modo="completo" />
+            <GeradorDeLink />
             <PreparadorOffline
               paginas={["/", ...opcoes.map((d) => `/${d.nicho}`)]}
             />

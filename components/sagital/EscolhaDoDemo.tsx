@@ -12,7 +12,9 @@ import {
 } from "react";
 import { montarLinkDoDemo, type Nicho } from "@/lib/link";
 import { validarCor, validarNome, type PadraoDoTema } from "@/lib/tema";
+import { EscolhasDaPrevia } from "./EscolhasDaPrevia";
 import { PreviaAoVivo, type Aparelho } from "./PreviaAoVivo";
+import { QrDoDemo } from "./QrDoDemo";
 import { SeletorDeCor } from "./SeletorDeCor";
 
 type Captura = { src: StaticImageData; alt: string };
@@ -173,6 +175,24 @@ export function ProvedorDaEscolha({
           tituloDoSite={`Demo de ${demo.rotulo.toLowerCase()} para ${nomeExibido}`}
           link={link}
           rotuloDoBotao="Abrir o demo"
+          escolhas={
+            <EscolhasDaPrevia
+              demos={demos}
+              nicho={nicho}
+              aoEscolherNicho={setNicho}
+              nome={nome}
+              aoMudarNome={setNome}
+              nomePadrao={demo.padrao.nome}
+            />
+          }
+          acoes={
+            <QrDoDemo
+              link={link}
+              rotulo={demo.rotulo}
+              nomeExibido={nomeExibido}
+              className="shrink-0 px-3.5"
+            />
+          }
           controles={
             <SeletorDeCor
               nome="cor-da-previa"

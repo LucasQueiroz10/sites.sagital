@@ -50,6 +50,10 @@ type Props = {
   link: string | null;
   /** Controles extras na barra de baixo, como o seletor de cor dos demos. */
   controles?: ReactNode;
+  /** Escolhas no alto, acima do aparelho (o ramo e o nome, nos demos). */
+  escolhas?: ReactNode;
+  /** Ações ao lado do botão de abrir, como o QR code dos demos. */
+  acoes?: ReactNode;
   /** Texto do botão que abre o site fora da prévia. */
   rotuloDoBotao?: string;
 };
@@ -70,6 +74,8 @@ export function PreviaAoVivo({
   tituloDoSite,
   link,
   controles,
+  escolhas,
+  acoes,
   rotuloDoBotao = "Abrir o site",
 }: Props) {
   const dialogo = useRef<HTMLDialogElement>(null);
@@ -177,6 +183,8 @@ export function PreviaAoVivo({
         </div>
         <span aria-hidden />
       </div>
+
+      {escolhas}
 
       <div
         ref={palco}
@@ -303,9 +311,16 @@ export function PreviaAoVivo({
         </div>
         {controles && <div className="flex justify-center">{controles}</div>}
         {link && (
-          <BotaoSagital href={link} variante="inverso" className="lg:px-6">
-            {rotuloDoBotao}
-          </BotaoSagital>
+          <div className="flex items-center gap-2">
+            {acoes}
+            <BotaoSagital
+              href={link}
+              variante="inverso"
+              className="flex-1 lg:flex-none lg:px-6"
+            >
+              {rotuloDoBotao}
+            </BotaoSagital>
+          </div>
         )}
       </div>
     </dialog>

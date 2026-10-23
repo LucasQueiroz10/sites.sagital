@@ -7,18 +7,16 @@ import { useEscolha } from "./EscolhaDoDemo";
 import { FundoSoffit } from "./FundoSoffit";
 
 /**
- * O palco do topo no desktop: a captura real do demo escolhido no navegador
- * e no celular, trocando junto com o ramo em dois tempos (o navegador chega,
- * o celular vem logo atrás). Abre a prévia ao vivo.
+ * O palco da seção "Veja o site do seu negócio": a captura real do demo
+ * escolhido no navegador e no celular, trocando junto com o ramo em dois
+ * tempos (o navegador chega, o celular vem logo atrás). Abre a prévia ao
+ * vivo, onde o visitante escolhe o ramo, o nome e a cor.
  */
 export function PalcoDoDemo() {
   const { demos, nicho, demo, abrirPrevia } = useEscolha();
 
   return (
-    <div
-      data-revela
-      className="sg-noite relative hidden aspect-[6/5] overflow-hidden rounded-[32px] lg:sticky lg:top-24 lg:block"
-    >
+    <div className="sg-noite relative aspect-square overflow-hidden rounded-3xl text-left sm:aspect-[16/10] sm:rounded-[32px]">
       <FundoSoffit />
       {demos.map((d) => {
         const atual = d.nicho === nicho;
@@ -34,7 +32,7 @@ export function PalcoDoDemo() {
             {d.capturaDesktop && (
               <div
                 className={classes(
-                  "absolute top-[11%] left-[7%] w-[74%] overflow-hidden rounded-xl bg-[#e9eef4] shadow-[0_24px_60px_rgb(5_10_30/0.45)]",
+                  "absolute top-[11%] left-[7%] w-[74%] overflow-hidden rounded-xl bg-[#e9eef4] shadow-[0_24px_60px_rgb(5_10_30/0.45)] sm:top-[8%] sm:left-[8%] sm:w-[70%]",
                   "transition-transform duration-[520ms] ease-[cubic-bezier(.16,1,.3,1)]",
                   !atual && "translate-y-3",
                 )}
@@ -49,7 +47,7 @@ export function PalcoDoDemo() {
                     src={d.capturaDesktop.src}
                     alt={atual ? d.capturaDesktop.alt : ""}
                     fill
-                    sizes="(min-width: 1280px) 520px, 40vw"
+                    sizes="(min-width: 768px) 540px, 74vw"
                     className="object-cover object-top"
                   />
                 </div>
@@ -58,7 +56,7 @@ export function PalcoDoDemo() {
             {d.captura && (
               <div
                 className={classes(
-                  "sg-celular absolute top-[27%] right-[6%] w-[25%] rounded-[1.75rem] p-1.5",
+                  "sg-celular absolute top-[27%] right-[6%] w-[25%] rounded-[1.75rem] p-1.5 sm:top-[18%] sm:right-[7%] sm:w-[19%]",
                   "transition-transform delay-[70ms] duration-[520ms] ease-[cubic-bezier(.16,1,.3,1)]",
                   !atual && "translate-y-8",
                 )}
@@ -68,7 +66,7 @@ export function PalcoDoDemo() {
                     src={d.captura.src}
                     alt={atual ? d.captura.alt : ""}
                     fill
-                    sizes="(min-width: 1280px) 180px, 14vw"
+                    sizes="(min-width: 768px) 150px, 25vw"
                     className="object-cover object-top"
                   />
                 </div>
