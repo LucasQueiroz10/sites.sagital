@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { instrumentSerif, interTight } from "@/app/fontes";
 import type { SiteDoPortfolio } from "@/data/portfolio";
+import { TrilhoNoCelular } from "./TrilhoNoCelular";
 
 /** Ano dos trabalhos, ao lado do número de cada cartão. */
 const ANO = 2026;
@@ -16,9 +17,9 @@ const serifaItalica =
  * A vitrine dos trabalhos na página inicial: um cartão grande por site, na
  * cor da marca de cada cliente. No desktop os cartões grudam no topo um
  * pouco abaixo do anterior, e o seguinte sobe por cima dele, como uma pilha
- * de pastas: ao fim, as bordas de todos ficam à vista. No celular, onde o
- * cartão é mais alto que a tela, eles só vêm um depois do outro. A lista
- * completa, com a prévia ao vivo, fica em /trabalhos.
+ * de pastas: ao fim, as bordas de todos ficam à vista. No tablet eles só vêm
+ * um depois do outro; no celular, num trilho com seta. A lista completa,
+ * com a prévia ao vivo, fica em /trabalhos.
  */
 export function VitrineDeTrabalhos({ sites }: { sites: SiteDoPortfolio[] }) {
   return (
@@ -56,22 +57,27 @@ export function VitrineDeTrabalhos({ sites }: { sites: SiteDoPortfolio[] }) {
           </Link>
         </div>
 
-        <ol className="mt-10 grid gap-5 sm:mt-14 lg:gap-8">
-          {sites.map((site, i) => (
-            <li
-              key={site.id}
-              data-revela
-              className="lg:sticky lg:top-[calc(5rem+var(--degrau)*1.5rem)]"
-              style={{ "--degrau": i } as CSSProperties}
-            >
-              <CartaoDoTrabalho
-                site={site}
-                numero={i + 1}
-                total={sites.length}
-              />
-            </li>
-          ))}
-        </ol>
+        <div className="mt-10 sm:mt-14">
+          <TrilhoNoCelular
+            rotulo="Trabalhos"
+            className="sm:grid sm:gap-5 lg:gap-8"
+          >
+            {sites.map((site, i) => (
+              <li
+                key={site.id}
+                data-revela
+                className="flex lg:sticky lg:top-[calc(5rem+var(--degrau)*1.5rem)]"
+                style={{ "--degrau": i } as CSSProperties}
+              >
+                <CartaoDoTrabalho
+                  site={site}
+                  numero={i + 1}
+                  total={sites.length}
+                />
+              </li>
+            ))}
+          </TrilhoNoCelular>
+        </div>
       </div>
     </section>
   );
@@ -90,7 +96,7 @@ function CartaoDoTrabalho({
   return (
     <article
       aria-labelledby={`trabalho-${site.id}`}
-      className="group relative grid overflow-hidden rounded-[28px] text-white shadow-[0_-18px_50px_-12px_rgb(2_8_23/0.55)] lg:h-[min(34rem,calc(100vh-11rem))] lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
+      className="group relative grid w-full overflow-hidden rounded-[28px] text-white shadow-[0_-18px_50px_-12px_rgb(2_8_23/0.55)] lg:h-[min(34rem,calc(100vh-11rem))] lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
       style={{ backgroundColor: site.cor }}
     >
       <div className="relative z-10 flex flex-col gap-6 p-6 sm:p-8 lg:justify-between lg:p-10">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { instrumentSerif, interTight } from "@/app/fontes";
 import type { Demo } from "@/data/sagital";
 import { classes } from "@/lib/classes";
+import { TrilhoNoCelular } from "./TrilhoNoCelular";
 
 /** Ano dos demos, ao lado da etiqueta de cada quadro. */
 const ANO = 2026;
@@ -25,11 +26,10 @@ const serifaItalica =
  * partir de uma referência de portfólio): quadros com uma foto do próprio
  * demo e o celular mostrando a primeira tela real dele. Duas fileiras
  * desencontradas: grande e pequeno (o pequeno mais baixo), depois pequeno e
- * grande. A lista completa, com a prévia ao vivo, fica em /demos.
+ * grande; no celular, um trilho com seta. A lista completa, com a prévia ao
+ * vivo, fica em /demos.
  */
 export function VitrineDeDemos({ demos }: { demos: Demo[] }) {
-  const fileiras = [demos.slice(0, 2), demos.slice(2, 4)];
-
   return (
     <section
       id="demos"
@@ -65,38 +65,37 @@ export function VitrineDeDemos({ demos }: { demos: Demo[] }) {
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-y-10 sm:mt-14 sm:gap-y-14">
-          {fileiras.map((fileira, f) => (
-            <ul
-              key={f}
-              className={classes(
-                "grid gap-x-5 gap-y-10 lg:gap-x-6",
-                // A primeira fileira abre com o quadro grande; a segunda, com o pequeno.
-                f === 0
-                  ? "sm:grid-cols-[minmax(0,1.42fr)_minmax(0,1fr)]"
-                  : "sm:grid-cols-[minmax(0,1fr)_minmax(0,1.42fr)]",
-              )}
-            >
-              {fileira.map((demo, i) => {
-                const indice = f * 2 + i;
-                const grande = f === 0 ? i === 0 : i === 1;
-                return (
-                  <li
-                    key={demo.nicho}
-                    data-revela
+        {/* Uma lista só. No celular, um trilho com seta; a partir de 640px,
+            as duas fileiras desencontradas, numa grade de três colunas
+            (1fr / 0,42fr / 1fr): o quadro grande ocupa duas, o pequeno uma.
+            Na primeira fileira o grande vem antes; na segunda, depois. */}
+        <div className="mt-10 sm:mt-14">
+          <TrilhoNoCelular
+            rotulo="Demos"
+            className="sm:grid sm:grid-cols-[minmax(0,1fr)_minmax(0,0.42fr)_minmax(0,1fr)] sm:gap-x-5 sm:gap-y-14 lg:gap-x-6"
+          >
+            {demos.map((demo, indice) => {
+              const grande = indice === 0 || indice === 3;
+              return (
+                <li
+                  key={demo.nicho}
+                  data-revela
+                  className={classes(
+                    indice === 0 && "sm:col-span-2",
                     // Na primeira fileira, o quadro pequeno desce um pouco.
-                    className={classes(f === 0 && !grande && "sm:mt-[22%]")}
-                  >
-                    <QuadroDoDemo
-                      demo={demo}
-                      grande={grande}
-                      posicao={POSICOES_DO_CELULAR[indice] ?? "right-[9%]"}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-          ))}
+                    indice === 1 && "sm:mt-[22%]",
+                    indice === 3 && "sm:col-span-2",
+                  )}
+                >
+                  <QuadroDoDemo
+                    demo={demo}
+                    grande={grande}
+                    posicao={POSICOES_DO_CELULAR[indice] ?? "right-[9%]"}
+                  />
+                </li>
+              );
+            })}
+          </TrilhoNoCelular>
         </div>
       </div>
     </section>
