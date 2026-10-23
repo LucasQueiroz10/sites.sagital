@@ -20,6 +20,7 @@ const navegacao = [
   { rotulo: "Trabalhos", href: "/trabalhos" },
   { rotulo: "Como funciona", href: "/#como-funciona" },
   { rotulo: "Pacotes", href: "/#pacotes" },
+  { rotulo: "Premium", href: "/premium" },
 ];
 
 /**

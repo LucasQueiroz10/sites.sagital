@@ -17,8 +17,8 @@ type Props = {
   paleta: string[];
   /** Texto do botão de abrir; o complemento vai só para leitores de tela. */
   abrir: { rotulo: string; complemento: string };
-  /** O olho da prévia ao vivo. */
-  previa: ReactNode;
+  /** O olho da prévia ao vivo (os projetos premium ainda não têm). */
+  previa?: ReactNode;
 };
 
 /**

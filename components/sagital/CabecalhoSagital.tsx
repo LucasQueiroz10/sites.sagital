@@ -9,13 +9,14 @@ import { montarLinkWhatsApp } from "@/lib/whatsapp";
 import { BotaoContato } from "./BotaoContato";
 import { MarcaSagital } from "./MarcaSagital";
 
-// "Demos" e "Trabalhos" abrem as páginas com todos; o resto são seções da página
+// "Demos", "Trabalhos" e "Premium" abrem as próprias páginas; o resto são seções da página
 // inicial (na própria página, a viagem até a âncora continua animada).
 const navegacao = [
   { rotulo: "Demos", href: "/demos" },
   { rotulo: "Trabalhos", href: "/trabalhos" },
   { rotulo: "Como funciona", href: "/#como-funciona" },
   { rotulo: "Pacotes", href: "/#pacotes" },
+  { rotulo: "Premium", href: "/premium" },
 ];
 
 /**

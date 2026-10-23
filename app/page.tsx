@@ -294,6 +294,46 @@ export default function PaginaSagital() {
               </Container>
             </section>
 
+            {/* Para quem não se viu nos pacotes: a ponte para /premium. */}
+            <section
+              id="premium"
+              aria-labelledby="premium-titulo"
+              data-revela-grupo
+              className="scroll-mt-20 border-t border-[var(--sg-borda-sutil)] py-14 sm:py-20"
+            >
+              <Container
+                largura="larga"
+                className="grid gap-6 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-14"
+              >
+                <h2 id="premium-titulo" data-revela className={tituloDeSecao}>
+                  Não encontrou o que procurava?
+                </h2>
+                <div
+                  data-revela
+                  className="grid max-w-[60ch] justify-items-start gap-6"
+                >
+                  <p className="text-[1.0625rem] leading-relaxed text-texto-suave">
+                    Conheça os projetos premium: sites com identidade feita do
+                    zero e recursos sob medida para o seu negócio, com preço e
+                    prazo combinados com você.
+                  </p>
+                  <BotaoSagital
+                    href="/premium"
+                    variante="contorno"
+                    tamanho="medio"
+                    className="group"
+                  >
+                    Ver projetos premium
+                    <ArrowRight
+                      aria-hidden
+                      className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+                      strokeWidth={2}
+                    />
+                  </BotaoSagital>
+                </div>
+              </Container>
+            </section>
+
             <section
               aria-labelledby="contato-titulo"
               className="pb-14 sm:pb-20"
