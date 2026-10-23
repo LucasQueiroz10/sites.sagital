@@ -6,6 +6,10 @@ import demoTabacaria from "@/public/imagens/sagital/demo-tabacaria.png";
 import demoTabacariaDesktop from "@/public/imagens/sagital/demo-tabacaria-desktop.png";
 import demoVarejo from "@/public/imagens/sagital/demo-varejo.png";
 import demoVarejoDesktop from "@/public/imagens/sagital/demo-varejo-desktop.png";
+import cenarioAcademia from "@/public/imagens/academia/bike.jpg";
+import cenarioRestaurante from "@/public/imagens/restaurante/limoes.jpg";
+import cenarioTabacaria from "@/public/imagens/tabacaria/poltrona-lareira.jpg";
+import cenarioVarejo from "@/public/imagens/varejo/feminino-banner.jpg";
 import type { Nicho } from "@/lib/link";
 import type { PadraoDoTema } from "@/lib/tema";
 import { academia } from "./academia";
@@ -29,6 +33,10 @@ export type Demo = {
   /** Etiqueta de origem: a paleta e a fonte de cada demo. */
   paleta: `#${string}`[];
   fonte: string;
+  /** Vitrine da página inicial: o que o negócio é, em poucas palavras. */
+  resumo: string;
+  /** Foto do próprio demo atrás do celular, na vitrine; `foco` é o object-position. */
+  cenario: Imagem & { foco: string };
 };
 
 export const demos: Demo[] = [
@@ -48,6 +56,12 @@ export const demos: Demo[] = [
     },
     paleta: ["#ffffff", "#d42a16", "#12161c"],
     fonte: "Sofia Sans Condensed",
+    resumo: "academia de bairro",
+    cenario: {
+      src: cenarioAcademia,
+      alt: "Turma de bike indoor pedalando lado a lado diante de uma parede de blocos",
+      foco: "30% 50%",
+    },
   },
   {
     nicho: "varejo",
@@ -65,6 +79,12 @@ export const demos: Demo[] = [
     },
     paleta: ["#ffffff", "#f5f5f5", "#121212"],
     fonte: "Hanken Grotesk",
+    resumo: "loja de básicos",
+    cenario: {
+      src: cenarioVarejo,
+      alt: "Mulher de camiseta branca e calça jeans num estúdio cinza",
+      foco: "50% 22%",
+    },
   },
   {
     nicho: "restaurante",
@@ -82,6 +102,12 @@ export const demos: Demo[] = [
     },
     paleta: ["#fbf6ea", "#8fb0f0", "#15355a"],
     fonte: "Libre Caslon Condensed",
+    resumo: "comida natural",
+    cenario: {
+      src: cenarioRestaurante,
+      alt: "Limões cortados sobre um caminho de mesa de linho verde",
+      foco: "40% 50%",
+    },
   },
   {
     nicho: "tabacaria",
@@ -99,6 +125,12 @@ export const demos: Demo[] = [
     },
     paleta: ["#120e0b", "#a8835a", "#efe6d8"],
     fonte: "Marcellus",
+    resumo: "tabacaria e lounge",
+    cenario: {
+      src: cenarioTabacaria,
+      alt: "Poltrona de couro ao lado de uma lareira, na penumbra",
+      foco: "60% 50%",
+    },
   },
 ];
 

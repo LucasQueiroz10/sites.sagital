@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { BotaoContato } from "@/components/sagital/BotaoContato";
-import { BotaoDePrevia } from "@/components/sagital/BotaoDePrevia";
 import { BotaoDePreviaDoSite } from "@/components/sagital/BotaoDePreviaDoSite";
 import { BotaoSagital } from "@/components/sagital/BotaoSagital";
 import { CabecalhoSagital } from "@/components/sagital/CabecalhoSagital";
@@ -14,6 +13,7 @@ import { PalcoDoDemo } from "@/components/sagital/PalcoDoDemo";
 import { PercursoDoProcesso } from "@/components/sagital/PercursoDoProcesso";
 import { RevelarAoRolar } from "@/components/sagital/RevelarAoRolar";
 import { RodapeSagital } from "@/components/sagital/RodapeSagital";
+import { VitrineDeDemos } from "@/components/sagital/VitrineDeDemos";
 import { BarraFixa } from "@/components/ui/BarraFixa";
 import { Carrossel } from "@/components/ui/Carrossel";
 import { Container } from "@/components/ui/Container";
@@ -164,96 +164,7 @@ export default function PaginaSagital() {
             </Container>
           </section>
 
-          <section
-            id="demos"
-            data-revela-grupo
-            aria-labelledby="demos-titulo"
-            className="scroll-mt-20 pt-6 pb-14 sm:pb-20"
-          >
-            <Carrossel
-              rotulo="Demos"
-              cabecalho={
-                <>
-                  <h2 id="demos-titulo" data-revela className={tituloDeSecao}>
-                    Quatro demos, cada um com a cara do ramo
-                  </h2>
-                  <p data-revela className={apoioDeSecao}>
-                    São pontos de partida, não limites: o seu site é feito para
-                    o seu negócio, seja qual for o ramo. Toque no olho e veja o
-                    demo ao vivo no celular, no tablet e no computador.
-                  </p>
-                </>
-              }
-            >
-              {demos.map((demo) => (
-                <li
-                  data-revela
-                  key={demo.nicho}
-                  className="w-[78%] max-w-[19rem] shrink-0 snap-start sm:w-[19rem] lg:w-[calc((100%-3rem)/4)] lg:max-w-none"
-                >
-                  <article
-                    aria-labelledby={`demo-${demo.nicho}`}
-                    className="flex h-full flex-col"
-                  >
-                    <Link
-                      href={`/${demo.nicho}`}
-                      tabIndex={-1}
-                      aria-hidden
-                      className="group relative block aspect-[4/5] overflow-hidden rounded-xl bg-superficie px-5 pt-5"
-                    >
-                      <span className="relative block h-full overflow-hidden rounded-t-[1.25rem] shadow-[0_2px_10px_rgb(17_26_61/0.1)]">
-                        <Image
-                          src={demo.captura.src}
-                          alt={demo.captura.alt}
-                          fill
-                          sizes="(min-width: 1024px) 18rem, (min-width: 640px) 17rem, 70vw"
-                          className="object-cover object-top transition-transform duration-[360ms] ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-[1.03]"
-                        />
-                      </span>
-                    </Link>
-                    <div className="mt-4 flex items-center justify-between gap-3">
-                      <h3
-                        id={`demo-${demo.nicho}`}
-                        className="text-lg font-bold tracking-[-0.015em]"
-                      >
-                        {demo.rotulo}
-                      </h3>
-                      <span aria-hidden className="flex">
-                        {demo.paleta.map((cor) => (
-                          <span
-                            key={cor}
-                            className="-ml-1.5 size-5 rounded-full border-2 border-white shadow-[0_0_0_1px_var(--sg-borda-sutil)] first:ml-0"
-                            style={{ backgroundColor: cor }}
-                          />
-                        ))}
-                      </span>
-                    </div>
-                    <p className="mt-1.5 text-[0.9375rem] text-texto-suave">
-                      {demo.descricao}
-                    </p>
-                    <p className="mt-1.5 text-[0.8125rem] text-[var(--sg-terciario)]">
-                      Fonte {demo.fonte}
-                    </p>
-                    <div className="mt-auto flex gap-2 pt-4">
-                      <BotaoSagital
-                        href={`/${demo.nicho}`}
-                        variante="secundario"
-                        tamanho="medio"
-                        className="flex-1"
-                      >
-                        Abrir o demo
-                        <span className="sr-only">
-                          {" "}
-                          de {demo.rotulo.toLowerCase()}
-                        </span>
-                      </BotaoSagital>
-                      <BotaoDePrevia nicho={demo.nicho} rotulo={demo.rotulo} />
-                    </div>
-                  </article>
-                </li>
-              ))}
-            </Carrossel>
-          </section>
+          <VitrineDeDemos demos={demos} />
 
           <section
             id="portfolio"
