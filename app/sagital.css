@@ -35,7 +35,6 @@
       radial-gradient(120% 90% at 0% 100%, #2a9ac4 0%, rgb(42 154 196 / 0) 45%),
       linear-gradient(160deg, #141b3b 0%, #18266a 55%, #1f3cae 100%);
     --sg-promo: linear-gradient(100deg, #15214a 0%, #22357f 70%, #2c44a3 100%);
-    --sg-sombra-sm: 0 2px 8px rgb(17 26 61 / 0.06);
     --sg-sombra-md: 0 6px 20px rgb(17 26 61 / 0.08);
     --sg-sombra-lg: 0 16px 48px rgb(17 26 61 / 0.14);
     --sg-sombra-botao: 0 6px 16px rgb(31 72 194 / 0.24);
