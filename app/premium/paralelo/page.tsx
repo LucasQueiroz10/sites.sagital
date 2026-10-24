@@ -9,9 +9,11 @@ import type { Metadata, Viewport } from "next";
 import { jakarta } from "@/app/fontes";
 import { RodapeDoPortfolio } from "@/components/portfolio/RodapeDoPortfolio";
 import { Abertura } from "@/components/premium/paralelo/Abertura";
+import { Contador } from "@/components/premium/paralelo/Contador";
 import { Contato } from "@/components/premium/paralelo/Contato";
 import { ExemploDaApi } from "@/components/premium/paralelo/ExemploDaApi";
 import { Planos } from "@/components/premium/paralelo/Planos";
+import { RevelarAoRolar } from "@/components/premium/paralelo/RevelarAoRolar";
 import { Simulador } from "@/components/premium/paralelo/Simulador";
 import { VoltarParaSagital } from "@/components/VoltarParaSagital";
 import {
@@ -44,25 +46,26 @@ const ICONES = {
   checkout: ShoppingBag,
 } as const;
 
+/** Título e texto de abertura de cada seção, que entram ao rolar. */
 function Cabeca({
   id,
-  rotulo,
   titulo,
   texto,
 }: {
   id: string;
-  rotulo: string;
   titulo: string;
   texto?: string;
 }) {
   return (
     <div className="max-w-[44rem]">
-      <p className="pa-rotulo">{rotulo}</p>
-      <h2 id={id} className="pa-h2 mt-4">
+      <h2 id={id} className="pa-h2" data-revela="titulo">
         {titulo}
       </h2>
       {texto && (
-        <p className="mt-5 max-w-[56ch] text-[1.0625rem] leading-relaxed text-[var(--texto-suave)]">
+        <p
+          data-revela="texto"
+          className="mt-5 max-w-[56ch] text-[1.0625rem] leading-relaxed text-[var(--texto-suave)]"
+        >
           {texto}
         </p>
       )}
@@ -78,20 +81,31 @@ export default function PaginaDaParalelo() {
       className={`${jakarta.variable} min-h-dvh`}
     >
       <Abertura />
+      <RevelarAoRolar />
 
       <main>
         {/* Números logo abaixo do globo. */}
         <section aria-label="A Paralelo em números" className="border-b border-[var(--linha)]">
-          <dl className={`${container} grid grid-cols-2 lg:grid-cols-4`}>
+          <dl
+            data-revela-grupo
+            className={`${container} grid grid-cols-2 lg:grid-cols-4`}
+          >
             {numeros.map((n, i) => (
               <div
                 key={n.legenda}
+                data-revela
                 className={`border-[var(--linha)] py-8 sm:py-10 ${i % 2 ? "border-l pl-5 sm:pl-8" : ""} ${i > 1 ? "border-t lg:border-t-0" : ""} ${i === 2 ? "lg:border-l lg:pl-8" : ""}`}
               >
                 <dt className="sr-only">{n.legenda}</dt>
                 <dd>
                   <span className="block text-[clamp(1.75rem,1.3rem+1.8vw,2.5rem)] font-medium tracking-[-0.03em] text-white tabular-nums">
-                    {n.valor}
+                    <Contador
+                      valor={n.valor}
+                      de={n.de}
+                      casas={n.casas}
+                      prefixo={n.prefixo}
+                      sufixo={n.sufixo}
+                    />
                   </span>
                   <span className="mt-1 block text-[0.9375rem] text-[var(--texto-suave)]">
                     {n.legenda}
@@ -110,15 +124,18 @@ export default function PaginaDaParalelo() {
           <div className={container}>
             <Cabeca
               id="produtos-titulo"
-              rotulo="Produtos"
               titulo="Uma conta para o dinheiro que cruza a fronteira"
               texto="Receber, pagar, guardar e vender em outras moedas, sem abrir conta lá fora e sem esperar o banco."
             />
-            <ul className="mt-12 grid gap-4 sm:grid-cols-2">
+            <ul data-revela-grupo className="mt-12 grid gap-4 sm:grid-cols-2">
               {produtos.map((p) => {
                 const Icone = ICONES[p.id];
                 return (
-                  <li key={p.id} className="pa-cartao flex flex-col p-6 sm:p-8">
+                  <li
+                    key={p.id}
+                    data-revela
+                    className="pa-cartao flex flex-col p-6 sm:p-8"
+                  >
                     <span className="grid size-11 place-items-center rounded-full bg-[var(--roxo-fundo)] text-[var(--roxo)]">
                       <Icone aria-hidden className="size-5" strokeWidth={1.75} />
                     </span>
@@ -156,12 +173,13 @@ export default function PaginaDaParalelo() {
             <div className="lg:sticky lg:top-28">
               <Cabeca
                 id="simulador-titulo"
-                rotulo="Simulador"
                 titulo="Quanto chega do outro lado"
                 texto="Coloque um valor e veja a conta inteira: cotação, tarifa, imposto e o que sobra. Ao lado, o mesmo envio num banco tradicional."
               />
             </div>
-            <Simulador />
+            <div data-revela className="min-w-0">
+              <Simulador />
+            </div>
           </div>
         </section>
 
@@ -173,7 +191,6 @@ export default function PaginaDaParalelo() {
           <div className={container}>
             <Cabeca
               id="precos-titulo"
-              rotulo="Preços"
               titulo="Planos que crescem com a operação"
               texto="Sem taxa de abertura nem de manutenção no plano Início. Quanto mais movimenta, menor a tarifa."
             />
@@ -194,22 +211,31 @@ export default function PaginaDaParalelo() {
             <div>
               <Cabeca
                 id="desenvolvedores-titulo"
-                rotulo="Desenvolvedores"
                 titulo="Uma cobrança em dólar, cinco linhas de código"
                 texto="Integre recebimentos e pagamentos ao seu sistema, à sua loja ou ao seu ERP."
               />
-              <ul className="mt-10 grid gap-6">
+              <ul data-revela-grupo className="mt-10 grid gap-6">
                 {recursosDaApi.map((r) => (
-                  <li key={r.titulo} className="border-l-2 border-[var(--roxo-forte)] pl-5">
+                  <li
+                    key={r.titulo}
+                    data-revela
+                    className="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-x-3"
+                  >
+                    <span
+                      aria-hidden
+                      className="mt-[0.45rem] size-2 rounded-full bg-[var(--roxo)] shadow-[0_0_14px_rgb(167_139_250/0.7)]"
+                    />
                     <h3 className="font-semibold text-white">{r.titulo}</h3>
-                    <p className="mt-1 leading-relaxed text-[var(--texto-suave)]">
+                    <p className="col-start-2 mt-1 leading-relaxed text-[var(--texto-suave)]">
                       {r.texto}
                     </p>
                   </li>
                 ))}
               </ul>
             </div>
-            <ExemploDaApi />
+            <div data-revela className="min-w-0">
+              <ExemploDaApi />
+            </div>
           </div>
         </section>
 
@@ -223,13 +249,16 @@ export default function PaginaDaParalelo() {
           >
             <Cabeca
               id="recursos-titulo"
-              rotulo="Recursos"
               titulo="Dúvidas de quem está começando"
               texto="O que mais perguntam antes de abrir a conta. Não achou a sua? O time de vendas responde."
             />
-            <ul className="border-t border-[var(--linha)]">
+            <ul data-revela-grupo className="border-t border-[var(--linha)]">
               {perguntas.map((p, i) => (
-                <li key={p.pergunta} className="border-b border-[var(--linha)]">
+                <li
+                  key={p.pergunta}
+                  data-revela
+                  className="border-b border-[var(--linha)]"
+                >
                   <details className="pa-pergunta group" open={i === 0}>
                     <summary className="flex items-start justify-between gap-6 py-5 text-[1.0625rem] font-medium text-white sm:text-[1.1875rem]">
                       {p.pergunta}
@@ -266,11 +295,12 @@ export default function PaginaDaParalelo() {
           >
             <Cabeca
               id="comecar-titulo"
-              rotulo="Comece hoje"
               titulo="Abra a conta ou fale com quem entende de câmbio"
               texto="Conta aberta em até um dia útil, tudo pelo celular. Para volumes grandes ou integração pela API, o time de vendas monta a proposta."
             />
-            <Contato />
+            <div data-revela className="min-w-0">
+              <Contato />
+            </div>
           </div>
         </section>
       </main>

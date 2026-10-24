@@ -4,6 +4,7 @@ import { Check } from "lucide-react";
 import { useState } from "react";
 import { DESCONTO_ANUAL, planos } from "@/data/paralelo";
 import { classes } from "@/lib/classes";
+import { Contador } from "./Contador";
 import { escolher } from "./escolha";
 import { Seta } from "./Seta";
 
@@ -14,8 +15,9 @@ const percentual = (taxa: number) =>
   `${(taxa * 100).toLocaleString("pt-BR", { maximumFractionDigits: 2 })}%`;
 
 /**
- * Os três planos, com a troca entre mensal e anual. O botão de cada plano
- * leva ao formulário já com o plano marcado (Escala vai para vendas).
+ * Os três planos, com a troca entre mensal e anual (o preço conta até o
+ * valor novo). O botão de cada plano leva ao formulário já com o plano
+ * marcado (Escala vai para vendas).
  */
 export function Planos() {
   const [anual, setAnual] = useState(false);
@@ -44,7 +46,7 @@ export function Planos() {
         </p>
       </div>
 
-      <ul className="mt-8 grid gap-4 lg:grid-cols-3">
+      <ul data-revela-grupo className="mt-8 grid gap-4 lg:grid-cols-3">
         {planos.map((p) => {
           const mensal =
             p.mensal === null
@@ -56,6 +58,7 @@ export function Planos() {
           return (
             <li
               key={p.id}
+              data-revela
               className={classes(
                 "pa-cartao relative flex flex-col p-6 sm:p-7",
                 p.destaque &&
@@ -87,7 +90,7 @@ export function Planos() {
                       R$
                     </span>
                     <span className="text-[2.75rem] leading-none font-medium tracking-[-0.04em] text-white tabular-nums">
-                      {reais(mensal)}
+                      <Contador valor={mensal} />
                     </span>
                     <span className="text-[0.9375rem] text-[var(--texto-suave)]">
                       /mês

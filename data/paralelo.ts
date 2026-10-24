@@ -27,12 +27,29 @@ export const globo = {
     "Globo terrestre desenhado em pontos roxos sobre um céu de estrelas, girando devagar",
 } as const;
 
-export const numeros = [
-  { valor: "R$ 2,4 bi", legenda: "movimentados por ano" },
-  { valor: "34", legenda: "moedas e 6 stablecoins" },
-  { valor: "180", legenda: "países para receber e pagar" },
-  { valor: "D+0", legenda: "liquidação em reais" },
-] as const;
+/**
+ * Os números logo abaixo do globo. Cada um conta de `de` até `valor` quando
+ * aparece na tela; a liquidação conta para baixo, de D+3 até D+0.
+ */
+export const numeros: {
+  valor: number;
+  legenda: string;
+  de?: number;
+  casas?: number;
+  prefixo?: string;
+  sufixo?: string;
+}[] = [
+  {
+    prefixo: "R$ ",
+    valor: 2.4,
+    casas: 1,
+    sufixo: " bi",
+    legenda: "movimentados por ano",
+  },
+  { valor: 34, legenda: "moedas e 6 stablecoins" },
+  { valor: 180, legenda: "países para receber e pagar" },
+  { prefixo: "D+", valor: 0, de: 3, legenda: "liquidação em reais" },
+];
 
 export const produtos = [
   {

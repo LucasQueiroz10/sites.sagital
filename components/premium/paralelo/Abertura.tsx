@@ -58,10 +58,10 @@ export function Abertura() {
     };
   }, []);
 
-  // A barra ganha fundo quando a abertura sai de baixo dela.
+  // A barra ganha fundo assim que a página rola: transparente, o texto da
+  // abertura passaria por baixo dos links.
   useEffect(() => {
-    const atualizar = () =>
-      setSolida(window.scrollY > window.innerHeight - 90);
+    const atualizar = () => setSolida(window.scrollY > 16);
     atualizar();
     window.addEventListener("scroll", atualizar, { passive: true });
     window.addEventListener("resize", atualizar);

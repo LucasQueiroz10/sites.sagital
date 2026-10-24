@@ -37,6 +37,7 @@
 
     --e-revela: cubic-bezier(0.16, 1, 0.3, 1);
     --e-suave: cubic-bezier(0.25, 0.8, 0.3, 1);
+    --e-toque: cubic-bezier(0.23, 1, 0.32, 1);
 
     background: var(--fundo);
     color: var(--texto);
@@ -201,7 +202,8 @@
     letter-spacing: calc(-0.15 * var(--u));
     transition:
       background 0.18s ease,
-      color 0.18s ease;
+      color 0.18s ease,
+      scale 0.16s var(--e-toque);
   }
   .pa-btn-entrar:hover {
     background: #232323;
@@ -219,7 +221,9 @@
     font-weight: 500;
     letter-spacing: 0;
     gap: calc(7 * var(--u));
-    transition: background 0.18s ease;
+    transition:
+      background 0.18s ease,
+      scale 0.16s var(--e-toque);
   }
   .pa-btn-comecar:hover {
     background: #fff;
@@ -246,6 +250,12 @@
     border: 0;
     cursor: pointer;
     padding: 0;
+    transition: scale 0.16s var(--e-toque);
+  }
+  /* O toque: o botão afunda um pouco sob o dedo. */
+  .pa-btn:active,
+  .pa-burger:active {
+    scale: 0.97;
   }
   .pa-burger span {
     display: block;
@@ -330,7 +340,7 @@
     padding-right: calc(19.2 * var(--u));
     transition:
       background 0.18s ease,
-      transform 0.18s ease;
+      scale 0.16s var(--e-toque);
   }
   .pa-btn-primario:hover {
     background: #fff;
@@ -344,7 +354,8 @@
     backdrop-filter: blur(2px);
     transition:
       background 0.18s ease,
-      border-color 0.18s ease;
+      border-color 0.18s ease,
+      scale 0.16s var(--e-toque);
   }
   .pa-btn-vidro:hover {
     background: rgb(0 0 0 / 0.66);
@@ -749,25 +760,6 @@
     scroll-margin-top: 4.5rem;
   }
 
-  .pa-rotulo {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--roxo);
-  }
-  .pa-rotulo::before {
-    content: "";
-    width: 0.375rem;
-    height: 0.375rem;
-    border-radius: 99px;
-    background: currentColor;
-    box-shadow: 0 0 12px currentColor;
-  }
-
   .pa-h2 {
     font-weight: 500;
     font-size: clamp(2.125rem, 1.4rem + 3vw, 3.75rem);
@@ -944,6 +936,78 @@
   }
   .pa-pergunta[open] .pa-pergunta-icone {
     transform: rotate(45deg);
+  }
+  /* A resposta desce pela altura em vez de saltar (onde o navegador sabe
+     animar até height: auto; nos outros, abre como sempre). */
+  @supports (interpolate-size: allow-keywords) {
+    .pa-pergunta {
+      interpolate-size: allow-keywords;
+    }
+    .pa-pergunta::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition:
+        block-size 0.32s var(--e-revela),
+        opacity 0.24s ease,
+        content-visibility 0.32s allow-discrete;
+    }
+    .pa-pergunta[open]::details-content {
+      block-size: auto;
+      opacity: 1;
+    }
+  }
+
+  /* ---------- revelar ao rolar (RevelarAoRolar.tsx) ---------- */
+  /* Os três gestos da abertura, levados para o resto da página. Só se
+     escondem depois que o script arma a página (data-revela-pronto). */
+  [data-premium="paralelo"] [data-revela] {
+    transition:
+      opacity 0.7s var(--e-revela),
+      translate 0.8s var(--e-revela),
+      scale 0.8s var(--e-revela);
+    transition-delay: calc(var(--revela-ordem, 0) * 70ms);
+  }
+  [data-premium="paralelo"][data-revela-pronto] [data-revela]:not([data-revelado]) {
+    opacity: 0;
+    translate: 0 1.125rem;
+    scale: 0.985;
+  }
+
+  /* Título: sobe por trás de uma máscara, como as linhas do título da
+     abertura. O recorte acompanha o deslocamento, então só aparece o que já
+     passou da borda de baixo. */
+  [data-premium="paralelo"] [data-revela="titulo"] {
+    clip-path: inset(-0.3em -0.3em -0.3em -0.3em);
+    transition:
+      translate 1s var(--e-revela),
+      clip-path 1s var(--e-revela);
+  }
+  [data-premium="paralelo"][data-revela-pronto] [data-revela="titulo"]:not([data-revelado]) {
+    opacity: 1;
+    scale: 1;
+    translate: 0 100%;
+    clip-path: inset(-0.3em -0.3em 100% -0.3em);
+  }
+
+  /* Texto: sobe e sai do desfoque, como o subtítulo da abertura. */
+  [data-premium="paralelo"] [data-revela="texto"] {
+    transition:
+      opacity 0.85s var(--e-revela),
+      translate 0.85s var(--e-revela),
+      filter 0.85s var(--e-revela);
+    transition-delay: 0.12s;
+  }
+  [data-premium="paralelo"][data-revela-pronto] [data-revela="texto"]:not([data-revelado]) {
+    scale: 1;
+    translate: 0 0.875rem;
+    filter: blur(4px);
+  }
+  /* No celular, sem o desfoque (o mesmo corte da abertura). */
+  @media (max-width: 552px) {
+    [data-premium="paralelo"][data-revela-pronto] [data-revela="texto"]:not([data-revelado]) {
+      filter: none;
+    }
   }
 
   .pa-dialogo {
