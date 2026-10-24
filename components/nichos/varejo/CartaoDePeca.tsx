@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useId, useRef, useState } from "react";
+import { useId, useRef, useState, type CSSProperties } from "react";
 import { BotaoWhatsApp } from "@/components/BotaoWhatsApp";
 import { Botao } from "@/components/ui/Botao";
 import type { DadosDoVarejo, Peca, Tamanho } from "@/data/tipos";
@@ -15,6 +15,13 @@ type Props = {
   rotuloDoNicho: string;
   /** Classes de largura do item na trilha. */
   className?: string;
+  /** Estilo do item (a ordem de chegada, quando a grade é filtrada). */
+  estilo?: CSSProperties;
+  /**
+   * Entra com a rolagem (RevelarAoRolar). Desligado na grade filtrável: lá
+   * os cartões nascem a cada filtro, depois que a página já foi armada.
+   */
+  revela?: boolean;
 };
 
 /**
@@ -26,6 +33,8 @@ export function CartaoDePeca({
   parcelamento,
   rotuloDoNicho,
   className,
+  estilo,
+  revela = true,
 }: Props) {
   const id = useId();
   const cartao = useRef<HTMLLIElement>(null);
@@ -61,6 +70,8 @@ export function CartaoDePeca({
   return (
     <li
       ref={cartao}
+      data-revela={revela ? "cartao" : undefined}
+      style={estilo}
       className={classes("flex shrink-0 snap-start flex-col", className)}
     >
       <div className="group relative aspect-[3/4] overflow-hidden rounded-lg bg-superficie">

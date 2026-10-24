@@ -54,15 +54,37 @@
   outline-color: #ffffff;
 }
 
-/* A foto da campanha assenta no lugar ao abrir; o resto já está à vista. */
+/* A etiqueta de vidro sobe do desfoque logo depois da foto abrir. */
 @media (prefers-reduced-motion: no-preference) {
-  [data-nicho="varejo"] .foto-que-assenta {
-    animation: assentar-varejo 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  [data-nicho="varejo"] .vidro-que-sobe {
+    animation: entra 0.9s var(--e-chegada) 0.55s both;
   }
 }
 
-@keyframes assentar-varejo {
-  from {
-    transform: scale(1.04);
-  }
+/* ---------- páginas internas ---------- */
+
+[data-nicho="varejo"] h1.titulo-interno {
+  font-size: clamp(2.5rem, 8vw, 4.75rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+[data-nicho="varejo"] h2.titulo-de-secao {
+  font-size: clamp(1.75rem, 4.4vw, 2.5rem);
+}
+
+[data-nicho="varejo"] .titulo-da-proxima {
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+[data-nicho="varejo"] .ver-mais {
+  border-width: 1px;
+  border-color: var(--cor-fio);
+}
+
+/* Fotos e cartões com os raios próprios da loja (o --raio é das pílulas). */
+[data-nicho="varejo"] .moldura-da-cabeca {
+  border-radius: 16px;
 }

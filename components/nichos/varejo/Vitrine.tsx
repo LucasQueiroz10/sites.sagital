@@ -36,7 +36,8 @@ export function Vitrine({ setor, parcelamento, rotuloDoNicho }: Props) {
       classeDoPonto={{ atual: "bg-texto", outros: "bg-[var(--cor-fio)]" }}
     >
       <li
-        className={`relative min-h-[28rem] shrink-0 snap-start overflow-hidden rounded-2xl bg-superficie ${largura}`}
+        data-revela="cartao"
+        className={`aproxima relative min-h-[28rem] shrink-0 snap-start overflow-hidden rounded-2xl bg-superficie ${largura}`}
       >
         <Image
           src={setor.banner.src}

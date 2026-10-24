@@ -37,6 +37,13 @@ export const varejo: DadosDoVarejo = {
     { rotulo: "Como comprar", href: "#como-comprar" },
     { rotulo: "Loja", href: "#contato" },
   ],
+  raiz: "/varejo",
+  paginas: [
+    { rotulo: "Feminino", href: "/varejo/feminino" },
+    { rotulo: "Masculino", href: "/varejo/masculino" },
+    { rotulo: "Como comprar", href: "/varejo/como-comprar" },
+    { rotulo: "Loja", href: "/varejo/loja" },
+  ],
   acaoPrincipal: {
     rotulo: "Falar com a loja",
     pedido: "Quero saber mais sobre as peças da loja.",
@@ -237,3 +244,97 @@ export const varejo: DadosDoVarejo = {
   },
   redes: ["instagram", "tiktok", "pinterest", "facebook"],
 };
+
+// ---------- páginas internas ----------
+
+/** Guia de medidas, em centímetros (página /varejo/como-comprar). */
+export const guiaDeMedidas: {
+  setor: string;
+  colunas: string[];
+  linhas: { tamanho: string; medidas: string[] }[];
+}[] = [
+  {
+    setor: "Feminino",
+    colunas: ["Busto", "Cintura", "Quadril"],
+    linhas: [
+      { tamanho: "PP", medidas: ["78-82", "60-64", "86-90"] },
+      { tamanho: "P", medidas: ["83-87", "65-69", "91-95"] },
+      { tamanho: "M", medidas: ["88-93", "70-75", "96-101"] },
+      { tamanho: "G", medidas: ["94-100", "76-82", "102-108"] },
+      { tamanho: "GG", medidas: ["101-108", "83-90", "109-116"] },
+    ],
+  },
+  {
+    setor: "Masculino",
+    colunas: ["Peito", "Cintura", "Quadril"],
+    linhas: [
+      { tamanho: "P", medidas: ["88-94", "74-80", "90-96"] },
+      { tamanho: "M", medidas: ["95-101", "81-87", "97-103"] },
+      { tamanho: "G", medidas: ["102-108", "88-95", "104-110"] },
+      { tamanho: "GG", medidas: ["109-116", "96-104", "111-118"] },
+    ],
+  },
+];
+
+/** As condições da loja, cada uma com o detalhe (página /varejo/como-comprar). */
+export const condicoes = [
+  {
+    titulo: "Pagamento",
+    texto:
+      "Pix, débito ou cartão de crédito em até 3x sem juros, com parcela mínima de R$ 25. O link de pagamento chega pelo WhatsApp.",
+  },
+  {
+    titulo: "Troca",
+    texto:
+      "Até 30 dias para trocar por outro tamanho ou outra peça, com a etiqueta. A troca é na loja ou pelo motoboy, sem custo no bairro.",
+  },
+  {
+    titulo: "Retirada",
+    texto:
+      "Separamos o pedido em até 1 hora no horário da loja. Você retira no balcão, sem fila, e pode provar antes de levar.",
+  },
+  {
+    titulo: "Entrega",
+    texto:
+      "No bairro, no mesmo dia para pedidos até as 16h, grátis acima de R$ 199. Para outros bairros, a taxa sai na mensagem.",
+  },
+];
+
+export const perguntasDoVarejo = [
+  {
+    pergunta: "Como sei qual tamanho escolher?",
+    resposta:
+      "Meça o busto (ou o peito), a cintura e o quadril com uma fita e compare com o guia acima. Entre dois tamanhos, as peças de algodão ficam melhor no maior.",
+  },
+  {
+    pergunta: "A peça que pedi pode estar esgotada?",
+    resposta:
+      "Os tamanhos esgotados já aparecem riscados na vitrine. Se acabar entre o pedido e a confirmação, a loja avisa na hora e sugere outro tamanho ou cor.",
+  },
+  {
+    pergunta: "Dá para separar e provar na loja?",
+    resposta:
+      "Dá. Peça para separar pelo WhatsApp e passe no provador quando quiser: a peça fica guardada até o fim do dia seguinte.",
+  },
+  {
+    pergunta: "Vocês emitem nota fiscal?",
+    resposta: "Sim, em todas as compras, enviada por e-mail ou no WhatsApp.",
+  },
+];
+
+/** O que a loja física oferece (página /varejo/loja). */
+export const naLoja = [
+  {
+    titulo: "Provador amplo",
+    texto: "Quatro cabines com espelho de corpo inteiro e banco.",
+  },
+  {
+    titulo: "Estacionamento ao lado",
+    texto: "Vagas rotativas na rua lateral e um estacionamento conveniado.",
+  },
+  {
+    titulo: "Separado para você",
+    texto:
+      "Peça pelo WhatsApp e encontre as peças no provador, já no seu tamanho.",
+  },
+];

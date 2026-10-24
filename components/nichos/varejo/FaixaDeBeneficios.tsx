@@ -5,6 +5,7 @@ import {
   Truck,
   type LucideIcon,
 } from "lucide-react";
+import type { CSSProperties } from "react";
 import type { DadosDoVarejo, IconeDoBeneficio } from "@/data/tipos";
 
 const icones: Record<IconeDoBeneficio, LucideIcon> = {
@@ -27,12 +28,13 @@ export function FaixaDeBeneficios({ beneficios }: Props) {
         aria-label="Vantagens da loja"
         className="flex snap-x scroll-px-4 gap-2 overflow-x-auto px-4 py-3 [scrollbar-width:none] sm:scroll-px-6 sm:px-6 lg:min-h-12 lg:justify-around lg:gap-6 lg:overflow-visible lg:rounded-full lg:bg-superficie lg:px-8 lg:py-0"
       >
-        {beneficios.map(({ texto, icone }) => {
+        {beneficios.map(({ texto, icone }, i) => {
           const Icone = icones[icone];
           return (
             <li
               key={texto}
-              className="flex min-h-10 shrink-0 snap-start items-center gap-2 rounded-full bg-superficie px-4 text-sm font-semibold lg:bg-transparent lg:px-0"
+              style={{ "--atraso": `${200 + i * 60}ms` } as CSSProperties}
+              className="entra flex min-h-10 shrink-0 snap-start items-center gap-2 rounded-full bg-superficie px-4 text-sm font-semibold lg:bg-transparent lg:px-0"
             >
               <Icone aria-hidden className="size-4 shrink-0" strokeWidth={2} />
               {texto}

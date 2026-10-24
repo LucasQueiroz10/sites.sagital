@@ -15,7 +15,8 @@ type Props = {
 
 /**
  * A campanha da estação: foto grande com cantos de 16px e, por cima, a
- * etiqueta de vidro escuro com o título e as duas ações.
+ * etiqueta de vidro escuro com o título e as duas ações. A foto abre de
+ * baixo para cima e a etiqueta sobe do desfoque logo depois.
  */
 export function BannerDeCampanha({
   titulo,
@@ -30,19 +31,19 @@ export function BannerDeCampanha({
       aria-labelledby="titulo-principal"
       className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:pt-4"
     >
-      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-superficie sm:aspect-[4/3] lg:aspect-[16/7]">
+      <div className="foto-entra relative aspect-[4/5] overflow-hidden rounded-2xl bg-superficie sm:aspect-[4/3] lg:aspect-[16/7]">
         <Image
           src={imagem.src}
           alt={imagem.alt}
           fill
           preload
           sizes="(min-width: 1280px) 1232px, 100vw"
-          className="foto-que-assenta object-cover object-[50%_12%] lg:object-[50%_16%]"
+          className="object-cover object-[50%_12%] lg:object-[50%_16%]"
           placeholder="blur"
         />
         {/* No celular e no tablet, a etiqueta é uma faixa encostada na base da
             foto; no desktop, flutua no canto, à esquerda do casal. */}
-        <div className="vidro absolute inset-x-0 bottom-0 px-4 pt-3.5 pb-4 sm:px-6 sm:py-5 lg:inset-x-auto lg:bottom-6 lg:left-6 lg:max-w-[27rem] lg:rounded-xl lg:p-8">
+        <div className="vidro vidro-que-sobe absolute inset-x-0 bottom-0 px-4 pt-3.5 pb-4 sm:px-6 sm:py-5 lg:inset-x-auto lg:bottom-6 lg:left-6 lg:max-w-[27rem] lg:rounded-xl lg:p-8">
           <h1
             id="titulo-principal"
             className="text-[1.625rem] leading-[1.08] font-semibold text-balance sm:text-[2.25rem] lg:text-[3rem] lg:leading-[1.04]"
