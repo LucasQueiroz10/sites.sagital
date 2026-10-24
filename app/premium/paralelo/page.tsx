@@ -12,17 +12,19 @@ import { Abertura } from "@/components/premium/paralelo/Abertura";
 import { Contador } from "@/components/premium/Contador";
 import { Contato } from "@/components/premium/paralelo/Contato";
 import { ExemploDaApi } from "@/components/premium/paralelo/ExemploDaApi";
+import { VerMais } from "@/components/premium/paralelo/Interno";
 import { Planos } from "@/components/premium/paralelo/Planos";
 import { RevelarAoRolar } from "@/components/premium/RevelarAoRolar";
 import { Simulador } from "@/components/premium/paralelo/Simulador";
 import { VoltarParaSagital } from "@/components/VoltarParaSagital";
 import {
   globo,
-  navegacao,
   nome,
   numeros,
+  paginas,
   perguntas,
   produtos,
+  raiz,
   recursosDaApi,
   rodape,
 } from "@/data/paralelo";
@@ -166,6 +168,11 @@ export default function PaginaDaParalelo() {
                 );
               })}
             </ul>
+            <div data-revela className="mt-8">
+              <VerMais href={`${raiz}/produtos`}>
+                Ver os produtos por dentro
+              </VerMais>
+            </div>
           </div>
         </section>
 
@@ -183,6 +190,11 @@ export default function PaginaDaParalelo() {
                 titulo="Quanto chega do outro lado"
                 texto="Coloque um valor e veja a conta inteira: cotação, tarifa, imposto e o que sobra. Ao lado, o mesmo envio num banco tradicional."
               />
+              <div data-revela className="mt-6">
+                <VerMais href={`${raiz}/como-funciona`}>
+                  Como funciona a conta
+                </VerMais>
+              </div>
             </div>
             <div data-revela className="min-w-0">
               <Simulador />
@@ -201,6 +213,9 @@ export default function PaginaDaParalelo() {
               titulo="Planos que crescem com a operação"
               texto="Sem taxa de abertura nem de manutenção no plano Início. Quanto mais movimenta, menor a tarifa."
             />
+            <div data-revela className="mt-6">
+              <VerMais href={`${raiz}/precos`}>Comparar planos</VerMais>
+            </div>
             <div className="mt-10">
               <Planos />
             </div>
@@ -239,6 +254,11 @@ export default function PaginaDaParalelo() {
                   </li>
                 ))}
               </ul>
+              <div data-revela className="mt-8">
+                <VerMais href={`${raiz}/desenvolvedores`}>
+                  Ver a documentação
+                </VerMais>
+              </div>
             </div>
             <div data-revela className="min-w-0">
               <ExemploDaApi />
@@ -320,7 +340,7 @@ export default function PaginaDaParalelo() {
             {nome}
           </span>
         }
-        navegacao={[...navegacao]}
+        navegacao={[...paginas, { rotulo: "Fale com vendas", href: "#vendas" }]}
         rodape={rodape}
         className="border-t border-[var(--linha)] bg-[#050507]"
       />

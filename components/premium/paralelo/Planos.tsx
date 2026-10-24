@@ -1,8 +1,9 @@
 "use client";
 
 import { Check } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
-import { DESCONTO_ANUAL, planos } from "@/data/paralelo";
+import { DESCONTO_ANUAL, planos, raiz } from "@/data/paralelo";
 import { classes } from "@/lib/classes";
 import { Contador } from "@/components/premium/Contador";
 import { escolher } from "./escolha";
@@ -140,6 +141,14 @@ export function Planos() {
                 {p.chamada}
                 <Seta className="pa-seta h-[11px] w-[13px]" />
               </a>
+              <Link
+                href={`${raiz}/precos/${p.id}`}
+                className="mt-3 inline-flex min-h-11 items-center justify-center gap-2 rounded-full text-[0.875rem] font-medium text-[var(--texto-suave)] transition-colors duration-200 hover:text-white"
+              >
+                Ver plano
+                <span className="sr-only"> {p.nome}</span>
+                <Seta className="pa-seta h-[9px] w-[11px]" />
+              </Link>
             </li>
           );
         })}
