@@ -41,7 +41,7 @@ const csp = [
 ].join("; ");
 
 /**
- * Paralelo e Redoma (premium): o vídeo da abertura de cada uma vem da CDN do
+ * Paralelo, Redoma e Destra (premium): o vídeo da abertura de cada uma vem da CDN do
  * modelo. Só essas páginas liberam o domínio do vídeo (e a Paralelo, o do
  * quadro de espera do globo); o resto do site segue na política acima.
  */
@@ -93,6 +93,10 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/premium/redoma",
+        headers: [{ key: "Content-Security-Policy", value: cspComVideo }],
+      },
+      {
+        source: "/premium/destra",
         headers: [{ key: "Content-Security-Policy", value: cspComVideo }],
       },
     ];

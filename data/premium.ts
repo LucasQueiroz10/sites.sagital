@@ -5,6 +5,7 @@
  */
 
 import capturaBloco from "@/public/imagens/sagital/premium-bloco.png";
+import capturaDestra from "@/public/imagens/sagital/premium-destra.png";
 import capturaLaMaree from "@/public/imagens/sagital/premium-la-maree.png";
 import capturaParalelo from "@/public/imagens/sagital/premium-paralelo.png";
 import capturaRedoma from "@/public/imagens/sagital/premium-redoma.png";
@@ -80,6 +81,20 @@ export const projetosPremium: ProjetoPremium[] = [
     },
     fonte: "Readex Pro",
     paleta: ["#ffffff", "#171717", "#000000"],
+  },
+  {
+    id: "destra",
+    nome: "Destra",
+    ramo: "Próteses biônicas",
+    destaque:
+      "Mão robótica em vídeo na abertura, sete pegadas que fecham os dedos um a um e a prótese montada por lado, tamanho e cor.",
+    href: "/premium/destra",
+    captura: {
+      src: capturaDestra,
+      alt: "Primeira tela do site da Destra no celular",
+    },
+    fonte: "Inter",
+    paleta: ["#ffffff", "#f4f4f6", "#0b0b0c"],
   },
 ];
 

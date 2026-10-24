@@ -1,0 +1,1262 @@
+/*
+ * Destra: mãos biônicas, preto e branco. A abertura é o modelo
+ * "neural kinetics" traduzido, escrito em CSS puro como veio (Inter de 300 a
+ * 600, branco, preto e o cinza #f4f4f6 das pílulas), com as entradas nos
+ * tempos do modelo. O resto do site segue a mesma paleta, sem cor nenhuma:
+ * o único vermelho é o do erro do formulário.
+ *
+ * Formas: tudo o que se toca é pílula; painéis têm 28px de raio; campos,
+ * 16px.
+ */
+
+@layer components {
+  [data-premium="destra"] {
+    --fundo: #ffffff;
+    --cinza: #f4f4f6;
+    --tinta: #0b0b0c;
+    --texto-suave: rgb(0 0 0 / 0.65);
+    --linha: rgb(0 0 0 / 0.1);
+
+    --e-modelo: cubic-bezier(0.16, 1, 0.3, 1);
+    --e-movimento: cubic-bezier(0.65, 0, 0.35, 1);
+
+    background: var(--fundo);
+    color: var(--tinta);
+    font-family:
+      var(--font-inter),
+      system-ui,
+      -apple-system,
+      sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  [data-premium="destra"] ::selection {
+    background: var(--tinta);
+    color: #ffffff;
+  }
+
+  [data-premium="destra"] :focus-visible {
+    outline: 2px solid var(--tinta);
+    outline-offset: 3px;
+  }
+
+  /* ---------- abertura (o modelo) ---------- */
+  .dt-abertura {
+    position: relative;
+    display: flex;
+    min-height: 100vh;
+    min-height: 100dvh;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .dt-video-moldura {
+    position: absolute;
+    z-index: 0;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    animation: dt-video-entra 1.8s var(--e-modelo) both;
+    /* No celular o vídeo ocupa 80% da tela: as bordas se dissolvem no
+       branco em vez de mostrar o retângulo. */
+    mask-image: radial-gradient(ellipse closest-side, #000 84%, transparent);
+  }
+  @media (min-width: 768px) {
+    .dt-video-moldura {
+      mask-image: none;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  @keyframes dt-video-entra {
+    from {
+      opacity: 0;
+      scale: 1.05;
+    }
+  }
+
+  /* As duas cópias do vídeo se cruzam no fim de cada volta (VideoEmLoop). */
+  .dt-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    /* O fundo do vídeo é quase branco (250): o brilho leva ao branco da
+       página, sem emenda. */
+    filter: brightness(1.025);
+    transition: opacity 0.9s linear;
+    pointer-events: none;
+  }
+  .dt-video.ativo {
+    opacity: 1;
+  }
+
+  .dt-marco {
+    position: absolute;
+    top: 60vh;
+    height: 1px;
+    width: 1px;
+  }
+
+  /* Barra fixa: a faixa não pega cliques, só as pílulas. */
+  .dt-barra {
+    position: fixed;
+    z-index: 50;
+    inset: 0 0 auto;
+    padding: 16px;
+    pointer-events: none;
+    animation: dt-desce 0.8s var(--e-modelo) both;
+  }
+  @media (min-width: 768px) {
+    .dt-barra {
+      padding: 24px 32px;
+    }
+  }
+  @keyframes dt-desce {
+    from {
+      opacity: 0;
+      translate: 0 -16px;
+    }
+  }
+
+  .dt-barra-linha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .dt-barra-lado {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .dt-barra-linha a,
+  .dt-barra-linha button,
+  .dt-barra-linha p,
+  .dt-menu {
+    pointer-events: auto;
+  }
+
+  .dt-logo {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px 0 0;
+    border-radius: 999px;
+    color: var(--tinta);
+    text-decoration: none;
+    transition:
+      background-color 0.3s ease,
+      padding 0.3s var(--e-modelo);
+  }
+  /* Fora da abertura, a marca ganha a sua pílula, como os outros itens
+     da barra: continua legível sobre qualquer seção, até a preta. */
+  .dt-barra[data-rolou] .dt-logo {
+    padding: 0 14px 0 10px;
+    background: rgb(255 255 255 / 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .dt-logo-nome {
+    display: none;
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+  @media (min-width: 768px) {
+    .dt-logo-nome {
+      display: inline;
+    }
+  }
+
+  /* Pílula preta com o círculo branco do "+". */
+  .dt-menu-botao {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 14px 4px 4px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--tinta);
+    /* Fio claro: some no branco e segura a pílula sobre a seção preta. */
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.16);
+    color: #ffffff;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.16s ease-out;
+  }
+  /* Alvo de toque de 44px sem mudar o desenho do modelo. */
+  .dt-menu-botao::after,
+  .dt-sistemas-circulo::after {
+    content: "";
+    position: absolute;
+    inset: -6px -2px;
+  }
+  .dt-menu-botao:active {
+    transform: scale(0.96);
+  }
+  .dt-menu-circulo,
+  .dt-sistemas-circulo {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 50%;
+  }
+  .dt-menu-circulo {
+    background: #ffffff;
+    color: var(--tinta);
+    transition: rotate 0.3s var(--e-modelo);
+  }
+  .dt-menu-botao[aria-expanded="true"] .dt-menu-circulo {
+    rotate: 90deg;
+  }
+  @media (min-width: 768px) {
+    .dt-menu-circulo,
+    .dt-sistemas-circulo {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .dt-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 14rem;
+    padding: 6px;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow:
+      0 1px 2px rgb(11 11 12 / 0.06),
+      0 12px 32px -8px rgb(11 11 12 / 0.18);
+    transform-origin: top left;
+  }
+  .dt-menu:not([hidden]) {
+    animation: dt-menu-abre 0.2s var(--e-modelo) both;
+  }
+  @keyframes dt-menu-abre {
+    from {
+      opacity: 0;
+      scale: 0.96;
+      translate: 0 -4px;
+    }
+  }
+  .dt-menu a {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    padding: 0 14px;
+    border-radius: 16px;
+    color: var(--tinta);
+    font-size: 15px;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+  }
+  .dt-menu a:hover {
+    background: var(--cinza);
+  }
+
+  .dt-etiquetas {
+    display: none;
+    align-items: center;
+    gap: 16px;
+    height: 40px;
+    padding: 0 18px;
+    border-radius: 999px;
+    background: var(--cinza);
+    font-size: 11px;
+    color: rgb(0 0 0 / 0.7);
+  }
+  @media (min-width: 768px) {
+    .dt-etiquetas {
+      display: flex;
+    }
+  }
+
+  .dt-sistemas {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px;
+    border-radius: 999px;
+    background: var(--cinza);
+    color: var(--tinta);
+    font-size: 11px;
+    text-decoration: none;
+    transition: background-color 0.18s ease;
+  }
+  .dt-sistemas:hover {
+    background: #e9e9ed;
+  }
+  .dt-sistemas-circulo {
+    position: relative;
+    background: var(--tinta);
+    color: #ffffff;
+  }
+  .dt-sistemas-rotulo {
+    display: none;
+    padding-right: 14px;
+  }
+  @media (min-width: 768px) {
+    .dt-sistemas-rotulo {
+      display: inline;
+    }
+  }
+
+  /* O título e os botões, sobre o degradê branco. */
+  .dt-rodape-abertura {
+    position: relative;
+    z-index: 30;
+    margin-top: auto;
+    padding: 96px 16px 28px;
+    background: linear-gradient(
+      to top,
+      #ffffff 0%,
+      rgb(255 255 255 / 0.8) 50%,
+      transparent 100%
+    );
+    animation: dt-sobe-20 1s var(--e-modelo) 0.5s both;
+  }
+  @media (min-width: 768px) {
+    .dt-rodape-abertura {
+      padding: 120px 32px 36px;
+    }
+  }
+  .dt-rodape-linha {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  @media (min-width: 768px) {
+    .dt-rodape-linha {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+
+  .dt-subtitulo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgb(0 0 0 / 0.55);
+    animation: dt-sobe-16 0.8s var(--e-modelo) 0.6s both;
+  }
+  .dt-ponto {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--tinta);
+  }
+
+  .dt-titulo {
+    margin-top: 16px;
+    font-weight: 300;
+    font-size: clamp(2rem, 8vw, 4.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    animation: dt-sobe-20 0.8s var(--e-modelo) 0.8s both;
+  }
+  @media (min-width: 768px) {
+    .dt-titulo {
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    }
+  }
+
+  .dt-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+    animation: dt-sobe-16 0.8s var(--e-modelo) 1s both;
+  }
+
+  .dt-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    animation: dt-sobe-16 0.8s var(--e-modelo) 1s both;
+  }
+  .dt-tags li {
+    padding: 6px 12px;
+    border: 1px solid rgb(0 0 0 / 0.12);
+    border-radius: 999px;
+    background: #ffffff;
+    font-size: 11px;
+  }
+
+  @keyframes dt-sobe-20 {
+    from {
+      opacity: 0;
+      translate: 0 20px;
+    }
+  }
+  @keyframes dt-sobe-16 {
+    from {
+      opacity: 0;
+      translate: 0 16px;
+    }
+  }
+
+  /* ---------- botões, campos, controles ---------- */
+  .dt-botao {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      color 0.18s ease,
+      transform 0.16s ease-out;
+  }
+  .dt-botao:active {
+    transform: scale(0.97);
+  }
+  .dt-botao-cheio {
+    border: 0;
+    background: var(--tinta);
+    color: #ffffff;
+  }
+  .dt-botao-cheio:hover {
+    background: #2a2a2e;
+  }
+  .dt-botao-cheio svg {
+    transition: translate 0.2s var(--e-modelo);
+  }
+  .dt-botao-cheio:hover svg {
+    translate: 3px 0;
+  }
+  .dt-botao-contorno {
+    border: 1px solid rgb(0 0 0 / 0.35);
+    background: transparent;
+    color: var(--tinta);
+  }
+  .dt-botao-contorno:hover {
+    border-color: var(--tinta);
+  }
+
+  .dt-link {
+    border: 0;
+    background: none;
+    padding: 0;
+    font: inherit;
+    font-size: inherit;
+    color: var(--tinta);
+    text-decoration: underline;
+    text-decoration-color: rgb(0 0 0 / 0.3);
+    text-underline-offset: 3px;
+    cursor: pointer;
+    transition: text-decoration-color 0.15s ease;
+  }
+  .dt-link:hover {
+    text-decoration-color: var(--tinta);
+  }
+
+  .dt-rotulo {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--texto-suave);
+  }
+
+  .dt-tag-pequena {
+    padding: 5px 11px;
+    border: 1px solid rgb(0 0 0 / 0.12);
+    border-radius: 999px;
+    background: #ffffff;
+    font-size: 12px;
+  }
+
+  .dt-campo {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0 1rem;
+    border: 1px solid rgb(0 0 0 / 0.14);
+    border-radius: 16px;
+    background: #ffffff;
+    color: var(--tinta);
+    font: inherit;
+    font-size: 1rem;
+    caret-color: var(--tinta);
+    transition: border-color 0.18s ease;
+  }
+  .dt-campo:hover {
+    border-color: rgb(0 0 0 / 0.3);
+  }
+  .dt-campo:focus-visible {
+    outline: none;
+    border-color: var(--tinta);
+    box-shadow: 0 0 0 1px var(--tinta);
+  }
+  .dt-campo[aria-invalid="true"] {
+    border-color: #b42318;
+  }
+
+  .dt-alternador {
+    display: inline-flex;
+    padding: 4px;
+    gap: 4px;
+    border-radius: 999px;
+    background: var(--cinza);
+  }
+  .dt-alternador label span {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    padding: 0 18px;
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    color: rgb(0 0 0 / 0.7);
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .dt-alternador label:hover span {
+    color: var(--tinta);
+  }
+  .dt-alternador input:checked + span {
+    background: #ffffff;
+    color: var(--tinta);
+    box-shadow:
+      0 1px 2px rgb(11 11 12 / 0.08),
+      0 2px 8px -2px rgb(11 11 12 / 0.1);
+  }
+  .dt-alternador input:focus-visible + span {
+    outline: 2px solid var(--tinta);
+    outline-offset: 2px;
+  }
+
+  /* Opção em linha com o círculo de marcar (nível da amputação). */
+  .dt-opcao {
+    display: flex;
+    min-height: 52px;
+    align-items: center;
+    gap: 12px;
+    padding: 0 18px;
+    border: 1px solid rgb(0 0 0 / 0.12);
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition:
+      border-color 0.18s ease,
+      background-color 0.18s ease;
+  }
+  .dt-opcao:hover {
+    border-color: rgb(0 0 0 / 0.3);
+  }
+  .dt-opcao:has(input:checked) {
+    border-color: var(--tinta);
+    background: var(--cinza);
+  }
+  .dt-opcao:has(input:focus-visible) {
+    outline: 2px solid var(--tinta);
+    outline-offset: 3px;
+  }
+  .dt-opcao-marca {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    border: 1px solid rgb(0 0 0 / 0.35);
+    border-radius: 50%;
+    transition: border-color 0.18s ease;
+  }
+  .dt-opcao-marca::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--tinta);
+    scale: 0.4;
+    opacity: 0;
+    transition:
+      scale 0.22s var(--e-modelo),
+      opacity 0.15s ease;
+  }
+  .dt-opcao:has(input:checked) .dt-opcao-marca {
+    border-color: var(--tinta);
+  }
+  .dt-opcao:has(input:checked) .dt-opcao-marca::after {
+    scale: 1;
+    opacity: 1;
+  }
+
+  .dt-cor,
+  .dt-ficha {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px 0 8px;
+    border: 1px solid rgb(0 0 0 / 0.12);
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition:
+      border-color 0.18s ease,
+      background-color 0.18s ease,
+      color 0.18s ease;
+  }
+  .dt-ficha {
+    padding: 0 16px;
+  }
+  .dt-cor:hover,
+  .dt-ficha:hover {
+    border-color: rgb(0 0 0 / 0.3);
+  }
+  .dt-cor:has(input:checked) {
+    border-color: var(--tinta);
+  }
+  .dt-cor:has(input:focus-visible),
+  .dt-ficha:has(input:focus-visible) {
+    outline: 2px solid var(--tinta);
+    outline-offset: 3px;
+  }
+  .dt-cor-amostra {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.14);
+  }
+  .dt-ficha-icone {
+    display: none;
+  }
+  .dt-ficha:has(input:checked) {
+    border-color: var(--tinta);
+    background: var(--tinta);
+    color: #ffffff;
+  }
+  .dt-ficha:has(input:checked) .dt-ficha-icone {
+    display: block;
+  }
+
+  /* A régua da medida: trilho fino, preenchido até o polegar. */
+  .dt-regua {
+    appearance: none;
+    height: 2.75rem;
+    background: transparent;
+    cursor: pointer;
+  }
+  .dt-regua::-webkit-slider-runnable-track {
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(
+      to right,
+      var(--tinta) var(--preenchido),
+      rgb(0 0 0 / 0.14) var(--preenchido)
+    );
+  }
+  .dt-regua::-moz-range-track {
+    height: 2px;
+    background: rgb(0 0 0 / 0.14);
+  }
+  .dt-regua::-moz-range-progress {
+    height: 2px;
+    background: var(--tinta);
+  }
+  .dt-regua::-webkit-slider-thumb {
+    appearance: none;
+    width: 1.375rem;
+    height: 1.375rem;
+    margin-top: calc(-0.6875rem + 1px);
+    border-radius: 50%;
+    background: var(--tinta);
+    box-shadow: 0 0 0 5px rgb(11 11 12 / 0.08);
+    transition: box-shadow 0.18s ease;
+  }
+  .dt-regua::-moz-range-thumb {
+    width: 1.375rem;
+    height: 1.375rem;
+    border: 0;
+    border-radius: 50%;
+    background: var(--tinta);
+    box-shadow: 0 0 0 5px rgb(11 11 12 / 0.08);
+  }
+  .dt-regua:hover::-webkit-slider-thumb,
+  .dt-regua:active::-webkit-slider-thumb {
+    box-shadow: 0 0 0 8px rgb(11 11 12 / 0.1);
+  }
+  .dt-regua:focus-visible {
+    outline: none;
+  }
+  .dt-regua:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid var(--tinta);
+    outline-offset: 4px;
+  }
+  .dt-regua:focus-visible::-moz-range-thumb {
+    outline: 2px solid var(--tinta);
+    outline-offset: 4px;
+  }
+
+  /* ---------- seções ---------- */
+  .dt-secao {
+    scroll-margin-top: 5.5rem;
+  }
+
+  .dt-h2 {
+    font-weight: 300;
+    font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  .dt-h3 {
+    font-weight: 400;
+    font-size: clamp(1.375rem, 1.15rem + 0.8vw, 1.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+
+  /* O que troca de conteúdo (pegada, relato, nível) entra saindo do desfoque. */
+  .dt-troca {
+    animation: dt-troca 0.42s var(--e-modelo) both;
+  }
+  @keyframes dt-troca {
+    from {
+      opacity: 0;
+      translate: 0 6px;
+      filter: blur(4px);
+    }
+  }
+
+  /* Pegadas: a lista de nomes e o palco cinza com a mão. */
+  .dt-pegadas {
+    display: grid;
+    gap: 6px;
+  }
+  @media (max-width: 1023px) {
+    .dt-pegadas {
+      display: flex;
+      margin-inline: -16px;
+      padding-inline: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 16px;
+      scrollbar-width: none;
+    }
+    .dt-pegadas::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .dt-pegada {
+    display: flex;
+    min-height: 56px;
+    flex-shrink: 0;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 22px;
+    border: 1px solid rgb(0 0 0 / 0.1);
+    border-radius: 999px;
+    scroll-snap-align: start;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .dt-pegada > span {
+    align-self: center;
+  }
+  .dt-pegada:hover {
+    border-color: rgb(0 0 0 / 0.3);
+  }
+  .dt-pegada:has(input:checked) {
+    border-color: var(--tinta);
+    background: var(--tinta);
+    color: #ffffff;
+  }
+  .dt-pegada:has(input:focus-visible) {
+    outline: 2px solid var(--tinta);
+    outline-offset: 3px;
+  }
+  .dt-pegada-nome {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .dt-pegada-exemplo {
+    font-size: 0.875rem;
+    color: rgb(0 0 0 / 0.55);
+    transition: color 0.2s ease;
+  }
+  .dt-pegada:has(input:checked) .dt-pegada-exemplo {
+    color: rgb(255 255 255 / 0.7);
+  }
+
+  .dt-palco {
+    position: relative;
+    display: grid;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 28px;
+    background: var(--cinza);
+  }
+  @media (min-width: 640px) {
+    .dt-palco {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: end;
+    }
+  }
+  .dt-palco-mao {
+    width: 100%;
+    max-height: 30rem;
+    padding: 24px 24px 0;
+  }
+  .dt-palco-ficha {
+    display: grid;
+    gap: 24px;
+    padding: 0 24px 24px;
+  }
+  @media (min-width: 640px) {
+    .dt-palco-ficha {
+      padding: 32px 32px 32px 0;
+    }
+  }
+  .dt-palco-dados {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding-top: 20px;
+    border-top: 1px solid var(--linha);
+  }
+  .dt-palco-dados dt {
+    font-size: 0.8125rem;
+    color: var(--texto-suave);
+  }
+  .dt-palco-dados dd {
+    margin-top: 4px;
+    font-size: 1.0625rem;
+    font-weight: 500;
+  }
+
+  .dt-mao-espelho {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    transition: transform 0.6s var(--e-movimento);
+  }
+
+  /* O traço do sinal: desenha conforme a seção entra na tela. */
+  .dt-sinal-grafico {
+    display: block;
+    width: 100%;
+    height: clamp(7rem, 16vw, 13rem);
+    overflow: visible;
+  }
+  .dt-sinal-traco {
+    fill: none;
+    stroke: var(--tinta);
+    stroke-width: 1.75;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .dt-sinal-base,
+  .dt-sinal-divisa {
+    stroke: rgb(0 0 0 / 0.12);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .dt-sinal-divisa {
+    stroke-dasharray: 3 5;
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .dt-sinal-traco {
+        stroke-dasharray: 1;
+        animation: dt-desenha linear both;
+        animation-timeline: view();
+        animation-range: entry 30% cover 55%;
+      }
+    }
+  }
+  @keyframes dt-desenha {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .dt-sinal-etapas {
+    display: grid;
+    gap: 36px;
+    margin-top: 32px;
+  }
+  @media (min-width: 768px) {
+    .dt-sinal-etapas {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 32px;
+    }
+  }
+
+  /* Ficha: quatro números, o primeiro em preto. */
+  .dt-ficha-grade {
+    display: grid;
+    gap: 8px;
+  }
+  @media (min-width: 640px) {
+    .dt-ficha-grade {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .dt-ficha-grade {
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    }
+  }
+  .dt-ficha-celula {
+    display: flex;
+    min-height: 13rem;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    border-radius: 28px;
+    background: #ffffff;
+  }
+  .dt-ficha-escura {
+    background: var(--tinta);
+    color: #ffffff;
+  }
+  .dt-numero {
+    display: block;
+    font-weight: 300;
+    font-size: clamp(3rem, 2.2rem + 2.6vw, 4.75rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+  }
+
+  /* Manifesto: a mão parada do vídeo, com a frase. */
+  .dt-manifesto {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #ffffff;
+  }
+  .dt-manifesto-foto {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    object-position: 56% 50%;
+  }
+  .dt-manifesto-texto {
+    display: flex;
+    flex-direction: column;
+    padding-block: 8px 96px;
+    font-weight: 300;
+    font-size: clamp(3rem, 1rem + 8vw, 9rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+  }
+  /* No desktop a mão vai para a direita e a frase ocupa a esquerda. */
+  @media (min-width: 768px) {
+    .dt-manifesto-foto {
+      position: absolute;
+      top: 0;
+      right: -24%;
+      z-index: -1;
+      width: 90%;
+      height: 100%;
+      aspect-ratio: auto;
+    }
+    .dt-manifesto-texto {
+      min-height: 88svh;
+      justify-content: center;
+      padding-block: 96px;
+    }
+  }
+
+  /* Monte a sua: palco com a mão e o resumo, e as escolhas ao lado. */
+  .dt-monte {
+    display: grid;
+    gap: 40px;
+  }
+  @media (min-width: 1024px) {
+    .dt-monte {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      gap: 64px;
+      align-items: start;
+    }
+  }
+  .dt-monte-palco {
+    display: grid;
+    overflow: hidden;
+    border-radius: 28px;
+    background: var(--cinza);
+  }
+  @media (min-width: 1024px) {
+    .dt-monte-palco {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+  .dt-monte-mao {
+    width: 100%;
+    max-height: 34rem;
+    padding: 32px 24px 0;
+  }
+  .dt-monte-resumo {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0 24px 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--linha);
+  }
+  .dt-monte-resumo dt {
+    font-size: 0.8125rem;
+    color: var(--texto-suave);
+  }
+  .dt-monte-resumo dd {
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* Jornada: quatro etapas sobre uma linha que se enche ao rolar. */
+  .dt-jornada {
+    position: relative;
+    display: grid;
+    gap: 40px;
+  }
+  @media (min-width: 768px) {
+    .dt-jornada {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 28px;
+    }
+  }
+  .dt-jornada li {
+    position: relative;
+    padding-top: 28px;
+    border-top: 1px solid rgb(255 255 255 / 0.2);
+  }
+  .dt-jornada li::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #ffffff;
+    transform-origin: left;
+    scale: 0 1;
+    transition: scale 0.9s var(--e-modelo);
+    transition-delay: calc(var(--revela-ordem, 0) * 120ms + 0.2s);
+  }
+  .dt-jornada li[data-revelado]::before,
+  [data-premium="destra"]:not([data-revela-pronto]) .dt-jornada li::before {
+    scale: 1 1;
+  }
+  .dt-jornada-prazo {
+    display: inline-flex;
+    padding: 6px 12px;
+    border: 1px solid rgb(255 255 255 / 0.25);
+    border-radius: 999px;
+    font-size: 0.8125rem;
+  }
+
+  /* Relatos: nomes à esquerda, a citação e a mãozinha à direita. */
+  .dt-relatos {
+    display: grid;
+    gap: 32px;
+  }
+  @media (min-width: 1024px) {
+    .dt-relatos {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      gap: 64px;
+    }
+  }
+  .dt-relatos-nomes {
+    display: grid;
+    align-content: start;
+    border-top: 1px solid var(--linha);
+  }
+  .dt-relatos-nomes button {
+    position: relative;
+    display: grid;
+    gap: 2px;
+    padding: 18px 0 18px 20px;
+    border: 0;
+    border-bottom: 1px solid var(--linha);
+    background: none;
+    font: inherit;
+    color: rgb(0 0 0 / 0.45);
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  .dt-relatos-nomes button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    margin-top: -4px;
+    border-radius: 50%;
+    background: var(--tinta);
+    scale: 0;
+    transition: scale 0.25s var(--e-modelo);
+  }
+  .dt-relatos-nomes button:hover {
+    color: rgb(0 0 0 / 0.75);
+  }
+  .dt-relatos-nomes button[aria-selected="true"] {
+    color: var(--tinta);
+  }
+  .dt-relatos-nomes button[aria-selected="true"]::before {
+    scale: 1;
+  }
+  .dt-relatos-nome {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+  .dt-relatos-quem {
+    font-size: 0.875rem;
+  }
+  .dt-relatos-painel {
+    display: grid;
+    gap: 32px;
+    align-items: center;
+  }
+  @media (min-width: 640px) {
+    .dt-relatos-painel {
+      grid-template-columns: minmax(0, 1fr) 13rem;
+    }
+  }
+  .dt-citacao {
+    font-weight: 300;
+    font-size: clamp(1.625rem, 1.2rem + 1.6vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    text-wrap: pretty;
+  }
+  .dt-relatos-mao {
+    display: grid;
+    height: 17rem;
+    grid-template-rows: minmax(0, 1fr) auto;
+    justify-items: center;
+    gap: 12px;
+    padding: 20px 12px 16px;
+    border-radius: 28px;
+    background: var(--cinza);
+  }
+
+  /* Formulário da avaliação. */
+  .dt-formulario {
+    display: grid;
+    gap: 24px;
+  }
+  .dt-mao-levada {
+    padding: 18px 20px;
+    border-radius: 20px;
+    background: var(--cinza);
+  }
+
+  .dt-pergunta summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  .dt-pergunta summary::-webkit-details-marker {
+    display: none;
+  }
+  .dt-pergunta-icone {
+    transition: rotate 0.25s var(--e-modelo);
+  }
+  .dt-pergunta[open] .dt-pergunta-icone {
+    rotate: 45deg;
+  }
+  @supports (interpolate-size: allow-keywords) {
+    .dt-pergunta {
+      interpolate-size: allow-keywords;
+    }
+    .dt-pergunta::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition:
+        block-size 0.32s var(--e-modelo),
+        opacity 0.24s ease,
+        content-visibility 0.32s allow-discrete;
+    }
+    .dt-pergunta[open]::details-content {
+      block-size: auto;
+      opacity: 1;
+    }
+  }
+
+  /* ---------- revelar ao rolar (RevelarAoRolar.tsx) ---------- */
+  [data-premium="destra"] [data-revela] {
+    transition:
+      opacity 0.7s var(--e-modelo),
+      translate 0.8s var(--e-modelo);
+    transition-delay: calc(var(--revela-ordem, 0) * 70ms);
+  }
+  [data-premium="destra"][data-revela-pronto]
+    [data-revela]:not([data-revelado]) {
+    opacity: 0;
+    translate: 0 1.25rem;
+  }
+  [data-premium="destra"] [data-revela="titulo"] {
+    clip-path: inset(-0.3em -0.3em -0.3em -0.3em);
+    transition:
+      translate 1s var(--e-modelo),
+      clip-path 1s var(--e-modelo);
+  }
+  [data-premium="destra"][data-revela-pronto]
+    [data-revela="titulo"]:not([data-revelado]) {
+    opacity: 1;
+    translate: 0 100%;
+    clip-path: inset(-0.3em -0.3em 100% -0.3em);
+  }
+  [data-premium="destra"] [data-revela="texto"] {
+    transition:
+      opacity 0.7s var(--e-modelo) 0.12s,
+      translate 0.8s var(--e-modelo) 0.12s,
+      filter 0.7s var(--e-modelo) 0.12s;
+  }
+  [data-premium="destra"][data-revela-pronto]
+    [data-revela="texto"]:not([data-revelado]) {
+    filter: blur(6px);
+  }
+
+  /* Movimento reduzido: o vídeo para no primeiro quadro (VideoEmLoop), a
+     mão troca de pegada de uma vez (MaoBionica) e nada mais anda. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-premium="destra"] *,
+    [data-premium="destra"] *::before,
+    [data-premium="destra"] *::after,
+    [data-premium="destra"] ::details-content {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+}
