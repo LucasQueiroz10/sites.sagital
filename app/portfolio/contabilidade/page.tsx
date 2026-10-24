@@ -1,15 +1,19 @@
 import { ArrowDown, Check, MessageCircle } from "lucide-react";
 import type { Metadata, Viewport } from "next";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { CabecalhoDoPortfolio } from "@/components/portfolio/CabecalhoDoPortfolio";
 import { RodapeDoPortfolio } from "@/components/portfolio/RodapeDoPortfolio";
+import { MesComAPrumo } from "@/components/portfolio/contabilidade/MesComAPrumo";
 import { RelatorioDoMes } from "@/components/portfolio/contabilidade/RelatorioDoMes";
+import { TituloEmPalavras } from "@/components/portfolio/TituloEmPalavras";
+import { Contador } from "@/components/premium/Contador";
+import { RevelarAoRolar } from "@/components/premium/RevelarAoRolar";
 import { SimuladorDeRegime } from "@/components/portfolio/contabilidade/SimuladorDeRegime";
 import { Carrossel } from "@/components/ui/Carrossel";
 import { Container } from "@/components/ui/Container";
 import { contabilidade as dados } from "@/data/portfolio/contabilidade";
 import { classes } from "@/lib/classes";
-import { formatarPrecoRedondo } from "@/lib/formato";
 import { linkDoPortfolio } from "@/lib/whatsapp";
 import "./contabilidade.css";
 import { schibsted } from "./fontes";
@@ -43,7 +47,7 @@ export default function PaginaContabilidade() {
             <svg
               aria-hidden
               viewBox="0 0 16 24"
-              className="h-6 w-4 text-destaque"
+              className="prumo-balanca h-6 w-4 text-destaque"
               fill="currentColor"
             >
               <rect x="7.25" y="0" width="1.5" height="12" />
@@ -72,6 +76,7 @@ export default function PaginaContabilidade() {
         classeDoMenu="border-borda bg-fundo"
       />
 
+      <RevelarAoRolar raiz="contabilidade" atributo="data-portfolio" />
       <main id="topo" className="flex-1">
         <section
           aria-labelledby="titulo-principal"
@@ -84,17 +89,17 @@ export default function PaginaContabilidade() {
             <div className="pb-4 lg:col-span-6 lg:pb-20">
               <h1
                 id="titulo-principal"
-                className="sobe text-[clamp(2.75rem,10vw,4.75rem)] leading-[1] text-balance"
+                className="text-[clamp(2.75rem,10vw,4.75rem)] leading-[1] text-balance"
               >
-                {dados.titulo}
+                <TituloEmPalavras texto={dados.titulo} atraso={150} />
               </h1>
-              <p className="sobe mt-6 max-w-[46ch] text-lg leading-relaxed text-texto-suave [--ordem:1]">
+              <p className="sobe mt-6 max-w-[46ch] text-lg leading-relaxed text-texto-suave [--ordem:7]">
                 {dados.apoio}
               </p>
-              <div className="sobe mt-9 flex flex-col gap-3 [--ordem:2] sm:flex-row sm:flex-wrap">
+              <div className="sobe mt-9 flex flex-col gap-3 [--ordem:9] sm:flex-row sm:flex-wrap">
                 <a
                   href="#simulador"
-                  className={`${botao} bg-primaria text-primaria-texto hover:bg-primaria-hover`}
+                  className={`${botao} tatil bg-primaria text-primaria-texto hover:bg-primaria-hover`}
                 >
                   Simular meus impostos
                   <ArrowDown aria-hidden className="size-4" />
@@ -123,11 +128,14 @@ export default function PaginaContabilidade() {
                   placeholder="blur"
                 />
               </div>
-              <div className="absolute bottom-8 left-0 rounded-tema bg-fundo p-4 shadow-[0_18px_40px_-20px_rgb(16_42_67/0.45)] sm:left-6 lg:-left-6">
+              <div
+                style={{ "--atraso": "1100ms" } as CSSProperties}
+                className="entra absolute bottom-8 left-0 rounded-tema bg-fundo p-4 shadow-[0_18px_40px_-20px_rgb(16_42_67/0.45)] sm:left-6 lg:-left-6"
+              >
                 <p className="flex items-center gap-2 text-sm font-semibold">
                   <span
                     aria-hidden
-                    className="grid size-5 place-items-center rounded-full bg-[var(--cor-menta)] text-[var(--cor-tinta)]"
+                    className="cont-confere grid size-5 place-items-center rounded-full bg-[var(--cor-menta)] text-[var(--cor-tinta)]"
                   >
                     <Check className="size-3.5" strokeWidth={3} />
                   </span>
@@ -150,21 +158,49 @@ export default function PaginaContabilidade() {
           className="scroll-mt-20 py-20 lg:py-28"
         >
           <Container largura="larga">
-            <div className="mb-10 grid gap-4 lg:mb-14 lg:grid-cols-12">
-              <h2 id="simulador-titulo" className="lg:col-span-6">
+            <div className="mb-10 max-w-[44rem] lg:mb-14">
+              <h2 id="simulador-titulo" data-revela="titulo">
                 Quanto de imposto a sua empresa paga?
               </h2>
-              <p className="max-w-[44ch] text-lg leading-relaxed text-texto-suave lg:col-span-5 lg:col-start-8 lg:self-end">
+              <p
+                data-revela="texto"
+                className="mt-5 max-w-[46ch] text-lg leading-relaxed text-texto-suave"
+              >
                 Mova o faturamento e escolha a atividade. O simulador mostra o
                 regime mais provável e uma estimativa do imposto do mês.
               </p>
             </div>
-            <SimuladorDeRegime
-              nomeDoSite={dados.nome}
-              atividades={dados.atividades}
-              faturamento={dados.faturamento}
-              dasMei={dados.dasMei}
-            />
+            <div data-revela>
+              <SimuladorDeRegime
+                nomeDoSite={dados.nome}
+                atividades={dados.atividades}
+                faturamento={dados.faturamento}
+                dasMei={dados.dasMei}
+              />
+            </div>
+          </Container>
+        </section>
+
+        <section
+          aria-labelledby="mes-titulo"
+          className="overflow-hidden border-t border-borda py-20 lg:py-28"
+        >
+          <Container largura="larga">
+            <div className="max-w-[44rem]">
+              <h2 id="mes-titulo" data-revela="titulo">
+                O seu mês com a Prumo
+              </h2>
+              <p
+                data-revela="texto"
+                className="mt-5 max-w-[46ch] text-lg leading-relaxed text-texto-suave"
+              >
+                Cada prazo tem dia marcado, e você sabe de cada um antes que ele
+                chegue.
+              </p>
+            </div>
+            <div className="mt-12 lg:mt-20">
+              <MesComAPrumo marcos={dados.mes} />
+            </div>
           </Container>
         </section>
 
@@ -175,14 +211,23 @@ export default function PaginaContabilidade() {
         >
           <Container largura="larga" className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-4">
-              <h2 id="servicos-titulo">Do CNPJ ao relatório do mês</h2>
-              <div className="mt-10">
+              <h2 id="servicos-titulo" data-revela="titulo">
+                Do CNPJ ao relatório do mês
+              </h2>
+              <div data-revela className="mt-10">
                 <RelatorioDoMes relatorio={dados.relatorio} />
               </div>
             </div>
-            <ul className="grid content-start gap-x-10 sm:grid-cols-2 lg:col-span-8">
+            <ul
+              data-revela-grupo
+              className="grid content-start gap-x-10 sm:grid-cols-2 lg:col-span-8"
+            >
               {dados.servicos.map((servico) => (
-                <li key={servico.titulo} className="border-t border-borda py-7">
+                <li
+                  key={servico.titulo}
+                  data-revela
+                  className="border-t border-borda py-7"
+                >
                   <h3 className="text-xl font-semibold tracking-[-0.02em]">
                     {servico.titulo}
                   </h3>
@@ -205,7 +250,9 @@ export default function PaginaContabilidade() {
             classeDoPonto={{ atual: "bg-texto", outros: "bg-[#c5d0db]" }}
             cabecalho={
               <>
-                <h2 id="clientes-titulo">Feito para o comércio de bairro</h2>
+                <h2 id="clientes-titulo" data-revela="titulo">
+                  Feito para o comércio de bairro
+                </h2>
                 <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-texto-suave">
                   Lojas, restaurantes, salões e ateliês: negócios em que o dono
                   faz tudo e precisa de alguém de confiança nos números.
@@ -240,19 +287,23 @@ export default function PaginaContabilidade() {
           className="scroll-mt-20 py-20 lg:py-28"
         >
           <Container largura="larga">
-            <div className="mb-12 grid gap-4 lg:grid-cols-12">
-              <h2 id="planos-titulo" className="lg:col-span-6">
+            <div className="mb-12 max-w-[44rem]">
+              <h2 id="planos-titulo" data-revela="titulo">
                 Planos
               </h2>
-              <p className="max-w-[44ch] text-lg leading-relaxed text-texto-suave lg:col-span-5 lg:col-start-8 lg:self-end">
+              <p
+                data-revela="texto"
+                className="mt-5 max-w-[46ch] text-lg leading-relaxed text-texto-suave"
+              >
                 Mensalidade fixa, sem taxa de abertura para quem fecha um plano
                 anual.
               </p>
             </div>
-            <ul className="grid gap-5 lg:grid-cols-3">
+            <ul data-revela-grupo className="grid gap-5 lg:grid-cols-3">
               {dados.planos.map((plano) => (
                 <li
                   key={plano.nome}
+                  data-revela
                   className={classes(
                     "flex flex-col rounded-tema p-7 sm:p-8",
                     plano.destaque
@@ -279,7 +330,7 @@ export default function PaginaContabilidade() {
                     {plano.paraQuem}
                   </p>
                   <p className="numero mt-8 text-[3rem] leading-none font-bold tracking-[-0.04em]">
-                    {formatarPrecoRedondo(plano.mensal)}
+                    <Contador valor={plano.mensal / 100} prefixo="R$ " />
                     <span
                       className={classes(
                         "ml-1 text-base font-normal tracking-normal",
@@ -342,7 +393,10 @@ export default function PaginaContabilidade() {
             largura="larga"
             className="grid gap-12 lg:grid-cols-12 lg:items-center"
           >
-            <div className="relative aspect-[16/10] overflow-hidden rounded-tema lg:col-span-7">
+            <div
+              data-revela="foto"
+              className="relative aspect-[16/10] overflow-hidden rounded-tema lg:col-span-7"
+            >
               <Image
                 src={dados.imagens.reuniao.src}
                 alt={dados.imagens.reuniao.alt}
@@ -353,7 +407,9 @@ export default function PaginaContabilidade() {
               />
             </div>
             <div className="lg:col-span-5">
-              <h2 id="equipe-titulo">Gente que atende pelo nome</h2>
+              <h2 id="equipe-titulo" data-revela="titulo">
+                Gente que atende pelo nome
+              </h2>
               <p className="mt-5 text-lg leading-relaxed text-texto-suave">
                 Você fala sempre com as mesmas pessoas, que conhecem a sua
                 empresa e respondem no mesmo dia.
@@ -396,7 +452,10 @@ export default function PaginaContabilidade() {
           className="scroll-mt-20 pb-20 lg:pb-28"
         >
           <Container largura="larga">
-            <div className="escuro grid gap-10 overflow-hidden rounded-tema bg-[var(--cor-tinta)] px-6 py-12 text-white sm:px-12 sm:py-16 lg:grid-cols-12 lg:items-end">
+            <div
+              data-revela
+              className="escuro grid gap-10 overflow-hidden rounded-tema bg-[var(--cor-tinta)] px-6 py-12 text-white sm:px-12 sm:py-16 lg:grid-cols-12 lg:items-end"
+            >
               <div className="lg:col-span-7">
                 <h2 id="contato-titulo" className="max-w-[16ch]">
                   Troque de contador sem dor de cabeça

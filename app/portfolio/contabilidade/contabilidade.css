@@ -100,3 +100,149 @@
     transform: translateY(14px);
   }
 }
+
+/* ---------- o mês com a Prumo (MesComAPrumo) ---------- */
+@media (min-width: 1024px) {
+  /* Cada marco fica no dia dele sobre a régua: o ponto cai exatamente no
+     dia, e o texto se encosta à esquerda no começo do mês e à direita no
+     fim, para nunca sair da página. */
+  [data-portfolio="contabilidade"] .mes-marco {
+    position: absolute;
+    top: var(--recuo);
+    left: var(--esquerda);
+    width: 11rem;
+    translate: calc(var(--esquerda) * -1) 0;
+  }
+  [data-portfolio="contabilidade"] .mes-marco[data-direita] {
+    text-align: right;
+  }
+  [data-portfolio="contabilidade"] .mes-marco::before {
+    content: "";
+    position: absolute;
+    left: var(--esquerda);
+    top: calc(-1.25rem - var(--recuo));
+    width: 1px;
+    height: calc(1.25rem + var(--recuo) - 0.5rem);
+    background: var(--cor-borda);
+  }
+  [data-portfolio="contabilidade"] .mes-ponto {
+    top: calc(-1.25rem - var(--recuo) - 5.5px);
+    left: calc(var(--esquerda) - 5.5px);
+  }
+}
+
+[data-portfolio="contabilidade"] .mes-linha {
+  transform-origin: left;
+}
+[data-portfolio="contabilidade"] .mes-linha-vertical {
+  transform-origin: top;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-portfolio="contabilidade"] .mes {
+      view-timeline-name: --mes;
+    }
+    [data-portfolio="contabilidade"] .mes-linha {
+      animation: mes-enche-x linear both;
+      animation-timeline: --mes;
+      animation-range: cover 18% cover 58%;
+    }
+    [data-portfolio="contabilidade"] .mes-linha-vertical {
+      animation: mes-enche-y linear both;
+      animation-timeline: --mes;
+      animation-range: cover 10% cover 70%;
+    }
+    /* No celular cada marco acende ao cruzar o meio da tela; no desktop,
+       quando a linha do mês chega ao dia dele. */
+    [data-portfolio="contabilidade"] .mes-marco,
+    [data-portfolio="contabilidade"] .mes-ponto {
+      animation: mes-acende linear both;
+      animation-timeline: view();
+      animation-range: cover 35% cover 50%;
+    }
+    [data-portfolio="contabilidade"] .mes-ponto {
+      animation-name: mes-ponto;
+    }
+    @media (min-width: 1024px) {
+      [data-portfolio="contabilidade"] .mes-marco,
+      [data-portfolio="contabilidade"] .mes-ponto {
+        animation-timeline: --mes;
+        animation-range: cover var(--inicio) cover var(--fim);
+      }
+    }
+  }
+}
+@keyframes mes-enche-x {
+  from {
+    scale: 0 1;
+  }
+}
+@keyframes mes-enche-y {
+  from {
+    scale: 1 0;
+  }
+}
+@keyframes mes-acende {
+  from {
+    opacity: 0.3;
+  }
+}
+@keyframes mes-ponto {
+  from {
+    background-color: var(--cor-fundo);
+    scale: 0.6;
+  }
+  to {
+    background-color: var(--cor-destaque);
+    scale: 1;
+  }
+}
+
+/* O prumo da marca balança e assenta quando a página abre. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-portfolio="contabilidade"] .prumo-balanca {
+    transform-origin: 50% 0;
+    animation: prumo-balanca 2.2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s both;
+  }
+}
+@keyframes prumo-balanca {
+  0% {
+    rotate: 14deg;
+  }
+  22% {
+    rotate: -9deg;
+  }
+  44% {
+    rotate: 5deg;
+  }
+  64% {
+    rotate: -2.5deg;
+  }
+  82% {
+    rotate: 1deg;
+  }
+  100% {
+    rotate: 0deg;
+  }
+}
+
+/* O "em dia" do cartão do topo confere com um estalo depois que o cartão
+   chega. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-portfolio="contabilidade"] .cont-confere {
+    animation: cont-confere 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.5s both;
+  }
+}
+@keyframes cont-confere {
+  from {
+    scale: 0.4;
+    opacity: 0;
+  }
+}
+
+/* O Contador usa algarismos tabulares; nesta fonte eles alargam o ponto
+   ("R$ 9 . 900"), então aqui os números contam em proporcionais. */
+[data-portfolio="contabilidade"] .tabular-nums {
+  font-variant-numeric: lining-nums proportional-nums;
+}

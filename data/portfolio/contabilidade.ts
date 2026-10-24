@@ -134,6 +134,43 @@ export const contabilidade = {
       },
     },
   ],
+  /**
+   * O mês de um cliente, dia a dia: os marcos acendem conforme a linha do
+   * mês passa por eles na rolagem. O DAS do Simples vence no dia 20.
+   */
+  mes: [
+    {
+      dia: 1,
+      titulo: "Notas e extratos",
+      texto:
+        "Você manda pelo aplicativo, ou a gente busca no banco e na prefeitura.",
+    },
+    {
+      dia: 5,
+      titulo: "Folha pronta",
+      texto: "Holerites, pró-labore e as guias da folha, conferidos.",
+    },
+    {
+      dia: 10,
+      titulo: "Relatório do mês",
+      texto: "Faturamento, despesas e lucro numa página só.",
+    },
+    {
+      dia: 15,
+      titulo: "Guias no WhatsApp",
+      texto: "Cinco dias antes de vencer, com o valor e o código de barras.",
+    },
+    {
+      dia: 20,
+      titulo: "Impostos pagos",
+      texto: "DAS e demais guias em dia. A gente confere o pagamento.",
+    },
+    {
+      dia: 28,
+      titulo: "Conversa do mês",
+      texto: "Quinze minutos para dúvidas e planos, se você quiser.",
+    },
+  ],
   planos: [
     {
       nome: "MEI",
