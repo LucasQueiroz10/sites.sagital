@@ -1,10 +1,15 @@
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import type { Metadata, Viewport } from "next";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { CabecalhoDoPortfolio } from "@/components/portfolio/CabecalhoDoPortfolio";
 import { RodapeDoPortfolio } from "@/components/portfolio/RodapeDoPortfolio";
 import { ConversaSobreProjeto } from "@/components/portfolio/arquitetura/ConversaSobreProjeto";
 import { GaleriaDeProjetos } from "@/components/portfolio/arquitetura/GaleriaDeProjetos";
+import { PlantaDoProcesso } from "@/components/portfolio/arquitetura/PlantaDoProcesso";
+import { TituloEmPalavras } from "@/components/portfolio/TituloEmPalavras";
+import { Contador } from "@/components/premium/Contador";
+import { RevelarAoRolar } from "@/components/premium/RevelarAoRolar";
 import { Container } from "@/components/ui/Container";
 import { arquitetura as dados } from "@/data/portfolio/arquitetura";
 import { linkDoPortfolio } from "@/lib/whatsapp";
@@ -52,6 +57,7 @@ export default function PaginaArquitetura() {
         classeDoMenu="border-borda bg-fundo"
       />
 
+      <RevelarAoRolar raiz="arquitetura" atributo="data-portfolio" />
       <main id="topo" className="flex-1">
         <section aria-labelledby="titulo-principal">
           <Container largura="larga" className="pt-10 lg:pt-16">
@@ -60,9 +66,12 @@ export default function PaginaArquitetura() {
                 id="titulo-principal"
                 className="text-[clamp(3rem,12vw,6rem)] leading-[0.9] text-balance lg:col-span-8"
               >
-                {dados.titulo}
+                <TituloEmPalavras texto={dados.titulo} atraso={150} />
               </h1>
-              <div className="lg:col-span-3 lg:col-start-10 lg:pb-2">
+              <div
+                className="entra lg:col-span-3 lg:col-start-10 lg:pb-2"
+                style={{ "--atraso": "750ms" } as CSSProperties}
+              >
                 <p className="max-w-[36ch] text-lg leading-relaxed text-texto-suave">
                   {dados.apoio}
                 </p>
@@ -100,17 +109,24 @@ export default function PaginaArquitetura() {
           className="scroll-mt-20 py-20 lg:py-32"
         >
           <Container largura="larga">
-            <div className="mb-10 flex flex-col justify-between gap-6 lg:mb-14 lg:flex-row lg:items-end">
-              <h2 id="projetos-titulo">Projetos</h2>
-              <p className="max-w-[40ch] text-lg leading-relaxed text-texto-suave">
+            <div className="mb-10 max-w-[44rem] lg:mb-14">
+              <h2 id="projetos-titulo" data-revela="titulo">
+                Projetos
+              </h2>
+              <p
+                data-revela="texto"
+                className="mt-5 max-w-[40ch] text-lg leading-relaxed text-texto-suave"
+              >
                 Uma seleção dos últimos anos. Toque em um projeto para ver a
                 ficha completa.
               </p>
             </div>
-            <GaleriaDeProjetos
-              projetos={dados.projetos}
-              nomeDoSite={dados.nome}
-            />
+            <div data-revela>
+              <GaleriaDeProjetos
+                projetos={dados.projetos}
+                nomeDoSite={dados.nome}
+              />
+            </div>
           </Container>
         </section>
 
@@ -120,25 +136,21 @@ export default function PaginaArquitetura() {
           className="scroll-mt-20 border-t border-borda py-20 lg:py-32"
         >
           <Container largura="larga">
-            <h2 id="processo-titulo">Como trabalhamos</h2>
-            <ol className="mt-12 grid border-t border-texto sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
-              {dados.processo.map((passo, i) => (
-                <li
-                  key={passo.etapa}
-                  className="border-b border-borda py-8 sm:pr-8 lg:border-r lg:border-b-0 lg:px-6 lg:first:pl-0 lg:last:border-r-0"
-                >
-                  <h3 className="text-[2rem] leading-none font-semibold tracking-[-0.02em] [font-stretch:75%] uppercase">
-                    {passo.etapa}
-                  </h3>
-                  <p className="numero mt-2 text-sm text-texto-suave">
-                    Etapa {i + 1} · {passo.prazo}
-                  </p>
-                  <p className="mt-4 leading-relaxed text-texto-suave">
-                    {passo.texto}
-                  </p>
-                </li>
-              ))}
-            </ol>
+            <div className="max-w-[44rem]">
+              <h2 id="processo-titulo" data-revela="titulo">
+                Como trabalhamos
+              </h2>
+              <p
+                data-revela="texto"
+                className="mt-5 max-w-[42ch] text-lg leading-relaxed text-texto-suave"
+              >
+                Do terreno vazio à chave na mão, em quatro etapas. Role e veja a
+                planta de uma casa ganhar forma em cada uma.
+              </p>
+            </div>
+            <div className="mt-10 lg:mt-16">
+              <PlantaDoProcesso passos={dados.processo} />
+            </div>
           </Container>
         </section>
 
@@ -148,7 +160,10 @@ export default function PaginaArquitetura() {
           className="scroll-mt-20 bg-superficie py-20 lg:py-32"
         >
           <Container largura="larga" className="grid gap-12 lg:grid-cols-12">
-            <div className="relative aspect-[4/3] overflow-hidden lg:col-span-6 lg:aspect-auto">
+            <div
+              data-revela="foto"
+              className="relative aspect-[4/3] overflow-hidden lg:col-span-6 lg:aspect-auto"
+            >
               <Image
                 src={dados.estudio.imagem.src}
                 alt={dados.estudio.imagem.alt}
@@ -159,7 +174,9 @@ export default function PaginaArquitetura() {
               />
             </div>
             <div className="lg:col-span-5 lg:col-start-8 lg:py-6">
-              <h2 id="estudio-titulo">O estúdio</h2>
+              <h2 id="estudio-titulo" data-revela="titulo">
+                O estúdio
+              </h2>
               <div className="mt-8 grid gap-5 text-lg leading-relaxed text-texto-suave">
                 {dados.estudio.paragrafos.map((paragrafo) => (
                   <p key={paragrafo.slice(0, 20)}>{paragrafo}</p>
@@ -169,7 +186,7 @@ export default function PaginaArquitetura() {
                 {dados.numeros.map((numero) => (
                   <div key={numero.rotulo} className="pt-5 pr-3">
                     <dd className="numero text-[2.75rem] leading-none font-semibold tracking-[-0.03em] [font-stretch:75%]">
-                      {numero.valor}
+                      <Contador valor={Number(numero.valor)} />
                     </dd>
                     <dt className="mt-2 text-sm text-texto-suave">
                       {numero.rotulo}
@@ -188,7 +205,9 @@ export default function PaginaArquitetura() {
         >
           <Container largura="larga" className="grid gap-14 lg:grid-cols-12">
             <div className="lg:col-span-5">
-              <h2 id="contato-titulo">Vamos conversar sobre o seu projeto</h2>
+              <h2 id="contato-titulo" data-revela="titulo">
+                Vamos conversar sobre o seu projeto
+              </h2>
               <p className="mt-8 max-w-[38ch] text-lg leading-relaxed text-white/70">
                 Conte o que você imagina. Respondemos em até dois dias úteis
                 para marcar a primeira visita.
@@ -200,7 +219,7 @@ export default function PaginaArquitetura() {
                 <span>{dados.contato.email}</span>
               </address>
             </div>
-            <div className="lg:col-span-6 lg:col-start-7">
+            <div data-revela className="lg:col-span-6 lg:col-start-7">
               <ConversaSobreProjeto
                 nomeDoSite={dados.nome}
                 {...dados.orcamento}

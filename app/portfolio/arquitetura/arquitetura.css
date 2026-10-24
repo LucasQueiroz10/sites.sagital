@@ -119,3 +119,118 @@
     transform: translateY(24px);
   }
 }
+
+/* ---------- prancha do processo (PlantaDoProcesso) ---------- */
+[data-portfolio="arquitetura"] .prancha {
+  border: 1px solid var(--cor-borda);
+  background-color: var(--cor-fundo);
+  /* A malha de papel milimetrado, bem apagada. */
+  background-image:
+    linear-gradient(rgb(28 27 25 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(28 27 25 / 0.045) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+[data-portfolio="arquitetura"] .planta-traco {
+  fill: none;
+  stroke: var(--cor-grafite);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+/* Terreno e croqui em lápis: mais finos e mais claros. */
+[data-portfolio="arquitetura"] .planta-camada-0 .planta-traco {
+  stroke: var(--cor-texto-suave);
+  stroke-width: 0.9;
+}
+[data-portfolio="arquitetura"] .planta-camada-1 .planta-traco {
+  stroke: var(--cor-texto-suave);
+  stroke-width: 0.8;
+}
+/* As paredes do projeto, grossas. */
+[data-portfolio="arquitetura"]
+  .planta-camada-2
+  .planta-traco:nth-child(-n + 4) {
+  stroke-width: 5;
+  stroke-linecap: square;
+}
+[data-portfolio="arquitetura"] .planta-parede {
+  fill: none;
+  stroke: var(--cor-grafite);
+  stroke-width: 9;
+  stroke-linecap: square;
+}
+[data-portfolio="arquitetura"] .planta-texto {
+  font-size: 11px;
+  fill: var(--cor-texto-suave);
+  font-family: var(--fonte-texto);
+}
+
+/* Camada escondida: os traços recolhem e os textos e paredes somem. */
+[data-portfolio="arquitetura"]
+  .planta-camada:not([data-visivel])
+  .planta-traco {
+  stroke-dashoffset: 1;
+}
+[data-portfolio="arquitetura"]
+  .planta-camada:not([data-visivel])
+  :is(.planta-texto, .planta-parede) {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Ao chegar, cada traço se desenha, um depois do outro; ao voltar, a
+     camada recolhe de uma vez, mais rápido. */
+  [data-portfolio="arquitetura"] .planta-traco {
+    transition: stroke-dashoffset 0.35s cubic-bezier(0.4, 0, 1, 1);
+  }
+  [data-portfolio="arquitetura"] [data-visivel] .planta-traco {
+    transition: stroke-dashoffset 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+  [data-portfolio="arquitetura"] :is(.planta-texto, .planta-parede) {
+    transition: opacity 0.6s ease 0.5s;
+  }
+  [data-portfolio="arquitetura"] .planta-passo {
+    transition: opacity 0.5s ease;
+  }
+  [data-portfolio="arquitetura"] .planta-legenda {
+    animation: planta-legenda 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* A capa do topo se aproxima devagar enquanto passa pela tela. */
+  @supports (animation-timeline: view()) {
+    [data-portfolio="arquitetura"] .capa-abre img {
+      animation: capa-aproxima linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+[data-portfolio="arquitetura"] .planta-passo-apagado {
+  opacity: 0.3;
+}
+
+@keyframes planta-legenda {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}
+@keyframes capa-aproxima {
+  from {
+    scale: 1.12;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+/* Recolhido, o traço ainda deixaria a ponta redonda à vista: a camada some
+   assim que termina de recolher, e volta na hora quando é chamada. */
+[data-portfolio="arquitetura"] .planta-camada:not([data-visivel]) {
+  opacity: 0;
+  transition: opacity 0s linear 0.35s;
+}
