@@ -50,6 +50,14 @@ export const restaurante: DadosDoRestaurante = {
     { rotulo: "Galeria", href: "#galeria" },
     { rotulo: "Contato", href: "#contato" },
   ],
+  raiz: "/restaurante",
+  paginas: [
+    { rotulo: "Cardápio", href: "/restaurante/cardapio" },
+    { rotulo: "A casa", href: "/restaurante/a-casa" },
+    { rotulo: "Reservas", href: "/restaurante/reservas" },
+    { rotulo: "Galeria", href: "/restaurante/galeria" },
+    { rotulo: "Contato", href: "/restaurante/contato" },
+  ],
   acaoPrincipal: {
     rotulo: "Fazer pedido",
     pedido: "Quero fazer um pedido.",
@@ -344,3 +352,114 @@ export const restaurante: DadosDoRestaurante = {
   },
   redes: ["instagram", "facebook", "tiktok"],
 };
+
+// ---------- páginas internas ----------
+
+/** O dia da cozinha, da feira ao fechamento (página /restaurante/a-casa). */
+export const diaDaCozinha = [
+  {
+    hora: "7h",
+    titulo: "Feira",
+    texto: "A compra do dia, na barraca de quem planta a 40 km daqui.",
+  },
+  {
+    hora: "8h",
+    titulo: "Portas abertas",
+    texto: "Café coado, pão de fermentação natural e os primeiros sucos.",
+  },
+  {
+    hora: "9h",
+    titulo: "Pré-preparo",
+    texto: "Folhas lavadas, legumes picados e os molhos da casa batidos.",
+  },
+  {
+    hora: "11h30",
+    titulo: "Almoço",
+    texto: "Os bowls saem montados na hora em que o pedido chega.",
+  },
+  {
+    hora: "16h",
+    titulo: "Tarde",
+    texto: "Açaí, bolo de cenoura e smoothie para a pausa do trabalho.",
+  },
+  {
+    hora: "21h",
+    titulo: "Fechamento",
+    texto: "O que sobra vai para a cozinha solidária do bairro.",
+  },
+];
+
+/** Como funciona a reserva (página /restaurante/reservas). */
+export const regrasDaReserva = [
+  {
+    titulo: "15 minutos de tolerância",
+    texto: "Depois disso a mesa volta para a fila. Avise se for atrasar.",
+  },
+  {
+    titulo: "Grupos de 8 ou mais",
+    texto:
+      "Juntamos mesas no salão do fundo. Reserve com um dia de antecedência.",
+  },
+  {
+    titulo: "Aniversário à mesa",
+    texto:
+      "Conte na mensagem: a fatia de bolo de cenoura com vela é por nossa conta.",
+  },
+];
+
+export const perguntasDaReserva = [
+  {
+    pergunta: "Preciso reservar para almoçar?",
+    resposta:
+      "Durante a semana, quase nunca. A reserva garante o lugar no almoço de sexta e no brunch de sábado, quando o salão enche.",
+  },
+  {
+    pergunta: "Posso levar o meu cachorro?",
+    resposta:
+      "Pode, nas mesas da calçada. Temos pote de água e petisco natural para ele.",
+  },
+  {
+    pergunta: "Tem cadeirinha para criança?",
+    resposta:
+      "Temos três cadeirinhas e um cardápio menor, com pratos em meia porção. É só pedir na reserva.",
+  },
+  {
+    pergunta: "Como cancelo uma reserva?",
+    resposta:
+      "Responda a mensagem de confirmação no WhatsApp. Não cobramos nada pelo cancelamento.",
+  },
+];
+
+/** Pedidos para levar e entrega (página /restaurante/contato). */
+export const formasDePedir = [
+  {
+    titulo: "No WhatsApp",
+    texto: "Mande o pedido e retire no balcão em 20 minutos, em pote de papel.",
+  },
+  {
+    titulo: "No iFood",
+    texto: "Entrega no bairro e arredores, com o mesmo cardápio do salão.",
+  },
+  {
+    titulo: "No salão",
+    texto: "Mesas com luz natural, tomada e wi-fi, para comer com calma.",
+  },
+];
+
+export const perguntasDoContato = [
+  {
+    pergunta: "Vocês fazem marmita para a semana?",
+    resposta:
+      "Fazemos, por encomenda até quinta. Cinco bowls frescos, entregues na segunda de manhã, montados para durar.",
+  },
+  {
+    pergunta: "Tem opção sem lactose e sem glúten?",
+    resposta:
+      "Todo prato sai sem lactose se você pedir, e os marcados como sem glúten são preparados em tábuas separadas.",
+  },
+  {
+    pergunta: "Atendem eventos e reuniões?",
+    resposta:
+      "Montamos bandejas de bowls, sanduíches e sucos para grupos a partir de 10 pessoas. Conte a data e o número de pessoas no WhatsApp.",
+  },
+];
