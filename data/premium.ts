@@ -6,6 +6,7 @@
 
 import capturaBloco from "@/public/imagens/sagital/premium-bloco.png";
 import capturaLaMaree from "@/public/imagens/sagital/premium-la-maree.png";
+import capturaSellix from "@/public/imagens/sagital/premium-sellix.png";
 import type { Imagem } from "./tipos";
 
 export type ProjetoPremium = {
@@ -50,6 +51,20 @@ export const projetosPremium: ProjetoPremium[] = [
     },
     fonte: "Saira",
     paleta: ["#e85102", "#e4e4e4", "#333333"],
+  },
+  {
+    id: "sellix",
+    nome: "Sellix",
+    ramo: "Fintech de pagamentos",
+    destaque:
+      "Abertura em tela cheia com o globo em vídeo, em loop sem emenda, e títulos que sobem linha por linha.",
+    href: "/premium/sellix",
+    captura: {
+      src: capturaSellix,
+      alt: "Primeira tela do site da fintech Sellix no celular",
+    },
+    fonte: "Plus Jakarta Sans",
+    paleta: ["#7c5cff", "#181818", "#000000"],
   },
 ];
 

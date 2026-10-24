@@ -40,6 +40,23 @@ const csp = [
   ...(process.env.VERCEL ? ["upgrade-insecure-requests"] : []),
 ].join("; ");
 
+/**
+ * Sellix (premium) é um HTML único em public/premium/sellix, como o modelo
+ * pede: fonte do Google Fonts e vídeo do globo servidos por CDN externa. Só
+ * essa página libera esses domínios; o resto do site segue na política acima.
+ */
+const cspDaSellix = csp
+  .replace("style-src 'self'", "style-src 'self' https://fonts.googleapis.com")
+  .replace("font-src 'self'", "font-src 'self' https://fonts.gstatic.com")
+  .replace(
+    "img-src 'self'",
+    "img-src 'self' https://d2ol7oe51mr4n9.cloudfront.net",
+  )
+  .replace(
+    "default-src 'self'",
+    "default-src 'self'; media-src 'self' https://d8j0ntlcm91z4.cloudfront.net",
+  );
+
 const cabecalhosDeSeguranca = [
   { key: "Content-Security-Policy", value: csp },
   {
@@ -70,7 +87,19 @@ const nextConfig: NextConfig = {
     qualities: [75],
   },
   async headers() {
-    return [{ source: "/:path*", headers: cabecalhosDeSeguranca }];
+    return [
+      { source: "/:path*", headers: cabecalhosDeSeguranca },
+      // Vem depois para substituir a política geral nessa página.
+      {
+        source: "/premium/sellix/:path*",
+        headers: [{ key: "Content-Security-Policy", value: cspDaSellix }],
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      { source: "/premium/sellix", destination: "/premium/sellix/index.html" },
+    ];
   },
   turbopack: {
     rules: {
