@@ -113,6 +113,42 @@ export const odontologia = {
       "Plano de tratamento por escrito, com etapas e prazos",
     ],
   },
+  /**
+   * A primeira consulta minuto a minuto: o relógio da seção anda até o
+   * minuto de cada etapa conforme a rolagem. Somam a hora da avaliação.
+   */
+  primeiraConsulta: [
+    {
+      minuto: 0,
+      titulo: "Café e conversa",
+      texto:
+        "Você conta o que incomoda e o que espera do tratamento. Ninguém encosta em nada antes disso.",
+    },
+    {
+      minuto: 15,
+      titulo: "Exame clínico",
+      texto:
+        "A dentista examina dentes e gengiva mostrando tudo numa câmera intraoral, na tela à sua frente.",
+    },
+    {
+      minuto: 30,
+      titulo: "Raio-x digital",
+      texto:
+        "Feito ali mesmo, na cadeira, com um décimo da radiação do filme. A imagem aparece na hora.",
+    },
+    {
+      minuto: 45,
+      titulo: "O plano, explicado",
+      texto:
+        "Cada etapa com o porquê, o prazo e as alternativas. Você pergunta o quanto quiser.",
+    },
+    {
+      minuto: 60,
+      titulo: "Tudo por escrito",
+      texto:
+        "Você sai com o plano no WhatsApp e decide com calma. Sem pressão para marcar na hora.",
+    },
+  ],
   clinica: {
     paragrafo:
       "Três consultórios, recepção sem fila e um intervalo entre pacientes para nenhuma consulta atrasar a outra.",

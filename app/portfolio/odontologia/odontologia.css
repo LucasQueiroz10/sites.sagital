@@ -69,3 +69,75 @@
     transform: scale(1.06);
   }
 }
+
+/* ---------- primeira consulta: o relógio da hora ---------- */
+[data-portfolio="odontologia"] .odo-relogio-arco {
+  transition: stroke-dashoffset 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+[data-portfolio="odontologia"] .odo-relogio-ponteiro {
+  transform-origin: 50px 50px;
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+[data-portfolio="odontologia"] .odo-etapa {
+  transition:
+    opacity 0.5s ease,
+    filter 0.5s ease;
+}
+[data-portfolio="odontologia"] .odo-etapa-apagada {
+  opacity: 0.32;
+}
+
+/* ---------- tratamentos em lista ---------- */
+[data-portfolio="odontologia"] .odo-tratamento {
+  position: relative;
+  isolation: isolate;
+}
+/* No mouse, o gelo sobe por trás da linha apontada. */
+[data-portfolio="odontologia"] .odo-tratamento::before {
+  content: "";
+  position: absolute;
+  inset: 0 -1.25rem;
+  z-index: -1;
+  border-radius: var(--raio);
+  background: var(--cor-superficie);
+  opacity: 0;
+  scale: 1 0.6;
+  transition:
+    opacity 0.25s ease,
+    scale 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-portfolio="odontologia"] .odo-tratamento:hover::before {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* ---------- depoimentos ---------- */
+[data-portfolio="odontologia"] .odo-barra {
+  width: 100%;
+  transform-origin: left;
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-portfolio="odontologia"] .odo-barra {
+    animation: odo-barra linear both;
+  }
+  [data-portfolio="odontologia"] [data-pausado] .odo-barra {
+    animation-play-state: paused;
+  }
+  [data-portfolio="odontologia"] .odo-depoimento {
+    animation: odo-depoimento 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+@keyframes odo-barra {
+  from {
+    scale: 0 1;
+  }
+}
+@keyframes odo-depoimento {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+    filter: blur(6px);
+  }
+}
