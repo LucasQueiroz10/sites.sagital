@@ -83,8 +83,12 @@
     opacity 0.5s ease,
     filter 0.5s ease;
 }
-[data-portfolio="odontologia"] .odo-etapa-apagada {
-  opacity: 0.32;
+/* Esmaecer as outras etapas é um gesto de foco que acompanha a rolagem; com
+   movimento reduzido, todas ficam acesas. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-portfolio="odontologia"] .odo-etapa-apagada {
+    opacity: 0.32;
+  }
 }
 
 /* ---------- tratamentos em lista ---------- */

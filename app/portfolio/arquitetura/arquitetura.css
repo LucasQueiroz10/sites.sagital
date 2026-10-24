@@ -209,8 +209,11 @@
     }
   }
 }
-[data-portfolio="arquitetura"] .planta-passo-apagado {
-  opacity: 0.3;
+/* Com movimento reduzido, todas as etapas ficam acesas. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-portfolio="arquitetura"] .planta-passo-apagado {
+    opacity: 0.3;
+  }
 }
 
 @keyframes planta-legenda {
