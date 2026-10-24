@@ -1,10 +1,14 @@
 import { ArrowDown, MessageCircle, Plus } from "lucide-react";
 import type { Metadata, Viewport } from "next";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { CabecalhoDoPortfolio } from "@/components/portfolio/CabecalhoDoPortfolio";
 import { RodapeDoPortfolio } from "@/components/portfolio/RodapeDoPortfolio";
 import { AreasDeAtuacao } from "@/components/portfolio/advocacia/AreasDeAtuacao";
 import { TriagemDoCaso } from "@/components/portfolio/advocacia/TriagemDoCaso";
+import { PalavrasQueAcendem } from "@/components/portfolio/PalavrasQueAcendem";
+import { TituloEmPalavras } from "@/components/portfolio/TituloEmPalavras";
+import { RevelarAoRolar } from "@/components/premium/RevelarAoRolar";
 import { Carrossel } from "@/components/ui/Carrossel";
 import { Container } from "@/components/ui/Container";
 import { advocacia as dados } from "@/data/portfolio/advocacia";
@@ -62,6 +66,7 @@ export default function PaginaAdvocacia() {
         classeDoMenu="border-white/10 bg-[var(--cor-floresta)]"
       />
 
+      <RevelarAoRolar raiz="advocacia" atributo="data-portfolio" />
       <main id="topo" className="flex-1">
         <section
           aria-labelledby="titulo-principal"
@@ -76,17 +81,23 @@ export default function PaginaAdvocacia() {
                 id="titulo-principal"
                 className="text-[clamp(2.75rem,10.5vw,5.75rem)] leading-[1.02] text-balance"
               >
-                {dados.titulo}
+                <TituloEmPalavras texto={dados.titulo} atraso={250} />
               </h1>
-              <p className="mt-6 max-w-[46ch] text-lg leading-relaxed text-white/80">
+              <p
+                className="entra mt-6 max-w-[46ch] text-lg leading-relaxed text-white/80"
+                style={{ "--atraso": "650ms" } as CSSProperties}
+              >
                 {dados.apoio}
               </p>
-              <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <div
+                className="entra mt-9 flex flex-wrap items-center gap-x-6 gap-y-3"
+                style={{ "--atraso": "800ms" } as CSSProperties}
+              >
                 <a
                   href={agendar}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={botaoClaro}
+                  className={`${botaoClaro} tatil`}
                 >
                   <MessageCircle aria-hidden className="size-5" />
                   Agendar uma conversa
@@ -129,8 +140,12 @@ export default function PaginaAdvocacia() {
               largura="larga"
               className="grid gap-6 py-8 sm:grid-cols-3 sm:gap-10 lg:py-10"
             >
-              {dados.compromissos.map((item) => (
-                <div key={item.titulo}>
+              {dados.compromissos.map((item, i) => (
+                <div
+                  key={item.titulo}
+                  className="entra"
+                  style={{ "--atraso": `${950 + i * 90}ms` } as CSSProperties}
+                >
                   <p className="font-titulo text-[1.375rem] leading-tight">
                     {item.titulo}
                   </p>
@@ -149,16 +164,21 @@ export default function PaginaAdvocacia() {
           className="scroll-mt-20 py-20 lg:py-28"
         >
           <Container largura="larga">
-            <div className="mb-12 grid gap-4 lg:mb-16 lg:grid-cols-12">
-              <h2 id="atuacao-titulo" className="lg:col-span-6">
+            <div className="mb-12 max-w-[44rem] lg:mb-16">
+              <h2 id="atuacao-titulo" data-revela="titulo">
                 Áreas de atuação
               </h2>
-              <p className="max-w-[46ch] text-lg leading-relaxed text-texto-suave lg:col-span-5 lg:col-start-8 lg:self-end">
+              <p
+                data-revela="texto"
+                className="mt-5 max-w-[48ch] text-lg leading-relaxed text-texto-suave"
+              >
                 Cada caso tem um advogado responsável do começo ao fim. Quando o
                 assunto passa de uma área para outra, a equipe trabalha junta.
               </p>
             </div>
-            <AreasDeAtuacao areas={dados.areas} nomeDoSite={dados.nome} />
+            <div data-revela>
+              <AreasDeAtuacao areas={dados.areas} nomeDoSite={dados.nome} />
+            </div>
           </Container>
         </section>
 
@@ -167,20 +187,45 @@ export default function PaginaAdvocacia() {
           className="bg-superficie py-20 lg:py-28"
         >
           <Container largura="larga">
-            <h2 id="atendimento-titulo" className="max-w-[16ch]">
+            <h2
+              id="atendimento-titulo"
+              data-revela="titulo"
+              className="max-w-[16ch]"
+            >
               Como é o atendimento
             </h2>
-            <ol className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8 lg:mt-16">
+            {/* Uma linha do tempo: o fio de cada passo se desenha em
+                sequência, e o marco acende quando o fio chega. */}
+            <ol
+              data-revela-grupo
+              className="mt-12 grid gap-12 sm:grid-cols-3 sm:gap-8 lg:mt-20"
+            >
               {dados.atendimento.map((passo, i) => (
-                <li key={passo.titulo} className="border-t border-texto pt-6">
+                <li key={passo.titulo} className="relative pt-10">
                   <span
                     aria-hidden
-                    className="font-titulo text-[3.5rem] leading-none text-destaque"
+                    data-revela="fio"
+                    className="absolute inset-x-0 top-0 h-px bg-texto"
+                  />
+                  <span
+                    aria-hidden
+                    data-revela
+                    className="adv-marco absolute top-0 left-0 size-[11px] -translate-y-1/2 rounded-full bg-destaque"
+                  />
+                  <span
+                    aria-hidden
+                    data-revela
+                    className="block font-titulo text-[clamp(3.5rem,6vw,5rem)] leading-none text-destaque"
                   >
-                    {i + 1}
+                    {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-5 text-xl font-medium">{passo.titulo}</h3>
-                  <p className="mt-2 leading-relaxed text-texto-suave">
+                  <h3 data-revela className="mt-6 text-xl font-medium">
+                    {passo.titulo}
+                  </h3>
+                  <p
+                    data-revela
+                    className="mt-2 max-w-[34ch] leading-relaxed text-texto-suave"
+                  >
                     {passo.texto}
                   </p>
                 </li>
@@ -192,26 +237,38 @@ export default function PaginaAdvocacia() {
         <section
           id="escritorio"
           aria-labelledby="escritorio-titulo"
-          className="scroll-mt-20 py-20 lg:py-28"
+          className="scroll-mt-20 py-24 lg:py-36"
         >
-          <Container largura="larga" className="grid gap-12 lg:grid-cols-12">
-            <h2 id="escritorio-titulo" className="lg:col-span-4">
+          <Container largura="larga">
+            <h2
+              id="escritorio-titulo"
+              data-revela="titulo"
+              className="text-[clamp(1.5rem,3vw,2rem)]"
+            >
               O escritório
             </h2>
-            <div className="lg:col-span-8">
-              <figure>
-                <blockquote className="font-titulo text-[clamp(1.75rem,4.6vw,2.875rem)] leading-[1.15] text-balance">
-                  “{dados.escritorio.citacao}”
-                </blockquote>
-                <figcaption className="mt-5 text-texto-suave">
-                  {dados.socia.nome}, {dados.socia.funcao.toLowerCase()}
-                </figcaption>
-              </figure>
-              <div className="mt-12 grid gap-6 text-lg leading-relaxed text-texto-suave sm:grid-cols-2 sm:gap-10">
-                {dados.escritorio.paragrafos.map((paragrafo) => (
-                  <p key={paragrafo.slice(0, 24)}>{paragrafo}</p>
-                ))}
-              </div>
+            {/* A frase da sócia acende palavra por palavra com a rolagem. */}
+            <figure className="mt-10 lg:mt-14">
+              <blockquote className="font-titulo text-[clamp(2.125rem,5.6vw,4.5rem)] leading-[1.08] tracking-[-0.02em] text-balance">
+                <PalavrasQueAcendem texto={`“${dados.escritorio.citacao}”`} />
+              </blockquote>
+              <figcaption
+                data-revela
+                className="mt-8 flex items-center gap-4 text-texto-suave"
+              >
+                <span aria-hidden className="h-px w-10 bg-texto-suave" />
+                {dados.socia.nome}, {dados.socia.funcao.toLowerCase()}
+              </figcaption>
+            </figure>
+            <div
+              data-revela-grupo
+              className="mt-16 grid gap-6 text-lg leading-relaxed text-texto-suave sm:grid-cols-2 sm:gap-10 lg:ml-[33%] lg:mt-24"
+            >
+              {dados.escritorio.paragrafos.map((paragrafo) => (
+                <p key={paragrafo.slice(0, 24)} data-revela>
+                  {paragrafo}
+                </p>
+              ))}
             </div>
           </Container>
         </section>
@@ -229,7 +286,11 @@ export default function PaginaAdvocacia() {
             classeDasSetas="rounded-tema border border-borda bg-fundo text-texto hover:border-texto"
             classeDoPonto={{ atual: "bg-texto", outros: "bg-borda" }}
             cabecalho={
-              <h2 id="equipe-titulo" className="pb-6 lg:pb-10">
+              <h2
+                id="equipe-titulo"
+                data-revela="titulo"
+                className="pb-6 lg:pb-10"
+              >
                 Equipe
               </h2>
             }
@@ -239,7 +300,10 @@ export default function PaginaAdvocacia() {
                 key={pessoa.nome}
                 className="group w-[78%] max-w-[20rem] shrink-0 snap-start sm:w-[calc((100%-3rem)/3)] sm:max-w-none lg:w-[calc((100%-4rem)/3)]"
               >
-                <div className="relative aspect-[4/5] overflow-hidden rounded-tema bg-superficie">
+                <div
+                  data-revela="foto"
+                  className="relative aspect-[4/5] overflow-hidden rounded-tema bg-superficie"
+                >
                   <Image
                     src={pessoa.imagem.src}
                     alt={pessoa.imagem.alt}
@@ -271,7 +335,11 @@ export default function PaginaAdvocacia() {
             className="grid gap-12 lg:grid-cols-12 lg:gap-14"
           >
             <div className="lg:col-span-5">
-              <h2 id="contato-titulo" className="max-w-[12ch]">
+              <h2
+                id="contato-titulo"
+                data-revela="titulo"
+                className="max-w-[12ch]"
+              >
                 Conte o seu caso
               </h2>
               <p className="mt-6 max-w-[40ch] text-lg leading-relaxed text-white/75">
@@ -291,7 +359,7 @@ export default function PaginaAdvocacia() {
                 </div>
               </dl>
             </div>
-            <div className="lg:col-span-7">
+            <div data-revela className="lg:col-span-7">
               <TriagemDoCaso nomeDoSite={dados.nome} {...dados.triagem} />
             </div>
           </Container>
@@ -303,7 +371,11 @@ export default function PaginaAdvocacia() {
           className="scroll-mt-20 py-20 lg:py-28"
         >
           <Container largura="larga" className="grid gap-10 lg:grid-cols-12">
-            <h2 id="duvidas-titulo" className="lg:col-span-4">
+            <h2
+              id="duvidas-titulo"
+              data-revela="titulo"
+              className="lg:col-span-4"
+            >
               Dúvidas frequentes
             </h2>
             <div className="border-t border-borda lg:col-span-8">

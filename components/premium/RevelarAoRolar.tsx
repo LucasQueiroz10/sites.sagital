@@ -18,14 +18,18 @@ const MAIOR_ORDEM = 5;
  * que falhe nunca deixa a página vazia. O que já está à vista ao carregar
  * fica como está. Com movimento reduzido, nada se esconde.
  *
- * `raiz` é o valor de data-premium do site; o CSS de cada site desenha os
- * gestos.
+ * `raiz` é o valor de data-premium do site (ou de data-portfolio, com
+ * `atributo`); o CSS de cada site desenha os gestos.
  */
-export function RevelarAoRolar({ raiz: site }: { raiz: string }) {
+export function RevelarAoRolar({
+  raiz: site,
+  atributo = "data-premium",
+}: {
+  raiz: string;
+  atributo?: "data-premium" | "data-portfolio";
+}) {
   useEffect(() => {
-    const raiz = document.querySelector<HTMLElement>(
-      `[data-premium="${site}"]`,
-    );
+    const raiz = document.querySelector<HTMLElement>(`[${atributo}="${site}"]`);
     if (!raiz || prefereMenosMovimento()) return;
 
     const grupos = new Map<Element, HTMLElement[]>();
@@ -69,7 +73,7 @@ export function RevelarAoRolar({ raiz: site }: { raiz: string }) {
       observador.disconnect();
       delete raiz.dataset.revelaPronto;
     };
-  }, [site]);
+  }, [site, atributo]);
 
   return null;
 }
