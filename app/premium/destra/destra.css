@@ -1213,6 +1213,111 @@
     }
   }
 
+  /* ---------- páginas internas ---------- */
+
+  /* A barra interna fica sólida desde o topo: sem a faixa da abertura atrás,
+     só as pílulas, e um véu branco para o texto não passar por baixo. */
+  .dt-barra-interna::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 -24px;
+    z-index: -1;
+    background: linear-gradient(
+      #ffffff 0%,
+      rgb(255 255 255 / 0.85) 55%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .dt-menu a[aria-current="page"] {
+    background: var(--tinta);
+    color: #ffffff;
+  }
+
+  /* As páginas à vista no desktop: a pílula cinza das etiquetas, com a
+     atual em preto. */
+  .dt-paginas {
+    display: none;
+    align-items: center;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 999px;
+    background: var(--cinza);
+    pointer-events: auto;
+  }
+  @media (min-width: 1024px) {
+    .dt-paginas {
+      display: flex;
+    }
+  }
+  .dt-paginas a {
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    padding: 0 14px;
+    border-radius: 999px;
+    color: rgb(0 0 0 / 0.7);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease;
+  }
+  .dt-paginas a:hover {
+    color: var(--tinta);
+  }
+  .dt-paginas a[aria-current="page"] {
+    background: var(--tinta);
+    color: #ffffff;
+  }
+
+  .dt-caminho {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    font-size: 0.875rem;
+    color: var(--texto-suave);
+  }
+  .dt-caminho a {
+    transition: color 0.15s ease;
+  }
+  .dt-caminho a:hover {
+    color: var(--tinta);
+  }
+  .dt-caminho li + li::before {
+    content: "/";
+    margin-right: 10px;
+    color: rgb(0 0 0 / 0.25);
+  }
+
+  /* O título das páginas internas: o da abertura, leve e apertado. */
+  .dt-h1 {
+    font-weight: 300;
+    font-size: clamp(2.75rem, 1.5rem + 5.2vw, 6rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+
+  /* A entrada do alto das páginas internas, no tempo do modelo. */
+  .dt-entra {
+    animation: dt-sobe-16 0.9s var(--e-modelo) both;
+    animation-delay: calc(var(--ordem, 0) * 100ms + 100ms);
+  }
+
+  /* As tabelas lado a lado: linhas finas, primeira coluna em cinza. */
+  .dt-tabela th,
+  .dt-tabela td {
+    padding: 18px 20px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .dt-tabela tbody tr {
+    border-top: 1px solid var(--linha);
+  }
+
   /* ---------- revelar ao rolar (RevelarAoRolar.tsx) ---------- */
   [data-premium="destra"] [data-revela] {
     transition:

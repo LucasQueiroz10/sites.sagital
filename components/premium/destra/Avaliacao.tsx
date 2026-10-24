@@ -1,12 +1,14 @@
 "use client";
 
 import { Check } from "lucide-react";
+import Link from "next/link";
 import { useId, useState } from "react";
 import {
   acabamentos,
   niveis,
   nome as nomeDaEmpresa,
   pegadas,
+  raiz,
   situacoes,
 } from "@/data/destra";
 import { linkDoPremium } from "@/lib/whatsapp";
@@ -134,9 +136,9 @@ export function Avaliacao() {
             <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-black/65">
               Ainda não escolheu? Tudo bem: a terapeuta define nível, tamanho e
               encaixe com você. Se quiser adiantar,{" "}
-              <a href="#monte" className="dt-link">
+              <Link href={`${raiz}#monte`} className="dt-link">
                 monte a sua
-              </a>
+              </Link>
               .
             </p>
           </>

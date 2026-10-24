@@ -7,6 +7,7 @@ import { RevelarAoRolar } from "@/components/premium/RevelarAoRolar";
 import { Abertura } from "@/components/premium/destra/Abertura";
 import { Avaliacao } from "@/components/premium/destra/Avaliacao";
 import { Configurador } from "@/components/premium/destra/Configurador";
+import { VerMais } from "@/components/premium/destra/Interno";
 import { Logo } from "@/components/premium/destra/Logo";
 import { Pegadas } from "@/components/premium/destra/Pegadas";
 import { Relatos } from "@/components/premium/destra/Relatos";
@@ -16,9 +17,10 @@ import {
   fichaCompleta,
   fichaEmDestaque,
   jornada,
-  navegacao,
   nome,
+  paginas,
   perguntas,
+  raiz,
   rodape,
 } from "@/data/destra";
 import maoAberta from "@/public/imagens/premium/destra/mao-aberta.jpg";
@@ -88,6 +90,9 @@ export default function PaginaDaDestra() {
             <div data-revela className="mt-12 sm:mt-16">
               <Pegadas />
             </div>
+            <div data-revela className="mt-10">
+              <VerMais href={`${raiz}/pegadas`}>Ver as sete pegadas</VerMais>
+            </div>
           </div>
         </section>
 
@@ -104,6 +109,11 @@ export default function PaginaDaDestra() {
             />
             <div className="mt-14 sm:mt-20">
               <Sinal />
+            </div>
+            <div data-revela className="mt-12">
+              <VerMais href={`${raiz}/como-funciona`}>
+                Ficha técnica e encaixes
+              </VerMais>
             </div>
           </div>
         </section>
@@ -209,6 +219,11 @@ export default function PaginaDaDestra() {
                 </li>
               ))}
             </ol>
+            <div data-revela className="mt-14">
+              <VerMais href={`${raiz}/jornada`} claro>
+                A jornada por dentro
+              </VerMais>
+            </div>
           </div>
         </section>
 
@@ -221,6 +236,11 @@ export default function PaginaDaDestra() {
             <Cabeca id="relatos-titulo" titulo="Quem usa conta" />
             <div data-revela className="mt-12 sm:mt-16">
               <Relatos />
+            </div>
+            <div data-revela className="mt-12">
+              <VerMais href={`${raiz}/relatos`}>
+                Ler as histórias inteiras
+              </VerMais>
             </div>
           </div>
         </section>
@@ -277,7 +297,11 @@ export default function PaginaDaDestra() {
             {nome}
           </span>
         }
-        navegacao={[...navegacao]}
+        navegacao={[
+          ...paginas,
+          { rotulo: "Monte a sua", href: "#monte" },
+          { rotulo: "Avaliação", href: "#avaliacao" },
+        ]}
         rodape={rodape}
         className="border-t border-black/[0.08] bg-white"
       />

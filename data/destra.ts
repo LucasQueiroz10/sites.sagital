@@ -22,6 +22,17 @@ export const navegacao = [
   { rotulo: "Avaliação", href: "#avaliacao" },
 ] as const;
 
+/** O endereço do site; as páginas internas ficam abaixo dele. */
+export const raiz = "/premium/destra";
+
+/** As páginas internas, na ordem do menu e do rodapé. */
+export const paginas = [
+  { rotulo: "Pegadas", href: `${raiz}/pegadas` },
+  { rotulo: "Como funciona", href: `${raiz}/como-funciona` },
+  { rotulo: "Jornada", href: `${raiz}/jornada` },
+  { rotulo: "Relatos", href: `${raiz}/relatos` },
+] as const;
+
 /** O vídeo da abertura e o quadro que aparece enquanto ele carrega. */
 export const video = {
   src: "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_215831_c6a8989c-d716-4d8d-8745-e972a2eec711.mp4",
@@ -289,7 +300,39 @@ export const acabamentos: {
   },
 ];
 
-/** Da primeira conversa ao dia a dia: a jornada com a Destra. */
+type Celula = boolean | string;
+
+/** Os três níveis lado a lado, na página "Como funciona". */
+export const comparacaoDosNiveis: {
+  linha: string;
+  valores: [Celula, Celula, Celula];
+}[] = [
+  {
+    linha: "Para quem",
+    valores: [
+      "Perdeu dedos, mas tem a palma",
+      "Perdeu a mão, até o punho",
+      "Perdeu a mão e parte do antebraço",
+    ],
+  },
+  {
+    linha: "Encaixe",
+    valores: ["Luva de silicone", "Carbono curto", "Carbono até o cotovelo"],
+  },
+  { linha: "Pegadas", valores: ["5 de 7", "Todas as 7", "Todas as 7"] },
+  { linha: "Punho giratório", valores: [false, true, true] },
+  { linha: "Sensores no músculo", valores: ["2", "2", "2 ou 4"] },
+  {
+    linha: "Peso total",
+    valores: ["Cerca de 180 g", "Cerca de 460 g", "Cerca de 620 g"],
+  },
+  {
+    linha: "Encaixe pronto em",
+    valores: ["2 semanas", "3 semanas", "4 semanas"],
+  },
+  { linha: "Sessões de treino", valores: ["4", "6", "8"] },
+];
+
 export const jornada = [
   {
     prazo: "1 hora",
@@ -317,12 +360,110 @@ export const jornada = [
   },
 ] as const;
 
+/** O que acontece em cada etapa da jornada, na página da jornada. */
+export const jornadaPorDentro: Record<
+  string,
+  { voce: string; nos: string; leva: string[] }
+> = {
+  Avaliação: {
+    voce: "Conta o que quer voltar a fazer, da louça ao trabalho.",
+    nos: "Medimos o braço, testamos os sinais dos músculos e dizemos qual nível serve.",
+    leva: [
+      "Pedido médico, se tiver",
+      "Exames do braço, se tiver",
+      "A carteirinha do plano",
+    ],
+  },
+  "Encaixe sob medida": {
+    voce: "Vem duas vezes à clínica: para o molde e para provar o encaixe de teste.",
+    nos: "Fazemos o encaixe transparente, ajustamos onde aperta e só então o definitivo em carbono.",
+    leva: ["Roupa de manga curta", "Uma hora livre em cada visita"],
+  },
+  Treino: {
+    voce: "Aprende os gestos de cada pegada, primeiro na clínica e depois em casa.",
+    nos: "A terapeuta ajusta a sensibilidade de cada sensor ao seu jeito de contrair.",
+    leva: ["Objetos do seu dia a dia, para treinar com eles"],
+  },
+  Acompanhamento: {
+    voce: "Usa a mão. Se algo incomodar, avisa pelo aplicativo.",
+    nos: "Ajustamos à distância e revisamos tudo uma vez por ano, sem custo.",
+    leva: ["Nada: a revisão anual é marcada por nós"],
+  },
+};
+
+/** Os três jeitos de pagar a mão, lado a lado (a Destra não mostra preço). */
+export const caminhosDePagamento: {
+  id: string;
+  nome: string;
+  resumo: string;
+  linhas: { rotulo: string; valor: string }[];
+}[] = [
+  {
+    id: "plano",
+    nome: "Plano de saúde",
+    resumo: "O caminho mais comum. A equipe monta o pedido com você.",
+    linhas: [
+      { rotulo: "Quem paga", valor: "O plano, total ou em parte" },
+      {
+        rotulo: "Prazo de resposta",
+        valor: "21 dias úteis, pela regra da ANS",
+      },
+      {
+        rotulo: "O que precisa",
+        valor: "Pedido médico e o relatório da avaliação",
+      },
+      {
+        rotulo: "A Destra cuida de",
+        valor: "Relatório técnico, orçamento e recurso, se negarem",
+      },
+    ],
+  },
+  {
+    id: "sus",
+    nome: "SUS",
+    resumo: "Pela rede de reabilitação, quando o caso se encaixa.",
+    linhas: [
+      {
+        rotulo: "Quem paga",
+        valor: "O SUS, pela tabela de órteses e próteses",
+      },
+      { rotulo: "Prazo de resposta", valor: "Varia por estado e por fila" },
+      {
+        rotulo: "O que precisa",
+        valor: "Encaminhamento de um centro de reabilitação",
+      },
+      {
+        rotulo: "A Destra cuida de",
+        valor: "Documentos técnicos para o processo",
+      },
+    ],
+  },
+  {
+    id: "particular",
+    nome: "Particular",
+    resumo: "Para quem quer começar logo ou não tem cobertura.",
+    linhas: [
+      { rotulo: "Quem paga", valor: "Você, à vista ou parcelado" },
+      {
+        rotulo: "Prazo de resposta",
+        valor: "O orçamento sai no dia da avaliação",
+      },
+      { rotulo: "O que precisa", valor: "Só a avaliação" },
+      { rotulo: "A Destra cuida de", valor: "Parcelamento em até 24 vezes" },
+    ],
+  },
+];
+
 /** Relatos de quem usa (pessoas fictícias). */
 export const relatos: {
   texto: string;
   nome: string;
   quem: string;
   pegada: IdDaPegada;
+  /** A história completa, na página de relatos. */
+  historia: string[];
+  /** O que voltou a fazer, em poucas palavras. */
+  voltou: string[];
 }[] = [
   {
     texto:
@@ -330,6 +471,11 @@ export const relatos: {
     nome: "Marta Quintela",
     quem: "Confeiteira, usa a mão no punho desde 2024",
     pegada: "pinca",
+    historia: [
+      "Marta perdeu a mão direita num acidente com uma batedeira industrial, onze anos depois de abrir a confeitaria. Passou dois anos só coordenando a cozinha.",
+      "Na avaliação, a terapeuta pediu que ela trouxesse um bico de confeiteiro. O treino da pinça foi feito com ele, de olho fechado, até o gesto virar automático.",
+    ],
+    voltou: ["Decorar bolos", "Amarrar o avental", "Abrir potes"],
   },
   {
     texto:
@@ -337,6 +483,15 @@ export const relatos: {
     nome: "Osvaldo Brites",
     quem: "Marceneiro aposentado, mão no antebraço",
     pegada: "gancho",
+    historia: [
+      "Osvaldo usou um gancho mecânico por vinte anos. Funcionava, mas cansava o ombro e chamava atenção na rua.",
+      "A troca levou um mês. O que mais mudou foi a feira de sábado: o gancho biônico trava sozinho, e o braço descansa enquanto ele conversa com o feirante.",
+    ],
+    voltou: [
+      "Carregar as sacolas da feira",
+      "Lixar madeira",
+      "Segurar a neta no colo",
+    ],
   },
   {
     texto:
@@ -344,6 +499,15 @@ export const relatos: {
     nome: "Iara Mendonça",
     quem: "Estudante de direito, nasceu sem a mão esquerda",
     pegada: "tripe",
+    historia: [
+      "Iara nasceu sem a mão esquerda e nunca usou prótese: as que conheceu eram pesadas e serviam para pouco.",
+      "Ela chegou à avaliação desconfiada. Os músculos do antebraço responderam no primeiro teste, e em seis sessões ela digitava com as duas mãos.",
+    ],
+    voltou: [
+      "Digitar com as duas mãos",
+      "Tomar notas na aula",
+      "Cortar a comida",
+    ],
   },
 ];
 
