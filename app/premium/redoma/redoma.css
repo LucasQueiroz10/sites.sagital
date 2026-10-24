@@ -1,0 +1,423 @@
+/*
+ * Redoma: proteção de dados sobre fundo preto. A abertura é o modelo
+ * "securify" traduzido, escrito em utilitários do Tailwind como veio; este
+ * arquivo guarda só o que eles não alcançam: a fonte, o título apertado, o
+ * cruzamento do vídeo e as peças do resto do site. A paleta é a do modelo,
+ * sem cor nenhuma: preto, branco, neutral-900 e o branco em transparências.
+ */
+
+@layer components {
+  [data-premium="redoma"] {
+    --fundo: #000000;
+    --painel: #171717; /* neutral-900 */
+    --linha: rgb(255 255 255 / 0.1);
+    --linha-forte: rgb(255 255 255 / 0.18);
+    --texto: #ffffff;
+    --texto-suave: rgb(255 255 255 / 0.7);
+
+    --e-revela: cubic-bezier(0.16, 1, 0.3, 1);
+
+    background: var(--fundo);
+    color: var(--texto);
+    font-family:
+      var(--font-readex),
+      system-ui,
+      -apple-system,
+      sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  [data-premium="redoma"] ::selection {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  [data-premium="redoma"] :focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
+
+  /* As palavras gigantes do modelo. */
+  [data-premium="redoma"] .hero-title {
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+  }
+
+  /* As duas cópias do vídeo se cruzam no fim de cada volta (VideoEmLoop). */
+  .rd-video {
+    opacity: 0;
+    transition: opacity 0.9s linear;
+    pointer-events: none;
+  }
+  .rd-video.ativo {
+    opacity: 1;
+  }
+
+  .rd-menu:not([hidden]) {
+    animation: rd-desce 0.2s var(--e-revela) both;
+  }
+  @keyframes rd-desce {
+    from {
+      opacity: 0;
+      translate: 0 -0.375rem;
+    }
+  }
+
+  /* ---------- resto do site ---------- */
+  .rd-secao {
+    scroll-margin-top: 6.5rem;
+  }
+
+  .rd-h2 {
+    font-weight: 500;
+    font-size: clamp(2.5rem, 1.3rem + 5vw, 5.75rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  .rd-h3 {
+    font-weight: 500;
+    font-size: clamp(1.875rem, 1.3rem + 2.2vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  .rd-cartao {
+    background: var(--painel);
+    border-radius: 1.75rem;
+  }
+
+  .rd-rotulo {
+    display: block;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: var(--texto-suave);
+  }
+
+  /* Os botões do modelo: pílula branca e pílula neutral-900. */
+  .rd-botao {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 1.5rem;
+    border-radius: 99px;
+    font: inherit;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    text-decoration: none;
+    white-space: nowrap;
+    border: 0;
+    cursor: pointer;
+    transition:
+      background-color 0.18s ease,
+      transform 0.16s ease;
+  }
+  .rd-botao:active {
+    transform: scale(0.97);
+  }
+  .rd-botao-branco {
+    background: #ffffff;
+    color: #000000;
+  }
+  .rd-botao-branco:hover {
+    background: #e5e5e5; /* neutral-200 */
+  }
+  .rd-botao-escuro {
+    background: rgb(255 255 255 / 0.08);
+    color: #ffffff;
+  }
+  .rd-botao-escuro:hover {
+    background: rgb(255 255 255 / 0.14);
+  }
+
+  .rd-botao-icone {
+    display: grid;
+    width: 3.25rem;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 0.06);
+    color: var(--texto-suave);
+    border: 0;
+    cursor: pointer;
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease;
+  }
+  .rd-botao-icone:hover {
+    background: rgb(255 255 255 / 0.12);
+    color: #ffffff;
+  }
+
+  /* Seletor em pílula (abas dos ramos, ciclo, começar/suporte). */
+  .rd-alternador {
+    display: inline-flex;
+    padding: 0.3125rem;
+    gap: 0.25rem;
+    border-radius: 99px;
+    background: var(--painel);
+    scrollbar-width: none;
+  }
+  .rd-alternador button {
+    min-height: 2.5rem;
+    flex-shrink: 0;
+    padding: 0 1.125rem;
+    border-radius: 99px;
+    font: inherit;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: #d4d4d4; /* neutral-300, como os links da barra */
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease;
+  }
+  .rd-alternador button:hover {
+    color: #ffffff;
+  }
+  .rd-alternador button[aria-pressed="true"],
+  .rd-alternador button[aria-selected="true"] {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .rd-campo {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0 1rem;
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid transparent;
+    color: var(--texto);
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 400;
+    transition:
+      border-color 0.18s ease,
+      background-color 0.18s ease;
+  }
+  .rd-campo:hover {
+    background: rgb(255 255 255 / 0.09);
+  }
+  .rd-campo:focus-visible {
+    outline: none;
+    border-color: #ffffff;
+  }
+  .rd-campo[aria-invalid="true"] {
+    border-color: rgb(255 255 255 / 0.6);
+    border-style: dashed;
+  }
+  select.rd-campo {
+    appearance: none;
+    padding-right: 2.75rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='m1 1.5 5 5 5-5' stroke='%23ffffff' stroke-opacity='.7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.125rem center;
+  }
+  select.rd-campo option {
+    background: #171717;
+    color: #ffffff;
+  }
+
+  .rd-ficha {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+    padding: 0 1rem;
+    border-radius: 99px;
+    background: rgb(255 255 255 / 0.06);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: #d4d4d4;
+    cursor: pointer;
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease;
+  }
+  .rd-ficha:hover {
+    color: #ffffff;
+    background: rgb(255 255 255 / 0.1);
+  }
+  .rd-ficha:has(input:checked) {
+    background: #ffffff;
+    color: #000000;
+  }
+  .rd-ficha:has(input:focus-visible) {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
+
+  /* A régua de pessoas: trilho fino, preenchido até o polegar. */
+  .rd-regua {
+    appearance: none;
+    height: 2.75rem;
+    background: transparent;
+    cursor: pointer;
+  }
+  .rd-regua::-webkit-slider-runnable-track {
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(
+      to right,
+      #ffffff var(--preenchido),
+      rgb(255 255 255 / 0.15) var(--preenchido)
+    );
+  }
+  .rd-regua::-moz-range-track {
+    height: 2px;
+    border-radius: 2px;
+    background: rgb(255 255 255 / 0.15);
+  }
+  .rd-regua::-moz-range-progress {
+    height: 2px;
+    background: #ffffff;
+  }
+  .rd-regua::-webkit-slider-thumb {
+    appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: calc(-0.75rem + 1px);
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 0 6px rgb(255 255 255 / 0.12);
+    transition: box-shadow 0.18s ease;
+  }
+  .rd-regua::-moz-range-thumb {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 0;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 0 6px rgb(255 255 255 / 0.12);
+  }
+  .rd-regua:hover::-webkit-slider-thumb {
+    box-shadow: 0 0 0 9px rgb(255 255 255 / 0.16);
+  }
+  .rd-regua:focus-visible {
+    outline: none;
+  }
+  .rd-regua:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
+  }
+  .rd-regua:focus-visible::-moz-range-thumb {
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
+  }
+
+  /* Os planos: o indicado para o tamanho da equipe ganha o contorno branco. */
+  .rd-plano {
+    background: var(--painel);
+    border-radius: 1.75rem;
+    box-shadow: inset 0 0 0 1px transparent;
+    transition: box-shadow 0.25s ease;
+  }
+  .rd-plano.destaque {
+    box-shadow: inset 0 0 0 1px #ffffff;
+  }
+
+  .rd-tempo {
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+  .rd-degrau {
+    transition: background-color 0.25s ease;
+  }
+
+  /* O painel de cada ramo entra devagar ao trocar de aba. */
+  .rd-painel {
+    animation: rd-painel-entra 0.45s var(--e-revela) both;
+  }
+  @keyframes rd-painel-entra {
+    from {
+      opacity: 0;
+      translate: 0 0.5rem;
+    }
+  }
+
+  .rd-pergunta summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  .rd-pergunta summary::-webkit-details-marker {
+    display: none;
+  }
+  .rd-pergunta[open] .rd-pergunta-icone {
+    transform: rotate(45deg);
+  }
+  /* A resposta desce pela altura em vez de saltar (onde o navegador sabe
+     animar até height: auto; nos outros, abre como sempre). */
+  @supports (interpolate-size: allow-keywords) {
+    .rd-pergunta {
+      interpolate-size: allow-keywords;
+    }
+    .rd-pergunta::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition:
+        block-size 0.32s var(--e-revela),
+        opacity 0.24s ease,
+        content-visibility 0.32s allow-discrete;
+    }
+    .rd-pergunta[open]::details-content {
+      block-size: auto;
+      opacity: 1;
+    }
+  }
+
+  /* ---------- revelar ao rolar (RevelarAoRolar.tsx) ---------- */
+  /* Só se escondem depois que o script arma a página (data-revela-pronto). */
+  [data-premium="redoma"] [data-revela] {
+    transition:
+      opacity 0.7s var(--e-revela),
+      translate 0.8s var(--e-revela);
+    transition-delay: calc(var(--revela-ordem, 0) * 70ms);
+  }
+  [data-premium="redoma"][data-revela-pronto]
+    [data-revela]:not([data-revelado]) {
+    opacity: 0;
+    translate: 0 1.25rem;
+  }
+
+  /* Título: sobe por trás de uma máscara, no mesmo corpo apertado da
+     abertura. */
+  [data-premium="redoma"] [data-revela="titulo"] {
+    clip-path: inset(-0.3em -0.3em -0.3em -0.3em);
+    transition:
+      translate 1s var(--e-revela),
+      clip-path 1s var(--e-revela);
+  }
+  [data-premium="redoma"][data-revela-pronto]
+    [data-revela="titulo"]:not([data-revelado]) {
+    opacity: 1;
+    translate: 0 100%;
+    clip-path: inset(-0.3em -0.3em 100% -0.3em);
+  }
+
+  [data-premium="redoma"] [data-revela="texto"] {
+    transition-delay: 0.12s;
+  }
+
+  /* Movimento reduzido: o vídeo para no primeiro quadro (VideoEmLoop) e
+     nada mais anda. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-premium="redoma"] *,
+    [data-premium="redoma"] *::before,
+    [data-premium="redoma"] *::after,
+    [data-premium="redoma"] ::details-content {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+}

@@ -9,11 +9,11 @@ import type { Metadata, Viewport } from "next";
 import { jakarta } from "@/app/fontes";
 import { RodapeDoPortfolio } from "@/components/portfolio/RodapeDoPortfolio";
 import { Abertura } from "@/components/premium/paralelo/Abertura";
-import { Contador } from "@/components/premium/paralelo/Contador";
+import { Contador } from "@/components/premium/Contador";
 import { Contato } from "@/components/premium/paralelo/Contato";
 import { ExemploDaApi } from "@/components/premium/paralelo/ExemploDaApi";
 import { Planos } from "@/components/premium/paralelo/Planos";
-import { RevelarAoRolar } from "@/components/premium/paralelo/RevelarAoRolar";
+import { RevelarAoRolar } from "@/components/premium/RevelarAoRolar";
 import { Simulador } from "@/components/premium/paralelo/Simulador";
 import { VoltarParaSagital } from "@/components/VoltarParaSagital";
 import {
@@ -81,11 +81,14 @@ export default function PaginaDaParalelo() {
       className={`${jakarta.variable} min-h-dvh`}
     >
       <Abertura />
-      <RevelarAoRolar />
+      <RevelarAoRolar raiz="paralelo" />
 
       <main>
         {/* Números logo abaixo do globo. */}
-        <section aria-label="A Paralelo em números" className="border-b border-[var(--linha)]">
+        <section
+          aria-label="A Paralelo em números"
+          className="border-b border-[var(--linha)]"
+        >
           <dl
             data-revela-grupo
             className={`${container} grid grid-cols-2 lg:grid-cols-4`}
@@ -137,7 +140,11 @@ export default function PaginaDaParalelo() {
                     className="pa-cartao flex flex-col p-6 sm:p-8"
                   >
                     <span className="grid size-11 place-items-center rounded-full bg-[var(--roxo-fundo)] text-[var(--roxo)]">
-                      <Icone aria-hidden className="size-5" strokeWidth={1.75} />
+                      <Icone
+                        aria-hidden
+                        className="size-5"
+                        strokeWidth={1.75}
+                      />
                     </span>
                     <h3 className="mt-6 text-[1.375rem] font-semibold tracking-[-0.02em] text-white">
                       {p.titulo}

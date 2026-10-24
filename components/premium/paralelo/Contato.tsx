@@ -90,7 +90,11 @@ export function Contato() {
       }}
       className="pa-cartao grid gap-6 p-5 sm:p-8"
     >
-      <div className="pa-alternador justify-self-start" role="group" aria-label="O que você quer">
+      <div
+        className="pa-alternador justify-self-start"
+        role="group"
+        aria-label="O que você quer"
+      >
         <button
           type="button"
           aria-pressed={!vendas}

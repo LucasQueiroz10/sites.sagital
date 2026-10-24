@@ -7,6 +7,7 @@
 import capturaBloco from "@/public/imagens/sagital/premium-bloco.png";
 import capturaLaMaree from "@/public/imagens/sagital/premium-la-maree.png";
 import capturaParalelo from "@/public/imagens/sagital/premium-paralelo.png";
+import capturaRedoma from "@/public/imagens/sagital/premium-redoma.png";
 import type { Imagem } from "./tipos";
 
 export type ProjetoPremium = {
@@ -65,6 +66,20 @@ export const projetosPremium: ProjetoPremium[] = [
     },
     fonte: "Plus Jakarta Sans",
     paleta: ["#7c5cff", "#181818", "#000000"],
+  },
+  {
+    id: "redoma",
+    nome: "Redoma",
+    ramo: "Proteção de dados",
+    destaque:
+      "Vídeo em tela cheia com tipografia gigante, teste de senha que calcula quanto tempo ela aguenta e preço pelo tamanho da equipe.",
+    href: "/premium/redoma",
+    captura: {
+      src: capturaRedoma,
+      alt: "Primeira tela do site da Redoma no celular",
+    },
+    fonte: "Readex Pro",
+    paleta: ["#ffffff", "#171717", "#000000"],
   },
 ];
 

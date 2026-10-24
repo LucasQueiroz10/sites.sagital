@@ -41,8 +41,13 @@
 
     background: var(--fundo);
     color: var(--texto);
-    font-family: var(--font-jakarta), -apple-system, BlinkMacSystemFont,
-      "Segoe UI", Roboto, sans-serif;
+    font-family:
+      var(--font-jakarta),
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: geometricPrecision;
@@ -59,7 +64,8 @@
     color: #fff;
   }
 
-  [data-premium="paralelo"] :is(a, button, summary, input, select):focus-visible {
+  [data-premium="paralelo"]
+    :is(a, button, summary, input, select):focus-visible {
     outline: 2px solid var(--roxo);
     outline-offset: 3px;
   }
@@ -625,7 +631,15 @@
     padding-top: 0.26em;
     margin-top: -0.26em;
   }
-  .pa-anim :is(.pa-ln-i, .pa-logo, .pa-links a, .pa-acoes .pa-btn, .pa-sub, .pa-ctas .pa-btn) {
+  .pa-anim
+    :is(
+      .pa-ln-i,
+      .pa-logo,
+      .pa-links a,
+      .pa-acoes .pa-btn,
+      .pa-sub,
+      .pa-ctas .pa-btn
+    ) {
     will-change: transform, opacity;
   }
 
@@ -684,7 +698,8 @@
   @keyframes pa-logo-entra {
     from {
       opacity: 0;
-      transform: translateY(calc(-2.4 * var(--u))) translateY(calc(9 * var(--u)));
+      transform: translateY(calc(-2.4 * var(--u)))
+        translateY(calc(9 * var(--u)));
     }
     to {
       opacity: 1;
@@ -968,7 +983,8 @@
       scale 0.8s var(--e-revela);
     transition-delay: calc(var(--revela-ordem, 0) * 70ms);
   }
-  [data-premium="paralelo"][data-revela-pronto] [data-revela]:not([data-revelado]) {
+  [data-premium="paralelo"][data-revela-pronto]
+    [data-revela]:not([data-revelado]) {
     opacity: 0;
     translate: 0 1.125rem;
     scale: 0.985;
@@ -983,7 +999,8 @@
       translate 1s var(--e-revela),
       clip-path 1s var(--e-revela);
   }
-  [data-premium="paralelo"][data-revela-pronto] [data-revela="titulo"]:not([data-revelado]) {
+  [data-premium="paralelo"][data-revela-pronto]
+    [data-revela="titulo"]:not([data-revelado]) {
     opacity: 1;
     scale: 1;
     translate: 0 100%;
@@ -998,14 +1015,16 @@
       filter 0.85s var(--e-revela);
     transition-delay: 0.12s;
   }
-  [data-premium="paralelo"][data-revela-pronto] [data-revela="texto"]:not([data-revelado]) {
+  [data-premium="paralelo"][data-revela-pronto]
+    [data-revela="texto"]:not([data-revelado]) {
     scale: 1;
     translate: 0 0.875rem;
     filter: blur(4px);
   }
   /* No celular, sem o desfoque (o mesmo corte da abertura). */
   @media (max-width: 552px) {
-    [data-premium="paralelo"][data-revela-pronto] [data-revela="texto"]:not([data-revelado]) {
+    [data-premium="paralelo"][data-revela-pronto]
+      [data-revela="texto"]:not([data-revelado]) {
       filter: none;
     }
   }

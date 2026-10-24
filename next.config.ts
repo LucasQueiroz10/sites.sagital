@@ -41,19 +41,18 @@ const csp = [
 ].join("; ");
 
 /**
- * Paralelo (premium): o globo da abertura é um vídeo servido pela CDN do
- * modelo, com o quadro de espera ao lado. Só essa página libera esses dois
- * domínios; o resto do site segue na política acima.
+ * Paralelo e Redoma (premium): o vídeo da abertura de cada uma vem da CDN do
+ * modelo. Só essas páginas liberam o domínio do vídeo (e a Paralelo, o do
+ * quadro de espera do globo); o resto do site segue na política acima.
  */
-const cspDaParalelo = csp
-  .replace(
-    "img-src 'self'",
-    "img-src 'self' https://d2ol7oe51mr4n9.cloudfront.net",
-  )
-  .replace(
-    "default-src 'self'",
-    "default-src 'self'; media-src 'self' https://d8j0ntlcm91z4.cloudfront.net",
-  );
+const cspComVideo = csp.replace(
+  "default-src 'self'",
+  "default-src 'self'; media-src 'self' https://d8j0ntlcm91z4.cloudfront.net",
+);
+const cspDaParalelo = cspComVideo.replace(
+  "img-src 'self'",
+  "img-src 'self' https://d2ol7oe51mr4n9.cloudfront.net",
+);
 
 const cabecalhosDeSeguranca = [
   { key: "Content-Security-Policy", value: csp },
@@ -91,6 +90,10 @@ const nextConfig: NextConfig = {
       {
         source: "/premium/paralelo",
         headers: [{ key: "Content-Security-Policy", value: cspDaParalelo }],
+      },
+      {
+        source: "/premium/redoma",
+        headers: [{ key: "Content-Security-Policy", value: cspComVideo }],
       },
     ];
   },

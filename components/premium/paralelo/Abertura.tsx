@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { navegacao, nome } from "@/data/paralelo";
+import { globo, navegacao, nome } from "@/data/paralelo";
 import { classes } from "@/lib/classes";
 import { prefereMenosMovimento } from "@/lib/movimento";
 import { DialogoDeEntrada } from "./DialogoDeEntrada";
 import { escolher, type Intencao } from "./escolha";
 import { Seta } from "./Seta";
-import { VideoDoGlobo } from "./VideoDoGlobo";
+import { VideoEmLoop } from "@/components/premium/VideoEmLoop";
 
 /** A entrada inteira dura 1,67s; passou disso, ela se desliga de qualquer jeito. */
 const LIMITE_DA_ENTRADA = 2600;
@@ -110,7 +110,13 @@ export function Abertura() {
       aria-labelledby="pa-titulo"
       className={classes("pa-hero", entrando && "pa-anim")}
     >
-      <VideoDoGlobo />
+      <VideoEmLoop
+        video={globo.video}
+        quadro={globo.quadro}
+        descricao={globo.descricao}
+        classeDoFundo="pa-bg"
+        classeDoVideo="pa-video"
+      />
 
       <header className={classes("pa-nav", solida && "solida")}>
         <a className="pa-logo" href="#topo">

@@ -4,7 +4,7 @@ import { Check } from "lucide-react";
 import { useState } from "react";
 import { DESCONTO_ANUAL, planos } from "@/data/paralelo";
 import { classes } from "@/lib/classes";
-import { Contador } from "./Contador";
+import { Contador } from "@/components/premium/Contador";
 import { escolher } from "./escolha";
 import { Seta } from "./Seta";
 

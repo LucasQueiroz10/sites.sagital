@@ -7,9 +7,9 @@ import { prefereMenosMovimento } from "@/lib/movimento";
 const MAIOR_ORDEM = 5;
 
 /**
- * As partes da página entram conforme a rolagem, na mesma língua da
- * abertura: o título sobe por trás de uma máscara, o texto sai do desfoque e
- * os cartões assentam em sequência (paralelo.css, [data-revela]). Dentro de
+ * As partes da página entram conforme a rolagem: o título sobe por trás de
+ * uma máscara, o texto sai do desfoque e os cartões assentam em sequência
+ * ([data-revela] no CSS de cada site premium). Dentro de
  * um [data-revela-grupo], quem dispara é o grupo, e os itens entram na ordem
  * da página.
  *
@@ -17,11 +17,14 @@ const MAIOR_ORDEM = 5;
  * (data-revela-pronto) o que está fora da tela se esconde, então um script
  * que falhe nunca deixa a página vazia. O que já está à vista ao carregar
  * fica como está. Com movimento reduzido, nada se esconde.
+ *
+ * `raiz` é o valor de data-premium do site; o CSS de cada site desenha os
+ * gestos.
  */
-export function RevelarAoRolar() {
+export function RevelarAoRolar({ raiz: site }: { raiz: string }) {
   useEffect(() => {
     const raiz = document.querySelector<HTMLElement>(
-      '[data-premium="paralelo"]',
+      `[data-premium="${site}"]`,
     );
     if (!raiz || prefereMenosMovimento()) return;
 
@@ -66,7 +69,7 @@ export function RevelarAoRolar() {
       observador.disconnect();
       delete raiz.dataset.revelaPronto;
     };
-  }, []);
+  }, [site]);
 
   return null;
 }

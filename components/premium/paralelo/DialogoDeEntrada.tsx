@@ -105,7 +105,10 @@ export function DialogoDeEntrada({
               onChange={(e) => setEmail(e.target.value)}
               className="pa-campo mt-2"
             />
-            <button type="submit" className="pa-botao pa-botao-branco mt-5 w-full">
+            <button
+              type="submit"
+              className="pa-botao pa-botao-branco mt-5 w-full"
+            >
               Receber link de acesso
             </button>
           </form>

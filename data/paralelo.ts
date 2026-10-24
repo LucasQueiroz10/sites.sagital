@@ -57,28 +57,44 @@ export const produtos = [
     titulo: "Receber do exterior",
     texto:
       "Link de pagamento, fatura em dólar ou euro e cartão internacional. O dinheiro cai em reais ou fica na moeda que você escolher.",
-    itens: ["Fatura em 34 moedas", "Cartão internacional", "Câmbio de exportação com IOF zero"],
+    itens: [
+      "Fatura em 34 moedas",
+      "Cartão internacional",
+      "Câmbio de exportação com IOF zero",
+    ],
   },
   {
     id: "enviar",
     titulo: "Pagar lá fora",
     texto:
       "Fornecedores, freelancers e assinaturas em 180 países, com a cotação travada no momento do envio.",
-    itens: ["Cotação travada", "Pagamentos em lote", "Comprovante para o contador"],
+    itens: [
+      "Cotação travada",
+      "Pagamentos em lote",
+      "Comprovante para o contador",
+    ],
   },
   {
     id: "conta",
     titulo: "Conta multimoeda",
     texto:
       "Saldo em real, dólar, euro e libra, e USDC ou USDT guardados com custódia própria, sem abrir conta em corretora.",
-    itens: ["Custódia de stablecoins", "Conversão entre saldos", "Pix para entrar e sair"],
+    itens: [
+      "Custódia de stablecoins",
+      "Conversão entre saldos",
+      "Pix para entrar e sair",
+    ],
   },
   {
     id: "checkout",
     titulo: "Checkout global",
     texto:
       "Sua loja vendendo para o mundo: Pix para quem é daqui, cartão e cripto para quem é de fora, tudo no mesmo extrato.",
-    itens: ["Plugins para as lojas mais usadas", "Preço na moeda do cliente", "Antifraude incluso"],
+    itens: [
+      "Plugins para as lojas mais usadas",
+      "Preço na moeda do cliente",
+      "Antifraude incluso",
+    ],
   },
 ] as const;
 
@@ -146,11 +162,13 @@ export const DESCONTO_ANUAL = 2 / 12;
 export const recursosDaApi = [
   {
     titulo: "API REST e webhooks assinados",
-    texto: "Cobranças, pagamentos e saldos por HTTP, com aviso na hora em que o dinheiro entra.",
+    texto:
+      "Cobranças, pagamentos e saldos por HTTP, com aviso na hora em que o dinheiro entra.",
   },
   {
     titulo: "Ambiente de testes",
-    texto: "Chaves de teste com saldo de mentira em todas as moedas, para integrar sem risco.",
+    texto:
+      "Chaves de teste com saldo de mentira em todas as moedas, para integrar sem risco.",
   },
   {
     titulo: "Bibliotecas prontas",
