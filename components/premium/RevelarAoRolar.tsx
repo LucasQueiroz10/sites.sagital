@@ -18,15 +18,19 @@ const MAIOR_ORDEM = 5;
  * que falhe nunca deixa a página vazia. O que já está à vista ao carregar
  * fica como está. Com movimento reduzido, nada se esconde.
  *
- * `raiz` é o valor de data-premium do site (ou de data-portfolio, com
- * `atributo`); o CSS de cada site desenha os gestos.
+ * `raiz` é o valor de data-premium do site (ou de data-portfolio ou
+ * data-nicho, com `atributo`); o CSS de cada site desenha os gestos.
+ *
+ * O que ainda está escondido ao armar (a tabacaria só mostra a página depois
+ * do aviso de maioridade) não tem tamanho: fica esperando a tela, e entra
+ * quando aparece.
  */
 export function RevelarAoRolar({
   raiz: site,
   atributo = "data-premium",
 }: {
   raiz: string;
-  atributo?: "data-premium" | "data-portfolio";
+  atributo?: "data-premium" | "data-portfolio" | "data-nicho";
 }) {
   useEffect(() => {
     const raiz = document.querySelector<HTMLElement>(`[${atributo}="${site}"]`);
@@ -61,7 +65,9 @@ export function RevelarAoRolar({
     for (const alvo of grupos.keys()) {
       // À vista ou já passado (a página abriu rolada, ou pulou por âncora):
       // fica visível, sem esperar.
-      if (alvo.getBoundingClientRect().top < window.innerHeight) {
+      const caixa = alvo.getBoundingClientRect();
+      const semTamanho = caixa.width === 0 && caixa.height === 0;
+      if (!semTamanho && caixa.top < window.innerHeight) {
         for (const item of grupos.get(alvo) ?? []) item.dataset.revelado = "";
       } else {
         observador.observe(alvo);

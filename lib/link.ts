@@ -42,3 +42,28 @@ export function nomeDoArquivoQr(nicho: Nicho, nome: string): string {
     .replace(/^-|-$/g, "");
   return `qr-${nicho}${base ? `-${base}` : ""}.png`;
 }
+
+/**
+ * A personalização da URL (`?nome=&cor=`) como texto de busca, só com os
+ * valores válidos, para os links entre as páginas de um demo levarem o
+ * mesmo nome e a mesma cor. Vazio quando não há nada a levar.
+ */
+export function buscaDoDemo(
+  nome: string | null | undefined,
+  cor: string | null | undefined,
+): string {
+  const parametros = new URLSearchParams();
+  const nomeValido = validarNome(nome);
+  const corValida = validarCor(cor?.replace(/^#/, ""));
+  if (nomeValido) parametros.set("nome", nomeValido);
+  if (corValida) parametros.set("cor", corValida.slice(1));
+  const texto = parametros.toString();
+  return texto ? `?${texto}` : "";
+}
+
+/** Põe a busca no link, antes da âncora: "/academia/planos?nome=X#faq". */
+export function comBusca(href: string, busca: string): string {
+  if (!busca || !href.startsWith("/")) return href;
+  const [caminho = "", ancora] = href.split("#");
+  return `${caminho}${busca}${ancora === undefined ? "" : `#${ancora}`}`;
+}

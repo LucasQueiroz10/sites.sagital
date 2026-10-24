@@ -1,7 +1,9 @@
 import { ArrowUp, type LucideIcon } from "lucide-react";
+import Link from "next/link";
 import type { ReactNode } from "react";
 import type { Rede } from "@/data/tipos";
 import { classes } from "@/lib/classes";
+import { comBusca } from "@/lib/link";
 import { Container } from "./Container";
 import { IconeDeRede, REDES } from "./IconeDeRede";
 
@@ -184,23 +186,26 @@ export function RodapeCompleto({
 export function LinksDoRodape({
   links,
   tom = "claro",
+  busca = "",
 }: {
   links: { rotulo: string; href: string }[];
   tom?: Tom;
+  /** A personalização da URL dos demos, levada para as outras páginas. */
+  busca?: string;
 }) {
   return (
     <ul className="grid gap-1">
       {links.map((link) => (
         <li key={link.href}>
-          <a
-            href={link.href}
+          <Link
+            href={comBusca(link.href, busca)}
             className={classes(
               "inline-flex min-h-9 items-center transition-colors",
               CORES[tom].link,
             )}
           >
             {link.rotulo}
-          </a>
+          </Link>
         </li>
       ))}
     </ul>

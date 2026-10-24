@@ -27,7 +27,7 @@ export type PropsDoBotao = PropsLink | PropsAcao;
 
 const base =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-tema px-5 " +
-  "text-base font-semibold transition-colors duration-150 " +
+  "text-base font-semibold transition-[color,background-color,border-color,scale] duration-150 ease-out active:scale-[0.97] " +
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque " +
   "disabled:cursor-not-allowed disabled:opacity-50";
 

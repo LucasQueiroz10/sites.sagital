@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   createContext,
   Suspense,
@@ -10,6 +10,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react";
+import { buscaDoDemo } from "@/lib/link";
 import {
   montarTitulo,
   resolverTema,
@@ -20,7 +21,18 @@ import {
 import { classes } from "@/lib/classes";
 import { VoltarParaSagital } from "./VoltarParaSagital";
 
-const ContextoDoTema = createContext<Tema | null>(null);
+/** O tema e a busca (`?nome=&cor=`) que os links entre as páginas levam. */
+export type TemaDoDemo = Tema & { busca: string };
+
+const ContextoDoTema = createContext<TemaDoDemo | null>(null);
+
+/**
+ * O último tema lido em cada nicho. A troca de página remonta o demo
+ * inteiro (a viagem entre páginas é por caminho); sem isto, cada página
+ * nova nasceria com o nome e a cor padrão e trocaria um quadro depois.
+ * Na primeira abertura está vazio, então a hidratação bate com o servidor.
+ */
+const ultimoTema = new Map<string, TemaDoDemo>();
 
 type PropsDoTema = {
   /** Identificador do nicho, usado pelo CSS em [data-nicho="..."]. */
@@ -28,6 +40,8 @@ type PropsDoTema = {
   /** Nome do nicho no título da aba, ex.: "Academia". */
   rotulo: string;
   padrao: PadraoDoTema;
+  /** As páginas internas, para o título da aba dizer em qual se está. */
+  paginas?: { rotulo: string; href: string }[];
   /** Classes extras do wrapper, como a variável da fonte do nicho. */
   className?: string;
   children: ReactNode;
@@ -42,17 +56,26 @@ export function TemaDoNicho({
   nicho,
   rotulo,
   padrao,
+  paginas = [],
   className,
   children,
 }: PropsDoTema) {
-  const [tema, setTema] = useState<Tema>(() => resolverTema({}, padrao));
+  const [tema, setTema] = useState<TemaDoDemo>(
+    () => ultimoTema.get(nicho) ?? { ...resolverTema({}, padrao), busca: "" },
+  );
   const estilo: CSSProperties & VariaveisDoTema = tema.variaveis;
 
   return (
     <ContextoDoTema.Provider value={tema}>
       {/* useSearchParams exige Suspense numa página estática; só este leitor espera a URL. */}
       <Suspense fallback={null}>
-        <LeitorDaUrl padrao={padrao} rotulo={rotulo} aoResolver={setTema} />
+        <LeitorDaUrl
+          nicho={nicho}
+          padrao={padrao}
+          rotulo={rotulo}
+          paginas={paginas}
+          aoResolver={setTema}
+        />
       </Suspense>
       <div
         data-nicho={nicho}
@@ -70,26 +93,53 @@ export function TemaDoNicho({
 }
 
 type PropsDoLeitor = {
+  nicho: string;
   padrao: PadraoDoTema;
   rotulo: string;
-  aoResolver: (tema: Tema) => void;
+  paginas: { rotulo: string; href: string }[];
+  aoResolver: (tema: TemaDoDemo) => void;
 };
 
-function LeitorDaUrl({ padrao, rotulo, aoResolver }: PropsDoLeitor) {
+function LeitorDaUrl({
+  nicho,
+  padrao,
+  rotulo,
+  paginas,
+  aoResolver,
+}: PropsDoLeitor) {
   const parametros = useSearchParams();
+  const caminho = usePathname();
   const nome = parametros.get("nome");
   const cor = parametros.get("cor");
+  const pagina = paginas.find((p) => p.href === caminho)?.rotulo;
 
   useEffect(() => {
-    const tema = resolverTema({ nome, cor }, padrao);
+    const tema = {
+      ...resolverTema({ nome, cor }, padrao),
+      busca: buscaDoDemo(nome, cor),
+    };
+    ultimoTema.set(nicho, tema);
     aoResolver(tema);
-    document.title = montarTitulo(tema.nome, rotulo);
-  }, [nome, cor, padrao, rotulo, aoResolver]);
+    const base = montarTitulo(tema.nome, rotulo);
+    const titulo = pagina ? `${pagina} | ${base}` : base;
+    document.title = titulo;
+    // Na troca de página, o Next escreve o título da página (com o nome
+    // padrão) depois deste efeito: o título volta para o personalizado.
+    const observador = new MutationObserver(() => {
+      if (document.title !== titulo) document.title = titulo;
+    });
+    observador.observe(document.head, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+    return () => observador.disconnect();
+  }, [nicho, nome, cor, padrao, rotulo, pagina, aoResolver]);
 
   return null;
 }
 
-export function useTema(): Tema {
+export function useTema(): TemaDoDemo {
   const tema = useContext(ContextoDoTema);
   if (!tema) throw new Error("useTema precisa estar dentro de <TemaDoNicho>.");
   return tema;

@@ -43,7 +43,7 @@ export function RodapeDoDemo({
   avisos,
   className,
 }: Props) {
-  const { nome } = useTema();
+  const { nome, busca } = useTema();
   const apelido = apelidoDoNome(nome);
   const email = `contato@${apelido}.exemplo`;
   const whatsapp = montarLinkWhatsApp(
@@ -63,7 +63,12 @@ export function RodapeDoDemo({
       colunas={[
         {
           titulo: "Navegação",
-          conteudo: <LinksDoRodape links={dados.navegacao} />,
+          conteudo: (
+            <LinksDoRodape
+              links={[{ rotulo: "Início", href: dados.raiz }, ...dados.paginas]}
+              busca={busca}
+            />
+          ),
         },
         {
           titulo: "Contato",

@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { ehNicho, montarLinkDoDemo, nomeDoArquivoQr } from "./link";
+import {
+  buscaDoDemo,
+  comBusca,
+  ehNicho,
+  montarLinkDoDemo,
+  nomeDoArquivoQr,
+} from "./link";
 
 const origem = "https://sagital.example";
 
@@ -39,5 +45,30 @@ describe("nicho e arquivo do QR", () => {
       "qr-academia-forca-total-gym.png",
     );
     expect(nomeDoArquivoQr("varejo", "")).toBe("qr-varejo.png");
+  });
+});
+
+describe("buscaDoDemo", () => {
+  it("leva só nome e cor válidos", () => {
+    expect(buscaDoDemo("Iron Gym", "FF6600")).toBe("?nome=Iron+Gym&cor=ff6600");
+    expect(buscaDoDemo("<b>", "azul")).toBe("");
+    expect(buscaDoDemo(null, "00aa00")).toBe("?cor=00aa00");
+  });
+});
+
+describe("comBusca", () => {
+  it("põe a busca antes da âncora", () => {
+    expect(comBusca("/academia/planos", "?cor=ff6600")).toBe(
+      "/academia/planos?cor=ff6600",
+    );
+    expect(comBusca("/academia/planos#faq", "?cor=ff6600")).toBe(
+      "/academia/planos?cor=ff6600#faq",
+    );
+  });
+
+  it("não mexe em âncoras da página nem em links de fora", () => {
+    expect(comBusca("#planos", "?cor=ff6600")).toBe("#planos");
+    expect(comBusca("https://wa.me/1", "?cor=ff6600")).toBe("https://wa.me/1");
+    expect(comBusca("/varejo", "")).toBe("/varejo");
   });
 });

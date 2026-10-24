@@ -40,7 +40,11 @@ export function Secao({
       ) : (
         <Container largura={largura}>
           {titulo && (
-            <h2 id={idDoTitulo} className={classes("mb-8", estiloDoTitulo)}>
+            <h2
+              id={idDoTitulo}
+              data-revela="titulo"
+              className={classes("mb-8", estiloDoTitulo)}
+            >
               {titulo}
             </h2>
           )}
@@ -51,7 +55,10 @@ export function Secao({
   );
 }
 
-/** O h2 de uma seção cheia, com o id que a seção usa em aria-labelledby. */
+/**
+ * O h2 de uma seção cheia, com o id que a seção usa em aria-labelledby. Nos
+ * demos, sobe por trás de uma máscara quando chega à tela (app/demos.css).
+ */
 export function TituloDaSecao({
   id,
   children,
@@ -61,7 +68,7 @@ export function TituloDaSecao({
   children: ReactNode;
 }) {
   return (
-    <h2 id={`${id}-titulo`} className={estiloDoTitulo}>
+    <h2 id={`${id}-titulo`} data-revela="titulo" className={estiloDoTitulo}>
       {children}
     </h2>
   );

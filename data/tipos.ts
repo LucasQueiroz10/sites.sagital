@@ -51,7 +51,12 @@ export type DadosDoNicho = {
   rotulo: string;
   padrao: PadraoDoTema;
   descricao: string;
+  /** As seções da página inicial, no cabeçalho dela. */
   navegacao: LinkDeNavegacao[];
+  /** O endereço da página inicial do demo, ex.: "/academia". */
+  raiz: `/${string}`;
+  /** Uma página para cada seção, no cabeçalho das internas e no rodapé. */
+  paginas: { rotulo: string; href: `/${string}` }[];
   acaoPrincipal: AcaoWhatsApp;
   expediente: Expediente[];
   endereco: Endereco;

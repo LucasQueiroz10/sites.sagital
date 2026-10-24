@@ -1,0 +1,435 @@
+/*
+ * Movimento comum dos quatro demos, no nível dos sites premium. Cada demo
+ * importa este arquivo no seu layout; os gestos próprios de cada um (o
+ * limão que gira, o friso de latão que se desenha...) ficam no CSS dele.
+ *
+ * As mesmas regras das premium: tudo nasce visível e só se esconde depois
+ * que RevelarAoRolar arma a página ([data-revela-pronto]); com movimento
+ * reduzido, nada se esconde e nada se desloca.
+ */
+[data-nicho] {
+  /* Chegada confiante, sem rebote: entradas e revelações. */
+  --e-chegada: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Movimento na tela (de um lugar a outro): sai devagar, corre e pousa. */
+  --e-movimento: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+[data-nicho] details > summary {
+  list-style: none;
+}
+
+[data-nicho] details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ---------- revelações ao rolar ---------- */
+
+[data-nicho] [data-revela] {
+  transition:
+    opacity 0.7s var(--e-chegada),
+    translate 0.8s var(--e-chegada);
+  transition-delay: calc(var(--revela-ordem, 0) * 70ms);
+}
+[data-nicho][data-revela-pronto] [data-revela]:not([data-revelado]) {
+  opacity: 0;
+  translate: 0 1.5rem;
+}
+
+/* Título que sobe por trás de uma máscara. */
+[data-nicho] [data-revela="titulo"] {
+  clip-path: inset(-0.3em -0.3em -0.3em -0.3em);
+  transition:
+    translate 1s var(--e-chegada),
+    clip-path 1s var(--e-chegada);
+}
+[data-nicho][data-revela-pronto] [data-revela="titulo"]:not([data-revelado]) {
+  opacity: 1;
+  translate: 0 100%;
+  clip-path: inset(-0.3em -0.3em 100% -0.3em);
+}
+
+/* Texto que sai do desfoque, um instante depois do título. */
+[data-nicho] [data-revela="texto"] {
+  transition:
+    opacity 0.7s var(--e-chegada) 0.12s,
+    translate 0.8s var(--e-chegada) 0.12s,
+    filter 0.7s var(--e-chegada) 0.12s;
+}
+[data-nicho][data-revela-pronto] [data-revela="texto"]:not([data-revelado]) {
+  filter: blur(6px);
+}
+
+/* Foto que abre como cortina, de baixo para cima, e assenta da escala. */
+[data-nicho] [data-revela="foto"] {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1.2s var(--e-chegada);
+  transition-delay: calc(var(--revela-ordem, 0) * 90ms);
+}
+[data-nicho] [data-revela="foto"] img {
+  transition: scale 1.6s var(--e-chegada);
+  transition-delay: inherit;
+}
+[data-nicho][data-revela-pronto] [data-revela="foto"]:not([data-revelado]) {
+  opacity: 1;
+  translate: none;
+  clip-path: inset(100% 0 0 0);
+}
+[data-nicho][data-revela-pronto] [data-revela="foto"]:not([data-revelado]) img {
+  scale: 1.14;
+}
+
+/* Fio que se desenha da esquerda (frisos, topo de colunas, linhas do tempo). */
+[data-nicho] [data-revela="fio"] {
+  transform-origin: left;
+  transition: scale 1.1s var(--e-chegada);
+  transition-delay: calc(var(--revela-ordem, 0) * 110ms + 0.15s);
+}
+[data-nicho][data-revela-pronto] [data-revela="fio"]:not([data-revelado]) {
+  opacity: 1;
+  translate: none;
+  scale: 0 1;
+}
+
+/* Cartão que assenta: sobe e cresce um fio, em sequência dentro do grupo. */
+[data-nicho] [data-revela="cartao"] {
+  transition:
+    opacity 0.6s var(--e-chegada),
+    translate 0.8s var(--e-chegada),
+    scale 0.8s var(--e-chegada);
+  transition-delay: calc(var(--revela-ordem, 0) * 75ms);
+}
+[data-nicho][data-revela-pronto] [data-revela="cartao"]:not([data-revelado]) {
+  translate: 0 2rem;
+  scale: 0.97;
+}
+
+/* Barra que cresce de baixo (o movimento por hora da academia). */
+[data-nicho] [data-revela="barra"] {
+  transform-origin: bottom;
+  transition: scale 0.9s var(--e-chegada);
+  transition-delay: calc(var(--revela-ordem, 0) * 45ms);
+}
+[data-nicho][data-revela-pronto] [data-revela="barra"]:not([data-revelado]) {
+  opacity: 1;
+  translate: none;
+  scale: 1 0;
+}
+
+/* ---------- entrada do topo de cada página ---------- */
+
+/* Títulos que entram palavra por palavra (TituloQueSobe). */
+[data-nicho] .palavra-sobe {
+  display: inline-block;
+  overflow: clip;
+  overflow-clip-margin: 0.14em;
+  vertical-align: top;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+[data-nicho] .palavra-sobe > span {
+  display: inline-block;
+}
+
+/* Apoio, botões e fotos do topo. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-nicho] .palavra-sobe > span {
+    animation: palavra-sobe 1s var(--e-chegada) var(--atraso, 0ms) both;
+  }
+
+  [data-nicho] .entra {
+    animation: entra 0.9s var(--e-chegada) var(--atraso, 0ms) both;
+  }
+
+  /* A palavra escrita à mão se desenha da esquerda para a direita. */
+  [data-nicho] .escreve {
+    animation: escreve 1.1s var(--e-movimento) var(--atraso, 0ms) both;
+  }
+
+  /* Foto do topo: abre de baixo para cima e assenta da escala. */
+  [data-nicho] .foto-entra {
+    animation: foto-abre 1.2s var(--e-chegada) var(--atraso, 0ms) both;
+  }
+  [data-nicho] .foto-entra img {
+    animation: foto-assenta 1.8s var(--e-chegada) var(--atraso, 0ms) both;
+  }
+}
+
+@keyframes palavra-sobe {
+  from {
+    translate: 0 108%;
+  }
+}
+
+@keyframes entra {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+    filter: blur(4px);
+  }
+}
+
+@keyframes escreve {
+  from {
+    clip-path: inset(-0.4em 100% -0.4em -0.4em);
+  }
+  to {
+    clip-path: inset(-0.4em -0.4em -0.4em -0.4em);
+  }
+}
+
+@keyframes foto-abre {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes foto-assenta {
+  from {
+    scale: 1.14;
+  }
+}
+
+/* Itens que chegam um a um quando o conteúdo troca (dia da grade,
+   categoria do cardápio, filtro da vitrine). */
+@media (prefers-reduced-motion: no-preference) {
+  [data-nicho] .chega {
+    animation: entra 0.45s var(--e-chegada) both;
+    animation-delay: calc(min(var(--ordem, 0), 8) * 45ms);
+  }
+}
+
+/* ---------- ligados à rolagem ---------- */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* A foto anda mais devagar que a página dentro da moldura. */
+    [data-nicho] .paralaxe {
+      overflow: clip;
+    }
+    [data-nicho] .paralaxe img {
+      scale: 1.16;
+      animation: paralaxe linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+
+    /* Palavras que acendem conforme a frase atravessa a tela. */
+    [data-nicho] .acende {
+      view-timeline-name: --acende;
+    }
+    [data-nicho] .acende-palavra {
+      animation: acende-palavra linear both;
+      animation-timeline: --acende;
+      animation-range: cover var(--inicio) cover var(--fim);
+    }
+
+    /* Peças que giram devagar enquanto atravessam a tela (o limão). */
+    [data-nicho] .gira-ao-rolar {
+      animation: gira-ao-rolar linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+
+    /* Faixa que desliza de lado enquanto atravessa a tela. */
+    [data-nicho] .desliza-ao-rolar {
+      animation: desliza-ao-rolar linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+
+@keyframes paralaxe {
+  from {
+    translate: 0 -7%;
+  }
+  to {
+    translate: 0 7%;
+  }
+}
+
+@keyframes acende-palavra {
+  from {
+    opacity: 0.18;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes gira-ao-rolar {
+  from {
+    rotate: -10deg;
+    translate: 0 1.5rem;
+  }
+  to {
+    rotate: 14deg;
+    translate: 0 -1.5rem;
+  }
+}
+
+@keyframes desliza-ao-rolar {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: calc(var(--casa, 1.25rem) * -8) 0;
+  }
+}
+
+/* ---------- interação ---------- */
+
+/* As respostas das dúvidas descem pela altura em vez de saltar. */
+@supports (interpolate-size: allow-keywords) {
+  [data-nicho] details {
+    interpolate-size: allow-keywords;
+  }
+  [data-nicho] details::details-content {
+    block-size: 0;
+    overflow: clip;
+    opacity: 0;
+    transition:
+      block-size 0.3s var(--e-chegada),
+      opacity 0.22s ease,
+      content-visibility 0.3s allow-discrete;
+  }
+  [data-nicho] details[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+}
+
+/* O sinal de mais das dúvidas vira um x. */
+[data-nicho] .sinal-da-duvida {
+  transition: rotate 0.25s var(--e-chegada);
+}
+[data-nicho] details[open] .sinal-da-duvida {
+  rotate: 45deg;
+}
+
+/* Toque com resposta: o que é pressionável afunda um fio. */
+[data-nicho] .tatil {
+  transition-property: color, background-color, border-color, scale;
+  transition-duration: 0.18s, 0.18s, 0.18s, 0.16s;
+  transition-timing-function: ease, ease, ease, ease-out;
+}
+[data-nicho] .tatil:active {
+  scale: 0.97;
+}
+
+/* A seta dos links "ver mais" anda um passo na direção do clique. */
+[data-nicho] .seta-que-anda {
+  transition: translate 0.25s var(--e-chegada);
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-nicho] a:hover > .seta-que-anda,
+  [data-nicho] a:focus-visible > .seta-que-anda {
+    translate: 0.25rem 0;
+  }
+
+  /* Foto de cartão que aproxima devagar sob o mouse. */
+  [data-nicho] .aproxima img {
+    transition: scale 0.7s var(--e-chegada);
+  }
+  [data-nicho] .aproxima:hover img {
+    scale: 1.04;
+  }
+}
+
+/* O menu do celular desce do cabeçalho, com os links em sequência. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-nicho] #menu-do-demo:not([hidden]) {
+    animation: menu-desce 0.32s var(--e-chegada) both;
+  }
+  [data-nicho] #menu-do-demo:not([hidden]) a {
+    animation: entra 0.5s var(--e-chegada) both;
+    animation-delay: calc(var(--ordem, 0) * 40ms + 60ms);
+  }
+}
+
+@keyframes menu-desce {
+  from {
+    opacity: 0;
+    translate: 0 -0.5rem;
+  }
+}
+
+/* O sublinhado da página atual no cabeçalho cresce do centro. */
+[data-nicho] .link-do-cabecalho {
+  position: relative;
+}
+[data-nicho] .link-do-cabecalho::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0.25rem;
+  height: 2px;
+  background: var(--cor-destaque);
+  scale: 0 1;
+  transition: scale 0.3s var(--e-chegada);
+}
+[data-nicho] .link-do-cabecalho[aria-current="page"]::after {
+  scale: 1 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-nicho] .link-do-cabecalho:hover::after {
+    scale: 1 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-nicho] [data-revela],
+  [data-nicho] [data-revela] img,
+  [data-nicho] details::details-content {
+    transition: none !important;
+  }
+}
+
+/* A palavra à mão que se desenha quando o bloco dela chega à tela. */
+[data-nicho] .escreve-ao-revelar {
+  clip-path: inset(-0.4em -0.4em -0.4em -0.4em);
+  transition: clip-path 1.1s var(--e-movimento) 0.35s;
+}
+[data-nicho][data-revela-pronto]
+  [data-revela]:not([data-revelado])
+  .escreve-ao-revelar {
+  clip-path: inset(-0.4em 100% -0.4em -0.4em);
+}
+
+/* O quadro da foto ampliada: o fundo escurece e a foto assenta da escala;
+   ao passar de uma para outra, a nova surge do desfoque. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-nicho] .quadro-da-foto[open] {
+    animation: quadro-abre 0.28s var(--e-chegada) both;
+  }
+  [data-nicho] .quadro-da-foto[open]::backdrop {
+    animation: fundo-escurece 0.28s ease both;
+  }
+  [data-nicho] .foto-que-troca {
+    animation: foto-troca 0.32s var(--e-chegada) both;
+  }
+}
+
+@keyframes quadro-abre {
+  from {
+    opacity: 0;
+    scale: 0.97;
+  }
+}
+
+@keyframes fundo-escurece {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes foto-troca {
+  from {
+    opacity: 0;
+    scale: 0.985;
+    filter: blur(6px);
+  }
+}
