@@ -1,8 +1,9 @@
 "use client";
 
-import { Check } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
+import Link from "next/link";
 import { useId, useRef, useState } from "react";
-import { type IdDoSetor, setores } from "@/data/redoma";
+import { type IdDoSetor, raiz, setores } from "@/data/redoma";
 
 /**
  * Soluções por ramo, em abas (padrão de abas do WAI: setas trocam de aba,
@@ -94,9 +95,22 @@ export function Setores() {
               </li>
             ))}
           </ul>
-          <a href="#precos" className="rd-botao rd-botao-branco mt-8">
-            ver quanto custa
-          </a>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href="#precos" className="rd-botao rd-botao-branco">
+              ver quanto custa
+            </a>
+            <Link
+              href={`${raiz}/solucoes/${setor.id}`}
+              className="rd-botao rd-botao-escuro group"
+            >
+              ver {setor.rotulo} por dentro
+              <ArrowUpRight
+                aria-hidden
+                className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                strokeWidth={1.5}
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </div>

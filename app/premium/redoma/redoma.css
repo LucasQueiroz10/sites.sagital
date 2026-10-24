@@ -376,6 +376,69 @@
     }
   }
 
+  /* ---------- páginas internas ---------- */
+
+  /* O título das páginas internas: o corpo gigante e apertado da abertura. */
+  .rd-h1 {
+    font-weight: 500;
+    font-size: clamp(3.5rem, 1rem + 11vw, 11rem);
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+    text-wrap: balance;
+  }
+
+  .rd-caminho {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem 0.75rem;
+    font-size: 0.9375rem;
+    color: var(--texto-suave);
+  }
+  .rd-caminho a {
+    transition: color 0.18s ease;
+  }
+  .rd-caminho a:hover {
+    color: #ffffff;
+  }
+  .rd-caminho li + li::before {
+    content: "/";
+    margin-right: 0.75rem;
+    color: rgb(255 255 255 / 0.3);
+  }
+
+  /* A entrada do alto das páginas internas: sobe por trás de uma máscara,
+     na ordem (--ordem), como as palavras da abertura. */
+  @media (prefers-reduced-motion: no-preference) {
+    .rd-entra {
+      animation: rd-entra 1s var(--e-revela) both;
+      animation-delay: calc(var(--ordem, 0) * 110ms + 80ms);
+    }
+  }
+  @keyframes rd-entra {
+    from {
+      opacity: 0;
+      translate: 0 1.5rem;
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      clip-path: inset(-0.3em -0.3em -0.3em -0.3em);
+    }
+  }
+
+  /* A tabela "lado a lado": a coluna do plano indicado ganha o painel. */
+  .rd-tabela th,
+  .rd-tabela td {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    vertical-align: middle;
+  }
+  .rd-tabela .rd-coluna-destaque {
+    background: var(--painel);
+  }
+  .rd-tabela tbody tr + tr {
+    border-top: 1px solid var(--linha);
+  }
+
   /* ---------- revelar ao rolar (RevelarAoRolar.tsx) ---------- */
   /* Só se escondem depois que o script arma a página (data-revela-pronto). */
   [data-premium="redoma"] [data-revela] {

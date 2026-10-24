@@ -22,6 +22,17 @@ export const navegacao = [
   { rotulo: "suporte", href: "#suporte" },
 ] as const;
 
+/** O endereço do site; as páginas internas ficam abaixo dele. */
+export const raiz = "/premium/redoma";
+
+/** As páginas internas, na ordem da barra e do rodapé. */
+export const paginas = [
+  { rotulo: "plataforma", href: `${raiz}/plataforma` },
+  { rotulo: "soluções", href: `${raiz}/solucoes` },
+  { rotulo: "preços", href: `${raiz}/precos` },
+  { rotulo: "empresa", href: `${raiz}/empresa` },
+] as const;
+
 /** O vídeo da abertura e o quadro que aparece enquanto ele carrega. */
 export const video = {
   src: "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_063509_7d167302-4fd4-480b-8260-18ab572333d4.mp4",
@@ -165,6 +176,267 @@ export const setores = [
 ] as const;
 
 export type IdDoSetor = (typeof setores)[number]["id"];
+export type IdDaCamada = (typeof camadas)[number]["id"];
+
+/** Cada camada por dentro, na página da plataforma. */
+export const camadasPorDentro: Record<
+  IdDaCamada,
+  { como: string[]; diaADia: string }
+> = {
+  cofre: {
+    como: [
+      "O programa da Redoma cria uma pasta no computador de cada pessoa.",
+      "O que entra nela é cifrado ali mesmo, com a chave da empresa, antes de subir.",
+      "Nos servidores chega só um arquivo ilegível, guardado em dois data centers no Brasil.",
+    ],
+    diaADia:
+      "A equipe salva e abre arquivos como sempre fez. A diferença é que um notebook roubado não leva nada junto.",
+  },
+  copia: {
+    como: [
+      "Toda noite, a Redoma copia o sistema, as pastas e o banco de dados que você escolher.",
+      "Cada cópia fica travada por 30 dias: nem um administrador consegue apagar.",
+      "Para voltar, você escolhe o dia e o que restaurar, do arquivo solto ao servidor inteiro.",
+    ],
+    diaADia:
+      "Ninguém precisa lembrar de fazer backup. Se um vírus cifrar tudo, a empresa volta ao dia anterior em minutos.",
+  },
+  radar: {
+    como: [
+      "Você informa o domínio do e-mail da empresa, e só isso.",
+      "Vigiamos fóruns, bases vazadas e mercados ilegais atrás dos logins desse domínio.",
+      "Quando um aparece, a pessoa recebe o aviso pelo WhatsApp com o passo a passo para trocar a senha.",
+    ],
+    diaADia:
+      "Um aviso por mês, em média, numa empresa de 20 pessoas. Quase sempre de um site de fora que vazou, não da empresa.",
+  },
+  acesso: {
+    como: [
+      "Cada pessoa entra com o login da empresa e um segundo passo no celular.",
+      "As permissões são por pasta: quem é do financeiro vê o financeiro.",
+      "Quem sai da empresa perde todos os acessos com um clique, e o registro guarda quem abriu o quê.",
+    ],
+    diaADia:
+      "Um login só para tudo, e nenhum ex-funcionário com a senha do servidor anotada no caderno.",
+  },
+  lgpd: {
+    como: [
+      "A Redoma varre as pastas e o banco atrás de CPF, telefone, endereço e dados de saúde.",
+      "Monta o mapa do que existe, onde está e quem acessa: o registro que a ANPD pede.",
+      "Os pedidos de quem quer ver ou apagar os próprios dados chegam num painel, com prazo.",
+    ],
+    diaADia:
+      "Quando um cliente pede para ser esquecido, você acha tudo dele em minutos e manda o comprovante.",
+  },
+};
+
+/** Os ramos por dentro, na página de cada solução. */
+export const setoresPorDentro: Record<
+  IdDoSetor,
+  {
+    apresentacao: string;
+    camadas: IdDaCamada[];
+    exige: string[];
+    plano: IdDoPlano;
+    /** A equipe de exemplo da estimativa de preço. */
+    equipe: string;
+    pessoas: number;
+  }
+> = {
+  saude: {
+    apresentacao:
+      "Consultórios, clínicas e laboratórios guardam o dado que a LGPD mais protege. A Redoma cuida dele sem mudar o sistema da recepção.",
+    camadas: ["cofre", "copia", "acesso"],
+    exige: [
+      "Dado de saúde é sensível: precisa de cuidado reforçado e acesso restrito",
+      "Vazamento obriga a avisar os pacientes e a ANPD",
+      "O prontuário deve ser guardado por no mínimo 20 anos",
+    ],
+    plano: "equipe",
+    equipe: "Uma clínica com 12 pessoas",
+    pessoas: 12,
+  },
+  escritorios: {
+    apresentacao:
+      "Advocacia, arquitetura e consultoria vivem de sigilo. A Redoma tranca as pastas por cliente e avisa quando um e-mail da equipe vaza.",
+    camadas: ["acesso", "radar", "cofre"],
+    exige: [
+      "O sigilo profissional vale para arquivos digitais também",
+      "Cada acesso a documento de cliente precisa poder ser explicado",
+      "Contratos com cláusula de proteção de dados pedem prova de cuidado",
+    ],
+    plano: "equipe",
+    equipe: "Um escritório com 8 pessoas",
+    pessoas: 8,
+  },
+  lojas: {
+    apresentacao:
+      "Lojas virtuais têm milhares de clientes cadastrados. A Redoma protege a base e organiza os pedidos que a LGPD dá a cada um deles.",
+    camadas: ["lgpd", "acesso", "copia"],
+    exige: [
+      "O cliente pode pedir para ver, corrigir ou apagar os próprios dados",
+      "A resposta tem prazo de 15 dias",
+      "A loja precisa saber dizer onde cada dado está guardado",
+    ],
+    plano: "equipe",
+    equipe: "Uma loja com 6 pessoas",
+    pessoas: 6,
+  },
+  contabilidade: {
+    apresentacao:
+      "Escritórios contábeis guardam certificados, senhas e folhas de dezenas de empresas. A Redoma tira tudo da planilha e põe no cofre.",
+    camadas: ["cofre", "acesso", "copia"],
+    exige: [
+      "O escritório responde pelos dados das empresas clientes",
+      "Certificado digital vazado permite agir em nome do cliente",
+      "Folha de pagamento tem dado pessoal de cada funcionário atendido",
+    ],
+    plano: "empresa",
+    equipe: "Um escritório com 15 pessoas",
+    pessoas: 15,
+  },
+};
+
+type Celula = boolean | string;
+
+/** A tabela "lado a lado" da página de preços: um valor por plano. */
+export const comparacaoDosPlanos: {
+  grupo: string;
+  linhas: { nome: string; valores: [Celula, Celula, Celula] }[];
+}[] = [
+  {
+    grupo: "preço",
+    linhas: [
+      {
+        nome: "Por pessoa, no mensal",
+        valores: ["grátis", "R$ 24", "R$ 42"],
+      },
+      { nome: "Por pessoa, no anual", valores: ["grátis", "R$ 19", "R$ 34"] },
+      {
+        nome: "Tamanho da equipe",
+        valores: ["até 3", "até 150", "a partir de 10"],
+      },
+      {
+        nome: "Taxa de instalação",
+        valores: ["nenhuma", "nenhuma", "nenhuma"],
+      },
+    ],
+  },
+  {
+    grupo: "proteção",
+    linhas: [
+      {
+        nome: "Cofre cifrado",
+        valores: ["50 GB", "1 TB por pessoa", "1 TB por pessoa"],
+      },
+      {
+        nome: "Cópia dos arquivos",
+        valores: ["semanal", "diária e imutável", "diária e imutável"],
+      },
+      {
+        nome: "Radar de vazamentos",
+        valores: ["3 e-mails", "domínio inteiro", "domínio inteiro"],
+      },
+      { nome: "Duas etapas no login", valores: [true, true, true] },
+      { nome: "Permissão por pasta", valores: [false, true, true] },
+      { nome: "Registro de acessos", valores: [false, "90 dias", "5 anos"] },
+    ],
+  },
+  {
+    grupo: "lgpd",
+    linhas: [
+      { nome: "Mapa de dados pessoais", valores: [false, true, true] },
+      { nome: "Pedidos de titulares", valores: [false, true, true] },
+      {
+        nome: "Encarregado de dados (DPO)",
+        valores: [false, false, "sob demanda"],
+      },
+      { nome: "Relatório para auditoria", valores: [false, false, "anual"] },
+    ],
+  },
+  {
+    grupo: "atendimento",
+    linhas: [
+      {
+        nome: "Suporte",
+        valores: ["por e-mail", "WhatsApp, 7h às 22h", "WhatsApp e telefone"],
+      },
+      { nome: "Plantão de incidentes", valores: [false, false, "24 horas"] },
+      { nome: "Gerente de conta", valores: [false, false, true] },
+    ],
+  },
+];
+
+export const perguntasDosPrecos = [
+  {
+    pergunta: "Quem conta como pessoa da equipe?",
+    resposta:
+      "Quem usa computador ou celular com acesso aos arquivos da empresa. Estagiário conta; quem só usa o caixa da loja, sem acesso aos arquivos, não.",
+  },
+  {
+    pergunta: "E se a equipe crescer no meio do ano?",
+    resposta:
+      "Você adiciona a pessoa pelo painel e paga a diferença proporcional aos meses que faltam. Quem sai libera a vaga na hora.",
+  },
+  {
+    pergunta: "O plano início é grátis mesmo?",
+    resposta:
+      "Sim, para até três pessoas, sem cartão de crédito. Ele existe para quem trabalha sozinho ter o básico bem feito.",
+  },
+  {
+    pergunta: "Por que o plano empresa tem mínimo de 10 pessoas?",
+    resposta:
+      "Porque inclui plantão 24 horas, encarregado de dados e gerente de conta, que custam o mesmo para uma equipe de 3 ou de 10.",
+  },
+] as const;
+
+/** A história da Redoma, na página da empresa. */
+export const historia = [
+  {
+    ano: "2019",
+    titulo: "dois anos de prontuários perdidos",
+    texto:
+      "Um vírus cifra o servidor da clínica de uma das fundadoras. A cópia de segurança estava no mesmo servidor.",
+  },
+  {
+    ano: "2020",
+    titulo: "a primeira versão do cofre",
+    texto:
+      "Doze clínicas de Florianópolis testam a pasta cifrada e a cópia imutável. Nenhuma precisou mudar de sistema.",
+  },
+  {
+    ano: "2022",
+    titulo: "o radar e a lgpd",
+    texto:
+      "Com a LGPD valendo, a Redoma passa a mapear dados pessoais e a vigiar vazamentos pelo domínio da empresa.",
+  },
+  {
+    ano: "2025",
+    titulo: "65 mil empresas",
+    texto:
+      "Escritórios, lojas e contabilidades de todo o país. O time cresce para 48 pessoas, todas no Brasil.",
+  },
+] as const;
+
+export const comoTrabalhamos = [
+  {
+    titulo: "dados no brasil",
+    texto: "Dois data centers em São Paulo e Fortaleza. Nada sai do país.",
+  },
+  {
+    titulo: "teste externo duas vezes por ano",
+    texto:
+      "Uma equipe de fora tenta invadir a plataforma. O relatório fica aberto aos clientes.",
+  },
+  {
+    titulo: "código revisado em dupla",
+    texto: "Nenhuma linha vai ao ar sem que outra pessoa leia antes.",
+  },
+  {
+    titulo: "transparência nos incidentes",
+    texto: "Se algo acontecer, os clientes sabem por nós, no mesmo dia.",
+  },
+] as const;
 
 /** Os textos dos planos; os preços estão em lib/assinatura.ts. */
 export const planos: {

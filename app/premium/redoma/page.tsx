@@ -5,6 +5,7 @@ import { RodapeDoPortfolio } from "@/components/portfolio/RodapeDoPortfolio";
 import { RevelarAoRolar } from "@/components/premium/RevelarAoRolar";
 import { Abertura } from "@/components/premium/redoma/Abertura";
 import { Contato } from "@/components/premium/redoma/Contato";
+import { VerMais } from "@/components/premium/redoma/Interno";
 import { Logo } from "@/components/premium/redoma/Logo";
 import { Planos } from "@/components/premium/redoma/Planos";
 import { Setores } from "@/components/premium/redoma/Setores";
@@ -13,11 +14,12 @@ import { VoltarParaSagital } from "@/components/VoltarParaSagital";
 import {
   camadas,
   fatos,
-  navegacao,
   nome,
   nomeNoTexto,
+  paginas,
   perguntas,
   principios,
+  raiz,
   rodape,
 } from "@/data/redoma";
 import quadro from "@/public/imagens/premium/redoma/quadro.jpg";
@@ -119,6 +121,11 @@ export default function PaginaDaRedoma() {
                 </li>
               ))}
             </ol>
+            <div data-revela className="mt-10">
+              <VerMais href={`${raiz}/plataforma`}>
+                ver a plataforma por dentro
+              </VerMais>
+            </div>
           </div>
         </section>
 
@@ -203,6 +210,9 @@ export default function PaginaDaRedoma() {
             <div data-revela className="mt-12">
               <Planos />
             </div>
+            <div data-revela className="mt-8">
+              <VerMais href={`${raiz}/precos`}>comparar planos</VerMais>
+            </div>
           </div>
         </section>
 
@@ -251,6 +261,9 @@ export default function PaginaDaRedoma() {
                 </li>
               ))}
             </ul>
+            <div data-revela className="mt-14">
+              <VerMais href={`${raiz}/empresa`}>conhecer a empresa</VerMais>
+            </div>
           </div>
         </section>
 
@@ -313,9 +326,9 @@ export default function PaginaDaRedoma() {
           </span>
         }
         navegacao={[
-          ...navegacao,
-          { rotulo: "preços", href: "#precos" },
+          ...paginas,
           { rotulo: "teste de senha", href: "#senha" },
+          { rotulo: "suporte", href: "#suporte" },
         ]}
         rodape={rodape}
         className="border-t border-white/10 bg-black"
