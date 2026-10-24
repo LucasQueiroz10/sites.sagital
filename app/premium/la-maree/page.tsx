@@ -12,6 +12,7 @@ import {
   Selo,
   type NomeDaGravura,
 } from "@/components/premium/la-maree/Marcas";
+import { VerMais } from "@/components/premium/la-maree/Interno";
 import { Reserva } from "@/components/premium/la-maree/Reserva";
 import { Container } from "@/components/ui/Container";
 import { VoltarParaSagital } from "@/components/VoltarParaSagital";
@@ -20,8 +21,10 @@ import {
   degustacao,
   fotos,
   horarios,
-  navegacao,
   nome,
+  origens,
+  paginas,
+  raiz,
   rodape,
 } from "@/data/la-maree";
 import { caligrafia, grotesca, serifa } from "./fontes";
@@ -236,9 +239,12 @@ export default function PaginaLaMaree() {
             </div>
             <div>
               <Cardapio />
-              <p className="lm-selo mt-5 text-[0.6875rem] text-[var(--cor-texto-suave)]">
-                Cardápio da estação. Pode mudar conforme a pesca do dia.
-              </p>
+              <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+                <p className="lm-selo text-[0.6875rem] text-[var(--cor-texto-suave)]">
+                  Cardápio da estação. Pode mudar conforme a pesca do dia.
+                </p>
+                <VerMais href={`${raiz}/cardapio`}>Cardápio inteiro</VerMais>
+              </div>
             </div>
           </Container>
         </section>
@@ -317,18 +323,7 @@ export default function PaginaLaMaree() {
                 cardápio.
               </p>
               <dl className="grid gap-x-8 gap-y-5 border-t border-[var(--cor-tinta)] pt-6 sm:grid-cols-2">
-                {[
-                  [
-                    "Ostras",
-                    "Colhidas pela manhã nas fazendas do Ribeirão da Ilha",
-                  ],
-                  [
-                    "Peixe do dia",
-                    "Dos pescadores artesanais de Santo Antônio de Lisboa",
-                  ],
-                  ["Ervas", "Da horta nos fundos da casa"],
-                  ["Pão", "Fermentação natural, assado duas vezes por dia"],
-                ].map(([termo, texto]) => (
+                {origens.map(({ termo, texto }) => (
                   <div key={termo}>
                     <dt className="lm-serifa text-[1.625rem]">{termo}</dt>
                     <dd className="lm-descricao mt-1">{texto}</dd>
@@ -390,9 +385,12 @@ export default function PaginaLaMaree() {
                 </div>
               ))}
             </dl>
-            <a href="#reservas" className="lm-botao lm-botao-cheio mt-10">
-              Reservar mesa
-            </a>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <a href="#reservas" className="lm-botao lm-botao-cheio">
+                Reservar mesa
+              </a>
+              <VerMais href={`${raiz}/degustacao`}>Ver os sete tempos</VerMais>
+            </div>
           </Container>
         </section>
 
@@ -437,6 +435,9 @@ export default function PaginaLaMaree() {
                 dois lugares. A cozinha é aberta, o vinho vem da adega no porão
                 e a mesa da janela é a primeira a sair nas noites de lua.
               </p>
+              <div className="lm-revela mt-8">
+                <VerMais href={`${raiz}/a-casa`}>A história da casa</VerMais>
+              </div>
             </div>
             <div className="mt-16 grid gap-4 sm:grid-cols-[minmax(0,5fr)_minmax(0,3fr)_minmax(0,4fr)] sm:items-end">
               <figure className="lm-revela relative aspect-[4/3]">
@@ -499,6 +500,11 @@ export default function PaginaLaMaree() {
               <span className={tituloDeSecao}>sua mesa</span>
             </h2>
             <Reserva />
+            <div className="mt-10">
+              <VerMais href={`${raiz}/reservas`} tinta>
+                Grupos e eventos
+              </VerMais>
+            </div>
           </Container>
         </section>
 
@@ -592,7 +598,7 @@ export default function PaginaLaMaree() {
             {nome}
           </span>
         }
-        navegacao={[...navegacao]}
+        navegacao={[...paginas]}
         rodape={rodape}
         className="border-t border-[var(--cor-borda)] bg-[var(--cor-tinta)]"
       />

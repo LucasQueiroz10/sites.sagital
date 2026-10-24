@@ -35,6 +35,17 @@ export const navegacao = [
   { rotulo: "Reservas", href: "#reservas" },
 ] as const;
 
+/** O endereço do site; as páginas internas ficam abaixo dele. */
+export const raiz = "/premium/la-maree";
+
+/** As páginas internas, na ordem da barra e do rodapé. */
+export const paginas = [
+  { rotulo: "Cardápio", href: `${raiz}/cardapio` },
+  { rotulo: "Degustação", href: `${raiz}/degustacao` },
+  { rotulo: "A casa", href: `${raiz}/a-casa` },
+  { rotulo: "Reservas", href: `${raiz}/reservas` },
+] as const;
+
 export const fotos = {
   ostras: {
     src: ostras,
@@ -239,6 +250,218 @@ export const degustacao = {
   harmonizacao: 260,
   quando: "Sextas e sábados, às 20h",
 };
+
+/** Os sete tempos do menu degustação, cada um com o vinho da harmonização. */
+export const temposDaDegustacao: {
+  nome: string;
+  complemento: string;
+  descricao: string;
+  vinho: string;
+}[] = [
+  {
+    nome: "Ostra",
+    complemento: "& espuma do mar",
+    descricao: "Ostra do Ribeirão, granité de pepino e espuma de água do mar.",
+    vinho: "Champagne brut, Reims",
+  },
+  {
+    nome: "Vieira",
+    complemento: "na brasa",
+    descricao:
+      "Vieira selada na brasa, beurre blanc de limão-cravo e caviar de tapioca.",
+    vinho: "Chablis, Borgonha",
+  },
+  {
+    nome: "Velouté",
+    complemento: "de mariscos",
+    descricao:
+      "Caldo de mariscos da ilha com açafrão e um fio de azeite de ervas.",
+    vinho: "Sauvignon blanc, São Joaquim",
+  },
+  {
+    nome: "Peixe do dia",
+    complemento: "em papillote",
+    descricao:
+      "O peixe que chegou de manhã, assado no papel com erva-doce e laranja.",
+    vinho: "Rosé de Provence",
+  },
+  {
+    nome: "Polvo",
+    complemento: "& fumaça",
+    descricao: "Polvo confitado, batata defumada e jus de camarão.",
+    vinho: "Pinot noir, Serra Gaúcha",
+  },
+  {
+    nome: "Queijos",
+    complemento: "da serra",
+    descricao: "Três queijos da Serra Catarinense com mel de bracatinga.",
+    vinho: "Porto tawny",
+  },
+  {
+    nome: "Tarte",
+    complemento: "de damasco",
+    descricao:
+      "Massa amanteigada, damascos assados e sorvete de flor de laranjeira.",
+    vinho: "Sauternes, Bordeaux",
+  },
+];
+
+/** A noite à la carte e a do menu degustação, lado a lado. */
+export const comparacaoDaNoite: {
+  linha: string;
+  carta: string;
+  degustacao: string;
+}[] = [
+  {
+    linha: "Pratos",
+    carta: "Você escolhe da carta",
+    degustacao: "Sete tempos do chef",
+  },
+  { linha: "Duração", carta: "Cerca de 1h30", degustacao: "Cerca de 3 horas" },
+  {
+    linha: "Quando",
+    carta: "Todos os dias de serviço",
+    degustacao: "Sextas e sábados, às 20h",
+  },
+  {
+    linha: "Por pessoa",
+    carta: "De R$ 180 a R$ 300, em média",
+    degustacao: "R$ 420",
+  },
+  {
+    linha: "Vinho",
+    carta: "Carta de vinhos e taças",
+    degustacao: "Harmonização de + R$ 260",
+  },
+  {
+    linha: "Restrições",
+    carta: "Avise ao garçom",
+    degustacao: "Avise na reserva",
+  },
+];
+
+/** A história da casa, na página "A casa". */
+export const historiaDaCasa = [
+  {
+    ano: "1870",
+    texto:
+      "Uma família açoriana ergue o casarão de frente para a baía, com janelas altas e um porão de pedra.",
+  },
+  {
+    ano: "2017",
+    texto:
+      "A chef volta de dez anos em Marselha e encontra o casarão fechado, com o porão inteiro alagado.",
+  },
+  {
+    ano: "2019",
+    texto:
+      "Depois de dois anos de reforma, a La Marée abre com trinta e dois lugares e o porão virado adega.",
+  },
+  {
+    ano: "Hoje",
+    texto:
+      "O cardápio muda com a estação e a pesca. A mesa da janela continua sendo a primeira a sair.",
+  },
+];
+
+/** De onde vem o que chega à mesa. */
+export const origens = [
+  {
+    termo: "Ostras",
+    texto: "Colhidas pela manhã nas fazendas do Ribeirão da Ilha",
+  },
+  {
+    termo: "Peixe do dia",
+    texto: "Dos pescadores artesanais de Santo Antônio de Lisboa",
+  },
+  { termo: "Ervas", texto: "Da horta nos fundos da casa" },
+  { termo: "Pão", texto: "Fermentação natural, assado duas vezes por dia" },
+];
+
+export const pessoasDaCasa = [
+  {
+    nome: "Helena Sousa",
+    papel: "Chef e sócia",
+    texto:
+      "Cozinhou dez anos em Marselha. Traz a Provença para o peixe da ilha.",
+  },
+  {
+    nome: "Valdir Cardoso",
+    papel: "Pescador",
+    texto: "O barco dele encosta no trapiche todo dia às seis.",
+  },
+  {
+    nome: "Joana Prates",
+    papel: "Sommelière",
+    texto: "Cuida da adega no porão e das harmonizações do menu.",
+  },
+];
+
+/** As regras da reserva, na página de reservas. */
+export const regrasDaReserva = [
+  {
+    titulo: "Confirmação",
+    texto:
+      "A reserva vale depois da resposta no WhatsApp, em até duas horas no horário de serviço.",
+  },
+  {
+    titulo: "Atraso",
+    texto:
+      "Seguramos a mesa por 15 minutos. Depois disso, ela volta para a lista de espera.",
+  },
+  {
+    titulo: "Cancelamento",
+    texto: "Avise até as 14h do dia. No menu degustação, até a véspera.",
+  },
+  {
+    titulo: "Crianças",
+    texto:
+      "São bem-vindas no almoço. No jantar, a casa recebe a partir de 12 anos.",
+  },
+];
+
+/** Os formatos para grupos e eventos, lado a lado. */
+export const eventos: {
+  id: string;
+  nome: string;
+  pessoas: string;
+  preco: string;
+  itens: string[];
+}[] = [
+  {
+    id: "mesa",
+    nome: "Mesa longa",
+    pessoas: "De 9 a 14 pessoas",
+    preco: "A carta, sem taxa",
+    itens: [
+      "Uma mesa só, no salão",
+      "Pedidos da carta",
+      "Bolo da casa no aniversário",
+    ],
+  },
+  {
+    id: "salao",
+    nome: "Salão reservado",
+    pessoas: "De 15 a 24 pessoas",
+    preco: "R$ 380 por pessoa",
+    itens: [
+      "O salão de cima só para o grupo",
+      "Menu de quatro tempos escolhido antes",
+      "Taça de champagne na chegada",
+    ],
+  },
+  {
+    id: "casa",
+    nome: "A casa inteira",
+    pessoas: "Até 32 pessoas",
+    preco: "R$ 560 por pessoa",
+    itens: [
+      "O casarão fechado para o evento",
+      "Menu degustação com harmonização",
+      "Visita à adega com a sommelière",
+    ],
+  },
+];
 
 /**
  * Turnos da casa por dia da semana (0 = domingo). Segunda fechada; almoço
