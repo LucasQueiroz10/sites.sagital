@@ -1,7 +1,12 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import { useRef, useState, type KeyboardEvent } from "react";
+import {
+  useRef,
+  useState,
+  type CSSProperties,
+  type KeyboardEvent,
+} from "react";
 import { useTema } from "@/components/TemaDoNicho";
 import {
   aulasDoDia,
@@ -115,12 +120,13 @@ export function GradeDeAulas({ grade, rotuloDoNicho }: Props) {
         className="mt-6"
       >
         {aulas.length === 0 ? (
-          <p className="py-6 text-texto-suave">
+          <p key={dia} className="chega py-6 text-texto-suave">
             Sem aulas coletivas neste dia.
           </p>
         ) : (
-          <ol className="divide-y divide-borda border-y border-borda">
-            {aulas.map((aula) => {
+          // Uma lista nova por dia: as aulas chegam uma a uma ao trocar.
+          <ol key={dia} className="divide-y divide-borda border-y border-borda">
+            {aulas.map((aula, i) => {
               const ehProxima =
                 proxima?.aula === aula &&
                 proxima.diasDepois === 0 &&
@@ -132,8 +138,9 @@ export function GradeDeAulas({ grade, rotuloDoNicho }: Props) {
               return (
                 <li
                   key={aula.inicio + aula.modalidade}
+                  style={{ "--ordem": i } as CSSProperties}
                   className={classes(
-                    "grid grid-cols-[4.25rem_1fr_auto] items-center gap-x-3 py-3 sm:grid-cols-[6rem_1fr_12rem_auto] sm:gap-x-5",
+                    "chega grid grid-cols-[4.25rem_1fr_auto] items-center gap-x-3 py-3 sm:grid-cols-[6rem_1fr_12rem_auto] sm:gap-x-5",
                     ehProxima && "-mx-4 bg-superficie px-4 sm:-mx-5 sm:px-5",
                   )}
                 >

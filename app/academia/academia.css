@@ -62,15 +62,54 @@
   outline-color: var(--cor-primaria-texto);
 }
 
-/* A foto principal assenta no lugar ao abrir; o resto já está à vista. */
+/* ---------- páginas internas ---------- */
+
+[data-nicho="academia"] :is(.titulo-da-proxima, .numero-grande) {
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  line-height: 0.92;
+}
+
+[data-nicho="academia"] .titulo-da-proxima {
+  text-transform: uppercase;
+}
+
+[data-nicho="academia"] h1.titulo-interno {
+  font-size: clamp(3rem, 12vw, 6.75rem);
+  line-height: 0.9;
+}
+
+/* A raia: uma faixa na cor do cliente que corre sob o topo de cada página
+   interna, como a linha de largada de uma pista. */
+[data-nicho="academia"] .cabeca-interna {
+  position: relative;
+}
+[data-nicho="academia"] .cabeca-interna::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 6px;
+  background: var(--cor-primaria);
+  transform-origin: left;
+}
 @media (prefers-reduced-motion: no-preference) {
-  [data-nicho="academia"] .foto-que-assenta {
-    animation: assentar 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  [data-nicho="academia"] .cabeca-interna::after {
+    animation: raia 1.3s var(--e-movimento) 0.35s both;
+  }
+}
+@keyframes raia {
+  from {
+    scale: 0 1;
   }
 }
 
-@keyframes assentar {
-  from {
-    transform: scale(1.04);
+/* A seta da próxima página na cor do cliente, e o nome que ganha a cor no hover. */
+@media (hover: hover) and (pointer: fine) {
+  [data-nicho="academia"] .proxima-pagina a:hover .titulo-da-proxima {
+    color: var(--cor-destaque);
   }
+}
+[data-nicho="academia"] .titulo-da-proxima {
+  transition: color 0.2s ease;
 }

@@ -1,18 +1,24 @@
 import { Check } from "lucide-react";
 import type { ReactNode } from "react";
 import { BotaoWhatsApp } from "@/components/BotaoWhatsApp";
+import { Contador } from "@/components/premium/Contador";
 import { Carrossel } from "@/components/ui/Carrossel";
 import type { Plano } from "@/data/tipos";
 import { classes } from "@/lib/classes";
 import { formatarPreco, partesDoPreco } from "@/lib/formato";
 
-type Props = { planos: Plano[]; rotuloDoNicho: string; cabecalho: ReactNode };
+type Props = {
+  planos: Plano[];
+  rotuloDoNicho: string;
+  cabecalho?: ReactNode;
+};
 
 /**
  * Planos lado a lado, com o preço mensal grande e um botão em cada um. O plano
  * em destaque ganha o selo e o contorno na cor do cliente. No celular, um por
  * vez no carrossel, cada card na altura do seu conteúdo; no desktop, os três
- * à vista e com a mesma altura.
+ * à vista e com a mesma altura. Os cartões assentam em sequência quando a
+ * tabela chega à tela, e o valor conta até o preço.
  */
 export function TabelaDePlanos({ planos, rotuloDoNicho, cabecalho }: Props) {
   return (
@@ -23,13 +29,14 @@ export function TabelaDePlanos({ planos, rotuloDoNicho, cabecalho }: Props) {
       className="gap-3 py-1 sm:gap-4"
     >
       {planos.map((plano) => {
-        const [reais, centavos] = partesDoPreco(plano.precoMensal);
+        const [, centavos] = partesDoPreco(plano.precoMensal);
         return (
           <li
             key={plano.nome}
             className="w-[86%] max-w-[22rem] shrink-0 snap-start self-start sm:w-[22rem] lg:w-[calc((100%-2rem)/3)] lg:max-w-none lg:self-stretch"
           >
             <article
+              data-revela="cartao"
               aria-labelledby={`plano-${plano.nome}`}
               className={classes(
                 "flex h-full flex-col rounded-xl bg-fundo p-6 sm:p-7",
@@ -54,8 +61,15 @@ export function TabelaDePlanos({ planos, rotuloDoNicho, cabecalho }: Props) {
                 )}
               >
                 <span className="mt-1.5 mr-1 text-xl">R$</span>
-                <span className="text-7xl">{reais}</span>
-                <span className="mt-1.5 text-3xl">,{centavos}</span>
+                <span aria-hidden className="text-7xl">
+                  <Contador
+                    valor={Math.floor(plano.precoMensal / 100)}
+                    de={Math.floor(plano.precoMensal / 200)}
+                  />
+                </span>
+                <span aria-hidden className="mt-1.5 text-3xl">
+                  ,{centavos}
+                </span>
                 <span className="mt-auto mb-1.5 ml-1.5 font-texto text-base font-medium text-texto-suave">
                   /mês
                 </span>

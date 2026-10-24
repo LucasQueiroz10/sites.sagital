@@ -124,6 +124,14 @@ export const academia: DadosDaAcademia = {
     { rotulo: "Estrutura", href: "#estrutura" },
     { rotulo: "Contato", href: "#contato" },
   ],
+  raiz: "/academia",
+  paginas: [
+    { rotulo: "Planos", href: "/academia/planos" },
+    { rotulo: "Aulas", href: "/academia/aulas" },
+    { rotulo: "Estrutura", href: "/academia/estrutura" },
+    { rotulo: "Alunos", href: "/academia/alunos" },
+    { rotulo: "Contato", href: "/academia/contato" },
+  ],
   acaoPrincipal: {
     rotulo: "Agendar aula experimental",
     pedido: "Quero agendar uma aula experimental.",
@@ -245,3 +253,181 @@ export const academia: DadosDaAcademia = {
   },
   redes: ["instagram", "tiktok", "youtube", "facebook"],
 };
+
+// ---------- páginas internas ----------
+
+/** Os planos lado a lado, linha por linha (página /academia/planos). */
+export const comparacaoDosPlanos: { linha: string; valores: string[] }[] = [
+  {
+    linha: "Musculação e aulas coletivas",
+    valores: ["Todas", "Todas", "Todas"],
+  },
+  {
+    linha: "Avaliação física",
+    valores: ["A cada 3 meses", "Na matrícula", "Na matrícula"],
+  },
+  {
+    linha: "Treino com personal",
+    valores: ["1 por mês", "1 por mês", "Avulso, R$ 70"],
+  },
+  { linha: "Convites para um amigo", valores: ["2 por mês", "Não", "Não"] },
+  { linha: "Fidelidade", valores: ["12 meses", "3 meses", "Nenhuma"] },
+  {
+    linha: "Congelar o plano",
+    valores: ["Até 60 dias", "Até 15 dias", "Não"],
+  },
+];
+
+/** Da experimental ao primeiro treino com ficha (página /academia/planos). */
+export const passosDaMatricula = [
+  {
+    titulo: "Aula experimental",
+    texto:
+      "Escolha um horário da grade e treine sem pagar. O professor acompanha do aquecimento ao fim.",
+  },
+  {
+    titulo: "Avaliação física",
+    texto:
+      "Peso, medidas, mobilidade e o seu objetivo, numa conversa de 30 minutos com o professor.",
+  },
+  {
+    titulo: "Ficha no celular",
+    texto:
+      "O treino montado para você chega pelo WhatsApp e é revisto a cada avaliação.",
+  },
+];
+
+export const perguntasDosPlanos = [
+  {
+    pergunta: "A aula experimental é grátis mesmo?",
+    resposta:
+      "Sim. Uma aula de qualquer modalidade, sem cadastro de cartão e sem compromisso. É só escolher o horário e mandar uma mensagem.",
+  },
+  {
+    pergunta: "Tem taxa de matrícula?",
+    resposta:
+      "Não. Você paga só o plano escolhido, a partir do dia em que começar a treinar.",
+  },
+  {
+    pergunta: "Posso trocar de plano depois?",
+    resposta:
+      "Pode subir de plano a qualquer momento, e a diferença é calculada pelos dias que faltam. Para descer, a troca vale no fim do período contratado.",
+  },
+  {
+    pergunta: "E se eu precisar parar por um tempo?",
+    resposta:
+      "Os planos Anual e Trimestral podem ser congelados por viagem ou motivo de saúde, sem custo, pelo prazo de cada plano.",
+  },
+  {
+    pergunta: "Quais formas de pagamento vocês aceitam?",
+    resposta:
+      "Cartão de crédito parcelado, débito automático e Pix. O plano Mensal também pode ser pago na recepção.",
+  },
+];
+
+/** O que levar na primeira aula (página /academia/aulas). */
+export const paraAPrimeiraAula = [
+  "Roupa leve e tênis fechado",
+  "Uma garrafa de água",
+  "Toalha de rosto",
+  "Chegar 10 minutos antes",
+];
+
+/** A estrutura em números (página /academia/estrutura). */
+export const estruturaEmNumeros = [
+  { valor: 1200, sufixo: " m²", rotulo: "de salão, com janelões" },
+  { valor: 68, sufixo: "", rotulo: "aparelhos e estações" },
+  { valor: 4, sufixo: "", rotulo: "salas de aula coletiva" },
+  { valor: 40, sufixo: " vagas", rotulo: "de estacionamento" },
+];
+
+export const comodidades = [
+  "Vestiários com armário e chuveiro quente",
+  "Estacionamento próprio, na porta",
+  "Ar-condicionado no salão e nas salas",
+  "Bebedouros com água gelada",
+  "Wi-fi aberto para os alunos",
+  "Bicicletário coberto",
+];
+
+/** Mais vozes da página /academia/alunos. */
+export const maisDepoimentos = [
+  {
+    texto:
+      "Comecei com 58 anos e medo de me machucar. A avaliação mudou tudo: hoje subo escada sem dor no joelho.",
+    autoria: "Aluno de musculação, 61 anos",
+  },
+  {
+    texto:
+      "A bike das 19h é o melhor horário do meu dia. A música, a turma e o professor que lembra o nome de todo mundo.",
+    autoria: "Aluna de bike indoor",
+  },
+  {
+    texto:
+      "Treino no almoço. A aula express de 30 minutos cabe certinho e eu volto para o trabalho a tempo.",
+    autoria: "Aluno do funcional express",
+  },
+];
+
+/** A frase de destaque da página de alunos, que acende ao rolar. */
+export const fraseDosAlunos =
+  "Aqui ninguém treina sozinho: o professor sabe o seu nome, a turma sente a sua falta e a ficha muda junto com você.";
+
+/**
+ * Movimento típico do salão por hora (0 a 100), das 5h às 22h, para a
+ * página de contato mostrar os horários mais tranquilos.
+ */
+export const movimentoPorHora: { hora: number; nivel: number }[] = [
+  { hora: 5, nivel: 18 },
+  { hora: 6, nivel: 62 },
+  { hora: 7, nivel: 74 },
+  { hora: 8, nivel: 48 },
+  { hora: 9, nivel: 30 },
+  { hora: 10, nivel: 22 },
+  { hora: 11, nivel: 28 },
+  { hora: 12, nivel: 56 },
+  { hora: 13, nivel: 44 },
+  { hora: 14, nivel: 20 },
+  { hora: 15, nivel: 18 },
+  { hora: 16, nivel: 26 },
+  { hora: 17, nivel: 58 },
+  { hora: 18, nivel: 88 },
+  { hora: 19, nivel: 96 },
+  { hora: 20, nivel: 78 },
+  { hora: 21, nivel: 46 },
+  { hora: 22, nivel: 20 },
+];
+
+export const comoChegarNaAcademia = [
+  {
+    titulo: "De carro",
+    texto:
+      "Estacionamento próprio com 40 vagas, entrada pela Av. das Palmeiras.",
+  },
+  {
+    titulo: "De ônibus",
+    texto: "Ponto em frente à praça, linhas 210 e 312, a 50 metros da porta.",
+  },
+  {
+    titulo: "De bicicleta",
+    texto: "Bicicletário coberto ao lado da recepção, com cadeado emprestado.",
+  },
+];
+
+export const perguntasDoContato = [
+  {
+    pergunta: "Abre em feriado?",
+    resposta:
+      "Na maioria dos feriados, sim, no horário de sábado. Os horários de cada feriado saem no Instagram com uma semana de antecedência.",
+  },
+  {
+    pergunta: "Preciso marcar para treinar musculação?",
+    resposta:
+      "Não. A musculação é livre em todo o horário de funcionamento. Só as aulas coletivas têm vagas por turma.",
+  },
+  {
+    pergunta: "Posso visitar antes de decidir?",
+    resposta:
+      "Claro. Passe na recepção em qualquer horário para conhecer o espaço, ou agende a aula experimental para treinar de verdade.",
+  },
+];
