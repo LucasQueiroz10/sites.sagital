@@ -41,13 +41,11 @@ const csp = [
 ].join("; ");
 
 /**
- * Sellix (premium) é um HTML único em public/premium/sellix, como o modelo
- * pede: fonte do Google Fonts e vídeo do globo servidos por CDN externa. Só
- * essa página libera esses domínios; o resto do site segue na política acima.
+ * Paralelo (premium): o globo da abertura é um vídeo servido pela CDN do
+ * modelo, com o quadro de espera ao lado. Só essa página libera esses dois
+ * domínios; o resto do site segue na política acima.
  */
-const cspDaSellix = csp
-  .replace("style-src 'self'", "style-src 'self' https://fonts.googleapis.com")
-  .replace("font-src 'self'", "font-src 'self' https://fonts.gstatic.com")
+const cspDaParalelo = csp
   .replace(
     "img-src 'self'",
     "img-src 'self' https://d2ol7oe51mr4n9.cloudfront.net",
@@ -91,14 +89,9 @@ const nextConfig: NextConfig = {
       { source: "/:path*", headers: cabecalhosDeSeguranca },
       // Vem depois para substituir a política geral nessa página.
       {
-        source: "/premium/sellix/:path*",
-        headers: [{ key: "Content-Security-Policy", value: cspDaSellix }],
+        source: "/premium/paralelo",
+        headers: [{ key: "Content-Security-Policy", value: cspDaParalelo }],
       },
-    ];
-  },
-  async rewrites() {
-    return [
-      { source: "/premium/sellix", destination: "/premium/sellix/index.html" },
     ];
   },
   turbopack: {

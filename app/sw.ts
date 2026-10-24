@@ -1,6 +1,10 @@
 /// <reference lib="webworker" />
 import { defaultCache } from "@serwist/turbopack/worker";
-import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
+import type {
+  PrecacheEntry,
+  RuntimeCaching,
+  SerwistGlobalConfig,
+} from "serwist";
 import { CacheFirst, ExpirationPlugin, Serwist } from "serwist";
 
 declare global {
@@ -10,6 +14,28 @@ declare global {
 }
 
 declare const self: ServiceWorkerGlobalScope;
+
+/**
+ * Só o que é do próprio site passa pelo service worker. Arquivos de outros
+ * domínios (o vídeo do globo da Paralelo, por exemplo) vão direto do
+ * navegador: buscados de dentro do worker, eles esbarram no connect-src
+ * 'self' do CSP e falham, e o vídeo nem precisa de cache offline.
+ */
+function soDoSite(entrada: RuntimeCaching): RuntimeCaching {
+  const { matcher } = entrada;
+  return {
+    ...entrada,
+    matcher: (opcoes) =>
+      opcoes.sameOrigin &&
+      (typeof matcher === "function"
+        ? matcher(opcoes)
+        : matcher instanceof RegExp
+          ? matcher.test(opcoes.url.href)
+          : typeof matcher === "string"
+            ? opcoes.url.href === new URL(matcher, self.location.href).href
+            : false),
+  };
+}
 
 const serwist = new Serwist({
   precacheEntries: self.__SW_MANIFEST,
@@ -34,7 +60,7 @@ const serwist = new Serwist({
         ],
       }),
     },
-    ...defaultCache,
+    ...defaultCache.map(soDoSite),
   ],
   fallbacks: {
     entries: [
