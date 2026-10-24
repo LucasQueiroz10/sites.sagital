@@ -9,13 +9,20 @@ import {
 } from "lucide-react";
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties } from "react";
 import { RodapeDoPortfolio } from "@/components/portfolio/RodapeDoPortfolio";
 import { Cabecalho } from "@/components/premium/bloco/Cabecalho";
 import { Cases } from "@/components/premium/bloco/Cases";
 import { Duvidas } from "@/components/premium/bloco/Duvidas";
 import { Equipe } from "@/components/premium/bloco/Equipe";
 import { FormularioDeAuditoria } from "@/components/premium/bloco/FormularioDeAuditoria";
+import {
+  Cinza,
+  Colchetes,
+  LARANJA,
+  TONS_DO_LARANJA,
+  VerMais,
+} from "@/components/premium/bloco/Interno";
 import { FaixaDeClientes, MarcaBloco } from "@/components/premium/bloco/Marcas";
 import { Numeros } from "@/components/premium/bloco/Numeros";
 import { PilhaDaAbertura } from "@/components/premium/bloco/PilhaDaAbertura";
@@ -29,8 +36,9 @@ import { VoltarParaSagital } from "@/components/VoltarParaSagital";
 import {
   destaques,
   imagens,
-  navegacao,
   nome,
+  paginas,
+  raiz,
   rodape,
   selosDaAuditoria,
   vantagensDoMix,
@@ -48,44 +56,6 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = { themeColor: "#e4e4e4" };
-
-const LARANJA = "var(--cor-laranja-campo)";
-const TONS_DO_LARANJA = ["#e85102", "#c24200"];
-
-/**
- * O título entre colchetes. Cada item de `linhas` é uma linha; as palavras
- * cinza vão num <span className="bl-cinza">.
- */
-function Colchetes({
-  id,
-  linhas,
-  recuo,
-  className,
-}: {
-  id: string;
-  linhas: ReactNode[];
-  recuo?: string;
-  className?: string;
-}) {
-  return (
-    <h2
-      id={id}
-      className={classes(
-        "bl-colchetes bl-quadrada text-[var(--cor-tinta)]",
-        className,
-      )}
-      style={recuo ? ({ "--recuo": recuo } as CSSProperties) : undefined}
-    >
-      {linhas.map((l, i) => (
-        <span key={i}>{l}</span>
-      ))}
-    </h2>
-  );
-}
-
-const Cinza = ({ children }: { children: ReactNode }) => (
-  <span className="bl-cinza">{children}</span>
-);
 
 /** A frase da agência, palavra por palavra (t = grafite, c = cinza). */
 const FRASE: ([string, "t" | "c"] | "blocos")[] = [
@@ -274,6 +244,11 @@ export default function PaginaBloco() {
                   Escolha as peças separadas ou monte o pacote completo: cada
                   serviço vira um bloco do seu mix.
                 </p>
+                <div className="mt-6">
+                  <VerMais href={`${raiz}/servicos`} branco>
+                    Ver cada serviço por dentro
+                  </VerMais>
+                </div>
               </div>
             </div>
 
@@ -292,14 +267,19 @@ export default function PaginaBloco() {
                   A auditoria gratuita escolhe o mix certo para os primeiros
                   pedidos chegarem em até 30 dias.
                 </p>
-                <a href="#auditoria" className="bl-botao bl-botao-branco mt-7">
-                  Pedir auditoria
-                  <ArrowUpRight
-                    aria-hidden
-                    className="size-4"
-                    strokeWidth={1.5}
-                  />
-                </a>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <a href="#auditoria" className="bl-botao bl-botao-branco">
+                    Pedir auditoria
+                    <ArrowUpRight
+                      aria-hidden
+                      className="size-4"
+                      strokeWidth={1.5}
+                    />
+                  </a>
+                  <VerMais href={`${raiz}/planos`} branco>
+                    Comparar planos
+                  </VerMais>
+                </div>
               </div>
               <ul className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:col-span-6 lg:col-start-7 lg:self-end">
                 {vantagensDoMix.map((v, i) => {
@@ -392,6 +372,9 @@ export default function PaginaBloco() {
                 />
               }
             />
+            <div className="mt-10">
+              <VerMais href={`${raiz}/cases`}>Ver todos os cases</VerMais>
+            </div>
           </div>
         </section>
 
@@ -490,6 +473,11 @@ export default function PaginaBloco() {
                     Cada etapa tem prazo, entrega e alguém responsável. Você
                     acompanha tudo pelo painel.
                   </p>
+                  <div className="mt-6">
+                    <VerMais href={`${raiz}/processo`}>
+                      Ver o processo por dentro
+                    </VerMais>
+                  </div>
                 </div>
               </div>
             }
@@ -643,7 +631,11 @@ export default function PaginaBloco() {
         tom="escuro"
         nome={nome}
         marca={<MarcaBloco tamanho="grande" className="text-white" />}
-        navegacao={[...navegacao]}
+        navegacao={[
+          ...paginas,
+          { rotulo: "Equipe", href: "#equipe" },
+          { rotulo: "Dúvidas", href: "#duvidas" },
+        ]}
         rodape={rodape}
         className="bg-[#1c1c1c]"
       />
