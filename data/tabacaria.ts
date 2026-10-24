@@ -41,6 +41,13 @@ export const tabacaria: DadosDaTabacaria = {
     { rotulo: "Galeria", href: "#galeria" },
     { rotulo: "Contato", href: "#contato" },
   ],
+  raiz: "/tabacaria",
+  paginas: [
+    { rotulo: "A loja", href: "/tabacaria/loja" },
+    { rotulo: "O lounge", href: "/tabacaria/lounge" },
+    { rotulo: "Galeria", href: "/tabacaria/galeria" },
+    { rotulo: "Contato", href: "/tabacaria/contato" },
+  ],
   acaoPrincipal: {
     rotulo: "Falar com a loja",
     pedido: "Gostaria de falar com a loja.",
@@ -139,3 +146,71 @@ export const tabacaria: DadosDaTabacaria = {
   },
   redes: ["instagram", "facebook"],
 };
+
+// ---------- páginas internas ----------
+// As mesmas regras do topo do arquivo: sem preço, oferta ou chamada ao
+// consumo; o que a página mostra é o atendimento, o espaço e o acervo.
+
+/** Como a loja ajuda a escolher (página /tabacaria/loja). */
+export const atendimento = [
+  {
+    titulo: "Mostrar as peças",
+    texto:
+      "Tudo sai da vitrine para a sua mão: o peso do isqueiro, o couro da tabaqueira, a espessura da seda.",
+  },
+  {
+    titulo: "Explicar as diferenças",
+    texto:
+      "Por que um maçarico e não um clássico, vidro ou madeira, qual cinzeiro aguenta a varanda.",
+  },
+  {
+    titulo: "Montar um presente",
+    texto:
+      "Uma peça ou um conjunto, na caixa de madeira da casa, com cartão escrito à mão.",
+  },
+];
+
+/** O que acontece no lounge (página /tabacaria/lounge). */
+export const usosDoLounge = [
+  {
+    titulo: "Esperar sem pressa",
+    texto: "Enquanto o pedido é separado ou o presente é embrulhado.",
+  },
+  {
+    titulo: "Conversar",
+    texto: "Mesas baixas e poltronas para uma conversa longa, com café.",
+  },
+  {
+    titulo: "Escolher com calma",
+    texto: "As peças vêm até a mesa, para comparar lado a lado.",
+  },
+];
+
+export const regrasDoLounge = [
+  "Entrada só para maiores de 18 anos, com documento.",
+  "Ambiente fechado: aqui não se fuma, como manda a lei.",
+  "Café, água e bebidas sem álcool à vontade para quem está na loja.",
+];
+
+export const perguntasDaTabacaria = [
+  {
+    pergunta: "Preciso mostrar documento?",
+    resposta:
+      "Sim. Pedimos documento com foto a quem aparenta ter menos de 25 anos, na loja e no lounge.",
+  },
+  {
+    pergunta: "Vocês vendem pelo site ou pelo WhatsApp?",
+    resposta:
+      "Não. O WhatsApp serve para tirar dúvidas e combinar a visita. A escolha e a compra acontecem na loja.",
+  },
+  {
+    pergunta: "Fazem embalagem para presente?",
+    resposta:
+      "Fazemos, na caixa de madeira da casa ou em papel kraft com fita, e escrevemos o cartão se você quiser.",
+  },
+  {
+    pergunta: "Tem estacionamento perto?",
+    resposta:
+      "Há um estacionamento rotativo na galeria ao lado e vagas na rua depois das 19h.",
+  },
+];

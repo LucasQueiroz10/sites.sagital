@@ -5,16 +5,21 @@ type Props = Pick<DadosDaTabacaria, "categorias" | "imagensDaLoja">;
 
 /**
  * As categorias da loja como o quadro de diretório de um saguão: nomes
- * gravados e uma linha sobre cada uma. Sem preços nem ofertas.
+ * gravados e uma linha sobre cada uma. Sem preços nem ofertas. As linhas
+ * entram uma a uma e as duas fotos abrem como cortina.
  */
 export function DiretorioDaLoja({ categorias, imagensDaLoja }: Props) {
   const [principal, detalhe] = imagensDaLoja;
   return (
     <div className="grid gap-12 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:gap-16">
-      <ul className="moldura grid content-start self-start px-5 py-6 sm:px-8 sm:py-8">
+      <ul
+        data-revela-grupo
+        className="moldura grid content-start self-start px-5 py-6 sm:px-8 sm:py-8"
+      >
         {categorias.map((categoria, i) => (
           <li
             key={categoria.nome}
+            data-revela
             className={i > 0 ? "border-t border-borda py-5" : "pb-5"}
           >
             <h3 className="text-2xl">{categoria.nome}</h3>
@@ -25,7 +30,10 @@ export function DiretorioDaLoja({ categorias, imagensDaLoja }: Props) {
 
       <div className="relative grid grid-cols-2 content-start gap-3 md:grid-cols-1 md:gap-4">
         {principal && (
-          <div className="relative aspect-[3/4] overflow-hidden">
+          <div
+            data-revela="foto"
+            className="relative aspect-[3/4] overflow-hidden"
+          >
             <Image
               src={principal.src}
               alt={principal.alt}
@@ -37,7 +45,10 @@ export function DiretorioDaLoja({ categorias, imagensDaLoja }: Props) {
           </div>
         )}
         {detalhe && (
-          <div className="moldura relative aspect-[3/4] overflow-hidden md:-mt-28 md:-ml-10 md:aspect-[4/3] md:w-3/4">
+          <div
+            data-revela="foto"
+            className="moldura relative aspect-[3/4] overflow-hidden md:-mt-28 md:-ml-10 md:aspect-[4/3] md:w-3/4"
+          >
             <Image
               src={detalhe.src}
               alt={detalhe.alt}
